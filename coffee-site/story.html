@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一杯咖啡的故事 · 猫和鱼</title>
+<style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 72px 24px 56px;
+        background: radial-gradient(900px 620px at 50% -12%, rgba(201,168,106,.11), transparent 70%), #14100e;
+        color: #e8dcc8;
+        font-family: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+        -webkit-font-smoothing: antialiased;
+    }
+    .story { width: 100%; max-width: 600px; }
+    .kicker { margin: 0 0 20px; font-size: 12px; letter-spacing: 5px; color: #c9a86a; }
+    h1 { margin: 0 0 10px; font-size: 30px; font-weight: 500; letter-spacing: 2px; }
+    .tagline { margin: 0 0 30px; font-size: 13px; letter-spacing: 1px; color: rgba(232,220,200,.42); }
+    .rule { width: 46px; height: 1px; margin: 0 0 34px; background: linear-gradient(90deg, #c9a86a, transparent); }
+    .text p { margin: 0 0 22px; font-size: 16px; line-height: 2.15; text-align: justify; color: rgba(240,232,218,.92); }
+    .sign { margin: 40px 0 0; text-align: right; font-size: 13px; letter-spacing: 2px; color: #c9a86a; }
+    .back { display: inline-block; margin-top: 48px; padding: 10px 24px; border: 1px solid rgba(201,168,106,.35); border-radius: 999px; color: #c9b79c; font-size: 13px; letter-spacing: 2px; text-decoration: none; transition: .3s; }
+    .back:hover { border-color: #c9a86a; color: #c9a86a; background: rgba(201,168,106,.06); }
+    .missing { font-size: 15px; line-height: 2; color: rgba(232,220,200,.6); }
+    .fade { animation: fade .9s ease both; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 480px) {
+        body { padding: 56px 20px 44px; }
+        h1 { font-size: 24px; }
+        .text p { font-size: 15px; line-height: 2.05; }
+    }
+</style>
+</head>
+<body>
+<main class="story fade">
+    <p class="kicker">这 杯 属 于 你</p>
+    <h1 id="name">……</h1>
+    <p class="tagline" id="tagline"></p>
+    <div class="rule"></div>
+    <div class="text" id="text"></div>
+    <p class="sign">—— 猫 和 鱼</p>
+    <a class="back" href="index.html">← 回 到 店 里</a>
+</main>
+<script src="coffees.js"></script>
+<script>
+(function () {
+    var id = new URLSearchParams(location.search).get("id");
+    var coffee = null;
+
+    if (typeof COFFEES !== "undefined") {
+        for (var i = 0; i < COFFEES.length; i++) {
+            if (COFFEES[i].id === id) { coffee = COFFEES[i]; break; }
+        }
+    }
+
+    if (!coffee) {
+        document.getElementById("name").textContent = "这杯还在路上";
+        document.getElementById("tagline").textContent = "也许走错了柜台，也许它还没煮好。";
+        document.getElementById("text").innerHTML = '<p class="missing">回到店里看看吧，那里总有一杯在等你。</p>';
+        return;
+    }
+
+    document.title = coffee.name + " · 一杯咖啡的故事";
+    document.getElementById("name").textContent = coffee.name;
+    document.getElementById("tagline").textContent = coffee.tagline || "";
+
+    var html = "";
+    for (var j = 0; j < coffee.story.length; j++) {
+        html += "<p>" + coffee.story[j] + "</p>";
+    }
+    document.getElementById("text").innerHTML = html;
+})();
+</script>
+</body>
+</html>

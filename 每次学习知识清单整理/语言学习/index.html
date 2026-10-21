@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>语言学习 · 从零开始 · 龙潜猫隐和小鱼的个人class</title>
+        <link rel="stylesheet" href="../lesson.css">
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">语言学习项目 · 从零开始</p>
+            <h1>选一门，从零开始</h1>
+            <p class="sub">每门语言一套完整的路：它是什么 → 能干什么 → 关键词 → 动手做项目 → 你自己写一个。</p>
+
+            <div class="meta">
+                <span>已开放 <b id="stat-open">0</b></span>
+                <span>考证模块 <b>1</b></span>
+                <span>筹备中 <b id="stat-soon">0</b></span>
+                <span>更新 <b>2026-10-21</b></span>
+            </div>
+
+            <p class="series">全程假设你只会开关电脑。看不懂就往下翻，先让它跑起来，再回头抠细节。</p>
+        </header>
+
+        <div class="idx-wrap">
+            <p class="idx-sec">选择一门语言</p>
+            <div class="lang-grid" id="lang-grid"></div>
+
+            <p class="idx-sec">考证</p>
+            <a class="lang-card" href="考试.html" style="max-width:520px;">
+                <div class="lh"><span class="lname">二级 · 编程类</span><span class="lv">考证</span></div>
+                <div class="ltag">全国计算机等级考试</div>
+                <div class="ld">Python 科目的考点范围、题型分值、答法、三十天复习计划。以后加的语言如果和考证挂钩，考点会同步写到这里。</div>
+                <div class="lm">目前收录：Python · 10 节</div>
+                <div class="lgo">去看考点 →</div>
+            </a>
+
+            <p class="idx-sec">怎么用这个模块</p>
+            <div class="card">
+                <p>每一门语言都按同一个顺序写，你不用适应第二种讲法：</p>
+                <table>
+                    <tr><th>顺序</th><th>内容</th><th>目的</th></tr>
+                    <tr><td>01–04</td><td>它是什么、能干什么、能找什么工作、怎么装</td><td>先知道值不值得学，再让第一行代码跑起来</td></tr>
+                    <tr><td>05–14</td><td>关键词：变量、判断、循环、函数、模块…</td><td>每种语言都绕不开的那几个词，一次讲一个</td></tr>
+                    <tr><td>15</td><td>跟着我写一个小项目</td><td>把散的知识点串成一条线</td></tr>
+                    <tr><td>16</td><td>你自己写一个独立项目</td><td>这一节没有完整代码，只有需求和验收标准</td></tr>
+                    <tr><td>17–18</td><td>路线、资源、结语</td><td>学完之后往哪走</td></tr>
+                </table>
+                <div class="note"><b>建议：</b>每读完一节就把代码敲一遍。看十遍不如敲一遍——敲错的那次记得最牢。</div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="stamp">语言学习 · 2026-10-21 建</div>
+            <div>第一门：Python · 后面会一门一门加</div>
+            <div style="margin-top:6px; font-size:12px;">新增一门语言：在 languages.js 里加一条，卡片自己长出来</div>
+        </footer>
+
+        <script src="languages.js"></script>
+        <script>
+        (function () {
+            var grid = document.getElementById("lang-grid");
+            var openCount = 0;
+            var soonCount = 0;
+
+            LANGUAGES.forEach(function (l) {
+                if (l.open) openCount++; else soonCount++;
+
+                var el = document.createElement(l.open ? "a" : "div");
+                el.className = "lang-card" + (l.open ? "" : " soon");
+                if (l.open) el.href = l.file;
+
+                el.innerHTML =
+                    '<div class="lh"><span class="lname">' + l.name + '</span>' +
+                    '<span class="lv">' + l.level + '</span></div>' +
+                    '<div class="ltag">' + l.tagline + '</div>' +
+                    '<div class="ld">' + l.desc + '</div>' +
+                    '<div class="lm">' + l.meta + '</div>' +
+                    '<div class="lgo">' + (l.open ? "开始学 →" : "敬请期待") + '</div>';
+
+                grid.appendChild(el);
+            });
+
+            document.getElementById("stat-open").textContent = openCount;
+            document.getElementById("stat-soon").textContent = soonCount;
+        })();
+        </script>
+        <script src="../../assets/update-popup.js"></script>
+    </body>
+</html>

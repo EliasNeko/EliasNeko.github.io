@@ -1084,3 +1084,61 @@ footer .stamp {
   .idx-grid { grid-template-columns: 1fr; }
   .dock { bottom: 16px; }
 }
+
+/* ==========================================================
+   语言学习项目
+   ========================================================== */
+
+.lang-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(167, 139, 250, 0.32);
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(167, 139, 250, 0.11), rgba(56, 189, 248, 0.02));
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  transition: 0.25s;
+}
+.lang-banner:hover { border-color: #a78bfa; transform: translateY(-2px); box-shadow: 0 14px 30px rgba(2, 6, 15, 0.5); }
+.lang-banner .ico { color: #a78bfa; font-size: 20px; }
+.lang-banner b { color: #c4b5fd; font-weight: normal; }
+.lang-banner .go { margin-left: auto; color: #a78bfa; font-size: 12.5px; letter-spacing: 1px; white-space: nowrap; }
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.lang-card {
+  display: block;
+  position: relative;
+  padding: 24px 22px 20px;
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--panel), var(--panel-2));
+  text-decoration: none;
+  color: var(--text);
+  transition: 0.25s;
+}
+.lang-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 18px 40px rgba(2, 6, 15, 0.55); }
+.lang-card .lh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.lang-card .lname { font-size: 24px; letter-spacing: 1px; }
+.lang-card .lv { font-size: 11px; letter-spacing: 2px; color: var(--accent); border: 1px solid var(--line-2); border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+.lang-card .ltag { color: var(--accent-2); font-size: 13px; margin-bottom: 10px; letter-spacing: 1px; }
+.lang-card .ld { color: var(--muted); font-size: 13.5px; line-height: 1.9; }
+.lang-card .lm { margin-top: 16px; font-size: 12px; color: var(--dim); letter-spacing: 1px; }
+.lang-card .lgo { margin-top: 14px; color: var(--accent); font-size: 13px; letter-spacing: 2px; }
+.lang-card.soon { opacity: 0.55; }
+.lang-card.soon:hover { transform: none; border-color: var(--line-2); box-shadow: none; }
+.lang-card.soon .lgo { color: var(--dim); }
+
+@media (max-width: 860px) {
+  .lang-banner { flex-wrap: wrap; gap: 10px; }
+  .lang-banner .go { margin-left: 0; }
+}

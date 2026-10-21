@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>第003期 · 2026-10-22 · 龙潜猫隐和小鱼的个人class知识点清单</title>
+        <link rel="stylesheet" href="lesson.css">
+        <style>:root{--lesson-date:"2026-10-22 · 课堂代码"}</style>
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">龙潜猫隐和小鱼的个人class · 第 003 期</p>
+            <h1>从「点一下」到「记得你」</h1>
+            <p class="sub">购物车、购买、故事页——页面开始有记忆了</p>
+            <div class="meta">
+                <span>日期 <b>2026-10-22</b></span>
+                <span>期号 <b>003</b></span>
+                <span>知识点 <b>17</b></span>
+                <span>踩过的坑 <b>5</b></span>
+            </div>
+            <p class="series">第 002 期：2026-10-21 · 页面 v2（门店 / 故事 / 页脚）</p>
+        </header>
+
+        <div class="layout">
+
+            <aside class="toc">
+                <h2>目录</h2>
+                <a href="#s01">01 今天的进度</a>
+                <a href="#s02">02 先让数据对，再让它好看</a>
+                <a href="#s03">03 事件委托</a>
+                <a href="#s04">04 Number()</a>
+                <a href="#s05">05 对象是引用</a>
+                <a href="#s06">06 合并同类项</a>
+                <a href="#s07">07 渲染</a>
+                <a href="#s08">08 innerHTML 的边界</a>
+                <a href="#s09">09 localStorage</a>
+                <a href="#s10">10 JSON</a>
+                <a href="#s11">11 push 与 splice</a>
+                <a href="#s12">12 z-index 层级</a>
+                <a href="#s13">13 作用域</a>
+                <a href="#s14">14 设备标签与钱包</a>
+                <a href="#s15">15 购买流程</a>
+                <a href="#s16">16 今天踩的坑</a>
+                <a href="#s17">17 下一步</a>
+            </aside>
+
+            <main>
+
+                <section class="card" id="s01">
+                    <h2><span class="num">01</span>今天的进度</h2>
+<p>上一期页面已经「长完了」，但它是死的——点「加入」什么都不会发生。今天一晚上，把它变成了一个<b>会记住你的店</b>。</p>
+<table>
+<tr><th>做了什么</th><th>结果</th></tr>
+<tr><td>购物车</td><td>加入、合并同款、加减数量、删除单行、清空</td></tr>
+<tr><td>数据持久化</td><td>关掉网页再打开，车还在</td></tr>
+<tr><td>购买与钱包</td><td>每人每天 ¥500，买完扣钱，第二天重置</td></tr>
+<tr><td>咖啡故事页</td><td>每杯咖啡一个专属页面，买完能去读</td></tr>
+<tr><td>上线</td><td>GitHub Pages，手机也能打开</td></tr>
+<tr><td>更新日志弹窗</td><td>每次打开网站，先告诉你今天更新了什么</td></tr>
+</table>
+<div class="note"><b>这一期的关键词：</b>数据。前面十一期学的都是「怎么让它好看」，从今天起是「怎么让它记住」。</div>
+                </section>
+
+                <section class="card" id="s02">
+                    <h2><span class="num">02</span>先让数据对，再让它好看</h2>
+<p>新手做购物车，第一反应是画一个侧边栏，再想办法把东西塞进去。顺序反了。</p>
+<p>正确的顺序是：<b>先想清楚数据长什么样</b>，界面只是它的影子。</p>
+<pre><code>var cart = [
+  { id: "yejia", name: "手冲耶加雪啡", price: 32, qty: 2 },
+  { id: "dirty", name: "燕麦dirty",     price: 19, qty: 1 }
+]</code></pre>
+<p>就一个数组，每格一个对象。<b>用户看到的一切——小计、合计、件数——全都能从这个数组算出来。</b>算不出来，说明数据还不够。</p>
+<div class="note"><b>检验标准：</b>如果某个数字只能靠「记住」而不能靠「算出来」，那你的数据结构设计错了。</div>
+                </section>
+
+                <section class="card" id="s03">
+                    <h2><span class="num">03</span>事件委托：把监听器挂在爸爸身上</h2>
+<p>三个按钮，可以各挂一个 <code>click</code>。但如果商品有三十个呢？而且以后还要动态加。</p>
+<p>做法是：<b>挂在它们的父元素上</b>，让点击自己「冒泡」上来。</p>
+<pre><code>document.querySelector(".cards").addEventListener("click", function (e) {
+    if (!e.target.classList.contains("buy")) return;   // 点的不是「加入」就走人
+    var name  = e.target.dataset.name;
+    var price = Number(e.target.dataset.price);
+    console.log(name, price);
+});</code></pre>
+<p><code>e.target</code> 是「你真正点到的那个元素」。点击会从它一层层往上冒泡，所以挂在 <code>.cards</code> 上能接住所有子元素的点击。</p>
+<div class="note"><b>好处有两个：</b>① 一个监听器管所有按钮，省内存；② <b>以后新生成的按钮自动生效</b>——购物车里的加减号就是这么做的。</div>
+                </section>
+
+                <section class="card" id="s04">
+                    <h2><span class="num">04</span>Number()：不转就会「321」</h2>
+<p><code>data-price="32"</code> 读出来永远是<b>字符串</b>，因为 HTML 属性只有文本。</p>
+<pre><code>var p = e.target.dataset.price;   // "32"，注意引号
+console.log(p + 1);                 // "321"   ← 字符串拼接
+console.log(Number(p) + 1);         // 33      ← 这才是加法</code></pre>
+<p>更阴险的是：<code>"32" * 2</code> 会得到 <code>64</code>。因为乘号没法用在字符串上，JS 悄悄帮你转了。于是「加」错、「乘」对，你查半天查不出来。</p>
+<div class="note"><b>规则：</b>从 DOM、URL、输入框、localStorage 里拿到的数字，<b>一律先 <code>Number()</code></b>。</div>
+                </section>
+
+                <section class="card" id="s05">
+                    <h2><span class="num">05</span>对象是引用，不是复制</h2>
+<p>合并同款时写了这句：</p>
+<pre><code>var found = cart[i];        // 不是复制一份，是拿到了那一格的「地址」
+found.qty = found.qty + 1;  // 改的是数组里那一格</code></pre>
+<p>数组里放对象，放的是<b>门牌号</b>，不是<b>复印件</b>。所以改 <code>found</code>，数组里就真的变了。</p>
+<p>反过来，数字和字符串是复制：<code>var a = 5; var b = a; b = 6;</code> 之后 <code>a</code> 还是 5。</p>
+<div class="note"><b>一句话：</b>对象和数组是「同一间屋子」，数字和字符串是「抄了一张纸」。</div>
+                </section>
+
+                <section class="card" id="s06">
+                    <h2><span class="num">06</span>合并同类项：先找，再决定</h2>
+<p>点两次同一杯咖啡，不应该出现两行，应该是一行、数量 2。</p>
+<pre><code>var found = null;
+for (var i = 0; i &lt; cart.length; i++) {
+    if (cart[i].name === item.name) {
+        found = cart[i];
+        break;                 // 找到就停，别傻走到底
+    }
+}
+
+if (found) found.qty = found.qty + 1;
+else cart.push(item);</code></pre>
+<p><code>found = null</code> 是「先假设没有」——一种诚实的写法。<code>break</code> 让循环在找到后立刻停下。</p>
+<div class="note"><b>备注：</b>这段手写循环，学了 <code>find()</code> 之后一行就能写完。但先手写一次，你才知道 <code>find()</code> 到底替你做了什么。</div>
+                </section>
+
+                <section class="card" id="s07">
+                    <h2><span class="num">07</span>渲染：数据一变，整块重画</h2>
+<p>不要在每个按钮的回调里各改一处 DOM——改到第五个功能，一定漏。</p>
+<p>正确做法：写一个 <code>render()</code>，它只回答一个问题：<b>「现在应该长什么样」</b>。</p>
+<pre><code>function render() {
+    var count = 0, total = 0, html = "";
+    for (var i = 0; i &lt; cart.length; i++) {
+        var it = cart[i];
+        count = count + it.qty;
+        total = total + it.price * it.qty;
+        html += '&lt;div class="cart-item"&gt;' + it.name + ' × ' + it.qty + '&lt;/div&gt;';
+    }
+    document.getElementById("cartList").innerHTML = html;
+    document.getElementById("cartCount").textContent = count;
+}</code></pre>
+<p>数据变了？调一次 <code>render()</code>。别去追「哪里变了」，只管「现在该是什么样」。</p>
+<div class="note"><b>这就是 React、Vue 的核心思想。</b>它们做得更快更聪明，但道理和你这二十行一样。<b>角标显示的是件数（sum of qty），不是种类数（cart.length）</b>——用户关心的是前者。</div>
+                </section>
+
+                <section class="card" id="s08">
+                    <h2><span class="num">08</span>innerHTML 的边界</h2>
+<p>每次循环里都 <code>appendChild</code>，浏览器就要重排一次；三十个商品重排三十次。</p>
+<p>更好的做法是<b>先在内存里拼好一整段字符串，最后一次写进页面</b>——只重排一次。</p>
+<p>但 <code>innerHTML</code> 有风险：如果拼进去的内容来自用户输入，那就是 <b>XSS 漏洞</b>。</p>
+<pre><code>// 危险：用户输入直接拼进 HTML
+list.innerHTML = '&lt;p&gt;' + 用户填的内容 + '&lt;/p&gt;';
+
+// 安全：先用 textContent 放纯文本
+p.textContent = 用户填的内容;
+list.appendChild(p);</code></pre>
+<div class="note"><b>判断标准不是「用不用 innerHTML」，是「数据从哪来」。</b>自己写死的咖啡名，放心拼；用户填的备注，必须转义。</div>
+                </section>
+
+                <section class="card" id="s09">
+                    <h2><span class="num">09</span>localStorage：浏览器给的小仓库</h2>
+<p>刷新就清空的购物车，没人敢用。</p>
+<table>
+<tr><th>能存什么</th><td><b>只能存字符串</b>——这是最要命的限制</td></tr>
+<tr><th>存在哪</th><td>按域名隔离，你的站点一间，别人的摸不到</td></tr>
+<tr><th>多大</th><td>大约 5MB</td></tr>
+<tr><th>活多久</th><td>一直在，除非用户清缓存</td></tr>
+</table>
+<pre><code>localStorage.setItem("coffee-cart-v1", JSON.stringify(cart));
+var raw = localStorage.getItem("coffee-cart-v1");
+cart = raw ? JSON.parse(raw) : [];</code></pre>
+<div class="note"><b>key 为什么要带 <code>v1</code>：</b>以后数据结构变了，换成 <code>v2</code>，旧存档自动作废，不会读到读不懂的数据。</div>
+                </section>
+
+                <section class="card" id="s10">
+                    <h2><span class="num">10</span>JSON：出去用 stringify，回来用 parse</h2>
+<p><code>JSON.stringify</code> 把对象变成字符串，<code>JSON.parse</code> 把它变回来。</p>
+<p>但 <code>parse</code> 遇到坏数据会<b>直接抛错</b>，整个脚本当场死掉，页面变尸体。</p>
+<pre><code>try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) cart = JSON.parse(raw);
+} catch (err) {
+    cart = [];          // 宁可丢掉存档，也不能让页面崩
+}</code></pre>
+<div class="note"><b>防御性编程：</b>所有「可能不存在的、可能被改坏的」外部数据，进程序第一件事就是包进 <code>try</code>。<b>坏数据不该让页面死。</b></div>
+                </section>
+
+                <section class="card" id="s11">
+                    <h2><span class="num">11</span>数组的增删：push 和 splice</h2>
+<pre><code>cart.push(item);      // 末尾加一个
+cart.splice(i, 1);     // 从第 i 个开始，删掉 1 个</code></pre>
+<p>购物车里「数量减到 0 就删掉这一行」，用的就是 <code>splice</code>。</p>
+<div class="note"><b>为什么是减到 0 才删，而不是点减号就删？</b>因为用户的意图是慢慢减。一刀切掉会让人措手不及——<b>交互设计也是产品思维。</b></div>
+                </section>
+
+                <section class="card" id="s12">
+                    <h2><span class="num">12</span>z-index：谁在上面</h2>
+<p>购物车抽屉做好了，校徽却压在它上面。因为校徽的 <code>z-index</code> 比抽屉大。</p>
+<table>
+<tr><th>10</th><td>导航栏</td></tr>
+<tr><th>95</th><td>校徽</td></tr>
+<tr><th>150</th><td>购物车遮罩</td></tr>
+<tr><th>160</th><td>购物车抽屉</td></tr>
+<tr><th>200</th><td>口令弹窗</td></tr>
+</table>
+<div class="note"><b>别写 9999。</b>层级要有理由：常驻元素 100 以下，弹层 100–199，压在一切之上的 200 以上。遮罩永远比抽屉低 10——它要衬在后面。</div>
+                </section>
+
+                <section class="card" id="s13">
+                    <h2><span class="num">13</span>作用域：函数定义在哪，就只能被哪看见</h2>
+<p>今天最值钱的一个 bug。</p>
+<p><code>render()</code> 被写进了「点击处理函数」的<b>内部</b>，还忘了调用。结果：数组变了，页面纹丝不动。</p>
+<pre><code>// 错：render 定义在点击函数里面
+btn.addEventListener("click", function () {
+    cart.push(item);
+    function render() { ... }   // 外面调不到它
+});
+
+// 对：render 放顶层
+function render() { ... }
+btn.addEventListener("click", function () {
+    cart.push(item);
+    render();
+});</code></pre>
+<div class="note"><b>缩进会说话。</b>那段函数缩进了 16 格，比周围的 <code>if</code> 还深——编辑器早就在提示「你放错层级了」，只是没人教过你怎么听。</div>
+                </section>
+
+                <section class="card" id="s14">
+                    <h2><span class="num">14</span>设备标签与每日钱包</h2>
+<p>需求是：每个用户每天 ¥500，刷新不重置。</p>
+<p>一开始想用「浏览器指纹」（UA、屏幕、字体拼一个 ID）。最后没用，改用<b>随机生成一个 ID 存起来</b>：</p>
+<pre><code>var id = localStorage.getItem("coffee-device-id");
+if (!id) {
+    id = "u" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    localStorage.setItem("coffee-device-id", id);
+}
+
+var today = "2026-10-22";
+var w = JSON.parse(localStorage.getItem("coffee-wallet-v1:" + id) || "null");
+if (!w || w.date !== today) w = { date: today, balance: 500 };   // 每天重置</code></pre>
+<table>
+<tr><th>为什么不用指纹</th><td>不稳定（浏览器一更新就变）、隐私敏感、常被防追踪功能搅乱</td></tr>
+<tr><th>随机 ID 好在哪</th><td>只要不清缓存就是同一个，而且只「记住你」，不「认出你」</td></tr>
+</table>
+<div class="note"><b>代价说清楚：</b>换浏览器、清缓存，就变成「新的人」，余额又是 500。这是纯前端的天花板——真要认人，得有后端和登录。</div>
+                </section>
+
+                <section class="card" id="s15">
+                    <h2><span class="num">15</span>购买流程：先校验，后扣款</h2>
+<pre><code>var total = 0;
+for (var i = 0; i &lt; cart.length; i++) total += cart[i].price * cart[i].qty;
+
+if (total &gt; wallet.balance) {
+    alert("余额不够");
+    return;                  // 关键：不动购物车，不扣钱
+}
+
+wallet.balance = wallet.balance - total;
+saveWallet();
+cart = [];
+save(); render();</code></pre>
+<p>顺序不能反。**先判断能不能买，再扣钱。**反过来写，就会出现「钱扣了但没买成」。</p>
+<div class="note"><b>现实提醒：</b>这里的余额是个前端数字，F12 里能改成 9999。真要收钱，价格必须由后端重新计算——<b>前端负责好看，后端负责真金白银。</b></div>
+                </section>
+
+                <section class="card" id="s16">
+                    <h2><span class="num">16</span>今天踩的坑</h2>
+<table>
+<tr><th>#</th><th>踩了什么</th><th>学到了</th></tr>
+<tr><td>1</td><td>两个 <code>console.log</code> 打同一句话</td><td>不报错的重复最危险，会把你引向错的排查方向</td></tr>
+<tr><td>2</td><td><code>render</code> 写进了点击函数里</td><td>函数定义在哪个大括号里，就只能被那个大括号看见</td></tr>
+<tr><td>3</td><td><code>git push</code> 退出码 1，其实成功了</td><td>退出码会撒谎，要看它到底说了什么</td></tr>
+<tr><td>4</td><td>GitHub 直连超时</td><td>浏览器走代理，git 不走；要给 git 单独配 <code>http.proxy</code></td></tr>
+<tr><td>5</td><td>校徽压住抽屉</td><td>z-index 要有层级表，不要临时加数字</td></tr>
+</table>
+<div class="note"><b>备注：</b>五个坑里，两个是「工具在骗你」（退出码、重复日志），两个是「顺序/层级」，只有一个是真的语法问题。<b>写代码的时间，大半花在分辨「谁在骗我」上。</b></div>
+                </section>
+
+                <section class="card" id="s17">
+                    <h2><span class="num">17</span>下一步</h2>
+<table>
+<tr><th>阶段</th><th>做什么</th><th>会学到</th></tr>
+<tr><td>Java 后端</td><td>JDK 17 自带的 HttpServer 写 <code>/api/orders</code></td><td>HTTP、JSON、前后端联调</td></tr>
+<tr><td>真的下单</td><td>价格由后端重算，订单存下来</td><td>为什么前端不能定价</td></tr>
+<tr><td>登录</td><td>让「同一个人」跨设备可用</td><td>会话、Token</td></tr>
+</table>
+<div class="note"><b>备注：</b>从前端到后端，最大的变化不是语言，是<b>「不再相信用户」</b>——所有从前端来的东西，都要重新校验一遍。</div>
+                </section>
+
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">第 003 期 · 2026-10-22</div>
+            <div>写给阿猫的第 3 课 · 这一课从 10-21 晚上一直上到 22 日凌晨</div>
+            <div style="margin-top:6px; font-size:12px; color:#6f6357;">上一期：第 002 期（2026-10-21） · 下一期：第 004 期</div>
+        </footer>
+
+        <script src="lessons.js"></script>
+        <script>renderLessonNav('知识点清单-003-2026-10-22.html');</script>
+        <script src="../assets/update-popup.js"></script>
+</body>
+</html>

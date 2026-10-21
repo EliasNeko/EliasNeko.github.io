@@ -38,6 +38,16 @@
       points: 17,
       pits: 5,
       tags: ["Grid 复用", ":not()", "中文排版", "页脚"]
+    },
+    {
+      n: 3,
+      kind: "lesson",
+      date: "2026-10-22",
+      title: "从「点一下」到「记得你」",
+      file: "知识点清单-003-2026-10-22.html",
+      points: 17,
+      pits: 5,
+      tags: ["事件委托", "localStorage", "JSON", "渲染", "作用域", "z-index"]
     }
   ];
 

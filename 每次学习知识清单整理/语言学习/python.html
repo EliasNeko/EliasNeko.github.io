@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Python · 从零开始 · 语言学习项目</title>
+        <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .breadcrumb { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; }
+            .breadcrumb:hover { color: var(--accent); }
+            .card h3 { margin: 26px 0 12px; font-size: 15px; font-weight: normal; color: var(--accent-2); letter-spacing: 1px; }
+            .card h3:first-of-type { margin-top: 6px; }
+        </style>
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">语言学习项目 · Python</p>
+            <h1>把人从重复劳动里捞出来</h1>
+            <p class="sub">零基础 · 27 节 · 从「它是什么」到「你自己写一个项目」</p>
+            <div class="meta">
+                <span>小节 <b>27</b></span>
+                <span>动手项目 <b>2</b></span>
+                <span>更新 <b>2026-10-22</b></span>
+            </div>
+            <p class="series">这门课假设你只会开关电脑。看不懂就往下翻，先让它跑起来，细节回头再抠。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+
+            <main>
+                <a class="breadcrumb" href="index.html">← 回到语言目录</a>
+
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>Python 是一门「读起来像英语」的编程语言。写它的时候，你更像在写一份步骤说明，而不是在跟机器较劲。</p>
+<p>1991 年由一个荷兰人做出来，名字取自一个喜剧团体 Monty Python——跟蟒蛇没关系。它最在意一件事：<b>代码是写给人读的，顺便让机器执行。</b></p>
+<p>举个最直白的对比。同样是打印十个数字：</p>
+<pre><code># C 语言
+for (int i = 0; i &lt; 10; i++) { printf("%d\n", i); }
+
+# Python
+for i in range(10):
+    print(i)</code></pre>
+<p>少了大括号、少了分号、少了类型声明。<b>代价是它跑得慢</b>（大概慢 10 到 100 倍），所以它不做游戏引擎、不做操作系统，它出现在「要把人从重复劳动里捞出来」的地方。</p>
+<div class="note"><b>一句话：</b>它不擅长把每件事做到最快，它擅长让你最快把事做完。</div></section>
+<section class="card" id="s02"><h2><span class="num">02</span>能干什么</h2>
+<p>不用背，看一眼有印象就行——将来你需要哪块，回来查这块。</p>
+<table><tr><th>场景</th><th>它在做什么</th><th>常用库</th></tr>
+<tr><td>数据分析</td><td>几万行 Excel 读进来、算指标、出图</td><td><code>pandas</code> <code>matplotlib</code></td></tr>
+<tr><td>自动化办公</td><td>批量改名、合并表格、生成 Word/PDF</td><td><code>openpyxl</code> <code>python-docx</code></td></tr>
+<tr><td>爬虫</td><td>自动下载网页上的公开数据</td><td><code>requests</code> <code>BeautifulSoup</code></td></tr>
+<tr><td>网站后端</td><td>做接口、存数据、给前端递内容</td><td><code>Flask</code> <code>Django</code> <code>FastAPI</code></td></tr>
+<tr><td>人工智能</td><td>训练模型、图像识别、大模型</td><td><code>PyTorch</code> <code>scikit-learn</code></td></tr>
+<tr><td>小工具</td><td>定时提醒、整理文件、算成绩</td><td>标准库就够</td></tr></table>
+<div class="note"><b>实话：</b>你不需要全都学。选一个你现在就想解决的问题，从它开始。学语言最好的理由，是「我有件事想让它替我干」。</div></section>
+<section class="card" id="s03"><h2><span class="num">03</span>学完能找什么工作</h2>
+<p>先看真相，再看希望。大学四年最怕的不是学不会，是学完了发现方向不对。</p>
+<table><tr><th>方向</th><th>实际做什么</th><th>一句实话</th></tr>
+<tr><td>数据分析</td><td>清洗数据、做报表、给决策找依据</td><td>岗位多，但要会 SQL，也要懂业务</td></tr>
+<tr><td>后端开发</td><td>写接口、做服务、扛并发</td><td>Python 岗比 Java 少，小团队和创业公司更爱用</td></tr>
+<tr><td>测试 / 自动化</td><td>写脚本跑测试、做自动化流程</td><td>门槛相对低，需求稳定，适合当第一份工作</td></tr>
+<tr><td>运维 / 脚本</td><td>部署、监控、处理日志</td><td>和 Linux 绑在一起学，性价比很高</td></tr>
+<tr><td>算法 / AI</td><td>训练模型、调参、做实验</td><td>本科直接进很难，通常要硕士</td></tr>
+<tr><td>爬虫</td><td>抓公开数据、做数据源</td><td>入门容易，但反爬和法律是坑</td></tr></table>
+<div class="note"><b>必须说清楚：</b>Python 是<b>入场券</b>，不是护城河。只会 Python 的人竞争力有限——它得配一个领域（前端、后端、数据、测试）才值钱。<b>语言是工具，你不是去当工具的。</b></div></section>
+<section class="card" id="s04"><h2><span class="num">04</span>装好，让它跑起来</h2>
+<p>四步，十分钟。Windows 举例，Mac 把 <code>python</code> 换成 <code>python3</code>。</p>
+<table>
+<tr><th>第 1 步</th><td>去 <code>python.org</code> 下载 Windows 安装包（认准 3.10 以上）</td></tr>
+<tr><th>第 2 步</th><td>安装第一屏，<b>务必勾上 Add python.exe to PATH</b>（不勾，后面全是麻烦）</td></tr>
+<tr><th>第 3 步</th><td>按 <code>Win + R</code> 输入 <code>cmd</code>，敲 <code>python --version</code>，看到版本号就成了</td></tr>
+<tr><th>第 4 步</th><td>敲 <code>python</code> 进入交互模式（出现 <code>&gt;&gt;&gt;</code>），试下面三行</td></tr></table>
+<pre><code>&gt;&gt;&gt; print("你好，世界")
+你好，世界
+&gt;&gt;&gt; 1 + 1
+2
+&gt;&gt;&gt; exit()</code></pre>
+<p>交互模式适合「试一句」，不适合写程序。真正的程序要写进文件：新建 <code>hello.py</code>，写一行 <code>print("你好")</code>，在 cmd 里 <code>python hello.py</code>。</p>
+<div class="note"><b>三个新手必踩的坑：</b>① 缩进是语法不是排版，四个空格别用 Tab；② 文件名别叫 <code>random.py</code>、<code>json.py</code>，会把自己写的文件当成标准库；③ 报错先看<b>最后一行</b>，那才是真正的原因。</div></section>
+<section class="card" id="s05"><h2><span class="num">05</span>第一行代码：print 和 input</h2>
+<p>程序的两条腿：<b>往外说</b>（print）、<b>往里收</b>（input）。</p>
+<pre><code>print("你好，世界")
+print("咖啡", "拿铁", sep=" + ")      # 自定义分隔
+print("这一行不换行", end="")          # 默认结尾是换行，可以改
+print("，接在后面")
+
+name = input("你叫什么名字？")
+print("你好，" + name)</code></pre>
+<table>
+<tr><th>print</th><td>把东西显示出来。可以一次打多个，用逗号隔开</td></tr>
+<tr><th>input</th><td>停下来等你输入，按回车才算完。<b>拿到的永远是字符串</b></td></tr>
+</table>
+<div class="note"><b>第一个大坑：</b><code>input()</code> 返回的是字符串。想让它当数字用，必须 <code>int(input(...))</code>——不转，等下算钱的时候就是 <code>"3" + "5" = "35"</code>。</div></section>
+<section class="card" id="s6"><h2><span class="num">06</span>变量 · 给数据起个名字</h2>
+<table><tr><th>是什么</th><td>一个名字，指向一个值。名字换内容，值就跟着换。</td></tr><tr><th>怎么写</th><td><code>名字 = 值</code>，不用提前声明类型，Python 自己认。</td></tr><tr><th>和谁搭</th><td>任何东西都能装：数字、文字、列表、函数，甚至是另一个变量。</td></tr></table>
+<pre><code>name = "阿猫"
+age = 18
+height = 1.75
+is_student = True
+
+print(name, age)
+print(type(age))
+print(type(height))
+print(type(is_student))</code></pre><div class="note"><b>输出：</b><code>阿猫 18</code>，然后 <code>&lt;class 'int'&gt;</code>、<code>&lt;class 'float'&gt;</code>、<code>&lt;class 'bool'&gt;</code><br><b>备注：</b>四种最常见的类型：<code>int</code> 整数、<code>float</code> 小数、<code>str</code> 文字、<code>bool</code> 真假。<br><b>命名：</b>小写英文加下划线，<code>total_price</code> 比 <code>tp</code> 好，<code>tp</code> 比 <code>a1</code> 好。三个月后你会感谢现在的自己。</div></section>
+<section class="card" id="s7"><h2><span class="num">07</span>数字与运算 · 让计算机算账</h2>
+<table><tr><th>是什么</th><td>加减乘除、比较大小、逻辑判断，这些符号决定了程序怎么算、怎么比。</td></tr><tr><th>怎么写</th><td>算术 <code>+ - * / // % **</code>；比较 <code>== != &gt; &lt; &gt;= &lt;=</code>；逻辑 <code>and or not</code>。</td></tr><tr><th>和谁搭</th><td>if 判断、循环计数，全靠它。</td></tr></table>
+<pre><code>print(7 + 3, 7 - 3, 7 * 3, 7 / 3)
+print(7 // 3, 7 % 3, 2 ** 10)
+print(10 &gt; 3, 10 == 3)
+print(True and False, True or False, not True)</code></pre><div class="note"><b>输出：</b><code>10 4 21 2.3333...</code> / <code>2 1 1024</code> / <code>True False</code> / <code>False True False</code><br><b>三个符号必记：</b><code>/</code> 永远得小数，<code>//</code> 是整除取整，<code>%</code> 是余数（判断奇偶就靠它）。<br><b>坑：</b><code>0.1 + 0.2</code> 不等于 <code>0.3</code>，是 <code>0.30000000000000004</code>。这不是 Python 的毛病，所有语言都这样——<b>涉及钱，用整数分来算</b>。</div></section>
+<section class="card" id="s8"><h2><span class="num">08</span>字符串 · 文字是怎么拼的</h2>
+<table><tr><th>是什么</th><td>一串文字。单引号双引号都行，两种完全等价。</td></tr><tr><th>怎么写</th><td>拼接 <code>+</code>，格式化 <b>f-string</b>：<code>f"你好 {name}"</code>；切分 <code>split</code>，合并 <code>join</code>。</td></tr><tr><th>和谁搭</th><td>输入、输出、文件、网页——凡是跟人打交道的地方都有它。</td></tr></table>
+<pre><code>s = "咖啡,拿铁,dirty"
+print(len(s))
+print(s.split(","))
+print("-".join(["a", "b", "c"]))
+print(s.upper(), s.lower())
+print(s[0], s[-1])
+print(s[:2], s[5:8])
+print("  空格  ".strip())
+print(f"{'咖啡'} 花了 {32} 元")</code></pre><div class="note"><b>输出：</b><code>11</code> / <code>['咖啡', '拿铁', 'dirty']</code> / <code>a-b-c</code> / <code>咖啡,拿铁,DIRTY 咖啡,拿铁,dirty</code> / <code>咖 y</code> / <code>咖啡 拿铁</code> / <code>空格</code> / <code>咖啡 花了 32 元</code><br><b>备注：</b>字符串<b>不可变</b>——<code>replace</code>、<code>strip</code> 都不改原字符串，而是返回一个新的。要写 <code>s = s.replace(...)</code> 才生效。<br><b>切片</b> <code>s[5:8]</code> 是「从 5 到 8，不含 8」，和 <code>range</code> 一个规矩。</div></section>
+<section class="card" id="s9"><h2><span class="num">09</span>类型转换 · 把「3」变成 3</h2>
+<table><tr><th>是什么</th><td>文字和数字长得像，但不是一回事。转换就是把它们互相翻译。</td></tr><tr><th>怎么写</th><td><code>int()</code> 转整数、<code>float()</code> 转小数、<code>str()</code> 转文字。</td></tr><tr><th>和谁搭</th><td>input、文件、爬下来的数据，进门第一件事就是转。</td></tr></table>
+<pre><code>print("3" + "5")
+print(int("3") + int("5"))
+print(str(3) + str(5))
+print(float("1.5") * 2)
+print(int(3.9))
+# print(int("3.5"))   # 会报错 ValueError</code></pre><div class="note"><b>输出：</b><code>35</code> / <code>8</code> / <code>35</code> / <code>3.0</code> / <code>3</code><br><b>坑：</b><code>int()</code> 不会四舍五入，是<b>直接砍掉小数</b>。<code>int("3.5")</code> 还会报错——得先 <code>float("3.5")</code> 再 <code>int()</code>。<br><b>口诀：</b>从外面进来的数字，一律先转，别信它长什么样。</div></section>
+<section class="card" id="s10"><h2><span class="num">10</span>if 判断 · 让程序做选择</h2>
+<table><tr><th>是什么</th><td>按条件走不同的路。程序所有的「聪明」，都是从这开始的。</td></tr><tr><th>怎么写</th><td><code>if 条件:</code> 换行<b>缩进</b>，可接 <code>elif</code>、<code>else</code>。</td></tr><tr><th>和谁搭</th><td>比较运算符、<code>and or not</code>，还有 <code>in</code>（在不在里面）。</td></tr></table>
+<pre><code>score = 82
+
+if score &gt;= 90:
+    print("A")
+elif score &gt;= 80:
+    print("B")
+else:
+    print("C")
+
+if 60 &lt;= score &lt; 90:          # Python 支持连写
+    print("及格，但还能再高一点")</code></pre><div class="note"><b>输出：</b><code>B</code> 和 <code>及格，但还能再高一点</code><br><b>备注：</b>冒号不能少，缩进不能乱。Python 用缩进划分「谁属于谁」——这是它最不像别的语言、也最像人话的地方。<br><b>常见错：</b>把 <code>==</code> 写成 <code>=</code>，程序不会报错，只会永远为真。</div></section>
+<section class="card" id="s11"><h2><span class="num">11</span>for / while 循环 · 重复做同一件事</h2>
+<table><tr><th>是什么</th><td><code>for</code> 是「对一堆东西逐个来」；<code>while</code> 是「只要条件还成立就一直来」。</td></tr><tr><th>怎么写</th><td><code>for x in 一堆东西:</code>；<code>while 条件:</code>（里面记得改条件，否则死循环）。</td></tr><tr><th>和谁搭</th><td><code>range()</code> 造数字，<code>enumerate()</code> 带序号，<code>break</code> 提前结束，<code>continue</code> 跳过这次。</td></tr></table>
+<pre><code>for i in range(3):
+    print("第", i + 1, "杯")
+
+for i in range(1, 10, 2):        # 起点、终点、步长
+    print(i, end=" ")
+
+names = ["阿猫", "小鱼"]
+for idx, n in enumerate(names):
+    print(idx, n)
+
+n = 0
+while n &lt; 3:
+    n = n + 1
+    if n == 2:
+        continue                  # 跳过这一次
+    print("还剩", n)</code></pre><div class="note"><b>输出：</b>第 1/2/3 杯；<code>1 3 5 7 9</code>；<code>0 阿猫</code>、<code>1 小鱼</code>；然后 <code>还剩 1</code>、<code>还剩 3</code><br><b>备注：</b><code>range(3)</code> 是 <code>0 1 2</code>，<b>不含 3</b>。这个「左闭右开」你会记一辈子——列表下标、切片都是它。</div></section>
+<section class="card" id="s12"><h2><span class="num">12</span>列表 list · 一排格子</h2>
+<table><tr><th>是什么</th><td>有序的一串东西。购物车、成绩表、待办清单，都是它。</td></tr><tr><th>怎么写</th><td><code>[a, b, c]</code>；<code>append</code> 加、<code>remove</code> 删、<code>[0]</code> 取、<code>[a:b]</code> 切。</td></tr><tr><th>和谁搭</th><td><code>len()</code> 长度，<code>sort()</code> 排序，<code>in</code> 判断，<code>for</code> 遍历。</td></tr></table>
+<pre><code>cart = ["手冲", "拿铁", "dirty"]
+cart.append("美式")
+print(cart)
+print(cart[0], cart[-1])
+print(cart[:2])
+print(len(cart))
+
+cart.remove("拿铁")
+print(cart)
+print("dirty" in cart)
+
+nums = [3, 1, 2]
+nums.sort()
+print(nums)</code></pre><div class="note"><b>输出：</b><code>['手冲','拿铁','dirty','美式']</code> / <code>手冲 美式</code> / <code>['手冲','拿铁']</code> / <code>4</code> / <code>['手冲','dirty','美式']</code> / <code>True</code> / <code>[1, 2, 3]</code><br><b>备注：</b>下标从 <b>0</b> 开始，<code>-1</code> 是最后一个。列表<b>可变</b>——<code>sort()</code> 直接改自己，<code>sorted()</code> 返回新的。</div></section>
+<section class="card" id="s13"><h2><span class="num">13</span>元组与集合 · 两个配角</h2>
+<table><tr><th>元组 tuple</th><td>用 <code>( )</code>，<b>不能改</b>。适合「一组固定的值」，比如坐标、一条记录的固定字段。</td></tr><tr><th>集合 set</th><td>用 <code>{ }</code>，<b>自动去重</b>、没有顺序。适合「有哪些人、有哪些标签」。</td></tr><tr><th>和谁搭</th><td>元组能解包，集合能做交集并集。</td></tr></table>
+<pre><code>point = (3, 5)
+x, y = point              # 解包
+print(x, y)
+# point[0] = 9            # 报错：元组不能改
+
+tags = {"咖啡", "咖啡", "猫"}
+print(tags)               # 只剩两个
+print(len(tags))
+a = {1, 2, 3}
+b = {2, 3, 4}
+print(a &amp; b, a | b)       # 交集、并集</code></pre><div class="note"><b>输出：</b><code>3 5</code> / <code>{'咖啡','猫'}</code> / <code>2</code> / <code>{2,3} {1,2,3,4}</code><br><b>备注：</b>新手 90% 的代码只会用到列表和字典，元组和集合是「需要时想起来还有这个」。<b>不知道该用哪个，就用列表。</b></div></section>
+<section class="card" id="s14"><h2><span class="num">14</span>字典 dict · 按名字找东西</h2>
+<table><tr><th>是什么</th><td>一堆「键 → 值」的配对。查起来快，更像真实世界的一条记录。</td></tr><tr><th>怎么写</th><td><code>{"键": 值}</code>；取值 <code>d["键"]</code>，键不存在会报错，用 <code>.get()</code> 更安全。</td></tr><tr><th>和谁搭</th><td><code>for k, v in d.items()</code> 遍历，<code>json</code> 模块天生跟它一家。</td></tr></table>
+<pre><code>coffee = {"name": "手冲", "price": 32}
+
+print(coffee["name"])
+print(coffee.get("stock", 0))     # 没有这个键，返回默认值 0
+
+coffee["price"] = 30
+coffee["stock"] = 10
+
+for k, v in coffee.items():
+    print(k, "=", v)
+
+order = {
+    "user": "阿猫",
+    "items": [{"name": "手冲", "qty": 2}],
+}
+print(order["items"][0]["name"])   # 一层层拆</code></pre><div class="note"><b>输出：</b><code>手冲</code> / <code>0</code> / name=手冲、price=30、stock=10 / <code>手冲</code><br><b>什么时候用字典：</b>需要「用名字找」而不是「按顺序找」——一条记录、一份配置、一个 JSON。<br><b>嵌套：</b>字典里放列表、列表里放字典，是真实数据最常见的形状，从外层往里一层层拆就对了。</div></section>
+<section class="card" id="s15"><h2><span class="num">15</span>函数 def · 把一段逻辑打包</h2>
+<table><tr><th>是什么</th><td>给一段代码起个名字。以后喊名字就能用，还能传参数、拿回结果。</td></tr><tr><th>怎么写</th><td><code>def 名字(参数):</code> + 缩进 + <code>return 结果</code>。</td></tr><tr><th>和谁搭</th><td>默认参数、关键字参数、可变参数，都是它的延伸。</td></tr></table>
+<pre><code>def total(price, qty=1):        # qty 有默认值
+    return price * qty
+
+print(total(32))
+print(total(32, 3))
+print(total(qty=2, price=10))    # 按名字传，顺序无所谓
+
+def greet(name):
+    print(f"欢迎，{name}")
+
+greet("阿猫")
+print(greet("小鱼"))             # 没有 return，结果是 None</code></pre><div class="note"><b>输出：</b><code>32</code> / <code>96</code> / <code>20</code> / <code>欢迎，阿猫</code> / <code>欢迎，小鱼</code> 然后 <code>None</code><br><b>备注：</b><code>return</code> 一旦执行，函数当场结束。没有 <code>return</code> 的函数返回 <code>None</code>——这不是错误，是「只干活、不交货」。<br><b>坑：</b>别用可变对象（列表、字典）当默认参数，它会在多次调用之间被共用。</div></section>
+<section class="card" id="s16"><h2><span class="num">16</span>模块 import · 用别人写好的东西</h2>
+<table><tr><th>是什么</th><td>别人（或标准库）写好的功能包，<code>import</code> 进来就能用。</td></tr><tr><th>怎么写</th><td><code>import 模块</code>、<code>from 模块 import 函数</code>、<code>import 模块 as 别名</code>。</td></tr><tr><th>和谁搭</th><td>第三方库要先装：<code>pip install 名字</code>。</td></tr></table>
+<pre><code>import random
+print(random.randint(1, 6))
+
+from datetime import date
+print(date.today())
+
+import math as m
+print(m.pi)
+
+# 自己写的文件也能当模块：
+# 同目录下建 tools.py，里面写 def hello(): ...
+# import tools
+# tools.hello()</code></pre><div class="note"><b>输出：</b>一个 1 到 6 的随机整数、今天的日期、<code>3.141592653589793</code><br><b>备注：</b>Python 自带几百个标准库，够解决大部分问题；不够时再 <code>pip install</code>。<b>安装失败多半是网络</b>，换国内镜像：<code>pip install -i https://pypi.tuna.tsinghua.edu.cn/simple 名字</code>。</div></section>
+<section class="card" id="s17"><h2><span class="num">17</span>文件读写 · 让数据活过这一次运行</h2>
+<table><tr><th>是什么</th><td>把数据写进硬盘，下次打开还在。变量的命只有一次程序那么长，文件的不一样。</td></tr><tr><th>怎么写</th><td><code>with open(文件名, "w", encoding="utf-8") as f:</code>，<code>w</code> 写、<code>r</code> 读、<code>a</code> 追加。</td></tr><tr><th>和谁搭</th><td><code>json</code> 存结构化数据，<code>csv</code> 存表格。</td></tr></table>
+<pre><code>with open("note.txt", "w", encoding="utf-8") as f:
+    f.write("第一行\n")
+    f.write("第二行\n")
+
+with open("note.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        print(line.strip())
+
+import json
+data = {"name": "阿猫", "scores": [90, 85]}
+with open("data.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)</code></pre><div class="note"><b>输出：</b><code>第一行</code> / <code>第二行</code>，同时生成 <code>note.txt</code> 和 <code>data.json</code><br><b>三个要点：</b>① <code>with</code> 会自动关文件，比手动 <code>close()</code> 安全；② <code>encoding="utf-8"</code> 不写，Windows 上中文可能乱码；③ <code>"w"</code> 会<b>清空原文件</b>，想保留旧内容用 <code>"a"</code>。</div></section>
+<section class="card" id="s18"><h2><span class="num">18</span>异常 try · 出错但不崩</h2>
+<table><tr><th>是什么</th><td>有些错误没法预防（用户乱输、文件不在、网断了），<code>try</code> 让你接住它。</td></tr><tr><th>怎么写</th><td><code>try:</code> 放可能出错的，<code>except 错误类型:</code> 放补救。</td></tr><tr><th>和谁搭</th><td><code>finally</code> 一定执行，<code>raise</code> 主动抛错。</td></tr></table>
+<pre><code>try:
+    n = int(input("输入一个数字："))
+    print(10 / n)
+except ValueError:
+    print("这不是数字")
+except ZeroDivisionError:
+    print("不能除以 0")
+else:
+    print("一切正常")
+finally:
+    print("不管怎样都会执行")</code></pre><div class="note"><b>输出：</b>输入 <code>abc</code> → 这不是数字；输入 <code>0</code> → 不能除以 0；输入 <code>5</code> → <code>2.0</code> 和 一切正常；最后都会打印「不管怎样都会执行」<br><b>备注：</b>异常不是「错误处理」，是<b>「允许失败」</b>。真实程序里，用户什么都敢输，你必须接得住。</div></section>
+<section class="card" id="s19"><h2><span class="num">19</span>类 class · 把数据和操作打包（了解即可）</h2>
+<table><tr><th>是什么</th><td>一个模板，用来批量生产「有数据、也有方法」的东西。</td></tr><tr><th>怎么写</th><td><code>class 名字:</code> + <code>__init__</code> 初始化 + 普通方法。</td></tr><tr><th>和谁搭</th><td>继承、组合，等你写出第三个类再研究。</td></tr></table>
+<pre><code>class Coffee:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def label(self):
+        return f"{self.name} ¥{self.price}"
+
+c = Coffee("手冲", 32)
+print(c.label())</code></pre><div class="note"><b>输出：</b><code>手冲 ¥32</code><br><b>备注：</b><code>self</code> 就是「这个东西自己」。<b>新手别急着学类</b>——函数能解决的先用函数。等你发现「数据和处理它的函数总是成对出现」，再来用类，那时你才看得懂它好在哪。</div></section>
+<section class="card" id="s20"><h2><span class="num">20</span>列表推导式 · 一行顶一个循环</h2>
+<table><tr><th>是什么</th><td>用一种更短的方式，把「对每个元素做点什么」写在一行里。</td></tr><tr><th>怎么写</th><td><code>[表达式 for x in 列表 if 条件]</code>。</td></tr><tr><th>和谁搭</th><td>过滤、转换、算平方，天天用。</td></tr></table>
+<pre><code>nums = [1, 2, 3, 4, 5]
+
+squares = [n * n for n in nums]
+evens   = [n for n in nums if n % 2 == 0]
+labels  = [f"第{i}名" for i in range(1, 4)]
+
+print(squares)
+print(evens)
+print(labels)</code></pre><div class="note"><b>输出：</b><code>[1, 4, 9, 16, 25]</code> / <code>[2, 4]</code> / <code>['第1名','第2名','第3名']</code><br><b>备注：</b>推导式是「语法糖」——它和 for 循环做的事一模一样，只是更短。<b>难读懂的时候就拆回循环</b>，别为了短牺牲可读性。</div></section>
+<section class="card" id="s21"><h2><span class="num">21</span>常用标准库 · 装了就能用，不用 pip</h2>
+<table><tr><th>math</th><td>开方、取整、圆周率。<code>sqrt</code> <code>ceil</code> <code>floor</code> <code>pi</code></td></tr><tr><th>random</th><td>随机数、随机抽。<code>randint</code> <code>choice</code> <code>shuffle</code></td></tr><tr><th>datetime</th><td>日期时间。<code>date.today()</code> <code>datetime.now()</code></td></tr><tr><th>os</th><td>和操作系统打交道：路径、文件、环境变量。<code>os.getcwd()</code> <code>os.path.exists</code></td></tr><tr><th>json</th><td>读写 JSON。<code>dumps</code> <code>loads</code> <code>dump</code> <code>load</code></td></tr></table>
+<pre><code>import math, random, datetime, os, json
+
+print(math.sqrt(16), math.ceil(3.2), math.floor(3.8))
+print(random.choice(["石头", "剪刀", "布"]))
+print(datetime.date.today())
+print(os.getcwd())
+print(json.dumps({"a": 1}, ensure_ascii=False))</code></pre><div class="note"><b>输出：</b><code>4.0 4 3</code> / 随机一个 / 今天的日期 / 当前目录 / <code>{"a": 1}</code><br><b>备注：</b>这五个库能解决你 80% 的「小工具」需求。<b>写之前先想想：标准库有没有现成的？</b>十有八九有。</div></section>
+<section class="card" id="s22"><h2><span class="num">22</span>读懂报错 · 这是最重要的技能</h2>
+<p>程序崩了不可怕，读不懂报错才可怕。看这个：</p>
+<pre><code>Traceback (most recent call last):
+  File "demo.py", line 3, in &lt;module&gt;
+    print(cart[3])
+IndexError: list index out of range</code></pre>
+<p><b>从下往上读</b>：最后一行是「什么错」，中间是「哪一行」，最上面是「怎么走到这儿的」。</p>
+<table>
+<tr><th>错误类型</th><th>人话</th><th>常见原因</th></tr>
+<tr><td><code>SyntaxError</code></td><td>语法不对</td><td>少冒号、括号不配对、中文标点</td></tr>
+<tr><td><code>IndentationError</code></td><td>缩进不对</td><td>空格和 Tab 混用</td></tr>
+<tr><td><code>NameError</code></td><td>这名字我不认识</td><td>变量名拼错、用之前没定义</td></tr>
+<tr><td><code>TypeError</code></td><td>类型对不上</td><td><code>"3" + 5</code>、函数少传参数</td></tr>
+<tr><td><code>ValueError</code></td><td>值不对</td><td><code>int("abc")</code></td></tr>
+<tr><td><code>IndexError</code></td><td>下标越界</td><td>列表只有 3 个，你取了第 4 个</td></tr>
+<tr><td><code>KeyError</code></td><td>字典里没这个键</td><td>拼错键名，改用 <code>.get()</code></td></tr>
+<tr><td><code>AttributeError</code></td><td>这东西没这个功能</td><td>列表用了 <code>.get()</code></td></tr>
+</table>
+<div class="note"><b>排查三步：</b>① 看最后一行是什么错误；② 看它指的第几行；③ 把那一行的变量 <code>print</code> 出来看看它到底是什么。<b>90% 的 bug，打印一下就好了。</b></div></section>
+<section class="card" id="s23"><h2><span class="num">23</span>写给人看的代码</h2>
+<p>代码是写给下一个读它的人看的，而那个人大概率是三个月后的你。</p>
+<table>
+<tr><th>缩进</th><td>统一 4 个空格（别用 Tab，编辑器里设置一下）</td></tr>
+<tr><th>命名</th><td>变量/函数用 <code>小写下划线</code>，类用 <code>大驼峰</code>，常量用 <code>全大写</code></td></tr>
+<tr><th>空行</th><td>函数之间空两行，逻辑段落之间空一行</td></tr>
+<tr><th>注释</th><td>说「为什么」，不说「是什么」——<code>i += 1  # 计数</code> 这种注释是废话</td></tr>
+</table>
+<pre><code># 不好
+def f(a, b):
+    return a * b * 0.9
+
+# 好
+def final_price(unit_price, quantity):
+    """按九折算出总价。"""
+    return unit_price * quantity * 0.9</code></pre>
+<div class="note"><b>一个检验方法：</b>把你的代码念出来。能念成人话，就是好代码；念出来像咒语，就该改了。</div></section>
+<section class="card" id="s24"><h2><span class="num">24</span>动手：写一个「记账本」</h2>
+<p>把前面二十多节串起来，做一个真能用的小东西：<b>命令行记账本</b>——记一笔、看清单、算合计，关掉再打开数据还在。</p>
+<table>
+<tr><th>需求</th><td>① 记一笔（名称 + 金额）② 看全部账目和合计 ③ 退出时自动保存</td></tr>
+<tr><th>数据</th><td>一条记录一个字典，全部记录一个列表：<code>[{"item": "咖啡", "cost": 32}]</code></td></tr>
+<tr><th>存哪</th><td>同目录的 <code>records.json</code>，用 <code>json</code> 读写</td></tr>
+<tr><th>用到</th><td>字典、列表、函数、while、if、文件、异常</td></tr></table>
+<pre><code>import json
+import os
+
+FILE = "records.json"
+
+def load():
+    if not os.path.exists(FILE):
+        return []
+    with open(FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def save(records):
+    with open(FILE, "w", encoding="utf-8") as f:
+        json.dump(records, f, ensure_ascii=False, indent=2)
+
+def main():
+    records = load()
+    while True:
+        cmd = input("1 记一笔 / 2 看账本 / 3 退出：")
+
+        if cmd == "1":
+            item = input("买了什么：")
+            cost = float(input("多少钱："))
+            records.append({"item": item, "cost": cost})
+            save(records)
+            print("记下了。")
+
+        elif cmd == "2":
+            total = 0
+            for r in records:
+                print(f'{r["item"]}   ¥{r["cost"]}')
+                total = total + r["cost"]
+            print(f"合计 ¥{total}")
+
+        elif cmd == "3":
+            break
+
+main()</code></pre>
+<h3>这段代码在讲什么</h3>
+<table>
+<tr><th>load / save</th><td>一对读写函数。读之前先问「文件在不在」，避免第一次运行就崩</td></tr>
+<tr><th>with open(...)</th><td>结束时自动关文件，比手动 <code>close()</code> 安全</td></tr>
+<tr><th>ensure_ascii=False</th><td>让 json 里存中文本身，而不是 <code>\u5496</code> 这种转义</td></tr>
+<tr><th>while True + break</th><td>菜单程序的经典写法：一直转，直到你喊停</td></tr>
+<tr><th>f'{r["item"]}'</th><td>外层单引号、内层双引号，字典取值不用转义</td></tr></table>
+<div class="note"><b>练手方向（自己改，别问我要答案）：</b>加一个「删除第 n 笔」；加「按分类统计」；把金额改成必须大于 0，输了就重来。<b>你改得动，才算真的看懂了。</b></div></section>
+<section class="card" id="s25"><h2><span class="num">25</span>独立项目：写一个「单词本」</h2>
+<p>这一节<b>没有完整代码</b>。给你需求、验收标准、和卡住时的提示。自己写出来，比抄十遍有用。</p>
+<h3>要做什么</h3>
+<table>
+<tr><th>功能</th><td>① 添加单词（英文 + 中文）② 开始复习 ③ 退出</td></tr>
+<tr><th>复习规则</th><td>随机抽 5 个（不够就有几个抽几个），显示中文，让你输入英文</td></tr>
+<tr><th>判分</th><td>答对 +1，答错显示正确答案；结束打印「本轮 5 题，答对 3 题」</td></tr>
+<tr><th>数据</th><td>存 <code>words.json</code>，结构自己定——建议 <code>[{"en": "apple", "cn": "苹果"}]</code></td></tr>
+<tr><th>容错</th><td>单词本为空时开始复习，不能崩，要提示「还没有单词」</td></tr></table>
+<h3>验收标准（做到了才算完成）</h3>
+<table>
+<tr><th>1</th><td>关掉程序再打开，之前加的单词还在</td></tr>
+<tr><th>2</th><td>输入 Apple / APPLE 也算对</td></tr>
+<tr><th>3</th><td>随便乱输菜单数字，程序不崩，能回到菜单</td></tr>
+<tr><th>4</th><td>至少有 3 个函数，每个不超过 25 行</td></tr></table>
+<h3>卡住时的提示（按顺序看，别一次看完）</h3>
+<table>
+<tr><th>提示 1</th><td>随机抽：<code>random.sample(列表, 5)</code>，但列表不足 5 个会报错——先判断长度</td></tr>
+<tr><th>提示 2</th><td>比较答案：<code>你输入的.strip().lower() == 正确答案.lower()</code></td></tr>
+<tr><th>提示 3</th><td>把「加单词」「复习」「存盘」各写成一个函数，<code>main()</code> 只放菜单循环</td></tr>
+<tr><th>提示 4</th><td>读文件时用 <code>try/except</code> 包住——json 文件被改坏了，程序要能活下来</td></tr></table>
+<div class="note"><b>做完之后：</b>加一个「错题本」，答错的单词单独存一份，下次优先复习。这一小步，就是所有背单词软件的雏形。</div></section>
+<section class="card" id="s26"><h2><span class="num">26</span>学完之后往哪走</h2>
+<table>
+<tr><th>阶段</th><th>做什么</th><th>达到什么算过关</th></tr>
+<tr><td>第 1 周</td><td>把这 27 节敲一遍，两个项目各写一次</td><td>不看教程能默写出 for、if、def 的骨架</td></tr>
+<tr><td>第 2–4 周</td><td>用 pandas 处理一份自己的成绩表 / 账单</td><td>能读出 Excel、算出汇总、存回文件</td></tr>
+<tr><td>第 2–3 个月</td><td>选一个方向：数据、后端、还是自动化</td><td>做出一个能给别人用的东西（哪怕只有你用）</td></tr>
+<tr><td>之后</td><td>学 Git、学 Linux、读别人的源码</td><td>能独立查文档解决一个没见过的报错</td></tr></table>
+<h3>几个真值得收藏的地方</h3>
+<table>
+<tr><th>官方文档（中文）</th><td><code>docs.python.org/zh-cn/3/</code> —— 所有答案的源头</td></tr>
+<tr><th>Python Tutor</th><td><code>pythontutor.com</code> —— 一行一行看变量怎么变，新手神器</td></tr>
+<tr><th>菜鸟教程 / 廖雪峰</th><td>速查可以，<b>别当唯一教材</b>，容易学成「只会抄例子」</td></tr>
+<tr><th>动手题</th><td>洛谷入门题、LeetCode 简单题，每天一道就够</td></tr></table>
+<div class="note"><b>一句提醒：</b>教程看得再多，都不如把一个自己的小工具跑起来。学习编程的转折点，永远是「我第一次写了个别人真的在用的东西」。</div></section>
+<section class="card" id="s27"><h2><span class="num">27</span>结语</h2>
+<p>Python 最好的地方，不是它简单，是它<b>不拦着你</b>。</p>
+<p>你脑子里的一个念头——「这个表格每天手动整理好烦」——从念头到跑起来，中间只隔二三十行代码。这种「想到就能做到」的爽感，是很多语言给不了的。</p>
+<p>但它也有代价。写起来容易，意味着<b>写烂也容易</b>：变量名乱起、一个函数两百行、复制粘贴三遍。三个月后你回来改，会想掐死现在的自己。所以从今天开始养成三个习惯——</p>
+<div class="note"><b>三个忠告：</b><br>① <b>命名比注释重要。</b>叫 <code>total_price</code> 的变量不需要注释；叫 <code>a1</code> 的变量，注释也救不了。<br>② <b>先让它跑，再让它对，最后让它好看。</b>顺序反了，你会在第一行就卡死。<br>③ <b>每学一个点，立刻用它做点废物。</b>一个只会打印九九乘法表的下午，比看三小时视频有用。</div>
+<p>最后一句：<b>语言是工具，不是身份。</b>你不是「一个学 Python 的人」，你是「一个想做出点东西的人」——Python 只是你现在手里最顺手的那把。</p>
+<p style="text-align:right;color:#7dd3fc;">—— 猫 和 鱼</p></section>
+
+                <p style="margin-top:34px;"><a class="breadcrumb" href="index.html">← 回到语言目录</a></p>
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">Python · 2026-10-22 修订</div>
+            <div>语言学习项目 · 第一门语言</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">还缺点什么？告诉我，我补。</div>
+        </footer>
+
+        <script>
+        (function () {
+            var toc = document.querySelector(".toc");
+            var secs = document.querySelectorAll("main section.card");
+            for (var i = 0; i < secs.length; i++) {
+                if (!secs[i].id) continue;
+                var h2 = secs[i].querySelector("h2");
+                if (!h2) continue;
+                var clone = h2.cloneNode(true);
+                var numEl = clone.querySelector(".num");
+                var num = numEl ? numEl.textContent : "";
+                if (numEl) clone.removeChild(numEl);
+                var label = (num ? num + " " : "") + clone.textContent.trim();
+                var a = document.createElement("a");
+                a.href = "#" + secs[i].id;
+                a.textContent = label;
+                a.title = label;
+                a.style.cssText = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+                toc.appendChild(a);
+            }
+            var bar = document.createElement("div");
+            bar.className = "progress";
+            document.body.appendChild(bar);
+            window.addEventListener("scroll", function () {
+                var el = document.documentElement;
+                var max = el.scrollHeight - el.clientHeight;
+                bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+            });
+        })();
+        </script>
+    </body>
+</html>
