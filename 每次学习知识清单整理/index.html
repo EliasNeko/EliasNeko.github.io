@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>知识清单 · 总目录 · 龙潜猫隐和小鱼的个人class</title>
+        <link rel="stylesheet" href="lesson.css">
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">龙潜猫隐和小鱼的个人class · 知识清单</p>
+            <p class="device" id="device">正在识别设备…</p>
+            <h1>一周一课，都在这儿</h1>
+            <p class="sub">每学完一次，就多一期。点开任意一期，可以左右翻页。</p>
+
+            <div class="meta">
+                <span>期数 <b id="stat-count">0</b></span>
+                <span>知识点 <b id="stat-points">0</b></span>
+                <span>踩过的坑 <b id="stat-pits">0</b></span>
+            </div>
+
+            <p class="series">基础篇常年置顶 · 一期一期往下读 · 键盘 ← → 可以翻页</p>
+        </header>
+
+        <div class="idx-wrap">
+
+            <a class="kw-banner" href="关键词.html">
+                <span class="ico">⌕</span>
+                <span>卡住了？查 <b>关键词词典</b> —— <code>&lt;title&gt; 是什么意思</code>、<code>flex</code>、<code>querySelector</code>，一次只讲一个词。</span>
+                <span class="go">去查 →</span>
+            </a>
+
+            <div class="idx-tools">
+                <div class="idx-search">
+                    <span class="icon">⌕</span>
+                    <input id="idx-search" type="text" placeholder="搜期号、日期、标题或标签…" autocomplete="off">
+                </div>
+                <p class="idx-hint">共 <span id="stat-count-2">0</span> 期 · 按时间顺序</p>
+            </div>
+
+            <p class="idx-sec">学习清单</p>
+            <div class="idx-grid" id="idx-grid"></div>
+
+            <p class="idx-sec">我们的项目</p>
+            <div class="idx-grid" id="idx-projects"></div>
+
+            <div class="idx-empty" id="idx-empty" style="display:none;">
+                没有找到匹配的内容，换个关键词试试。
+            </div>
+
+        </div>
+
+        <footer>
+            <div class="stamp">总目录 · 2026-10-21 建</div>
+            <div>小鱼 🐟 与 龙潜猫隐 · 一起写的</div>
+            <div style="margin-top:6px; font-size:12px;">新增一期：在 lessons.js 的 LESSONS 里加一条，全站自动更新</div>
+        </footer>
+
+        <script src="lessons.js"></script>
+        <script>
+    renderIndex();
+    renderDevice("device");
+    var c2 = document.getElementById("stat-count-2");
+    if (c2) c2.textContent = LESSONS.filter(function (l) { return l.kind !== "base"; }).length;
+  </script>
+
+        </body>
+    </html>

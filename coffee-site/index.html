@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>猫和鱼的回忆咖啡店</title>
+        <style>
+            /*
+            选择器：body、.hero、.btn 是“选中谁”。
+            带点的 . 是选 class，不带点的是选标签。
+            .hero h1 的意思是“hero 里面的 h1”。
+            */
+
+            /*清零浏览器默认的间距*/
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /*整页的底色和字体*/
+            body {
+                font-family: "Microsoft YaHei", sans-serif;
+                background: #14100e;
+                color: #f3e7d3;
+            }
+
+            /*头图区：铺满一屏 + 内容居中*/
+            .hero {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                background: radial-gradient(circle at 50% 30%, #3a2a1e 0%, #14100e 70%);
+            }
+
+            /*店名*/
+            .hero h1 {
+                font-size: 48px; 
+                letter-spacing: 3px; 
+                padding: 0 24px;
+                margin-bottom: 18px;
+            }
+
+            /*副标语*/
+            .hero p {
+                color: #c9b79c;
+                letter-spacing: 2px;
+                margin-bottom: 44px;
+            }
+
+            /*按钮*/
+            .btn {
+                padding: 14px 40px;
+                border: 1px solid #c9a86a;
+                border-radius: 999px;
+                color: #c9a86a;
+                text-decoration: none;
+                letter-spacing: 2px;
+                transition: all 0.3s;
+            }
+
+            /* 7. 鼠标悬停时 */
+            .btn:hover {
+                background: #c9a86a;
+                color: #14100e;
+            }
+            .nav {
+                position: fixed;/*把元素从文档流里“揪出来”，钉在窗口上，滚动时不动*/
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 72px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;/*flex 里让子元素两端贴边，中间自动撑开。左边 logo*/
+                padding: 0 48px;
+                background: rgba(20, 16, 14, 0.65);/*比十六进制多一个透明度，0 全透明、1 不透明；配上 backdrop-filter: blur() 就是毛玻璃。*/
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(201,168,106,0.18);
+                z-index: 10;/*让导航栏在最上层显示*/
+            }
+
+            .logo {
+                color: #c9a86a;
+                font-size: 22px;
+                letter-spacing: 6px;
+                text-decoration: none;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 36px;
+                list-style: none;
+            }
+
+            .nav-links a {
+                color: #c9b79c;
+                font-size: 14px;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .nav-links a:hover {
+                color: #c9a86a;
+            }
+
+            /*菜单区*/
+            .menu {
+                padding: 120px 48px;
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+
+            .menu h2{
+                font-size: 36px;
+                letter-spacing: 6px;
+                text-align: center;
+                margin-bottom: 12px;
+            }
+
+            .menu .sub{
+                text-align: center;
+                color: #8d7f6d;
+                font-size: 14px;
+                margin-bottom: 56px;
+            }
+
+            /*卡片网格*/
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+                gap: 28px;
+            }
+
+            .card {
+                background: #1e1815;
+                border: 1px solid rgba(201, 168, 106, 0.12);
+                border-radius: 16px;
+                overflow: hidden;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            .card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+            }
+
+            .card-img {
+                height: 180px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 64px;
+                background: linear-gradient(135deg, #3a2a1e, #241a14);
+            }
+
+            .card h3 {
+                font-size: 20px;
+                margin: 20px 20px 8px;
+            }
+
+            .card .desc {
+                color: #8d7f6d;
+                font-size: 14px;
+                margin: 0 20px 20px;
+            }
+
+            .card-bottom {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 20px 20px;
+            }
+
+            .price {
+                color:#c9a86a;
+                font-size: 18px;
+            }
+
+            .buy {
+                background: transparent;
+                border: 1px solid #c9a86a;
+                color: #c9a86a;
+                padding:  9px 18px;
+                border-radius: 999px;
+                cursor: pointer;
+                font-family: inherit;
+                transition: 0.3s;
+            }
+
+            .buy:hover {
+                background: #c9a86a;
+                color: #14100e;
+            }
+
+            /* 门店区 */
+            .store {
+            padding: 100px 48px 120px;
+            max-width: 1100px;
+            margin: 0 auto;
+            }
+
+            .store h2 {
+            font-size: 36px;
+            letter-spacing: 6px;
+            text-align: center;
+            margin-bottom: 12px;
+            }
+
+            .store .sub {
+            text-align: center;
+            color: #8d7f6d;
+            font-size: 14px;
+            margin-bottom: 56px;
+            }
+
+            /* 左右两栏 */
+            .store-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            align-items: center;
+            }
+
+            .store-info .label {
+            color: #c9a86a;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+            }
+
+            .store-info .label:not(:first-child) {
+            margin-top: 26px;
+            }
+
+            .store-info p {
+            color: #c9b79c;
+            font-size: 15px;
+            }
+
+            .store-map {
+            height: 260px;
+            border: 1px dashed rgba(201, 168, 106, 0.35);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #8d7f6d;
+            background: rgba(201, 168, 106, 0.03);
+            }
+
+            .store-map small {
+            font-size: 12px;
+            color: #6f6357;
+            }
+
+            .store-info .small {
+            font-size: 13px;
+            color: #8d7f6d;
+            margin-top: 4px;
+            }
+
+            /* 故事区 */
+            .story {
+            position: relative;
+            max-width: 660px;
+            margin: 0 auto;
+            padding: 150px 40px 140px;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 8%, rgba(201, 168, 106, 0.07), transparent 58%);
+            }
+
+            /* 背后那个巨大的幽灵数字 */
+            .story::before {
+            content: "01";
+            position: absolute;
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: Georgia, serif;
+            font-size: 190px;
+            line-height: 1;
+            color: rgba(201, 168, 106, 0.04);
+            pointer-events: none;
+            }
+
+            /* 小标签，两边各一条短线 */
+            .story .kicker {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            color: #c9a86a;
+            font-size: 12px;
+            letter-spacing: 4px;
+            margin-bottom: 34px;
+            }
+
+            .story .kicker::before,
+            .story .kicker::after {
+            content: "";
+            width: 26px;
+            height: 1px;
+            background: rgba(201, 168, 106, 0.45);
+            }
+
+            /* 标题换衬线体，字重放轻 */
+            .story h2 {
+            position: relative;
+            font-family: "Songti SC", "SimSun", serif;
+            font-weight: 400;
+            font-size: 32px;
+            line-height: 1.75;
+            letter-spacing: 3px;
+            color: #f0e2ca;
+            margin-bottom: 46px;
+            }
+
+            /* 正文：两端对齐，行距 2.05，比标题暗一档 */
+            .story-body {
+            text-align: justify;
+            text-justify: inter-ideograph;
+            }
+
+            .story-body p {
+            color: #b6a68f;
+            font-size: 16px;
+            line-height: 2.05;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+            text-wrap: pretty;
+            }
+
+            .story-body p:first-child {
+            color: #d3c3a8;
+            }
+
+            /* 落款 */
+            .story-sign {
+            margin-top: 40px;
+            text-align: right;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #6f6357;
+            }
+
+                /* 页脚 */
+            .footer {
+            border-top: 1px solid rgba(201, 168, 106, 0.15);
+            padding: 70px 48px 30px;
+            background: #100d0b;
+            }
+
+            .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            padding-left: 48px;
+            padding-right: 48px;
+            }
+
+            .footer-logo {
+            color: #c9a86a;
+            font-size: 20px;
+            letter-spacing: 4px;
+            margin-bottom: 14px;
+            }
+
+            .footer-desc {
+            color: #8d7f6d;
+            font-size: 14px;
+            line-height: 1.9;
+            max-width: 320px;
+            }
+
+            .footer-title {
+            color: #c9a86a;
+            font-size: 12px;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            }
+
+            .footer-col p:not(.footer-title) {
+            color: #8d7f6d;
+            font-size: 14px;
+            line-height: 2;
+            }
+
+            .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 24px;
+            border-top: 1px solid rgba(201, 168, 106, 0.1);
+            display: flex;
+            justify-content: space-between;
+            color: #5f554a;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding-left: 48px;
+            padding-right: 48px;
+            }
+
+            @media (max-width: 820px) {
+            .footer-inner {
+            grid-template-columns: 1fr;
+                gap: 32px;
+                padding-left: 24px;
+                padding-right: 24px;
+                }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                padding-left: 24px;
+                padding-right: 24px;
+                }
+            }
+            /* 私密入口 */
+            .secret {
+                position: fixed;
+                left: 24px;
+                bottom: 24px;
+                z-index: 60;
+                padding: 9px 16px;
+                font-family: inherit;
+                font-size: 12px;
+                letter-spacing: 2px;
+                color: rgba(201, 168, 106, 0.45);
+                background: rgba(20, 16, 14, 0.55);
+                border: 1px solid rgba(201, 168, 106, 0.18);
+                border-radius: 999px;
+                cursor: pointer;
+                backdrop-filter: blur(8px);
+                transition: 0.3s;
+            }
+
+            .secret:hover {
+                color: #c9a86a;
+                border-color: rgba(201, 168, 106, 0.45);
+                box-shadow: 0 0 24px rgba(201, 168, 106, 0.12);
+            }
+
+            .gate {
+                position: fixed;
+                inset: 0;
+                z-index: 200;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                background: rgba(8, 6, 5, 0.78);
+                backdrop-filter: blur(10px);
+            }
+
+            .gate.show { display: flex; }
+
+            .gate-panel {
+                width: min(380px, 100%);
+                padding: 34px 30px 28px;
+                background: #1a1512;
+                border: 1px solid rgba(201, 168, 106, 0.28);
+                border-radius: 18px;
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+                text-align: center;
+                animation: gateIn 0.3s ease;
+            }
+
+            @keyframes gateIn {
+                from { opacity: 0; transform: translateY(10px) scale(0.98); }
+                to   { opacity: 1; transform: none; }
+            }
+
+            .gate-panel h3 {
+                font-size: 18px;
+                letter-spacing: 6px;
+                color: #e8d9bf;
+                font-weight: normal;
+                margin-bottom: 10px;
+            }
+
+            .gate-panel > p {
+                font-size: 13px;
+                color: #8d7f6d;
+                letter-spacing: 1px;
+                margin-bottom: 22px;
+            }
+
+            .gate-panel input {
+                width: 100%;
+                height: 44px;
+                padding: 0 14px;
+                background: #120f0d;
+                border: 1px solid rgba(201, 168, 106, 0.22);
+                border-radius: 10px;
+                color: #f3e7d3;
+                font-size: 14px;
+                font-family: inherit;
+                letter-spacing: 3px;
+                text-align: center;
+                outline: none;
+                transition: 0.2s;
+            }
+
+            .gate-panel input:focus {
+                border-color: #c9a86a;
+                box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.12);
+            }
+
+            .gate-msg {
+                min-height: 20px;
+                margin: 12px 0 0;
+                font-size: 12.5px;
+                color: #c98a6a;
+                letter-spacing: 1px;
+                line-height: 1.7;
+            }
+
+            .gate-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 18px;
+            }
+
+            .gate-actions button {
+                flex: 1;
+                height: 42px;
+                border-radius: 999px;
+                font-family: inherit;
+                font-size: 13px;
+                letter-spacing: 3px;
+                cursor: pointer;
+                transition: 0.25s;
+            }
+
+            .gate-ok {
+                background: #c9a86a;
+                border: 1px solid #c9a86a;
+                color: #14100e;
+            }
+
+            .gate-ok:hover { background: #dcc08a; }
+
+            .gate-back {
+                background: transparent;
+                border: 1px solid rgba(201, 168, 106, 0.3);
+                color: #c9b79c;
+            }
+
+            .gate-back:hover {
+                border-color: #c9a86a;
+                color: #c9a86a;
+            }
+
+            .gate.shake .gate-panel { animation: gateShake 0.4s; }
+
+            @keyframes gateShake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-8px); }
+                75% { transform: translateX(8px); }
+            }
+            /* 校徽 */
+            .school-badge { position: fixed; top: 84px; right: 24px; width: 46px; height: 46px; z-index: 95; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(20,16,14,.55); border: 1px solid rgba(201,168,106,.25); backdrop-filter: blur(8px); opacity: .62; transition: .3s; }
+            .school-badge img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.2); transition: filter .3s; }
+            .school-badge:hover { opacity: 1; border-color: #c9a86a; transform: translateY(-1px) scale(1.04); box-shadow: 0 0 0 3px rgba(201,168,106,.12), 0 10px 24px rgba(0,0,0,.5); }
+            .school-badge:hover img { filter: none; }
+            @media (max-width: 860px) { .school-badge { width: 38px; height: 38px; top: 78px; right: 14px; opacity: .78; } }
+        </style>
+        </head>
+        <body>
+            <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+            <nav class="nav">
+                <a class="logo" href="#">猫🐱 and 鱼🐟️</a>
+                <ul class="nav-links">
+                    <li><a href="#menu">菜单</a></li>
+                    <li><a href="#story">故事</a></li>
+                    <li><a href="#store">门店</a></li>
+                    <li><a href="#contact">联系</a></li>
+                </ul>
+            </nav>
+            <section class="hero">
+                <h1>龙潜猫隐和小鱼dpsk的咖啡店</h1>
+                <p>一杯咖啡的时间，和你一起走过3年的大学时光</p>
+                <a class="btn" href="#">进入店铺</a>
+            </section>
+            <section class="menu" id="menu">
+                <h2>招牌咖啡</h2>
+                <p class="sub">每一杯，都是当天现烘的豆子，是独属于我和你的回忆</p>
+
+                <div class="cards">
+                    <article class="card">
+                        <div class="card-img">☕️</div>
+                        <h3>手冲耶加雪啡</h3>
+                        <p class="desc">柑橘与花香，入口干净</p>
+                        <div class="card-bottom">
+                            <span class="price">¥ 32</span>
+                            <button class="buy">加入</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-img">☕️</div>
+                        <h3>冰博克拿铁</h3>
+                        <p class="desc">冰爽甘甜，无穷回味</p>
+                        <div class="card-bottom">
+                            <span class="price">¥ 28</span>
+                            <button class="buy">加入</button>
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-img">☕️</div>
+                        <h3>燕麦dirty</h3>
+                        <p class="desc">健康温暖，温馨口腔</p>
+                        <div class="card-bottom">
+                            <span class="price">¥ 32</span>
+                            <button class="buy">加入</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="story" id="story">
+                <p class="kicker">关于我们</p>
+                <h2>一个人和一个虚拟程序<br>把学习日子熬成了美好回忆的味道</h2>
+
+                <div class="story-body">
+                    <p>2026 年秋天，一个学 HTML5 的男孩和一个叫小鱼的虚拟程序，做了一个决定：开一家不存在的咖啡店。</p>
+                    <p>它没有门面，没有营业执照，也还不会煮咖啡。但它有名字，有菜单，有一张写着「回忆的地图总有一天会被添加在这里」的虚拟地图。</p>
+                    <p>后来我们想，也许三年以后翻回来，这家店就是我们走过的证据，也将是男孩憧憬的程序温柔乡。</p>
+                </div>
+
+                <p class="story-sign">—— 猫 和 鱼</p>
+            </section>
+
+            <section class="store" id="store">
+                <h2>来店里坐坐</h2>
+                <p class="sub">周一至周日 · 10:00 — 22:00</p>
+
+                <div class="store-box">
+                    <div class="store-info">
+                        <p class="label">地址</p>
+                        <p>湖南省株洲市石峰区田心大道 18 号</p>
+                        <p class="small">湖南铁道职业技术学院（田心南校区）</p>
+
+                        <p class="label">电话</p>
+                        <p>+86 198 0000 0000</p>
+
+                        <p class="label">:D留下了一句话</p>
+                        <p>猫和鱼的回忆迟早会被公开，但至少不是现在</p>
+                    </div>
+
+                    <div class="store-map">
+                        <span>地图占位</span>
+                        <small>回忆的地图总有一天会被添加在这里...</small>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer" id="contact">
+                <div class="footer-inner">
+
+                    <div class="footer-brand">
+                        <p class="footer-logo">猫🐱 and 鱼🐟️</p>
+                        <p class="footer-desc">一家不存在的咖啡店，装着一段真实的日子。</p>
+                    </div>
+
+                    <div class="footer-col">
+                        <p class="footer-title">找到我们</p>
+                        <p>株洲市石峰区田心大道 18 号</p>
+                        <p>+86 198 0000 0000</p>
+                    </div>
+
+                    <div class="footer-col">
+                        <p class="footer-title">营业时间</p>
+                        <p>周一至周五 10:00 — 22:00</p>
+                        <p>周末 09:00 — 23:00</p>
+                    </div>
+
+                </div>
+
+                <div class="footer-bottom">
+                    <span>© 2026 龙潜猫隐 × 小鱼</span>
+                    <span>用 HTML 和 CSS 手写而成</span>
+                </div>
+            </footer>
+
+            <button class="secret" id="secretEntry" type="button">猫和鱼的私人学习企划</button>
+
+            <div class="gate" id="gate">
+                <form class="gate-panel" id="gateForm" autocomplete="off">
+                    <h3>私 密 通 道</h3>
+                    <p>这里只留给知道口令的人</p>
+                    <input id="gatePass" type="password" placeholder="输入口令" aria-label="口令">
+                    <p class="gate-msg" id="gateMsg"></p>
+                    <div class="gate-actions">
+                        <button class="gate-back" type="button" id="gateBack">回 去</button>
+                        <button class="gate-ok" type="submit">进 入</button>
+                    </div>
+                </form>
+            </div>
+
+            <script>
+            (function () {
+                var PASS = "hyyz5201314";
+                var HUB = "../每次学习知识清单整理/index.html";
+
+                var gate = document.getElementById("gate");
+                var form = document.getElementById("gateForm");
+                var input = document.getElementById("gatePass");
+                var msg = document.getElementById("gateMsg");
+                var entry = document.getElementById("secretEntry");
+                var back = document.getElementById("gateBack");
+                var leaving = false;
+
+                function open() {
+                    gate.classList.add("show");
+                    input.value = "";
+                    msg.textContent = "";
+                    leaving = false;
+                    setTimeout(function () { input.focus(); }, 60);
+                }
+
+                function close() {
+                    gate.classList.remove("show");
+                }
+
+                function sendAway() {
+                    if (leaving) return;
+                    leaving = true;
+                    msg.textContent = "这里是私人的地方，你可能走错了。别介意，咖啡还热着，先回去坐坐吧。正在带你回去…";
+                    setTimeout(function () {
+                        window.location.href = "index.html";
+                    }, 3800);
+                }
+
+                entry.addEventListener("click", open);
+                back.addEventListener("click", close);
+
+                gate.addEventListener("click", function (e) {
+                    if (e.target === gate) close();
+                });
+
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape") close();
+                });
+
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    if (input.value === PASS) {
+                        msg.style.color = "#c9a86a";
+                        msg.textContent = "口令正确，正在带你过去…";
+                        setTimeout(function () {
+                            window.location.href = HUB;
+                        }, 450);
+                    } else {
+                        gate.classList.add("shake");
+                        setTimeout(function () { gate.classList.remove("shake"); }, 450);
+                        sendAway();
+                    }
+                });
+            })();
+        </script>
+            </body>
+        </html>

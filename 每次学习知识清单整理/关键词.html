@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>关键词词典 · 龙潜猫隐和小鱼的个人class</title>
+        <link rel="stylesheet" href="lesson.css">
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">工具 · 关键词词典</p>
+            <h1>查一个词，就懂一件事</h1>
+            <p class="sub">HTML5 · CSS · JavaScript &nbsp;|&nbsp; 共 <b id="kw-count" style="color:var(--accent-2);font-weight:normal;">0</b> 条，随时补充</p>
+
+            <div class="kw-search" style="margin-top:34px;">
+                <span class="icon">⌕</span>
+                <input id="q" type="text" autocomplete="off" placeholder="试试：&lt;title&gt; 是什么意思 / flex / querySelector">
+                <button class="clear" id="clear" type="button" title="清空">×</button>
+            </div>
+
+            <div class="kw-chips" id="chips"></div>
+        </header>
+
+        <div class="kw-result-bar">
+            <span id="kw-state">输入关键词开始查，或点上面的词条</span>
+            <a href="index.html">← 回目录</a>
+        </div>
+
+        <div class="kw-list" id="kw-list"></div>
+
+        <div class="kw-empty" id="kw-empty" style="display:none;">
+            没找到 <b id="kw-miss"></b>。<br>
+            换个说法试试，或者去 <a href="基础知识.html">基础全书</a> 里翻一翻。
+        </div>
+
+        <div style="text-align:center; margin:56px 20px 10px; color:var(--dim); font-size:13px; letter-spacing:1px;">
+            想系统学一遍？&nbsp;<a href="基础知识.html" style="color:var(--accent); text-decoration:none;">翻开基础全书 →</a>
+        </div>
+
+        <footer>
+            <div class="stamp">关键词词典 · 2026-10-21 建</div>
+            <div>小鱼 🐟 给阿猫做的查询工具</div>
+        </footer>
+
+        <script src="keywords.js"></script>
+        <script src="lessons.js"></script>
+        <script>
+    document.getElementById("kw-count").textContent = KEYWORDS.length;
+
+    /* ---------- 工具函数 ---------- */
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+
+    function fmt(s) {
+      return esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+    }
+
+    function norm(s) {
+      return String(s)
+        .toLowerCase()
+        .replace(/是什么意思|是什么|什么意思|怎么用|怎样用|有什么用|干什么用|干嘛用|的用法|用法|作用|解释|含义|怎么|如何|为什么|？|\?|。|，|,|、|！|!/g, "")
+        .replace(/[<>「」【】"'`\s]/g, "")
+        .trim();
+    }
+
+    /* ---------- 数据索引 ---------- */
+    var INDEX = KEYWORDS.map(function (e, i) {
+      return {
+        i: i,
+        e: e,
+        keys: [norm(e.k)].concat((e.a || []).map(norm))
+      };
+    });
+
+    function score(item, q) {
+      var best = 99;
+      item.keys.forEach(function (k) {
+        if (!k) return;
+        if (k === q) best = Math.min(best, 0);
+        else if (k.indexOf(q) === 0) best = Math.min(best, 1);
+        else if (k.indexOf(q) > -1) best = Math.min(best, 2);
+        else if (q.indexOf(k) > -1 && k.length > 1) best = Math.min(best, 3);
+      });
+      return best;
+    }
+
+    function find(q) {
+      q = norm(q);
+      if (!q) return [];
+      return INDEX
+        .map(function (it) { return { it: it, s: score(it, q) }; })
+        .filter(function (x) { return x.s < 99; })
+        .sort(function (a, b) { return a.s - b.s; })
+        .map(function (x) { return x.it.e; });
+    }
+
+    /* ---------- 渲染 ---------- */
+    var list = document.getElementById("kw-list");
+    var empty = document.getElementById("kw-empty");
+    var state = document.getElementById("kw-state");
+
+    function card(e, n) {
+      var combos = (e.c || []).map(function (c) {
+        return "<span>" + esc(c) + "</span>";
+      }).join("");
+
+      return '' +
+        '<article class="kw-card" id="kw-' + n + '">' +
+          "<h2>" +
+            '<span class="kw-name">' + esc(e.k) + "</span>" +
+            '<span class="kw-lang">' + esc(e.t) + "</span>" +
+          "</h2>" +
+          '<p class="kw-row"><b>是什么</b><span>' + fmt(e.w) + "</span></p>" +
+          '<p class="kw-row"><b>怎么用</b><span>' + fmt(e.u) + "</span></p>" +
+          '<div class="kw-row"><b>能和谁搭</b><div class="kw-tags">' + combos + "</div></div>" +
+          "<pre><code>" + fmt(e.x) + "</code></pre>" +
+          '<div class="note"><b>输出：</b>' + fmt(e.o) + "</div>" +
+        "</article>";
+    }
+
+    function showEmpty(q) {
+      document.getElementById("kw-miss").textContent = q;
+      empty.style.display = "block";
+    }
+
+    function render(q) {
+      var res = find(q);
+      if (!q) {
+        list.innerHTML = "";
+        empty.style.display = "none";
+        state.textContent = "输入关键词开始查，或点上面的词条";
+        return;
+      }
+      if (!res.length) {
+        list.innerHTML = "";
+        showEmpty(q);
+        state.textContent = "没有匹配的词条";
+        return;
+      }
+      empty.style.display = "none";
+      list.innerHTML = res.map(card).join("");
+      state.textContent = "找到 " + res.length + " 条 · 关键词：" + q;
+      attachCopy();
+    }
+
+    /* ---------- 代码复制 ---------- */
+    function attachCopy() {
+      var pres = document.querySelectorAll("pre");
+      for (var i = 0; i < pres.length; i++) {
+        (function (pre) {
+          if (pre.querySelector(".code-copy")) return;
+          var btn = document.createElement("button");
+          btn.className = "code-copy";
+          btn.type = "button";
+          btn.textContent = "复制";
+          btn.addEventListener("click", function () {
+            var codeEl = pre.querySelector("code") || pre;
+            function done() {
+              btn.textContent = "已复制";
+              btn.classList.add("done");
+              setTimeout(function () {
+                btn.textContent = "复制";
+                btn.classList.remove("done");
+              }, 1600);
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(codeEl.innerText).then(done, function () {});
+            }
+          });
+          pre.appendChild(btn);
+        })(pres[i]);
+      }
+    }
+
+    /* ---------- 热门词条 ---------- */
+    var FEATURED = ["<title>", "flex", "grid", "querySelector", "localStorage", ":hover", "position", "map"];
+    var chips = document.getElementById("chips");
+    FEATURED.forEach(function (name) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = name;
+      b.addEventListener("click", function () {
+        var input = document.getElementById("q");
+        input.value = name;
+        render(name);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      chips.appendChild(b);
+    });
+
+    /* ---------- 输入交互 ---------- */
+    var input = document.getElementById("q");
+    var timer = null;
+
+    input.addEventListener("input", function () {
+      clearTimeout(timer);
+      var v = this.value;
+      timer = setTimeout(function () { render(v.trim()); }, 160);
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        clearTimeout(timer);
+        render(this.value.trim());
+        var first = document.querySelector(".kw-card");
+        if (first) first.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    document.getElementById("clear").addEventListener("click", function () {
+      input.value = "";
+      render("");
+      input.focus();
+    });
+
+    /* ---------- 深链：关键词.html?q=flex ---------- */
+    var q0 = new URLSearchParams(location.search).get("q");
+    if (q0) {
+      input.value = q0;
+      render(q0.trim());
+    }
+
+    /* 底部导航 / 进度条 */
+    renderLessonNav("关键词.html");
+  </script>
+
+        </body>
+    </html>
