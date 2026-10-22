@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我的好友 · 龙潜猫隐的咖啡店</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; padding: 40px 20px 90px; font-family: "Microsoft YaHei", sans-serif; color: #f3e7d3;
+        background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); }
+    .wrap { width: min(560px, 100%); margin: 0 auto; }
+    .back { display: inline-block; margin-bottom: 22px; color: rgba(201,183,156,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back:hover { color: #c9a86a; }
+    h1 { font-size: 26px; font-weight: normal; letter-spacing: 4px; margin-bottom: 8px; }
+    .sub { color: #c9b79c; font-size: 13px; margin-bottom: 24px; line-height: 1.9; }
+    .card { padding: 18px 20px; background: #1a1512; border: 1px solid rgba(201,168,106,.22); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+    .row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(201,168,106,.15); }
+    .row:last-child { border-bottom: 0; }
+    .av { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: #2a2119; color: #e0c48c; display: flex; align-items: center; justify-content: center; font-size: 14px; flex: 0 0 auto; }
+    .av img { width: 100%; height: 100%; object-fit: cover; }
+    .n { flex: 1; min-width: 0; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ops { display: flex; gap: 8px; }
+    .ops button { padding: 6px 12px; border: 1px solid rgba(201,168,106,.4); border-radius: 999px; background: none; color: #c9a86a; font: inherit; font-size: 12px; cursor: pointer; }
+    .ops button:hover { background: rgba(201,168,106,.12); }
+    .ops button.danger { border-color: rgba(226,154,142,.4); color: #e29a8e; }
+    .empty { color: rgba(201,183,156,.5); text-align: center; padding: 30px 0; font-size: 13px; line-height: 2; }
+    .msg { min-height: 20px; margin-top: 12px; font-size: 13px; }
+    .msg.ok { color: #9ec9a0; }
+    .msg.err { color: #e29a8e; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <a class="back" href="index.html">← 回到店里</a>
+    <h1>我 的 好 友</h1>
+    <p class="sub">好友存在云端，换设备登录也在。点「邀请」会建一个临时房间，把房间号发到公共聊天室。</p>
+
+    <div class="card">
+        <div id="list"><div class="empty">正在加载…</div></div>
+        <p class="msg" id="msg"></p>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script src="member.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
+    var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
+
+    var s = (function () { try { return JSON.parse(localStorage.getItem("coffee-session") || "null"); } catch (e) { return null; } })();
+
+    if (!s || !s.name || !s.hash) {
+        document.body.innerHTML = '<p style="padding:60px;text-align:center;color:#c9b79c;">先登录才能看好友。<br><br><a style="color:#c9a86a" href="account.html">去登录</a></p>';
+        return;
+    }
+
+    function rpc(name, body) {
+        return fetch(SB_URL + "/rest/v1/rpc/" + name, { method: "POST", headers: H, body: JSON.stringify(body) })
+            .then(function (r) { return r.ok ? r.json() : null; });
+    }
+
+    function esc(x) {
+        return String(x == null ? "" : x).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    var listEl = document.getElementById("list");
+    var msg = document.getElementById("msg");
+
+    function setMsg(t, ok) { msg.className = "msg " + (ok ? "ok" : "err"); msg.textContent = t; }
+
+    function render(friends) {
+        if (!friends.length) {
+            listEl.innerHTML = '<div class="empty">还没有好友。<br>去公共聊天室，点右上角「查看在线用户」，可以加人。</div>';
+            return;
+        }
+
+        listEl.innerHTML = "";
+        friends.forEach(function (f) {
+            var row = document.createElement("div");
+            row.className = "row";
+            row.innerHTML =
+                '<div class="av">' + (f.avatar ? '<img src="' + f.avatar + '" alt="">' : esc(f.name.slice(0, 1))) + '</div>' +
+                '<div class="n">' + esc(f.name) + '</div>' +
+                '<div class="ops">' +
+                '<button data-invite="' + esc(f.name) + '">邀请</button>' +
+                '<button class="danger" data-del="' + esc(f.name) + '">删除</button>' +
+                '</div>';
+            listEl.appendChild(row);
+        });
+    }
+
+    function load() {
+        rpc("friend_list", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+            if (d && d.ok) render(d.friends || []);
+            else listEl.innerHTML = '<div class="empty">拿不到好友列表。</div>';
+        }).catch(function () { listEl.innerHTML = '<div class="empty">连不上云端。</div>'; });
+    }
+
+    listEl.addEventListener("click", function (e) {
+        var b = e.target.closest("button");
+        if (!b) return;
+
+        var invite = b.getAttribute("data-invite");
+        var del = b.getAttribute("data-del");
+
+        if (del) {
+            if (!confirm("确定删除好友「" + del + "」吗？")) return;
+            rpc("friend_remove", { p_name: s.name, p_hash: s.hash, p_friend: del }).then(function (d) {
+                if (d && d.ok) { setMsg("已删除 " + del, true); load(); }
+                else setMsg("删除失败，稍后再试。", false);
+            });
+        }
+
+        if (invite) {
+            var room = String(Math.floor(100000 + Math.random() * 900000));
+            rpc("chat_create_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: "" }).then(function (d) {
+                if (!d || !d.ok) { setMsg("邀请没发出去，稍后再试。", false); return; }
+                return rpc("chat_send", {
+                    p_name: s.name, p_hash: s.hash, p_room: "public",
+                    p_body: "📨 " + invite + "，来房间 " + room + " 聊两句（1v1，无密码）", p_image: ""
+                }).then(function () {
+                    setMsg("邀请已发到公共聊天室：房间 " + room, true);
+                });
+            }).catch(function () { setMsg("连不上云端。", false); });
+        }
+    });
+
+    load();
+})();
+</script>
+    <script src="../assets/chat.js?v=20261022"></script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+/* 聊天室 —— 全站通用的聊天球 + 聊天窗
+   消息只保留 10 分钟（云端每次读写都会清理），关掉聊天就清空本地缓存。
+   依赖：Supabase 的 chat_* 函数（见 supabase/升级-聊天室.sql）。 */
+(function () {
+    "use strict";
+    if (window.__chatLoaded) return;
+    window.__chatLoaded = true;
+
+    var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
+    var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
+    var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
+
+    var EMOJIS = ["😀","😄","😂","🤣","😊","😍","😘","😎","🤔","😴","😭","😡","🥺","😅","👍","👏","🙏","💪","🎉","🔥","❤️","✨","☕","🍰","🌙","⭐","🌧️","🐱","🐟","🍀","🎵","📚"];
+
+    /* ---------- 会话 ---------- */
+    function session() {
+        try { return JSON.parse(localStorage.getItem("coffee-session") || "null"); } catch (e) { return null; }
+    }
+    function me() { var s = session(); return s && s.name && s.hash ? s : null; }
+
+    function rpc(name, body) {
+        return fetch(SB_URL + "/rest/v1/rpc/" + name, { method: "POST", headers: H, body: JSON.stringify(body) })
+            .then(function (r) { return r.ok ? r.json() : null; });
+    }
+
+    /* ---------- 样式 ---------- */
+    var css = document.createElement("style");
+    css.textContent = [
+        ".chat-ball{position:fixed;right:22px;bottom:96px;width:56px;height:56px;border-radius:50%;z-index:120;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:grab;user-select:none;background:linear-gradient(135deg,#38bdf8,#6366f1);color:#04121f;box-shadow:0 12px 30px rgba(2,6,15,.5);border:1px solid rgba(255,255,255,.5);touch-action:none}",
+        ".chat-ball:active{cursor:grabbing}",
+        ".chat-ball .dot{position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;background:#f87171;display:none}",
+        ".chat-ball .dot.show{display:block}",
+        ".chat-btn{border:1px solid rgba(201,168,106,.4);background:none;color:inherit;font:inherit;font-size:12px;letter-spacing:1px;padding:6px 14px;border-radius:999px;cursor:pointer}",
+        ".chat-drop{position:absolute;z-index:130;min-width:210px;padding:10px;border-radius:14px;background:#0d1524;border:1px solid rgba(56,189,248,.35);box-shadow:0 18px 40px rgba(0,0,0,.55);font-family:'Microsoft YaHei',sans-serif}",
+        ".chat-drop.cream{background:#1a1512;border-color:rgba(201,168,106,.4)}",
+        ".chat-drop button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;border-radius:8px;background:none;color:#e8f0fd;font:inherit;font-size:13px;cursor:pointer}",
+        ".chat-drop.cream button{color:#e8dcc8}",
+        ".chat-drop button:hover{background:rgba(56,189,248,.14)}",
+        ".chat-drop.cream button:hover{background:rgba(201,168,106,.14)}",
+        ".chat-drop .sub{padding-left:22px;font-size:12.5px;opacity:.85}",
+        ".chat-drop .hint{padding:6px 12px;font-size:11.5px;opacity:.5}",
+        ".chat-win{position:fixed;right:22px;bottom:164px;width:min(360px,92vw);height:min(480px,70vh);z-index:125;display:none;flex-direction:column;background:#0a1120;border:1px solid rgba(56,189,248,.35);border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.6);font-family:'Microsoft YaHei',sans-serif}",
+        ".chat-win.cream{background:#14100e;border-color:rgba(201,168,106,.4)}",
+        ".chat-win.show{display:flex}",
+        ".chat-head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid rgba(120,160,220,.18)}",
+        ".chat-win.cream .chat-head{border-color:rgba(201,168,106,.2)}",
+        ".chat-head .name{flex:1;font-size:13px;letter-spacing:1px;color:#cfe6ff}",
+        ".chat-win.cream .chat-head .name{color:#e8d6b4}",
+        ".chat-head button{border:0;background:none;color:#8fb3d9;font-size:18px;cursor:pointer}",
+        ".chat-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px}",
+        ".chat-msg{display:flex;gap:8px;align-items:flex-start}",
+        ".chat-msg .av{width:26px;height:26px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:12px;background:#1d2b45;color:#9fc9f5}",
+        ".chat-win.cream .chat-msg .av{background:#2a2119;color:#e0c48c}",
+        ".chat-msg .bubble{max-width:78%;padding:8px 11px;border-radius:10px;background:#111c30;color:#dbe9fb;font-size:13px;line-height:1.7;word-break:break-word}",
+        ".chat-win.cream .chat-msg .bubble{background:#1f1813;color:#e8dcc8}",
+        ".chat-msg.mine{flex-direction:row-reverse}",
+        ".chat-msg.mine .bubble{background:#1e4a6b;color:#e6f4ff}",
+        ".chat-win.cream .chat-msg.mine .bubble{background:#3a2c1c;color:#f5e9d6}",
+        ".chat-msg .who{font-size:10.5px;opacity:.55;margin-bottom:2px}",
+        ".chat-msg img{max-width:160px;border-radius:8px;display:block}",
+        ".chat-empty{margin:auto;color:#6b7f9c;font-size:12.5px;text-align:center;line-height:2;padding:20px}",
+        ".chat-input{display:flex;gap:6px;padding:10px;border-top:1px solid rgba(120,160,220,.18);align-items:center}",
+        ".chat-win.cream .chat-input{border-color:rgba(201,168,106,.2)}",
+        ".chat-input input[type=text]{flex:1;min-width:0;padding:9px 12px;border-radius:999px;border:1px solid rgba(120,160,220,.3);background:#0e1726;color:#e8f0fd;font:inherit;font-size:13px;outline:none}",
+        ".chat-win.cream .chat-input input[type=text]{background:#0f0b09;border-color:rgba(201,168,106,.3);color:#f3e7d3}",
+        ".chat-input button{border:0;background:none;font-size:17px;cursor:pointer;padding:2px 4px}",
+        ".chat-emoji{position:absolute;bottom:56px;left:10px;right:10px;display:none;flex-wrap:wrap;gap:2px;padding:8px;border-radius:10px;background:#0d1524;border:1px solid rgba(56,189,248,.3);max-height:150px;overflow-y:auto}",
+        ".chat-emoji.show{display:flex}",
+        ".chat-emoji span{font-size:19px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border-radius:6px}",
+        ".chat-emoji span:hover{background:rgba(56,189,248,.15)}",
+        ".chat-modal{position:fixed;inset:0;z-index:140;display:none;align-items:center;justify-content:center;background:rgba(2,6,15,.7);padding:20px}",
+        ".chat-modal.show{display:flex}",
+        ".chat-modal .box{width:min(420px,94vw);max-height:74vh;display:flex;flex-direction:column;background:#0d1524;border:1px solid rgba(56,189,248,.35);border-radius:16px;overflow:hidden;font-family:'Microsoft YaHei',sans-serif}",
+        ".chat-modal .h{padding:14px 16px;border-bottom:1px solid rgba(120,160,220,.18);display:flex;align-items:center;gap:10px}",
+        ".chat-modal .h b{flex:1;font-weight:normal;font-size:14px;letter-spacing:1px;color:#cfe6ff}",
+        ".chat-modal .h button{border:0;background:none;color:#8fb3d9;font-size:18px;cursor:pointer}",
+        ".chat-modal .s{padding:10px 14px}",
+        ".chat-modal .s input{width:100%;padding:9px 12px;border-radius:999px;border:1px solid rgba(120,160,220,.3);background:#0e1726;color:#e8f0fd;font:inherit;font-size:13px;outline:none}",
+        ".chat-modal .list{flex:1;overflow-y:auto;padding:0 14px 14px}",
+        ".chat-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed rgba(120,160,220,.12)}",
+        ".chat-row .av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:#1d2b45;color:#9fc9f5;display:flex;align-items:center;justify-content:center;font-size:12px}",
+        ".chat-row .av img{width:100%;height:100%;object-fit:cover}",
+        ".chat-row .n{flex:1;min-width:0;font-size:13px;color:#dbe9fb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+        ".chat-row .ops{display:flex;gap:6px;flex:0 0 auto}",
+        ".chat-row .ops button{padding:5px 9px;border:1px solid rgba(56,189,248,.35);border-radius:999px;background:none;color:#9fc9f5;font:inherit;font-size:11px;cursor:pointer}",
+        ".chat-row .ops button:hover{background:rgba(56,189,248,.12)}",
+        "@media (max-width:560px){.chat-win{right:10px;bottom:150px;width:94vw;height:64vh}.chat-ball{right:14px;bottom:88px}}"
+    ].join("");
+    document.head.appendChild(css);
+
+    /* ---------- 聊天球（可拖动） ---------- */
+    var ball = document.createElement("div");
+    ball.className = "chat-ball";
+    ball.innerHTML = '💬<span class="dot" id="chatDot"></span>';
+    document.body.appendChild(ball);
+
+    var ballPos = null;
+    try { ballPos = JSON.parse(localStorage.getItem("coffee-chat-ball") || "null"); } catch (e) {}
+
+    function applyBallPos(x, y) {
+        var w = 56, h = 56;
+        x = Math.max(8, Math.min(window.innerWidth - w - 8, x));
+        y = Math.max(70, Math.min(window.innerHeight - h - 8, y));
+        ball.style.left = x + "px";
+        ball.style.top = y + "px";
+        ball.style.right = "auto";
+        ball.style.bottom = "auto";
+        return { x: x, y: y };
+    }
+
+    if (ballPos) applyBallPos(ballPos.x, ballPos.y);
+
+    var dragging = false, moved = false, sx = 0, sy = 0, bx = 0, by = 0;
+
+    ball.addEventListener("pointerdown", function (e) {
+        dragging = true; moved = false;
+        var r = ball.getBoundingClientRect();
+        bx = r.left; by = r.top;
+        sx = e.clientX; sy = e.clientY;
+        ball.setPointerCapture(e.pointerId);
+    });
+
+    ball.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+        applyBallPos(bx + dx, by + dy);
+    });
+
+    ball.addEventListener("pointerup", function (e) {
+        dragging = false;
+        try { ball.releasePointerCapture(e.pointerId); } catch (err) {}
+        if (moved) {
+            var r = ball.getBoundingClientRect();
+            try { localStorage.setItem("coffee-chat-ball", JSON.stringify({ x: r.left, y: r.top })); } catch (err) {}
+        } else {
+            openChat();
+        }
+    });
+
+    /* ---------- 状态 ---------- */
+    var state = {
+        room: null,
+        roomName: "",
+        lastId: 0,
+        timer: null,
+        open: false,
+        online: 0,
+        publicCount: 0
+    };
+
+    function gold() { return location.pathname.indexOf("coffee-site") >= 0; }
+
+    /* ---------- 聊天窗 ---------- */
+    var win = document.createElement("div");
+    win.className = "chat-win" + (gold() ? " cream" : "");
+    win.innerHTML = [
+        '<div class="chat-head">',
+        '  <span class="name" id="chatTitle">聊天室</span>',
+        '  <button type="button" id="chatClose" title="关闭">×</button>',
+        '</div>',
+        '<div class="chat-body" id="chatBody"></div>',
+        '<div class="chat-input">',
+        '  <button type="button" id="chatEmojiBtn" title="表情">😊</button>',
+        '  <button type="button" id="chatImgBtn" title="图片">🖼️</button>',
+        '  <input type="text" id="chatText" placeholder="说点什么…" maxlength="300">',
+        '  <button type="button" id="chatSend" title="发送">➤</button>',
+        '</div>',
+        '<div class="chat-emoji" id="chatEmoji"></div>'
+    ].join("");
+    document.body.appendChild(win);
+
+    var body = win.querySelector("#chatBody");
+    var title = win.querySelector("#chatTitle");
+    var text = win.querySelector("#chatText");
+    var emojiBox = win.querySelector("#chatEmoji");
+
+    EMOJIS.forEach(function (e) {
+        var s = document.createElement("span");
+        s.textContent = e;
+        s.addEventListener("click", function () { text.value += e; text.focus(); });
+        emojiBox.appendChild(s);
+    });
+
+    win.querySelector("#chatEmojiBtn").addEventListener("click", function () { emojiBox.classList.toggle("show"); });
+    win.querySelector("#chatClose").addEventListener("click", closeChat);
+
+    win.querySelector("#chatImgBtn").addEventListener("click", function () {
+        var input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = function () {
+            var f = input.files && input.files[0];
+            if (!f) return;
+            if (f.size > 8 * 1024 * 1024) { alert("图片太大了，换一张小于 8MB 的。"); return; }
+            var img = new Image();
+            var url = URL.createObjectURL(f);
+            img.onload = function () {
+                var max = 320;
+                var scale = Math.min(1, max / Math.max(img.width, img.height));
+                var canvas = document.createElement("canvas");
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                URL.revokeObjectURL(url);
+                send("", canvas.toDataURL("image/jpeg", 0.62));
+            };
+            img.src = url;
+        };
+        input.click();
+    });
+
+    win.querySelector("#chatSend").addEventListener("click", function () { send(text.value); text.value = ""; });
+    text.addEventListener("keydown", function (e) { if (e.key === "Enter") { send(text.value); text.value = ""; } });
+
+    /* ---------- 消息 ---------- */
+    function renderMessages(list, append) {
+        if (!append) body.innerHTML = "";
+
+        if (!list.length && !append) {
+            body.innerHTML = '<div class="chat-empty">这里还安静着。<br>说点什么吧，消息只留 10 分钟。</div>';
+            return;
+        }
+
+        var empty = body.querySelector(".chat-empty");
+        if (empty) empty.remove();
+
+        var s = me();
+        list.forEach(function (m) {
+            var isMine = s && m.name === s.name;
+            var row = document.createElement("div");
+            row.className = "chat-msg" + (isMine ? " mine" : "");
+
+            var av = document.createElement("div");
+            av.className = "av";
+            av.textContent = (m.name || "?").slice(0, 1);
+
+            var bubble = document.createElement("div");
+            bubble.className = "bubble";
+            bubble.innerHTML = '<div class="who">' + escapeHtml(m.name) + "</div>";
+
+            if (m.image) {
+                var im = document.createElement("img");
+                im.src = m.image;
+                bubble.appendChild(im);
+            }
+            if (m.body) {
+                var p = document.createElement("div");
+                p.textContent = m.body;
+                bubble.appendChild(p);
+            }
+
+            row.appendChild(av);
+            row.appendChild(bubble);
+            body.appendChild(row);
+            if (m.id > state.lastId) state.lastId = m.id;
+        });
+
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function escapeHtml(s) {
+        return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function fetchMessages() {
+        if (!state.room) return;
+        rpc("chat_fetch", { p_room: state.room, p_after: state.lastId }).then(function (d) {
+            if (!d || !d.ok) return;
+            var list = d.messages || [];
+            if (list.length) renderMessages(list, state.lastId > 0);
+        }).catch(function () {});
+    }
+
+    function send(bodyText, image) {
+        var s = me();
+        if (!s) { alert("先登录才能聊天。"); return; }
+        if (!state.room) return;
+        if (!bodyText && !image) return;
+
+        rpc("chat_send", { p_name: s.name, p_hash: s.hash, p_room: state.room, p_body: bodyText || "", p_image: image || "" })
+            .then(function () { fetchMessages(); })
+            .catch(function () {});
+    }
+
+    /* ---------- 打开 / 关闭 ---------- */
+    function openChat(room, name) {
+        var s = me();
+        if (!s) {
+            alert("聊天室需要先登录。");
+            location.href = "account.html";
+            return;
+        }
+
+        state.room = room || state.room || "public";
+        state.roomName = name || state.roomName || "公共聊天室";
+        state.lastId = 0;
+        body.innerHTML = '<div class="chat-empty">正在连接…</div>';
+        title.textContent = state.roomName;
+        win.classList.add("show");
+        state.open = true;
+
+        fetchMessages();
+        clearInterval(state.timer);
+        state.timer = setInterval(fetchMessages, 3000);
+
+        rpc("chat_ping", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+            if (d && d.ok) {
+                document.getElementById("chatDot").classList.remove("show");
+            }
+        }).catch(function () {});
+    }
+
+    function closeChat() {
+        win.classList.remove("show");
+        state.open = false;
+        clearInterval(state.timer);
+        state.timer = null;
+        body.innerHTML = "";        /* 本地不保留 */
+        state.lastId = 0;
+    }
+
+    /* ---------- 顶部按钮 ---------- */
+    function buildDropdown(anchor) {
+        var drop = document.createElement("div");
+        drop.className = "chat-drop" + (gold() ? " cream" : "");
+        drop.style.display = "none";
+        document.body.appendChild(drop);
+
+        function place() {
+            var r = anchor.getBoundingClientRect();
+            drop.style.left = Math.min(window.innerWidth - 240, Math.max(8, r.left)) + "px";
+            drop.style.top = (r.bottom + 8) + "px";
+        }
+
+        function renderMain() {
+            drop.innerHTML =
+                '<button data-act="public">公共聊天室 <span style="opacity:.6">（' + state.publicCount + ' 条消息）</span></button>' +
+                '<button data-act="private">1v1 聊天 ▸</button>';
+        }
+
+        function renderPrivate() {
+            drop.innerHTML =
+                '<button data-act="create">创建房间</button>' +
+                '<button data-act="join">加入房间</button>' +
+                '<button data-act="users">查看在线用户</button>' +
+                '<button data-act="back">← 返回</button>';
+        }
+
+        drop.addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            var act = b.getAttribute("data-act");
+
+            if (act === "public") { drop.style.display = "none"; openChat("public", "公共聊天室"); }
+            else if (act === "private") { renderPrivate(); }
+            else if (act === "back") { renderMain(); }
+            else if (act === "create") { drop.style.display = "none"; createRoom(); }
+            else if (act === "join") { drop.style.display = "none"; joinRoom(); }
+            else if (act === "users") { drop.style.display = "none"; showOnline(); }
+        });
+
+        anchor.addEventListener("click", function (e) {
+            e.stopPropagation();
+            place();
+            renderMain();
+            drop.style.display = drop.style.display === "none" ? "block" : "none";
+        });
+
+        document.addEventListener("click", function () { drop.style.display = "none"; });
+        window.addEventListener("resize", function () { if (drop.style.display !== "none") place(); });
+    }
+
+    function createRoom() {
+        var s = me();
+        if (!s) { alert("先登录。"); return; }
+
+        var room = prompt("房间号（6 位数字，自己定）：");
+        if (!room) return;
+        if (!/^\d{6}$/.test(room)) { alert("房间号必须是 6 位数字。"); return; }
+
+        var pwd = prompt("房间密码（可以不填，不填就是公开房）：") || "";
+        var pwdHash = "";
+        if (pwd) {
+            crypto.subtle.digest("SHA-256", new TextEncoder().encode(pwd)).then(function (buf) {
+                pwdHash = Array.from(new Uint8Array(buf)).map(function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+                doCreate(room, pwdHash, pwd);
+            });
+            return;
+        }
+        doCreate(room, "", "");
+    }
+
+    function doCreate(room, pwdHash, pwd) {
+        var s = me();
+        rpc("chat_create_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: pwdHash }).then(function (d) {
+            if (d && d.ok) {
+                alert("房间 " + room + " 建好了" + (pwd ? "（有密码）" : "（无密码）") + "，把房间号发给朋友。");
+                openChat(room, "房间 " + room);
+            } else if (d && d.error === "exists") {
+                alert("这个房间号已经有人用了，换一个。");
+            } else {
+                alert("建房间没成功，稍后再试。");
+            }
+        }).catch(function () { alert("连不上云端。"); });
+    }
+
+    function joinRoom() {
+        var room = prompt("输入 6 位房间号：");
+        if (!room) return;
+        if (!/^\d{6}$/.test(room)) { alert("房间号是 6 位数字。"); return; }
+
+        var pwd = prompt("房间密码（没设密码就直接确定）：") || "";
+        var s = me();
+        if (!s) { alert("先登录。"); return; }
+
+        var pwdHash = "";
+        var go = function (hash) {
+            rpc("chat_join_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: hash }).then(function (d) {
+                if (d && d.ok) openChat(room, "房间 " + room);
+                else if (d && d.error === "bad-password") alert("密码不对。");
+                else if (d && d.error === "no-room") alert("没有这个房间。");
+                else alert("进不去，稍后再试。");
+            }).catch(function () { alert("连不上云端。"); });
+        };
+
+        if (!pwd) { go(""); return; }
+        crypto.subtle.digest("SHA-256", new TextEncoder().encode(pwd)).then(function (buf) {
+            pwdHash = Array.from(new Uint8Array(buf)).map(function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+            go(pwdHash);
+        });
+    }
+
+    /* ---------- 在线用户 ---------- */
+    function showOnline() {
+        var s = me();
+        if (!s) { alert("先登录。"); return; }
+
+        var mask = document.createElement("div");
+        mask.className = "chat-modal show";
+        mask.innerHTML =
+            '<div class="box">' +
+            '<div class="h"><b>在线用户</b><button type="button" class="x">×</button></div>' +
+            '<div class="s"><input type="text" id="onlineSearch" placeholder="搜索用户名…"></div>' +
+            '<div class="list" id="onlineList"><div class="chat-empty">正在获取…</div></div>' +
+            '</div>';
+        document.body.appendChild(mask);
+
+        function close() { mask.remove(); }
+        mask.querySelector(".x").addEventListener("click", close);
+
+        var listEl = mask.querySelector("#onlineList");
+        var input = mask.querySelector("#onlineSearch");
+        var users = [];
+
+        function render(keyword) {
+            var k = (keyword || "").trim().toLowerCase();
+            var rows = users.filter(function (u) { return !k || u.name.toLowerCase().indexOf(k) >= 0; });
+
+            if (!rows.length) {
+                listEl.innerHTML = '<div class="chat-empty">没有找到人。</div>';
+                return;
+            }
+            listEl.innerHTML = "";
+            rows.forEach(function (u) {
+                var row = document.createElement("div");
+                row.className = "chat-row";
+                row.innerHTML =
+                    '<div class="av">' + (u.avatar ? '<img src="' + u.avatar + '" alt="">' : escapeHtml(u.name.slice(0, 1))) + '</div>' +
+                    '<div class="n">' + escapeHtml(u.name) + '</div>' +
+                    '<div class="ops">' +
+                    '<button data-invite="' + escapeHtml(u.name) + '">邀请</button>' +
+                    '<button data-friend="' + escapeHtml(u.name) + '">加好友</button>' +
+                    '</div>';
+                listEl.appendChild(row);
+            });
+        }
+
+        input.addEventListener("input", function () { render(input.value); });
+
+        listEl.addEventListener("click", function (e) {
+            var b = e.target.closest("button");
+            if (!b) return;
+            var invite = b.getAttribute("data-invite");
+            var friend = b.getAttribute("data-friend");
+
+            if (invite) inviteFriend(invite);
+            if (friend) {
+                rpc("friend_add", { p_name: s.name, p_hash: s.hash, p_friend: friend }).then(function (d) {
+                    b.textContent = d && d.ok ? "已加" : "失败";
+                    b.disabled = true;
+                });
+            }
+        });
+
+        rpc("chat_online", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+            if (d && d.ok) { users = d.users || []; render(""); }
+            else listEl.innerHTML = '<div class="chat-empty">拿不到在线名单。</div>';
+        }).catch(function () { listEl.innerHTML = '<div class="chat-empty">连不上云端。</div>'; });
+    }
+
+    /* 邀请：建一个临时房间，在公共聊天室丢一条带房间号的消息 */
+    function inviteFriend(name) {
+        var s = me();
+        if (!s) return;
+
+        var room = String(Math.floor(100000 + Math.random() * 900000));
+        rpc("chat_create_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: "" }).then(function (d) {
+            if (!d || !d.ok) { alert("邀请没发出去，换个人试试。"); return; }
+            return rpc("chat_send", {
+                p_name: s.name, p_hash: s.hash, p_room: "public",
+                p_body: "📨 " + name + "，来房间 " + room + " 聊两句（1v1，无密码）", p_image: ""
+            }).then(function () {
+                alert("邀请已经发到公共聊天室：房间 " + room + "。对方进去就能看到你。");
+            });
+        }).catch(function () { alert("连不上云端。"); });
+    }
+
+    /* ---------- 挂到导航栏 ---------- */
+    function mountButton() {
+        var s = me();
+        if (!s) return;
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "chat-btn";
+        btn.textContent = "聊天室";
+
+        var navRight = document.querySelector(".nav-right");
+        if (navRight) {
+            navRight.insertBefore(btn, navRight.firstChild);
+            buildDropdown(btn);
+            return;
+        }
+
+        var meta = document.querySelector(".top .series") || document.querySelector(".top .meta");
+        if (meta) {
+            var wrap = document.createElement("p");
+            wrap.style.cssText = "margin-top:14px;";
+            wrap.appendChild(btn);
+            meta.parentNode.insertBefore(wrap, meta.nextSibling);
+            buildDropdown(btn);
+        }
+    }
+
+    mountButton();
+
+    /* 每 30 秒报一次在线 */
+    var s0 = me();
+    if (s0) {
+        var ping = function () {
+            rpc("chat_ping", { p_name: s0.name, p_hash: s0.hash }).then(function (d) {
+                if (d && d.ok) { state.online = d.online; state.publicCount = d.public_count; }
+            }).catch(function () {});
+        };
+        ping();
+        setInterval(ping, 30000);
+    }
+
+    /* 给好友页用的接口 */
+    window.ChatAPI = {
+        me: me,
+        rpc: rpc,
+        escapeHtml: escapeHtml,
+        openChat: openChat,
+        invite: inviteFriend,
+        showOnline: showOnline
+    };
+})();
