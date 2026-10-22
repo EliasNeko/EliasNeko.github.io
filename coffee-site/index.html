@@ -756,6 +756,27 @@
                 .wallet { padding: 4px 10px; }
                 .wallet-label { display: none; }
                 .wallet strong { font-size: 13px; }
+
+                .hero h1 { font-size: clamp(26px, 7vw, 40px); letter-spacing: 2px; line-height: 1.35; padding: 0 18px; }
+                .hero p { font-size: 13px; letter-spacing: 1px; padding: 0 22px; line-height: 1.9; }
+                .secret { left: 12px; bottom: 14px; padding: 10px 14px; font-size: 11.5px; letter-spacing: 1px; }
+                .cart-btn { right: 12px; bottom: 14px; padding: 10px 14px; font-size: 14px; }
+                .live-widget { bottom: 74px; }
+            }
+
+            @media (max-width: 560px) {
+                .nav-links { display: none; }
+                .nav { height: 58px; padding: 0 12px; }
+                .nav-left { gap: 8px; }
+                .logo { font-size: 14px; letter-spacing: 1px; }
+                .nav-account { padding: 4px 9px; font-size: 11px; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                .nav-avatar { width: 24px; height: 24px; }
+                .wallet { padding: 3px 9px; }
+                .wallet strong { font-size: 12.5px; }
+                .nav-menu { top: 38px; }
+                .secret-long { display: none; }
+                .hero { padding-top: 84px; }
+                .hero h1 { font-size: clamp(24px, 7.6vw, 34px); }
             }
         </style>
         </head>
@@ -894,7 +915,7 @@
                 </div>
             </footer>
 
-            <button class="secret" id="secretEntry" type="button">书房 · 私人学习企划</button>
+            <button class="secret" id="secretEntry" type="button">书房<span class="secret-long"> · 私人学习企划</span></button>
             <button class="cart-btn" id="cartBtn" type="button">🛒 <span id="cartCount">0</span></button>
             <div class="cart-mask" id="cartMask"></div>
             <div class="cart-drawer" id="cartDrawer">
