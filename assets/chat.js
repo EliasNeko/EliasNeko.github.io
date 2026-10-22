@@ -331,6 +331,8 @@
         state.timer = null;
         body.innerHTML = "";        /* 本地不保留 */
         state.lastId = 0;
+        state.room = "public";
+        state.roomName = "公共聊天室";
     }
 
     /* ---------- 顶部按钮 ---------- */
@@ -530,7 +532,10 @@
             if (!d || !d.ok) { alert("房间没建起来，稍后再试。"); return; }
             return rpc("invite_send", { p_name: s.name, p_hash: s.hash, p_to: name, p_room: room });
         }).then(function (r) {
-            if (r && r.ok) alert("邀请已发出，等对方接（30 秒内有效）。");
+            if (r && r.ok) {
+                alert("邀请已发出，等对方接（30 秒内有效）。");
+                openChat(room, "房间 " + room);
+            }
             else if (r && r.error === "cooldown") alert("刚邀请过，等 30 秒再试。");
             else if (r && r.error === "self") alert("不能邀请自己。");
             else alert("邀请没发出去，再试一次。");
@@ -631,6 +636,12 @@
             if (inviteShowing) return;
             rpc("invite_pending", { p_name: s.name, p_hash: s.hash }).then(function (d) {
                 if (d && d.ok && d.invite) showInvite(d.invite);
+            }).catch(function () {});
+
+            rpc("invite_take", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+                if (d && d.ok && d.room && state.room !== d.room) {
+                    openChat(d.room, "房间 " + d.room);
+                }
             }).catch(function () {});
         }, 6000);
     })();
