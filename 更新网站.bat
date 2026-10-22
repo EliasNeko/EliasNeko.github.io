@@ -54,8 +54,17 @@ echo 正在上传...
 git push
 if not errorlevel 1 goto ok
 
+set "PROXY="
+for /f "usebackq delims=" %%p in (`powershell -NoProfile -Command "$s=(Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; if($s){$s}"`) do set "PROXY=%%p"
+if defined PROXY (
+    echo.
+    echo [提示] 第一次没推上去，改用系统代理 %PROXY% 再试...
+    git -c http.proxy=http://%PROXY% push
+    if not errorlevel 1 goto ok
+)
+
 echo.
-echo [提示] 第一次没推上去，可能是代理没开，改用直连再试一次...
+echo [提示] 代理也不行，改用直连再试一次...
 git -c "http.https://github.com.proxy=" push
 if not errorlevel 1 goto ok
 
@@ -66,8 +75,17 @@ ping -n 31 127.0.0.1 >nul
 git push
 if not errorlevel 1 goto ok
 
+set "PROXY="
+for /f "usebackq delims=" %%p in (`powershell -NoProfile -Command "$s=(Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings').ProxyServer; if($s){$s}"`) do set "PROXY=%%p"
+if defined PROXY (
+    echo.
+    echo [提示] 第一次没推上去，改用系统代理 %PROXY% 再试...
+    git -c http.proxy=http://%PROXY% push
+    if not errorlevel 1 goto ok
+)
+
 echo.
-echo [提示] 第一次没推上去，可能是代理没开，改用直连再试一次...
+echo [提示] 代理也不行，改用直连再试一次...
 git -c "http.https://github.com.proxy=" push
 if not errorlevel 1 goto ok
 
