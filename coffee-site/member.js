@@ -150,8 +150,8 @@ var Member = (function () {
     function publicEntries() { return read(PUBLIC_KEY, []); }
     function session() { return read(SESSION_KEY, null); }
 
-    function saveSession(name) {
-        return write(SESSION_KEY, { name: name, time: nowStr() });
+    function saveSession(name, hash) {
+        return write(SESSION_KEY, { name: name, time: nowStr(), hash: hash || "" });
     }
 
     function logout() {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>会员登记 · 猫和鱼的回忆咖啡店</title>
+<title>会员登记 · 龙潜猫隐的咖啡店</title>
 <style>
     /* 咖啡店的配色：深褐底 + 金线 */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -141,6 +141,13 @@
     }
     .session button:hover { color: #c9a86a; }
 
+    .avatar-title { margin: 0 0 14px; font-size: 14px; font-weight: normal; letter-spacing: 3px; color: #c9a86a; }
+    .avatar-row { display: flex; gap: 18px; align-items: flex-start; }
+    .avatar-preview { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(201,168,106,.45); background: #14100e; }
+    .avatar-side { flex: 1; min-width: 0; }
+    .avatar-side input[type="file"] { width: 100%; color: #c9b79c; font-size: 12px; margin-bottom: 8px; }
+    .avatar-side .submit { margin-top: 10px; }
+
     .admin-link {
         display: block;
         margin-top: 22px;
@@ -190,7 +197,7 @@
         <button id="logoutBtn" type="button">退出登录</button>
     </div>
 
-    <p class="kicker">猫 和 鱼 的 回 忆 咖 啡 店</p>
+    <p class="kicker">龙 潜 猫 隐 的 咖 啡 店</p>
     <h1>会员登记</h1>
     <p class="sub">登记之后，进「私人学习企划」不用再输口令；没登记的客人，仍然是游客。</p>
 
@@ -244,6 +251,19 @@
             <p class="msg" id="regMsg"></p>
         </form>
         <p class="quota" id="quota">这台设备还能登记 2 个账号</p>
+    </section>
+
+    <section class="card hidden" id="panelAvatar">
+        <h3 class="avatar-title">我 的 头 像</h3>
+        <div class="avatar-row">
+            <img class="avatar-preview" id="avatarPreview" alt="">
+            <div class="avatar-side">
+                <input type="file" id="avatarFile" accept="image/*">
+                <p class="hint">自动裁成正方形、压到 128×128，几 KB 到几十 KB，不会占云端空间。</p>
+                <button class="submit" id="avatarSave" type="button" disabled>保 存 头 像</button>
+            </div>
+        </div>
+        <p class="msg" id="avatarMsg"></p>
     </section>
 
     <a class="admin-link" href="admin.html">注册名单 · 站长后台（加密 / 解密 / 导出）→</a>
@@ -339,6 +359,7 @@
 
     /* 登录：先按名字取盐，再让服务器比对哈希 */
     function sbLogin(name, pass, done, fail) {
+        var lastHash = "";
         fetchTimeout(SB_URL + "/rest/v1/users?select=salt&name=eq." + encodeURIComponent(name), {
             headers: SB_HEADERS
         }, 9000).then(function (res) {
@@ -349,6 +370,7 @@
                 return;
             }
             return Member.hashPass(pass, rows[0].salt).then(function (h) {
+                lastHash = h;
                 return fetchTimeout(SB_URL + "/rest/v1/rpc/check_login", {
                     method: "POST",
                     headers: SB_HEADERS,
@@ -357,7 +379,7 @@
             }).then(function (res) {
                 return res.json();
             }).then(function (ok) {
-                if (ok === true) done();
+                if (ok === true) done(lastHash);
                 else fail("没找到这个账号，用户名或密码不对。");
             });
         }).catch(function () {
@@ -483,7 +505,7 @@
                 pub.push(Member.toPublic(user));
                 Member.write(Member.PUBLIC_KEY, pub);
 
-                Member.saveSession(name);
+                Member.saveSession(name, hash);
 
                 regMsg.className = "msg ok";
                 regMsg.textContent = text;
@@ -536,8 +558,8 @@
 
         if (!name || !pass) return fail("用户名和密码都要填。");
 
-        function done() {
-            Member.saveSession(name);
+        function done(hash) {
+            Member.saveSession(name, hash);
             loginMsg.className = "msg ok";
             loginMsg.textContent = "登录成功，正在带你回店里…";
             setTimeout(function () { window.location.href = "index.html"; }, 900);
@@ -548,7 +570,7 @@
             var local = Member.localUsers().filter(function (u) { return u.name === name; })[0];
             if (local) {
                 Member.hashPass(pass, local.salt).then(function (h) {
-                    if (h === local.hash) done();
+                    if (h === local.hash) done(h);
                     else fail("没找到这个账号，用户名或密码不对。");
                 });
                 return;
@@ -558,7 +580,7 @@
             if (!entry) return fail("没找到这个账号，用户名或密码不对。");
 
             Member.hashPass(pass, entry.salt).then(function (h) {
-                if (h === entry.hash) done();
+                if (h === entry.hash) done(h);
                 else fail("没找到这个账号，用户名或密码不对。");
             });
         }
@@ -596,6 +618,116 @@
         localLogin();
     });
 
+    /* ---------- 头像 ---------- */
+    var pendingAvatar = null;
+
+    function compressImage(file, size, quality) {
+        return new Promise(function (resolve, reject) {
+            var img = new Image();
+            var url = URL.createObjectURL(file);
+            img.onload = function () {
+                var canvas = document.createElement("canvas");
+                canvas.width = size;
+                canvas.height = size;
+                var ctx = canvas.getContext("2d");
+                var s = Math.min(img.width, img.height);
+                var sx = (img.width - s) / 2;
+                var sy = (img.height - s) / 2;
+                ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
+                URL.revokeObjectURL(url);
+                resolve(canvas.toDataURL("image/jpeg", quality));
+            };
+            img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("bad-image")); };
+            img.src = url;
+        });
+    }
+
+    function renderAvatarPanel() {
+        var panel = document.getElementById("panelAvatar");
+        if (!panel) return;
+
+        var me = Member.session();
+        if (!sbMode || !me || !me.name) {
+            panel.classList.add("hidden");
+            return;
+        }
+        panel.classList.remove("hidden");
+
+        var img = document.getElementById("avatarPreview");
+        var cached = null;
+        try { cached = localStorage.getItem("coffee-avatar:" + me.name); } catch (e) {}
+        if (cached) img.src = cached;
+
+        if (!cached) {
+            fetchTimeout(SB_URL + "/rest/v1/rpc/get_avatar", {
+                method: "POST",
+                headers: SB_HEADERS,
+                body: JSON.stringify({ p_name: me.name })
+            }, 8000).then(function (r) { return r.ok ? r.json() : null; })
+              .then(function (data) {
+                  if (typeof data === "string" && data) {
+                      img.src = data;
+                      try { localStorage.setItem("coffee-avatar:" + me.name, data); } catch (e) {}
+                  }
+              }).catch(function () {});
+        }
+    }
+
+    document.getElementById("avatarFile").addEventListener("change", function (e) {
+        var file = e.target.files && e.target.files[0];
+        var msg = document.getElementById("avatarMsg");
+        if (!file) return;
+
+        if (file.size > 8 * 1024 * 1024) {
+            msg.className = "msg err";
+            msg.textContent = "图片太大了，换一张小于 8MB 的。";
+            return;
+        }
+
+        compressImage(file, 128, 0.8).then(function (dataUrl) {
+            pendingAvatar = dataUrl;
+            document.getElementById("avatarPreview").src = dataUrl;
+            document.getElementById("avatarSave").disabled = false;
+            msg.className = "msg ok";
+            msg.textContent = "预览可以吗？满意就点保存。";
+        }).catch(function () {
+            msg.className = "msg err";
+            msg.textContent = "这张图读不出来，换一张试试。";
+        });
+    });
+
+    document.getElementById("avatarSave").addEventListener("click", function () {
+        var msg = document.getElementById("avatarMsg");
+        var me = Member.session();
+
+        if (!pendingAvatar) { msg.className = "msg err"; msg.textContent = "先选一张图。"; return; }
+        if (!me || !me.name) { msg.className = "msg err"; msg.textContent = "先登录。"; return; }
+        if (!me.hash) { msg.className = "msg err"; msg.textContent = "登录信息过期了，重新登录一次就能传。"; return; }
+
+        msg.className = "msg";
+        msg.textContent = "正在保存…";
+
+        fetchTimeout(SB_URL + "/rest/v1/rpc/set_avatar", {
+            method: "POST",
+            headers: SB_HEADERS,
+            body: JSON.stringify({ p_name: me.name, p_hash: me.hash, p_data: pendingAvatar })
+        }, 15000).then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (out) {
+              if (out && out.ok) {
+                  try { localStorage.setItem("coffee-avatar:" + me.name, pendingAvatar); } catch (e) {}
+                  msg.className = "msg ok";
+                  msg.textContent = "保存好了，回店里就能在右上角看到。";
+              } else {
+                  msg.className = "msg err";
+                  msg.textContent = "没存上：" + (out && out.error === "auth" ? "身份校验没过，重新登录一下。" : "云端出错了。");
+              }
+          })
+          .catch(function () {
+              msg.className = "msg err";
+              msg.textContent = "连不上云端，稍后再试。";
+          });
+    });
+
     /* ---------- 登录状态条 ---------- */
     function renderSession() {
         var me = Member.session();
@@ -620,7 +752,9 @@
     loadRemote();
     refreshQuota();
     renderSession();
+    renderAvatarPanel();
 })();
 </script>
+    <script src="../assets/live.js?v=20261022"></script>
 </body>
 </html>

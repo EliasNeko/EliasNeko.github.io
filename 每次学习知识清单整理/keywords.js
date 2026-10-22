@@ -35,7 +35,7 @@
   c:["<title>","<meta>","<link>","<style>"],
   x:`<head>
     <meta charset="UTF-8">
-    <title>猫和鱼的咖啡店</title>
+    <title>龙潜猫隐的咖啡店</title>
     <link rel="stylesheet" href="style.css">
   </head>`,
   o:"用户看不到这一块，但标签页标题、中文是否乱码、样式是否加载，全靠它。"},
@@ -55,9 +55,9 @@
   u:"写在 <head> 里，只能有一个，纯文本，不能放标签。",
   c:["<head>","<meta>"],
   x:`<head>
-    <title>猫和鱼的回忆咖啡店</title>
+    <title>龙潜猫隐的咖啡店</title>
   </head>`,
-  o:"浏览器顶部标签页显示「猫和鱼的回忆咖啡店」；页面正文里不会出现这行字。"},
+  o:"浏览器顶部标签页显示「龙潜猫隐的咖啡店」；页面正文里不会出现这行字。"},
 
   {k:"<meta>", t:"HTML", a:["meta","元信息","charset","viewport"],
   w:"描述页面的元信息，最常见的是字符编码和手机视口设置。它是自闭合标签。",
