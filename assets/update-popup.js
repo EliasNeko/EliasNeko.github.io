@@ -77,7 +77,7 @@
         wrap.className = "up-mask";
         wrap.innerHTML =
             '<div class="up-card" role="dialog" aria-modal="true" aria-label="更新日志">' +
-                '<p class="up-notice">本网站及代码在 Git 上均开源，且将一直免费 FREE！本站仅供大学生或需要参加考试的社会人士参考学习使用。任何人都可以模仿、参考、学习，但请勿用于商业用途，或做出违反互联网法律等违规的事情！</p>' +
+                '<p class="up-notice">本网站及代码在 Git 上均开源，且将一直免费 FREE！本站仅供大学生或需要参加考试的社会人士参考学习使用。任何人都可以模仿、参考、学习，但请勿用于商业用途，或做出违反互联网法律等违规的事情！<br/>语言学习项目已上线 Python / Java / C / JavaScript 四门课程。</p>' +
                 (lines ? '<p class="up-kicker">今日更新 · ' + today + "</p>" : '<p class="up-kicker">今 日 · ' + today + "</p>") +
                 body +
                 '<p class="up-contact">有想法、发现 bug、想催更 —— <a href="mailto:hyyzcn0115@163.com">hyyzcn0115@163.com</a> · 龙潜猫隐</p>' +

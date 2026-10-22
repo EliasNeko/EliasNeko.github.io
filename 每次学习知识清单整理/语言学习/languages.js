@@ -25,5 +25,25 @@ var LANGUAGES = [
         meta: "28 节 · 含 2 个动手项目",
         file: "java.html",
         open: true
+    },
+    {
+        id: "c",
+        name: "C 语言",
+        level: "零基础",
+        tagline: "贴着机器写代码",
+        desc: "内存、指针、手动管理。学完你会知道，别的语言都替你做了什么。",
+        meta: "28 节 · 含 2 个动手项目",
+        file: "c.html",
+        open: true
+    },
+    {
+        id: "javascript",
+        name: "JavaScript",
+        level: "零基础",
+        tagline: "让网页活起来",
+        desc: "浏览器唯一会执行的语言。从 DOM、事件讲到 fetch，最后写一个待办清单。",
+        meta: "29 节 · 含 2 个动手项目",
+        file: "js.html",
+        open: true
     }
 ];

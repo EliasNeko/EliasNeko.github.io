@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>JavaScript · 从零开始 · 语言学习项目</title>
+        <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .breadcrumb { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; }
+            .breadcrumb:hover { color: var(--accent); }
+            .card h3 { margin: 26px 0 12px; font-size: 15px; font-weight: normal; color: var(--accent-2); letter-spacing: 1px; }
+            .card h3:first-of-type { margin-top: 6px; }
+            .tip { border-left-color: #7dd3fc !important; }
+        </style>
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">语言学习项目 · JavaScript</p>
+            <h1>让网页活起来</h1>
+            <p class="sub">零基础 · 29 节 · 从「它是什么」到「自己写一个待办清单」</p>
+            <div class="meta">
+                <span>小节 <b>29</b></span>
+                <span>动手项目 <b>2</b></span>
+                <span>环境 <b>浏览器 + Node</b></span>
+                <span>更新 <b>2026-10-22</b></span>
+            </div>
+            <p class="series">这门课不需要先学别的语言。打开浏览器的 F12，你现在就能开始。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+
+            <main>
+                <a class="breadcrumb" href="index.html">← 回到语言目录</a>
+
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>JavaScript 是 1995 年 Brendan Eich 用十天写出来的语言。名字里带 Java，但它和 Java <b>没有血缘关系</b>——当年只是为了蹭热度。</p>
+<p>它是<b>浏览器唯一会执行的语言</b>。你在网页上见过的所有动画、弹窗、购物车、下拉菜单，背后都是它。现在它还能跑服务器（Node.js）、写小程序、做桌面软件（Electron）。</p>
+<table>
+<tr><th>运行在哪</th><td>浏览器里（Chrome 的 V8 引擎），或者装了 Node.js 的电脑上</td></tr>
+<tr><th>类型</th><td><b>动态类型</b>：不用写 <code>int</code>，变量爱装什么装什么</td></tr>
+<tr><th>单线程</th><td>一次只做一件事，但它有「事件循环」，等网络的时候可以去干别的</td></tr>
+<tr><th>生态</th><td>全世界最大的包仓库（npm），但也有大量没人维护的垃圾</td></tr>
+</table>
+<div class="note"><b>和 HTML/CSS 的分工：</b>HTML 是骨架，CSS 是皮肤，<b>JavaScript 是肌肉</b>——只有它能「动」。</div></section>
+
+<section class="card" id="s02"><h2><span class="num">02</span>能干什么</h2>
+<table>
+<tr><th>场景</th><th>它在做什么</th><th>常用东西</th></tr>
+<tr><td>网页交互</td><td>点击、切换、表单校验、轮播</td><td>DOM、事件</td></tr>
+<tr><td>前端框架</td><td>复杂页面的组织方式</td><td>Vue、React</td></tr>
+<tr><td>后端</td><td>写接口、连数据库</td><td>Node.js、Express</td></tr>
+<tr><td>小程序</td><td>微信里的应用</td><td>小程序框架（也是 JS）</td></tr>
+<tr><td>桌面软件</td><td>跨平台应用</td><td>Electron（VS Code 就是）</td></tr>
+<tr><td>小工具</td><td>脚本、自动化</td><td>Node + npm</td></tr>
+</table>
+<div class="note"><b>实话：</b>JS 是<b>门槛最低、竞争最激烈</b>的一门。会用的人多，用得好的人少——差别在「能不能把复杂交互写稳」。</div></section>
+
+<section class="card" id="s03"><h2><span class="num">03</span>学完能找什么工作</h2>
+<table><tr><th>方向</th><th>实际做什么</th><th>一句实话</th></tr>
+<tr><td>前端开发</td><td>写页面、对接接口、做交互</td><td>岗位多，但要会 Vue/React 其中之一</td></tr>
+<tr><td>全栈</td><td>前端 + Node 后端</td><td>小公司最爱，什么都要会一点</td></tr>
+<tr><td>小程序开发</td><td>微信/支付宝小程序</td><td>需求稳定，门槛比前端低</td></tr>
+<tr><td>Node 后端</td><td>写服务、处理高并发 IO</td><td>比 Java 岗位少，但上手快</td></tr>
+<tr><td>测试 / 自动化</td><td>写 E2E 测试、爬虫脚本</td><td>入门友好</td></tr></table>
+<div class="note"><b>必须说清楚：</b>「会 JS」现在等于「会 HTML + CSS + JS + 一个框架 + 打包工具」。<b>光会语法，找不到工作。</b></div></section>
+
+<section class="card" id="s04"><h2><span class="num">04</span>装好，让它跑起来</h2>
+<p>JS 最好的一点：<b>不用装</b>。浏览器自带引擎。</p>
+<table>
+<tr><th>方式一（现在就能用）</th><td>打开任意网页，按 <kbd>F12</kbd> → <b>Console</b>，直接敲 <code>1 + 1</code> 回车</td></tr>
+<tr><th>方式二（写文件）</th><td>新建 <code>index.html</code>，里面写 <code>&lt;script&gt;</code>，双击打开</td></tr>
+<tr><th>方式三（Node）</th><td>去 <code>nodejs.org</code> 装 LTS 版，然后 <code>node hello.js</code></td></tr>
+</table>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;测试&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 id="title"&gt;你好&lt;/h1&gt;
+    &lt;script&gt;
+        console.log("控制台能看到我");
+        document.getElementById("title").textContent = "你好，世界";
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<div class="note"><b>Console 是你最好的朋友：</b>报错、打印、试代码，全在那儿。<b>按钮没反应，第一步永远是打开 Console 看红字。</b></div></section>
+
+<section class="card" id="s05"><h2><span class="num">05</span>第一行代码：输出和弹窗</h2>
+<pre><code>// 输出到控制台（开发时最常用）
+console.log("你好，世界");
+console.log("1 + 1 =", 1 + 1);
+
+// 弹窗（少用，会打断用户）
+alert("这是一个提示");
+
+// 改页面上的元素
+let title = document.getElementById("title");
+if (title) title.textContent = "新标题";</code></pre>
+<table>
+<tr><th><code>console.log</code></th><td>打印。<b>可以一次传多个值</b>，用逗号隔开</td></tr>
+<tr><th><code>alert</code></th><td>弹窗。调试能用，正式页面别用</td></tr>
+<tr><th><code>textContent</code></th><td>改元素的文字。<b>比 <code>innerHTML</code> 安全</b>（不会解析标签）</td></tr>
+<tr><th><code>;</code></th><td>可有可无，但建议写，省得以后踩自动分号的坑</td></tr>
+</table>
+<div class="note"><b>第一个坑：</b><code>document.getElementById</code> 在元素还没出现时调用，会得到 <code>null</code>。<b>把 <code>&lt;script&gt;</code> 放在 <code>&lt;/body&gt;</code> 之前</b>，或者用 <code>defer</code>。</div></section>
+
+<section class="card" id="s06"><h2><span class="num">06</span>变量与类型</h2>
+<pre><code>let age = 18;          // 可以改
+const PI = 3.14;       // 不能重新赋值
+var old = 1;           // 老写法，作用域会漏，别用
+
+let name = "阿猫";       // 字符串
+let price = 19.9;       // 数字（没有整数和小数之分）
+let ok = true;          // 布尔
+let nothing = null;     // 空
+let notSet;             // undefined
+
+console.log(typeof name);   // "string"
+console.log(typeof price);  // "number"
+console.log(typeof ok);     // "boolean"</code></pre>
+<table>
+<tr><th><code>let</code></th><td>可以改。默认用它</td></tr>
+<tr><th><code>const</code></th><td>不能重新赋值。<b>能用 const 就用 const</b></td></tr>
+<tr><th><code>typeof null</code></th><td>返回 <code>"object"</code>——这是 JS 的历史 bug，别纠结，记住就行</td></tr>
+<tr><th>没有 int</th><td>只有 <code>number</code>，整数小数都是它</td></tr>
+</table>
+<div class="note"><b>命名：</b>小驼峰 <code>totalPrice</code>；常量全大写 <code>MAX_SIZE</code>；<b>别用拼音</b>。</div></section>
+
+<section class="card" id="s07"><h2><span class="num">07</span>运算 · 两个大坑</h2>
+<pre><code>console.log(7 + 2);      // 9
+console.log(7 / 2);      // 3.5  ← 和 C/Java 不同，没有整数除法
+console.log(7 % 2);      // 1
+console.log(2 ** 10);    // 1024
+
+console.log("3" + 1);    // "31"  ← 坑一：+ 遇到字符串就拼接
+console.log("3" - 1);    // 2     ← 减号会强制转数字
+console.log(1 + 2 + "3"); // "33" ← 从左往右算
+
+console.log(1 == "1");   // true  ← 坑二：== 会转换类型
+console.log(1 === "1");  // false ← === 严格比较，类型也要一致
+console.log(NaN === NaN); // false ← NaN 不等于任何东西
+
+let max = 3 > 1 ? 3 : 1;  // 三元</code></pre>
+<table>
+<tr><th><code>+</code></th><td>数字相加，字符串拼接。<b>只要一边是字符串，结果就是字符串</b></td></tr>
+<tr><th><code>==</code> vs <code>===</code></th><td><code>==</code> 会转类型，<code>===</code> 不会。<b>永远用 <code>===</code></b></td></tr>
+<tr><th><code>NaN</code></th><td>「不是数字」，判断要用 <code>Number.isNaN(x)</code></td></tr>
+<tr><th>小数</th><td><code>0.1 + 0.2</code> 得 <code>0.30000000000000004</code>，涉及钱要小心</td></tr>
+</table>
+<div class="note"><b>用 <code>===</code> 这一条能省你一半的诡异 bug。</b>团队的代码规范里，<code>==</code> 基本是禁止的。</div></section>
+
+<section class="card" id="s08"><h2><span class="num">08</span>字符串</h2>
+<pre><code>let name = "阿猫";
+let msg = &#96;你好，${name}&#96;;     // 模板字符串（反引号）
+console.log(msg);
+
+console.log(name.length);          // 2
+console.log(name[0]);              // 阿
+console.log(name.toUpperCase());   // 阿猫（字母才变）
+console.log("a,b,c".split(","));   // ["a","b","c"]
+console.log(["a","b"].join("-"));  // "a-b"
+console.log("hello".includes("ell")); // true
+console.log("  hi  ".trim());      // "hi"
+console.log("abc".replace("b", "X")); // "aXc"
+
+// 多行
+let text = &#96;第一行
+第二行&#96;;</code></pre>
+<table>
+<tr><th>模板字符串</th><td>用反引号包起来，里面 <code>${}</code> 可以塞变量。<b>拼字符串首选</b></td></tr>
+<tr><th>不可变</th><td>字符串方法都返回新字符串，不改原来的</td></tr>
+<tr><th>长度</th><td><code>.length</code> 是属性，不加括号（和 Java 的 <code>length()</code> 相反）</td></tr>
+</table>
+<div class="note"><b>坑：</b>中文和 emoji 的 <code>length</code> 可能不等于「字数」——部分字符占两个长度单位。</div></section>
+
+<section class="card" id="s09"><h2><span class="num">09</span>类型转换</h2>
+<pre><code>Number("123");      // 123
+Number("abc");      // NaN
+parseInt("12px");   // 12   ← 从头解析，遇到非数字停
+parseFloat("3.14"); // 3.14
+String(123);        // "123"
+Boolean(0);         // false
+Boolean("");        // false
+Boolean("0");       // true ← 坑：非空字符串都是 true
+
+// 隐式转换
+"5" * 2;      // 10
+"5" + 2;      // "52"</code></pre>
+<table>
+<tr><th>假值（falsy）</th><td><code>false</code>、<code>0</code>、<code>""</code>、<code>null</code>、<code>undefined</code>、<code>NaN</code></td></tr>
+<tr><th>真值</th><td>其他一切，包括 <code>"0"</code>、<code>"false"</code>、<code>[]</code>、<code>{}</code></td></tr>
+<tr><th><code>Number</code> vs <code>parseInt</code></th><td><code>Number</code> 要求整串都是数字；<code>parseInt</code> 能容错，但会「偷」前面的数字</td></tr>
+</table>
+<div class="note"><b>输入框取值</b>永远是字符串。<code>input.value === "0"</code> 是真值——判断数字前先 <code>Number()</code> 转一下。</div></section>
+
+<section class="card" id="s10"><h2><span class="num">10</span>条件 · if 与真假值</h2>
+<pre><code>let score = 85;
+
+if (score &gt;= 90) {
+    console.log("优秀");
+} else if (score &gt;= 60) {
+    console.log("及格");
+} else {
+    console.log("不及格");
+}
+
+// 假值判断（很常用）
+let name = "";
+if (!name) console.log("名字是空的");   // 会执行
+
+let list = [];
+if (list.length) console.log("有内容"); // 不会执行
+
+switch (score) {
+    case 100:
+        console.log("满分");
+        break;
+    default:
+        console.log("其他");
+}</code></pre>
+<table>
+<tr><th>falsy</th><td><code>false / 0 / "" / null / undefined / NaN</code>，其他都是真</td></tr>
+<tr><th><code>!</code></th><td>取反。<code>!name</code> 就是「name 是空的」</td></tr>
+<tr><th><code>switch</code></th><td>用的是 <code>===</code> 比较，记得写 <code>break</code></td></tr>
+</table>
+<div class="note"><b>坑：</b><code>if (list)</code> 对空数组永远为真——数组本身不是假值。要判断空，用 <code>list.length === 0</code>。</div></section>
+
+<section class="card" id="s11"><h2><span class="num">11</span>循环</h2>
+<pre><code>for (let i = 0; i &lt; 5; i++) {
+    console.log(i);
+}
+
+// for...of：遍历数组的值（最常用）
+let fruits = ["苹果", "香蕉"];
+for (const f of fruits) console.log(f);
+
+// for...in：遍历对象的键
+let user = { name: "阿猫", age: 18 };
+for (const key in user) console.log(key, user[key]);
+
+// while
+let n = 1;
+while (n &lt;= 3) { console.log(n); n++; }
+
+// 数组专用
+fruits.forEach(function (f, i) {
+    console.log(i, f);
+});</code></pre>
+<table>
+<tr><th><code>for...of</code></th><td>要值，用 of</td></tr>
+<tr><th><code>for...in</code></th><td>要键（下标或属性名），用 in</td></tr>
+<tr><th><code>forEach</code></th><td>数组的方法，不能 <code>break</code></td></tr>
+<tr><th>作用域</th><td><code>let</code> 在 <code>{ }</code> 里有效，<code>var</code> 会漏出去</td></tr>
+</table>
+<div class="note"><b>小练习：</b>用 <code>for...of</code> 遍历一个价格数组，算出总价并打印。</div></section>
+
+<section class="card" id="s12"><h2><span class="num">12</span>数组 · 最常用的数据结构</h2>
+<pre><code>let list = ["拿铁", "美式"];
+list.push("摩卡");          // 末尾加
+list.unshift("浓缩");        // 开头加
+console.log(list.length);    // 4
+console.log(list[0]);        // 浓缩
+list.pop();                  // 删末尾
+list.shift();                // 删开头
+list.splice(0, 1);           // 从下标 0 删 1 个
+
+let nums = [3, 1, 2];
+nums.sort((a, b) =&gt; a - b);  // 数字排序要传比较函数
+console.log(nums);            // [1, 2, 3]
+
+// 三个最常用的「变换」
+let doubled = nums.map(x =&gt; x * 2);          // [2, 4, 6]
+let big = nums.filter(x =&gt; x &gt; 1);           // [2, 3]
+let sum = nums.reduce((s, x) =&gt; s + x, 0);   // 6
+console.log(nums.includes(2));                // true</code></pre>
+<table>
+<tr><th><code>map</code></th><td>每个元素变成另一个，返回新数组</td></tr>
+<tr><th><code>filter</code></th><td>筛选，返回新数组</td></tr>
+<tr><th><code>reduce</code></th><td>把数组「压」成一个值（求和、求最大）</td></tr>
+<tr><th><code>sort</code></th><td><b>默认按字符串排序</b>，数字必须传 <code>(a,b) =&gt; a - b</code></td></tr>
+</table>
+<div class="note"><b>坑：</b><code>[10, 9, 1].sort()</code> 得到 <code>[1, 10, 9]</code>——因为默认按字符串比。<b>数字排序一定要传比较函数。</b></div></section>
+
+<section class="card" id="s13"><h2><span class="num">13</span>对象 · 一组有名字的数据</h2>
+<pre><code>let coffee = {
+    name: "拿铁",
+    price: 32,
+    hot: true,
+    desc: function () {
+        return this.name + " ¥" + this.price;
+    }
+};
+
+console.log(coffee.name);        // 拿铁
+console.log(coffee["price"]);    // 32
+coffee.price = 35;               // 改
+coffee.size = "大杯";             // 加新属性
+delete coffee.hot;               // 删
+console.log(coffee.desc());
+
+// 解构
+let { name, price } = coffee;
+console.log(name, price);
+
+// 可选链：对象可能是空的时候
+console.log(coffee?.supplier?.phone);   // 不会报错，得到 undefined</code></pre>
+<table>
+<tr><th>点 vs 方括号</th><td>名字固定用点；名字是变量用方括号 <code>obj[key]</code></td></tr>
+<tr><th><code>this</code></th><td>在对象的方法里指这个对象本身</td></tr>
+<tr><th>解构</th><td><code>let { name } = obj</code> 一行取出字段</td></tr>
+<tr><th>可选链 <code>?.</code></th><td>中间有一层是 null/undefined 就停下，返回 undefined，不报错</td></tr>
+</table>
+<div class="note"><b>对象和数组的区别：</b>数组按<b>顺序</b>取（<code>list[0]</code>），对象按<b>名字</b>取（<code>obj.name</code>）。</div></section>
+
+<section class="card" id="s14"><h2><span class="num">14</span>函数 · 三种写法</h2>
+<pre><code>// 1. 声明（会提升，能在定义前调用）
+function add(a, b) {
+    return a + b;
+}
+
+// 2. 函数表达式（赋值给变量）
+const sub = function (a, b) {
+    return a - b;
+};
+
+// 3. 箭头函数（最常用，写法短）
+const mul = (a, b) =&gt; a * b;
+const say = name =&gt; console.log("你好，" + name);
+
+// 默认参数
+function greet(name = "客人") {
+    return "你好，" + name;
+}
+console.log(greet());        // 你好，客人
+console.log(greet("阿猫"));   // 你好，阿猫
+
+// 函数也是值，可以当参数传
+[1, 2, 3].map(x =&gt; x * 2);</code></pre>
+<table>
+<tr><th>箭头函数</th><td><code>(参数) =&gt; 返回值</code>。只有一行时不用写 <code>return</code></td></tr>
+<tr><th>区别</th><td>箭头函数<b>没有自己的 <code>this</code></b>，它跟着外层的 <code>this</code> 走</td></tr>
+<tr><th>参数</th><td>JS 不检查参数个数，少传就是 <code>undefined</code></td></tr>
+</table>
+<div class="note"><b>什么时候用哪种：</b>回调、数组方法用箭头函数；需要在对象里用 <code>this</code> 的方法，用普通函数。</div></section>
+
+<section class="card" id="s15"><h2><span class="num">15</span>作用域与闭包</h2>
+<pre><code>let a = 1;              // 全局
+
+function outer() {
+    let b = 2;          // 函数作用域
+    if (true) {
+        let c = 3;      // 块级作用域（let/const 才有）
+        console.log(a, b, c);
+    }
+    // console.log(c);  // 报错：c 出不来
+}
+
+// 闭包：函数记住了它出生时的变量
+function counter() {
+    let n = 0;
+    return function () {
+        n++;
+        return n;
+    };
+}
+
+const next = counter();
+console.log(next());   // 1
+console.log(next());   // 2
+console.log(next());   // 3</code></pre>
+<table>
+<tr><th>块级作用域</th><td><code>let</code>/<code>const</code> 只在最近的一对 <code>{ }</code> 里有效</td></tr>
+<tr><th>闭包</th><td>内部函数「记住」了外部函数的变量，外部函数结束后那些变量还在</td></tr>
+<tr><th>经典坑</th><td>循环里用 <code>var</code> 绑事件，所有回调拿到的是同一个 <code>i</code>（最后的值）</td></tr>
+</table>
+<div class="note"><b>闭包不是什么玄学：</b>它就是「函数 + 它记得的那些变量」。计时器、防抖、模块私有变量，全靠它。</div></section>
+
+<section class="card" id="s16"><h2><span class="num">16</span>DOM · 操作页面</h2>
+<pre><code>&lt;p id="msg"&gt;原来的文字&lt;/p&gt;
+&lt;ul id="list"&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+let el = document.querySelector("#msg");   // 选第一个
+el.textContent = "改过的文字";
+el.classList.add("active");                 // 加类
+el.classList.toggle("hide");                // 有就删，没有就加
+el.style.color = "red";                     // 直接改样式（少用，优先改类）
+
+let li = document.createElement("li");      // 建元素
+li.textContent = "第一项";
+document.querySelector("#list").appendChild(li);
+&lt;/script&gt;</code></pre>
+<table>
+<tr><th><code>querySelector</code></th><td>用 CSS 选择器选<b>第一个</b>：<code>#id</code>、<code>.class</code>、<code>div p</code></td></tr>
+<tr><th><code>querySelectorAll</code></th><td>选全部，得到类数组，用 <code>forEach</code> 遍历</td></tr>
+<tr><th><code>textContent</code></th><td>纯文字，安全</td></tr>
+<tr><th><code>innerHTML</code></th><td>能解析标签，<b>别把用户输入塞进去</b>（XSS）</td></tr>
+</table>
+<div class="note"><b>顺序很重要：</b>脚本必须等元素出现后再选。放在 <code>&lt;/body&gt;</code> 前，或用 <code>defer</code>。</div></section>
+
+<section class="card" id="s17"><h2><span class="num">17</span>事件 · 让页面响应</h2>
+<pre><code>&lt;button id="btn"&gt;点我&lt;/button&gt;
+&lt;ul id="list"&gt;
+    &lt;li&gt;第一项&lt;/li&gt;
+    &lt;li&gt;第二项&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+document.querySelector("#btn").addEventListener("click", function (e) {
+    console.log("被点了", e.target);
+});
+
+// 事件委托：监听器挂在父元素上
+document.querySelector("#list").addEventListener("click", function (e) {
+    if (e.target.tagName === "LI") {
+        console.log("点了：", e.target.textContent);
+    }
+});
+&lt;/script&gt;</code></pre>
+<table>
+<tr><th><code>addEventListener</code></th><td>绑定事件，可绑多个，不会互相覆盖</td></tr>
+<tr><th>常见事件</th><td><code>click</code>、<code>input</code>、<code>submit</code>、<code>keydown</code>、<code>mouseover</code></td></tr>
+<tr><th><code>e.target</code></th><td>真正被点的那个元素</td></tr>
+<tr><th>事件委托</th><td>监听父元素，靠冒泡处理子元素。<b>动态加的元素也能响应</b></td></tr>
+</table>
+<div class="note"><b>为什么用委托：</b>列表以后会加第十项、第一百项，监听挂在父元素上，新加的项自动有效。</div></section>
+
+<section class="card" id="s18"><h2><span class="num">18</span>表单 · 取值与拦住提交</h2>
+<pre><code>&lt;form id="form"&gt;
+    &lt;input id="name" placeholder="名字"&gt;
+    &lt;input id="age" type="number" placeholder="年龄"&gt;
+    &lt;button type="submit"&gt;提交&lt;/button&gt;
+&lt;/form&gt;
+&lt;p id="msg"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+document.querySelector("#form").addEventListener("submit", function (e) {
+    e.preventDefault();                 // 拦住默认的整页刷新
+
+    let name = document.querySelector("#name").value.trim();
+    let age = document.querySelector("#age").value;
+
+    if (!name) {
+        document.querySelector("#msg").textContent = "名字不能空";
+        return;
+    }
+    if (Number(age) &lt; 0 || Number(age) &gt; 120) {
+        document.querySelector("#msg").textContent = "年龄不对";
+        return;
+    }
+
+    document.querySelector("#msg").textContent = "提交成功：" + name;
+    e.target.reset();                   // 清空表单
+});
+&lt;/script&gt;</code></pre>
+<table>
+<tr><th><code>preventDefault</code></th><td>取消元素默认行为（表单提交会刷新页面、链接会跳转）</td></tr>
+<tr><th><code>.value</code></th><td>输入框的值，<b>永远是字符串</b></td></tr>
+<tr><th>前端校验</th><td>只为体验。<b>真正安全靠后端校验</b>，用户按 F12 就能改</td></tr>
+</table>
+<div class="note"><b>这个模式你以后会写一千遍：</b>拦住提交 → 取值 → 校验 → 成功或提示 → 清空。</div></section>
+
+<section class="card" id="s19"><h2><span class="num">19</span>JSON 与 localStorage</h2>
+<pre><code>// 对象 → 字符串（存之前）
+let user = { name: "阿猫", age: 18 };
+let text = JSON.stringify(user);
+console.log(text);                 // {"name":"阿猫","age":18}
+
+// 字符串 → 对象（读之后）
+let back = JSON.parse(text);
+console.log(back.name);            // 阿猫
+
+// 存在浏览器里，关掉页面还在
+localStorage.setItem("user", text);
+let saved = localStorage.getItem("user");
+console.log(saved ? JSON.parse(saved).name : "没有");
+
+// 数组也一样
+let cart = [{ id: 1, qty: 2 }];
+localStorage.setItem("cart", JSON.stringify(cart));
+
+localStorage.removeItem("user");
+// localStorage.clear();   // 别手滑，会清空全部</code></pre>
+<table>
+<tr><th><code>JSON.stringify</code></th><td>对象/数组 → 字符串</td></tr>
+<tr><th><code>JSON.parse</code></th><td>字符串 → 对象，<b>格式不对会抛异常</b></td></tr>
+<tr><th><code>localStorage</code></th><td>只能存字符串，永久保存在这台浏览器</td></tr>
+<tr><th>sessionStorage</th><td>关掉标签页就没了</td></tr>
+</table>
+<div class="note"><b>只记得「这台浏览器」：</b>换设备、换浏览器、清缓存，数据就没了。要跨设备，必须走后端。</div></section>
+
+<section class="card" id="s20"><h2><span class="num">20</span>定时器 · 让事情晚点发生</h2>
+<pre><code>// 多久之后执行一次
+let timer = setTimeout(function () {
+    console.log("3 秒到了");
+}, 3000);
+
+clearTimeout(timer);        // 取消它
+
+// 每隔一段时间执行
+let tick = setInterval(function () {
+    console.log("每秒一次");
+}, 1000);
+
+setTimeout(function () {
+    clearInterval(tick);    // 5 秒后停
+}, 5000);</code></pre>
+<table>
+<tr><th><code>setTimeout</code></th><td>延迟执行一次，返回一个编号</td></tr>
+<tr><th><code>setInterval</code></th><td>重复执行，<b>一定要记得 clearInterval</b>，否则越积越多</td></tr>
+<tr><th>时间</th><td>单位是毫秒。<b>不保证精确</b>，主线程忙的时候会推后</td></tr>
+</table>
+<div class="note"><b>常见 bug：</b>切页面、切标签时忘了清定时器，回来发现轮播转得飞快。离开时 <code>clearInterval</code>。</div></section>
+
+<section class="card" id="s21"><h2><span class="num">21</span>异步 · Promise 与 async/await</h2>
+<pre><code>// 一个「以后才有结果」的操作
+function wait(ms) {
+    return new Promise(function (resolve) {
+        setTimeout(function () { resolve("等完了"); }, ms);
+    });
+}
+
+// 旧写法：链式 then
+wait(1000).then(function (msg) {
+    console.log(msg);
+});
+
+// 新写法：async / await（推荐）
+async function run() {
+    console.log("开始");
+    let msg = await wait(1000);     // 等它完成再往下走
+    console.log(msg);
+    console.log("结束");
+}
+run();</code></pre>
+<table>
+<tr><th>为什么异步</th><td>JS 单线程，等网络的时候不能把整个页面卡住</td></tr>
+<tr><th><code>Promise</code></th><td>「将来会有结果」的盒子，有 <code>resolve</code> 和 <code>reject</code></td></tr>
+<tr><th><code>await</code></th><td>等 Promise 出结果，只能在 <code>async</code> 函数里用</td></tr>
+<tr><th>错误处理</th><td><code>try { await ... } catch (e) { ... }</code></td></tr>
+</table>
+<div class="note"><b>一句话：</b><code>await</code> 让异步代码看起来像同步，读起来顺得多。现代代码基本都这么写。</div></section>
+
+<section class="card" id="s22"><h2><span class="num">22</span>fetch · 和服务器说话</h2>
+<pre><code>async function load() {
+    try {
+        let res = await fetch("https://example.com/api/list");
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        let data = await res.json();
+        console.log(data);
+    } catch (e) {
+        console.log("请求失败：", e.message);
+    }
+}
+
+// 发数据
+async function save(user) {
+    let res = await fetch("https://example.com/api/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user)
+    });
+    return res.json();
+}</code></pre>
+<table>
+<tr><th><code>fetch</code></th><td>发请求，返回 Promise。<b>要 <code>await</code> 两次</b>：一次拿响应，一次拿内容</td></tr>
+<tr><th><code>res.ok</code></th><td>状态码 200~299 为 true。<b>404、500 不会自动报错</b>，要自己判断</td></tr>
+<tr><th><code>res.json()</code></th><td>把返回的 JSON 解析成对象</td></tr>
+<tr><th>CORS</th><td>跨域请求要对方允许，否则浏览器直接拦掉</td></tr>
+</table>
+<div class="note"><b>坑：</b>网络断了、跨域被拦，<code>fetch</code> 会直接抛异常——所以一定要 <code>try/catch</code>，不然页面就静悄悄没反应。</div></section>
+
+<section class="card" id="s23"><h2><span class="num">23</span>模块与类 · 代码长大之后</h2>
+<pre><code>// math.js
+export function add(a, b) { return a + b; }
+export const PI = 3.14;
+
+// main.js
+import { add, PI } from "./math.js";
+console.log(add(1, 2), PI);
+
+// 类（和 Java 很像）
+class Coffee {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
+    }
+    desc() {
+        return this.name + " ¥" + this.price;
+    }
+}
+
+let c = new Coffee("拿铁", 32);
+console.log(c.desc());</code></pre>
+<table>
+<tr><th><code>export / import</code></th><td>一个文件一个模块。<code>&lt;script type="module"&gt;</code> 里才能用</td></tr>
+<tr><th><code>class</code></th><td>语法糖，本质还是原型。有 <code>constructor</code>、<code>this</code>、<code>extends</code></td></tr>
+<tr><th>没有 private</th><td>较新版本才有 <code>#field</code>；一般靠约定（下划线开头表示内部用）</td></tr>
+</table>
+<div class="note"><b>先别急着学框架：</b>模块和类搞清楚，Vue/React 的代码你才看得懂。</div></section>
+
+<section class="card" id="s24"><h2><span class="num">24</span>调试 · F12 的正确用法</h2>
+<table>
+<tr><th>Console</th><td>看报错、打印、直接敲代码试</td></tr>
+<tr><th>Elements</th><td>看 DOM 和 CSS，改样式即时生效</td></tr>
+<tr><th>Sources</th><td>打断点，一行一行执行，看变量的值</td></tr>
+<tr><th>Network</th><td>看每个请求：状态码、返回内容、耗时</td></tr>
+<tr><th>Application</th><td>看 localStorage、Cookie</td></tr>
+</table>
+<pre><code>console.log("普通");
+console.warn("黄色警告");
+console.error("红色错误");
+console.table([{ a: 1 }, { a: 2 }]);   // 表格显示
+console.time("耗时");
+// ... 一些代码
+console.timeEnd("耗时");</code></pre>
+<div class="note"><b>排查顺序：</b>看 Console 红字 → 看 Network 里请求成没成 → 断点看变量。90% 的问题到第二步就找到了。</div></section>
+
+<section class="card" id="s25"><h2><span class="num">25</span>写干净的 JS</h2>
+<table>
+<tr><th><code>const</code> 优先</th><td>不变的用 const，减少「谁改了它」的猜疑</td></tr>
+<tr><th>避免全局</th><td>别在顶层到处 <code>let</code>；用函数、模块把变量关起来</td></tr>
+<tr><th>函数短</th><td>超过 30 行就拆</td></tr>
+<tr><th>命名</th><td><code>isLoading</code>、<code>userList</code>，一眼看出是什么</td></tr>
+<tr><th>别用魔法数</th><td><code>if (code === 403)</code> 写成常量 <code>FORBIDDEN</code></td></tr>
+<tr><th>早返回</th><td>先处理异常情况，正常逻辑放最后，少一层缩进</td></tr>
+</table>
+<pre><code>// 不好
+function f(u) {
+    if (u) {
+        if (u.name) {
+            return u.name;
+        }
+    }
+}
+
+// 好
+function nameOf(u) {
+    if (!u) return "";
+    if (!u.name) return "";
+    return u.name;
+}</code></pre>
+<div class="note"><b>真话：</b>JS 的坑已经够多了（<code>==</code>、<code>this</code>、类型转换）。<b>别自己再造新的。</b></div></section>
+
+<section class="card" id="s26"><h2><span class="num">26</span>动手：写一个待办清单</h2>
+<p>目标：输入 → 添加 → 勾选完成 → 删除 → 刷新还在。<b>用到数组、DOM、事件委托、localStorage</b>。</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;待办&lt;/title&gt;
+&lt;style&gt;
+    body { font-family: sans-serif; max-width: 420px; margin: 40px auto; }
+    li { margin: 8px 0; }
+    .done { text-decoration: line-through; color: #999; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;待办清单&lt;/h2&gt;
+    &lt;input id="input" placeholder="要做什么？"&gt;
+    &lt;button id="add"&gt;添加&lt;/button&gt;
+    &lt;ul id="list"&gt;&lt;/ul&gt;
+
+    &lt;script&gt;
+    let todos = JSON.parse(localStorage.getItem("todos") || "[]");
+
+    const listEl = document.querySelector("#list");
+
+    function save() {
+        localStorage.setItem("todos", JSON.stringify(todos));
+    }
+
+    function render() {
+        listEl.innerHTML = "";
+        todos.forEach(function (t, i) {
+            let li = document.createElement("li");
+            li.className = t.done ? "done" : "";
+
+            let span = document.createElement("span");
+            span.textContent = t.text;
+            span.style.cursor = "pointer";
+            span.dataset.index = i;
+
+            let del = document.createElement("button");
+            del.textContent = "删除";
+            del.dataset.del = i;
+
+            li.appendChild(span);
+            li.appendChild(del);
+            listEl.appendChild(li);
+        });
+    }
+
+    document.querySelector("#add").addEventListener("click", function () {
+        let input = document.querySelector("#input");
+        let text = input.value.trim();
+        if (!text) return;
+        todos.push({ text: text, done: false });
+        input.value = "";
+        save();
+        render();
+    });
+
+    // 事件委托：一个监听器管所有项
+    listEl.addEventListener("click", function (e) {
+        if (e.target.dataset.index !== undefined) {
+            let i = Number(e.target.dataset.index);
+            todos[i].done = !todos[i].done;
+            save();
+            render();
+        }
+        if (e.target.dataset.del !== undefined) {
+            let i = Number(e.target.dataset.del);
+            todos.splice(i, 1);
+            save();
+            render();
+        }
+    });
+
+    render();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3>这段代码在讲什么</h3>
+<table>
+<tr><th>第 1 步</th><td>数据先用一个数组 <code>todos</code> 表示</td></tr>
+<tr><th>第 2 步</th><td><code>render()</code> 负责「把数据画出来」，每次改完都重画</td></tr>
+<tr><th>第 3 步</th><td>事件委托：一个监听器处理所有 li 的点击和删除</td></tr>
+<tr><th>第 4 步</th><td><code>dataset</code> 把下标存到元素上，点击时取出来</td></tr>
+</table>
+<div class="note"><b>练手方向（自己动手改）：</b>加「全部 / 未完成 / 已完成」筛选；加「清空已完成」；加编辑功能；按回车也能添加。<b>你改得动，才算真的看懂了。</b></div></section>
+
+<section class="card" id="s27"><h2><span class="num">27</span>独立项目：做一个「搜索过滤列表」</h2>
+<p>这一节<b>没有完整代码</b>。给你需求、验收标准、和卡住时的提示。</p>
+<h3>要做什么</h3>
+<table>
+<tr><th>1</th><td>页面上有一个搜索框，下面是一列表（电影、书、同学都行，自己编 10 条数据）</td></tr>
+<tr><th>2</th><td>边打字边过滤，<b>不用点按钮</b></td></tr>
+<tr><th>3</th><td>没有结果时显示「没有找到」</td></tr>
+<tr><th>4</th><td>搜索词高亮显示（可选，加分）</td></tr>
+</table>
+<h3>验收标准</h3>
+<table>
+<tr><th>1</th><td>输入「阿」，列表只剩包含「阿」的项</td></tr>
+<tr><th>2</th><td>清空输入框，全部恢复</td></tr>
+<tr><th>3</th><td>不区分大小写（英文时有用）</td></tr>
+<tr><th>4</th><td>数据是数组，渲染由一个 <code>render(list)</code> 函数完成</td></tr>
+</table>
+<h3>卡住时的提示</h3>
+<table>
+<tr><th>提示 1</th><td>用 <code>input</code> 事件，不是 <code>click</code>：<code>inputEl.addEventListener("input", ...)</code></td></tr>
+<tr><th>提示 2</th><td>过滤：<code>data.filter(item =&gt; item.name.includes(keyword))</code></td></tr>
+<tr><th>提示 3</th><td>大小写：两边都 <code>toLowerCase()</code> 再比</td></tr>
+<tr><th>提示 4</th><td>渲染前先清空容器：<code>listEl.innerHTML = ""</code></td></tr>
+</table>
+<div class="note"><b>做完之后：</b>把数据换成 <code>fetch</code> 从网上拉，就是一个真项目了。</div></section>
+
+<section class="card" id="s28"><h2><span class="num">28</span>学完之后往哪走</h2>
+<table>
+<tr><th>阶段</th><th>做什么</th><th>达到什么算过关</th></tr>
+<tr><td>第 1 周</td><td>把这 29 节敲一遍，两个项目各写一次</td><td>不看教程能写出事件委托和 localStorage 的套路</td></tr>
+<tr><td>第 2–3 周</td><td>学一个框架（Vue 最好上手）</td><td>能做一个带增删改查的小页面</td></tr>
+<tr><td>第 2 个月</td><td>学打包工具（Vite）、学 Git</td><td>能把自己的项目部署到网上</td></tr>
+<tr><td>第 3 个月</td><td>做一个小作品，放到 GitHub Pages</td><td>有一个能发给别人的链接</td></tr>
+</table>
+<h3>几个真值得收藏的地方</h3>
+<table>
+<tr><th>MDN</th><td><code>developer.mozilla.org</code> —— JS 的字典，比任何教程都准</td></tr>
+<tr><th>javascript.info</th><td>现代 JS 教程，讲得深且清楚</td></tr>
+<tr><th>Vue 官方文档</th><td>中文最好的一份框架文档</td></tr>
+</table>
+<div class="note"><b>一句提醒：</b>别在教程里泡太久。<b>挑一个自己想做的页面，做出来，卡住再查</b>——这是最快的一条路。</div>
+</section>
+
+<section class="card" id="s29"><h2><span class="num">29</span>结语</h2>
+<p>JavaScript 是最容易被低估、也最容易被高估的语言。</p>
+<p>说它被低估，是因为很多人只把它当「让按钮动一下」；说它被高估，是因为会写 <code>console.log</code> 的人也说自己会前端。</p>
+<p>真正的分界线不在语法，在<b>能不能把一个交互做稳</b>：边界情况、加载失败、空数据、重复点击——这些才是前端工程师每天在想的事。</p>
+<div class="note"><b>三个忠告：</b><br>① <b>用 <code>===</code>，别用 <code>==</code>。</b>这一条能省你一半的诡异 bug。<br>② <b>先画出来，再想优雅。</b>能跑的代码会告诉你哪里不好。<br>③ <b>F12 是你的老师。</b>任何网页都能拆开看，这是前端独有的特权。</div>
+<p style="text-align:right;color:#7dd3fc;">—— 龙潜猫隐</p></section>
+
+                <p style="margin-top:34px;"><a class="breadcrumb" href="index.html">← 回到语言目录</a></p>
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">JavaScript · 2026-10-22 建</div>
+            <div>语言学习项目 · 第四门语言</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">每一节都能单独看，卡在哪一节就回哪一节</div>
+        </footer>
+
+        <script>
+        (function () {
+            var toc = document.querySelector(".toc");
+            var secs = document.querySelectorAll("main section.card");
+            for (var i = 0; i < secs.length; i++) {
+                if (!secs[i].id) continue;
+                var h2 = secs[i].querySelector("h2");
+                if (!h2) continue;
+                var clone = h2.cloneNode(true);
+                var numEl = clone.querySelector(".num");
+                var num = numEl ? numEl.textContent : "";
+                if (numEl) clone.removeChild(numEl);
+                var label = (num ? num + " " : "") + clone.textContent.trim();
+                var a = document.createElement("a");
+                a.href = "#" + secs[i].id;
+                a.textContent = label;
+                a.title = label;
+                a.style.cssText = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+                toc.appendChild(a);
+            }
+            var bar = document.createElement("div");
+            bar.className = "progress";
+            document.body.appendChild(bar);
+            window.addEventListener("scroll", function () {
+                var el = document.documentElement;
+                var max = el.scrollHeight - el.clientHeight;
+                bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+            });
+        })();
+        </script>
+        <script src="../../assets/update-popup.js?v=20261022"></script>
+    </body>
+</html>
+

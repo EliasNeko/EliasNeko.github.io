@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>C 语言 · 从零开始 · 语言学习项目</title>
+        <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .breadcrumb { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; }
+            .breadcrumb:hover { color: var(--accent); }
+            .card h3 { margin: 26px 0 12px; font-size: 15px; font-weight: normal; color: var(--accent-2); letter-spacing: 1px; }
+            .card h3:first-of-type { margin-top: 6px; }
+            .danger { border-left-color: #e29a8e !important; }
+        </style>
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">语言学习项目 · C 语言</p>
+            <h1>贴着机器写代码</h1>
+            <p class="sub">零基础 · 28 节 · 从「它是什么」到「自己写一个通讯录」</p>
+            <div class="meta">
+                <span>小节 <b>28</b></span>
+                <span>动手项目 <b>2</b></span>
+                <span>编译器 <b>GCC</b></span>
+                <span>更新 <b>2026-10-22</b></span>
+            </div>
+            <p class="series">这门课不要求你先会别的语言。每一节都能单独看，卡在哪节就回哪节。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+
+            <main>
+                <a class="breadcrumb" href="index.html">← 回到语言目录</a>
+
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>C 语言 1972 年诞生在贝尔实验室，本来是为了写 <b>UNIX 操作系统</b> 才发明的。五十年过去，它还在——Linux 内核、Python 解释器、你手机里的芯片固件，底层全是 C。</p>
+<p>它和 Python、Java 最大的区别：<b>C 不替你收拾烂摊子</b>。</p>
+<table>
+<tr><th>内存</th><td>你自己申请（<code>malloc</code>）、自己归还（<code>free</code>）。忘了还，就是内存泄漏；还错了，程序直接崩</td></tr>
+<tr><th>检查</th><td>数组越界、指针乱指，<b>编译器不管</b>，运行时也不一定报错——直接给你一个「段错误」</td></tr>
+<tr><th>速度</th><td>快。C 写的代码几乎能直接变成机器指令，没有垃圾回收、没有虚拟机</td></tr>
+<tr><th>抽象</th><td>很少。你能直接操作内存地址，这是它的力量，也是它的危险</td></tr>
+</table>
+<div class="note"><b>一句话：</b>C 是<b>没有安全网的语言</b>。学会它，你对「程序到底在干什么」的理解会完成一次升级；但你也会第一次真的把程序写崩。</div></section>
+
+<section class="card" id="s02"><h2><span class="num">02</span>能干什么</h2>
+<table>
+<tr><th>场景</th><th>它在做什么</th><th>例子</th></tr>
+<tr><td>操作系统</td><td>内核、驱动、调度</td><td>Linux、Windows 内核（部分）</td></tr>
+<tr><th>嵌入式</th><td>单片机、家电、汽车控制器</td><td>STM32、Arduino 底层</td></tr>
+<tr><td>底层库</td><td>其他语言调用它的高性能模块</td><td>Python 的 numpy 底层</td></tr>
+<tr><td>数据库</td><td>存储引擎</td><td>MySQL、SQLite</td></tr>
+<tr><td>竞赛 / 算法</td><td>对时间要求极高的题</td><td>ACM</td></tr>
+</table>
+<div class="note"><b>实话：</b>日常写网站、写 App，基本用不到 C。它的舞台在<b>离硬件近的地方</b>。学它，一半是为了能力，一半是为了理解「语言之下还有什么」。</div></section>
+
+<section class="card" id="s03"><h2><span class="num">03</span>学完能找什么工作</h2>
+<table><tr><th>方向</th><th>实际做什么</th><th>一句实话</th></tr>
+<tr><td>嵌入式开发</td><td>给单片机、家电、车机写固件</td><td>岗位稳定，要懂电路和硬件手册</td></tr>
+<tr><td>Linux C / 驱动</td><td>内核模块、系统服务</td><td>门槛高，但替代性低</td></tr>
+<tr><td>音视频 / 图形</td><td>编解码、渲染引擎</td><td>吃数学，工资高</td></tr>
+<tr><td>C++ 后端</td><td>高并发服务、游戏服务器</td><td>C 是底子，还要学 C++</td></tr>
+<tr><td>算法 / 竞赛</td><td>参赛、读研</td><td>C 是工具，数学才是核心</td></tr></table>
+<div class="note"><b>必须说清楚：</b>纯 C 的岗位比 Java、前端少得多，而且大多在制造业、芯片、汽车这些行业。<b>C 更像地基，不是饭碗本身。</b></div></section>
+
+<section class="card" id="s04"><h2><span class="num">04</span>装好，让它跑起来</h2>
+<p>Windows 上最省事的是 <b>MinGW-w64</b>（自带 gcc），或者直接装 <b>Dev-C++</b>（学生常用，自带编译器）。</p>
+<table>
+<tr><th>第 1 步</th><td>装 MinGW-w64（推荐 <code>winlibs.com</code> 的压缩包），解压到 <code>C:\mingw64</code></td></tr>
+<tr><th>第 2 步</th><td>把 <code>C:\mingw64\bin</code> 加进系统环境变量 <code>Path</code></td></tr>
+<tr><th>第 3 步</th><td>新开 cmd，敲 <code>gcc --version</code>，出版本号才算成</td></tr>
+<tr><th>第 4 步</th><td>新建 <code>hello.c</code>，写下面几行</td></tr>
+</table>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    printf("你好，世界\n");
+    return 0;
+}</code></pre>
+<pre><code>gcc hello.c -o hello.exe     ← 编译
+hello.exe                    ← 运行</code></pre>
+<table>
+<tr><th><code>#include &lt;stdio.h&gt;</code></th><td>引入标准输入输出库。<b>printf 靠它</b>，不写就报「未声明」</td></tr>
+<tr><th><code>int main(void)</code></th><td>程序入口，必须有，返回 <code>int</code></td></tr>
+<tr><th><code>return 0;</code></th><td>告诉系统「正常结束」。非 0 表示出错</td></tr>
+<tr><th><code>\n</code></th><td>换行符。C 里不用它，输出会全挤在一行</td></tr>
+</table>
+<div class="note"><b>三个新手坑：</b>① 每条语句要以分号结尾；② 编译报错先看<b>第一条</b>，后面的往往是连锁反应；③ 中文乱码是编码问题——文件存成 UTF-8，Windows 控制台可能要 <code>chcp 65001</code>。</div></section>
+
+<section class="card" id="s05"><h2><span class="num">05</span>第一行代码：printf 和 scanf</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    printf("你好，世界\n");
+    printf("数字：%d，小数：%.2f，字符：%c\n", 42, 3.14159, 'A');
+
+    int age;
+    printf("你几岁？");
+    scanf("%d", &amp;age);        // 注意这个 &amp;
+    printf("你 %d 岁\n", age);
+
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>%d</code></th><td>整数</td><th><code>%f</code></th><td>小数</td></tr>
+<tr><th><code>%c</code></th><td>单个字符</td><th><code>%s</code></th><td>字符串</td></tr>
+<tr><th><code>%.2f</code></th><td>保留两位小数</td><th><code>%ld</code></th><td>long</td></tr>
+</table>
+<div class="note danger"><b>最常见的崩溃：</b><code>scanf("%d", age)</code> 少写 <code>&amp;</code>——程序会当场崩（段错误）。<b>scanf 要地址，printf 要值。</b>这一条能救你无数次。</div></section>
+
+<section class="card" id="s06"><h2><span class="num">06</span>变量与类型</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int age = 18;
+    float price = 19.9f;        // 小数常量加 f
+    double pi = 3.1415926;      // 默认就是 double
+    char level = 'A';           // 单引号，一个字符
+    long big = 123456789L;
+    unsigned int count = 10;    // 不能为负
+
+    printf("%d %f %lf %c\n", age, price, pi, level);
+    printf("size of int = %zu\n", sizeof(int));   // 4（字节）
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>int</code></th><td>整数，一般 4 字节</td></tr>
+<tr><th><code>char</code></th><td>1 字节。既能存字符，也能存小整数</td></tr>
+<tr><th><code>float / double</code></th><td>单精度 / 双精度小数。<b>C 里小数默认 double</b></td></tr>
+<tr><th><code>sizeof</code></th><td>看一个类型占几字节。C 不保证 int 一定是 4 字节</td></tr>
+<tr><th>没有 String</th><td>C 没有字符串类型，字符串就是一个 <code>char</code> 数组（第 08 节讲）</td></tr>
+</table>
+<div class="note"><b>和 Python/Java 最大的不同：</b>变量不初始化就<b>可能是任何值</b>（垃圾数据）。<b>声明时就给初值</b>，是个好习惯。</div></section>
+
+<section class="card" id="s07"><h2><span class="num">07</span>数字与运算</h2>
+<pre><code>int a = 7, b = 2;
+printf("%d\n", a / b);      // 3   ← 整数相除，砍掉小数
+printf("%d\n", a % b);      // 1   ← 余数
+printf("%f\n", a / 2.0);    // 3.500000
+printf("%d\n", 10 &gt; 3);     // 1   ← C 里「真」是 1，「假」是 0
+
+int x = 5;
+x++;            // 6
+x += 3;         // 9
+printf("%d\n", x);</code></pre>
+<table>
+<tr><th>布尔</th><td>C 没有 <code>true</code>/<code>false</code>（C99 可以 <code>#include &lt;stdbool.h&gt;</code>）。用 0 表示假，非 0 表示真</td></tr>
+<tr><th>整数除法</th><td><code>7 / 2</code> 是 3，不是 3.5。想得小数，至少一边是 <code>double</code></td></tr>
+<tr><th>溢出</th><td><code>int</code> 大约 ±21 亿，超了不会报错，会变成负数</td></tr>
+<tr><th>自增</th><td><code>i++</code> 先用后加，<code>++i</code> 先加后用。单独一行时没差别</td></tr>
+</table>
+<div class="note"><b>坑：</b><code>0.1 + 0.2 != 0.3</code>，所有语言都一样。涉及钱，用整数「分」来算。</div></section>
+
+<section class="card" id="s08"><h2><span class="num">08</span>数组与字符串</h2>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void) {
+    int nums[5] = {90, 85, 77, 60, 100};
+    printf("%d\n", nums[0]);        // 90，下标从 0 开始
+    printf("%zu\n", sizeof(nums) / sizeof(nums[0]));  // 5，元素个数
+
+    char name[20] = "阿猫";          // 字符串就是 char 数组
+    printf("%s\n", name);
+    printf("%zu\n", strlen(name));   // 字节数，不是字数！
+    return 0;
+}</code></pre>
+<table>
+<tr><th>长度</th><td>数组<b>不知道</b>自己有多长——C 不给你 <code>length</code>。要自己算或另存一个变量</td></tr>
+<tr><th>越界</th><td><code>nums[5]</code> 不会报错，会写到别人的内存里。<b>最容易埋雷的地方</b></td></tr>
+<tr><th>字符串结尾</th><td>C 用 <code>'\0'</code>（数字 0）标记字符串结束。<code>"阿猫"</code> 实际占 7 个字节</td></tr>
+<tr><th>中文</th><td>UTF-8 下一个汉字占 3 个字节，<code>strlen</code> 算的是字节</td></tr>
+</table>
+<div class="note danger"><b>必背：</b>字符串数组一定留够空间。<code>char name[3] = "阿猫";</code> 会越界——要 <code>[7]</code> 以上。C 不会帮你检查。</div></section>
+
+<section class="card" id="s09"><h2><span class="num">09</span>类型转换</h2>
+<pre><code>int a = 10;
+double b = a;              // 自动转：小 → 大，安全
+int c = (int) 3.99;        // 强制转：砍掉小数，得 3
+char ch = 'A';
+int code = ch;             // 65，字符本质是数字
+
+int x = 7, y = 2;
+double r = x / y;          // 3.000000 ← 先整数除，再转 double，晚了！
+double r2 = (double) x / y; // 3.500000 ← 先转再除</code></pre>
+<table>
+<tr><th>自动转换</th><td><code>char → int → float → double</code>，往大走自动</td></tr>
+<tr><th>强制转换</th><td><code>(类型) 值</code>，可能丢数据，自己负责</td></tr>
+<tr><th>字符与数字</th><td><code>'A'</code> 就是 65。所以 <code>'a' - 'A'</code> 得 32，大小写转换靠它</td></tr>
+</table>
+<div class="note"><b>第 09 节最值钱的一句：</b><b>先转换，再运算。</b>写 <code>x / y</code> 再赋给 double，小数已经丢了，转不回来。</div></section>
+
+<section class="card" id="s10"><h2><span class="num">10</span>if 与 switch</h2>
+<pre><code>int score = 85;
+
+if (score &gt;= 90) {
+    printf("优秀\n");
+} else if (score &gt;= 60) {
+    printf("及格\n");
+} else {
+    printf("不及格\n");
+}
+
+// switch 只能判断整数或字符
+int day = 3;
+switch (day) {
+    case 1:
+    case 2:
+    case 3:
+        printf("工作日\n");
+        break;          // 忘了 break 会「穿透」到下一个 case
+    default:
+        printf("休息日\n");
+}</code></pre>
+<table>
+<tr><th>条件</th><td>C 里「非 0 即真」，<code>if (1)</code> 合法，和 Java 不同</td></tr>
+<tr><th><code>==</code></th><td>比较要用两个等号。<code>if (a = 5)</code> 是赋值，永远为真——<b>经典 bug</b></td></tr>
+<tr><th><code>switch</code></th><td>只能配整数/字符，不能配字符串，也不能判断范围</td></tr>
+<tr><th><code>break</code></th><td>每个 case 结束都要 break，否则会一直往下执行</td></tr>
+</table>
+<div class="note"><b>写反了怎么查：</b>把常量写在左边——<code>if (5 == a)</code>。这样漏写一个等号会编译报错，而不是悄悄变成赋值。</div></section>
+
+<section class="card" id="s11"><h2><span class="num">11</span>循环</h2>
+<pre><code>// for
+for (int i = 0; i &lt; 5; i++) {
+    printf("%d ", i);
+}
+
+// while
+int n = 1;
+while (n &lt;= 3) {
+    printf("第 %d 次\n", n);
+    n++;
+}
+
+// do-while：至少执行一次
+int k = 10;
+do {
+    printf("一定执行一次\n");
+} while (k &lt; 5);
+
+// break / continue
+for (int i = 1; i &lt;= 10; i++) {
+    if (i % 2 == 0) continue;   // 偶数跳过
+    if (i &gt; 7) break;           // 超过 7 停
+    printf("%d ", i);
+}</code></pre>
+<table>
+<tr><th><code>for</code></th><td>三段式。<b>C99 之后才能在 for 里声明 <code>int i</code></b>，老编译器要写在外面</td></tr>
+<tr><th>死循环</th><td>忘了 <code>i++</code>，或者条件是赋值。<code>while (1)</code> 是合法的无限循环</td></tr>
+<tr><th><code>break / continue</code></th><td>跳出整个循环 / 跳过本次，只影响<b>最内层</b></td></tr>
+</table>
+<div class="note"><b>小练习：</b>打印九九乘法表。外层 <code>i</code> 1~9，内层 <code>j</code> 1~i，格式 <code>printf("%d*%d=%d ", j, i, i*j);</code></div></section>
+
+<section class="card" id="s12"><h2><span class="num">12</span>函数</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+// 先声明（告诉编译器有这么个函数）
+int add(int a, int b);
+void sayHello(char *name);
+
+int main(void) {
+    printf("%d\n", add(1, 2));
+    sayHello("阿猫");
+    return 0;
+}
+
+// 再定义
+int add(int a, int b) {
+    return a + b;
+}
+
+void sayHello(char *name) {
+    printf("你好，%s\n", name);
+}</code></pre>
+<table>
+<tr><th>声明 vs 定义</th><td>声明只写「长什么样」，定义写「怎么做」。<b>先声明后使用</b>，否则编译器不认识</td></tr>
+<tr><th><code>void</code></th><td>没有返回值</td></tr>
+<tr><th>参数</th><td>C 是<b>值传递</b>：传进去的是副本，函数里改了，外面不变（想改外面要传指针，第 15 节）</td></tr>
+<tr><th>数组参数</th><td><code>void f(int arr[])</code> 实际收到的是指针，长度要另外传</td></tr>
+</table>
+<div class="note"><b>好习惯：</b>一个函数不超过 40 行，只做一件事。C 没有类，函数就是唯一的组织单位，写乱了没人救你。</div></section>
+
+<section class="card" id="s13"><h2><span class="num">13</span>作用域与 static</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+int counter = 0;          // 全局变量：整个文件都能用
+
+void ping(void) {
+    static int calls = 0; // 只在第一次初始化为 0
+    calls++;
+    printf("第 %d 次调用\n", calls);
+}
+
+int main(void) {
+    ping();   // 1
+    ping();   // 2
+    ping();   // 3
+    return 0;
+}</code></pre>
+<table>
+<tr><th>局部变量</th><td>在函数里的 <code>{ }</code> 中，出了大括号就没了（栈上）</td></tr>
+<tr><th>全局变量</th><td>文件顶部，所有函数都能改。<b>尽量少用</b>，谁改的都不知道</td></tr>
+<tr><th><code>static</code> 局部</th><td>只初始化一次，函数返回后值还在，下次调用接着用</td></tr>
+<tr><th><code>static</code> 全局</th><td>限定只在<b>本文件</b>可见，别的文件看不到</td></tr>
+</table>
+<div class="note"><b>为什么少用全局变量：</b>它像公共黑板，谁都能写。项目一大，出问题时你根本不知道是哪个函数改的。</div></section>
+
+<section class="card" id="s14"><h2><span class="num">14</span>指针入门 · C 的灵魂</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int a = 10;
+    int *p = &amp;a;          // p 指向 a 的地址
+
+    printf("%d\n", a);    // 10  值
+    printf("%p\n", p);    // 0x7ffd... 地址
+    printf("%d\n", *p);   // 10  解引用：跟着地址去取值
+
+    *p = 99;              // 通过指针改值
+    printf("%d\n", a);    // 99  ← a 也变了
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>&amp;</code></th><td>取地址。<code>&amp;a</code> 是「a 住在哪」</td></tr>
+<tr><th><code>*</code></th><td>两种含义：声明时表示「这是指针」；使用时表示「取这个地址里的值」</td></tr>
+<tr><th><code>int *p</code></th><td>「指向 int 的指针」。指针也有类型，因为要知道读几个字节</td></tr>
+<tr><th><code>NULL</code></th><td>空指针。没指向任何东西，解引用它必崩</td></tr>
+</table>
+<div class="note"><b>一句话理解：</b>变量是「房间」，指针是「写着房间号的纸条」。<code>&amp;</code> 是查房间号，<code>*</code> 是按号码去开门。</div>
+<pre><code>int *q = NULL;
+// printf("%d", *q);   // 千万别这么干：段错误</code></pre></section>
+
+<section class="card" id="s15"><h2><span class="num">15</span>指针与函数 · 让函数改外面的变量</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+// 值传递：改不了外面
+void badAdd(int x) { x = x + 1; }
+
+// 传地址：能改外面
+void goodAdd(int *x) { (*x)++; }
+
+int main(void) {
+    int a = 10;
+    badAdd(a);
+    printf("%d\n", a);   // 10，没变
+
+    goodAdd(&amp;a);
+    printf("%d\n", a);   // 11，变了
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>(*x)++</code></th><td>先解引用再加一。括号不能省，<code>*x++</code> 是另一回事</td></tr>
+<tr><th>数组传参</th><td><code>void f(int arr[], int len)</code>，数组会退化成指针，<b>长度必须另传</b></td></tr>
+<tr><th>scanf</th><td>它要的就是地址，所以写 <code>&amp;age</code>。第 05 节那个坑，现在你懂为什么了</td></tr>
+</table>
+<div class="note"><b>规律：</b>想让函数<b>改外面的东西</b>，就传地址；只读，就传值。<code>scanf</code>、<code>strcpy</code> 这些标准函数，参数里全带指针。</div></section>
+
+<section class="card" id="s16"><h2><span class="num">16</span>结构体 struct</h2>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+typedef struct {
+    char name[20];
+    int age;
+    double score;
+} Student;
+
+int main(void) {
+    Student s1;
+    strcpy(s1.name, "阿猫");
+    s1.age = 18;
+    s1.score = 92.5;
+
+    printf("%s %d %.1f\n", s1.name, s1.age, s1.score);
+
+    Student list[3];          // 结构体数组
+    list[0] = s1;
+
+    Student *p = &amp;s1;
+    printf("%s\n", p-&gt;name);   // 指针用 -&gt;，等价于 (*p).name
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>struct</code></th><td>把几个不同类型的字段打包成一个新类型</td></tr>
+<tr><th><code>typedef</code></th><td>给类型起个短名字，之后不用写 <code>struct Student</code></td></tr>
+<tr><th><code>.</code> / <code>-&gt;</code></th><td>结构体变量用点，指针用箭头</td></tr>
+<tr><th>字符串字段</th><td>不能直接 <code>s1.name = "阿猫"</code>，要用 <code>strcpy</code></td></tr>
+</table>
+<div class="note"><b>为什么用它：</b>没有结构体，一个学生要开三个数组（名字、年龄、分数），删一个要动三处。<b>结构体让「一条数据」变成一个整体。</b></div></section>
+
+<section class="card" id="s17"><h2><span class="num">17</span>动态内存 · malloc 与 free</h2>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) {
+    int n = 5;
+    int *arr = malloc(n * sizeof(int));   // 申请堆内存
+    if (arr == NULL) {
+        printf("内存不够\n");
+        return 1;
+    }
+
+    for (int i = 0; i &lt; n; i++) arr[i] = i * 10;
+    for (int i = 0; i &lt; n; i++) printf("%d ", arr[i]);
+
+    free(arr);      // 用完还回去
+    arr = NULL;     // 防止野指针
+    return 0;
+}</code></pre>
+<table>
+<tr><th>栈 vs 堆</th><td>函数里的数组在<b>栈</b>上，函数结束就没了；<code>malloc</code> 在<b>堆</b>上，你不 free 它就一直占着</td></tr>
+<tr><th><code>sizeof</code></th><td><code>malloc(n * sizeof(int))</code>，别写死 4</td></tr>
+<tr><th>检查 NULL</th><td>内存可能申请失败，必须判断</td></tr>
+<tr><th><code>free</code></th><td>不 free = 内存泄漏；free 两次 = 崩溃</td></tr>
+</table>
+<div class="note danger"><b>最贵的三个 bug：</b>① 忘了 free（程序越跑越占内存）；② free 之后又用（野指针）；③ 数组越界写坏别人的内存。<b>这三个，编译器都不会提醒你。</b></div></section>
+
+<section class="card" id="s18"><h2><span class="num">18</span>字符串函数 · string.h</h2>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(void) {
+    char a[20] = "hello";
+    char b[20] = "world";
+    char c[40];
+
+    printf("%zu\n", strlen(a));        // 5
+    strcpy(c, a);                      // 复制
+    strcat(c, " ");                    // 拼接
+    strcat(c, b);
+    printf("%s\n", c);                 // hello world
+    printf("%d\n", strcmp(a, b));     // 负数：a 在 b 前面
+
+    if (strcmp(a, "hello") == 0) printf("相等\n");   // 比较字符串用 strcmp
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>strlen</code></th><td>到 <code>'\0'</code> 为止的长度（字节）</td></tr>
+<tr><th><code>strcpy</code></th><td>复制。<b>不检查目标够不够大</b>，这是历史上最多漏洞的来源</td></tr>
+<tr><th><code>strcat</code></th><td>拼接，同样不检查空间</td></tr>
+<tr><th><code>strcmp</code></th><td>比较，返回 0 表示相等。<b>不能用 <code>==</code> 比较字符串</b></td></tr>
+</table>
+<div class="note"><b>更安全的写法：</b><code>snprintf(buf, sizeof(buf), "%s %s", a, b);</code>——它知道缓冲区多大，不会溢出。新代码优先用它。</div></section>
+
+<section class="card" id="s19"><h2><span class="num">19</span>文件读写</h2>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    FILE *fp = fopen("notes.txt", "w");   // w 写，a 追加，r 读
+    if (fp == NULL) {
+        printf("打不开文件\n");
+        return 1;
+    }
+    fprintf(fp, "第一行\n");
+    fprintf(fp, "第二行\n");
+    fclose(fp);                            // 一定要关
+
+    fp = fopen("notes.txt", "r");
+    char line[100];
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        printf("[%s]", line);
+    }
+    fclose(fp);
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>fopen</code></th><td>打开文件，返回指针。<b>失败返回 NULL，必须判断</b></td></tr>
+<tr><th>模式</th><td><code>"r"</code> 读（不存在就失败）、<code>"w"</code> 写（<b>清空原内容</b>）、<code>"a"</code> 追加</td></tr>
+<tr><th><code>fgets</code></th><td>读一行，读到换行或 n-1 个字符为止，自动补 <code>'\0'</code></td></tr>
+<tr><th><code>fclose</code></th><td>不关文件，数据可能还在缓冲区里没写进去</td></tr>
+</table>
+<div class="note"><b>坑：</b><code>"w"</code> 会先清空文件。想保留旧内容用 <code>"a"</code>。<b>用 <code>"w"</code> 打开一个已有文件，等于把它的内容删了。</b></div></section>
+
+<section class="card" id="s20"><h2><span class="num">20</span>预处理 · #include 和 #define</h2>
+<pre><code>#include &lt;stdio.h&gt;
+#define MAX 100
+#define SQUARE(x) ((x) * (x))
+
+int main(void) {
+    int nums[MAX];
+    printf("%d\n", SQUARE(3));    // 9
+    printf("%d\n", MAX);
+    return 0;
+}</code></pre>
+<table>
+<tr><th><code>#include</code></th><td>把另一个文件的内容「粘贴」进来。标准库用 <code>&lt; &gt;</code>，自己的头文件用 <code>" "</code></td></tr>
+<tr><th><code>#define</code></th><td>宏替换，<b>在编译前完成</b>，不是变量</td></tr>
+<tr><th>宏的坑</th><td><code>#define SQUARE(x) x*x</code> 里 <code>SQUARE(1+2)</code> 会变成 <code>1+2*1+2</code>——<b>参数和整体都要加括号</b></td></tr>
+<tr><th><code>#ifdef</code></th><td>条件编译，调试代码可以这样临时开关</td></tr>
+</table>
+<div class="note"><b>现代做法：</b>常量优先用 <code>const int MAX = 100;</code>——它有类型，调试器看得见；宏不会。</div></section>
+
+<section class="card" id="s21"><h2><span class="num">21</span>多文件与头文件</h2>
+<pre><code>// student.h   ← 声明
+#ifndef STUDENT_H
+#define STUDENT_H
+typedef struct { char name[20]; int age; } Student;
+void printStudent(Student s);
+#endif
+
+// student.c   ← 实现
+#include &lt;stdio.h&gt;
+#include "student.h"
+void printStudent(Student s) {
+    printf("%s %d\n", s.name, s.age);
+}
+
+// main.c      ← 使用
+#include "student.h"
+int main(void) {
+    Student s = {"阿猫", 18};
+    printStudent(s);
+    return 0;
+}</code></pre>
+<pre><code>gcc main.c student.c -o app.exe</code></pre>
+<table>
+<tr><th>为什么拆</th><td>文件一大，一个 <code>.c</code> 几千行没法维护。按功能拆开</td></tr>
+<tr><th>头文件保护</th><td><code>#ifndef / #define / #endif</code>，防止同一份头文件被包含两次</td></tr>
+<tr><th>编译</th><td>把所有 <code>.c</code> 一起交给 gcc，它会分别编译再链接</td></tr>
+</table>
+<div class="note"><b>一句话：</b>头文件写「有什么」，<code>.c</code> 写「怎么做」。这是 C 项目的标准结构，你以后看任何开源项目都是这个样子。</div></section>
+
+<section class="card" id="s22"><h2><span class="num">22</span>最常见的十个错误</h2>
+<table>
+<tr><th>1</th><td><code>scanf</code> 忘了 <code>&amp;</code> → 运行时直接崩</td></tr>
+<tr><th>2</th><td>数组越界 → 有时没事，有时数据被莫名改掉，最难查</td></tr>
+<tr><th>3</th><td>字符串比较用 <code>==</code> → 永远不相等，要用 <code>strcmp</code></td></tr>
+<tr><th>4</th><td>字符串数组没留 <code>'\0'</code> 的位置</td></tr>
+<tr><th>5</th><td>忘了 <code>free</code> → 内存泄漏</td></tr>
+<tr><th>6</th><td><code>free</code> 之后继续用 → 野指针</td></tr>
+<tr><th>7</th><td><code>if (a = 5)</code> 写成赋值 → 条件永远为真</td></tr>
+<tr><th>8</th><td><code>switch</code> 忘了 <code>break</code> → 全部穿透</td></tr>
+<tr><th>9</th><td><code>printf</code> 的格式符和参数对不上（用 <code>%d</code> 打印 <code>double</code>）</td></tr>
+<tr><th>10</th><td>指针没初始化就用 → 段错误</td></tr>
+</table>
+<div class="note"><b>段错误（Segmentation fault）几乎只有一个原因：</b>你访问了不该访问的内存——空指针、野指针、越界、free 过的内存。看到它，先查这四个。</div></section>
+
+<section class="card" id="s23"><h2><span class="num">23</span>调试 · 让程序自己说话</h2>
+<pre><code>gcc -Wall -Wextra hello.c -o hello.exe</code></pre>
+<p><code>-Wall</code> 打开所有警告。<b>警告不是噪音，是提前告诉你的 bug。</b>新代码建议永远带上。</p>
+<table>
+<tr><th>printf 大法</th><td>在可疑的地方打印变量值。土，但有效</td></tr>
+<tr><th>分段排查</th><td>注释掉一半代码，看还崩不崩，二分定位</td></tr>
+<tr><th>gdb</th><td>命令行调试器：<code>gcc -g</code> 编译，<code>gdb app.exe</code>，然后 <code>run</code>、<code>bt</code> 看调用栈</td></tr>
+<tr><th>IDE</th><td>VS Code + C/C++ 插件可以打断点，比 gdb 好上手</td></tr>
+</table>
+<div class="note"><b>顺序：</b>先看编译器警告 → 再看第一行报错 → 再 printf → 最后上调试器。<b>很多人第一条就没做。</b></div></section>
+
+<section class="card" id="s24"><h2><span class="num">24</span>写给人看的 C</h2>
+<table>
+<tr><th>命名</th><td><code>total_score</code> 或 <code>totalScore</code>，项目里统一一种</td></tr>
+<tr><th><code>const</code></th><td>不打算改的参数加 <code>const</code>：<code>void print(const char *name)</code></td></tr>
+<tr><th>注释</th><td>函数上方写「做什么、参数是什么、返回什么」</td></tr>
+<tr><th>缩进</th><td>4 个空格，别用 Tab（不同编辑器宽度不一样）</td></tr>
+<tr><th>函数长度</th><td>超过 40 行就该拆</td></tr>
+</table>
+<pre><code>/**
+ * 计算平均分
+ * @param scores 分数数组，不能为空
+ * @param n      元素个数
+ * @return 平均分；n 为 0 时返回 0
+ */
+double average(const int *scores, int n) { ... }</code></pre>
+<div class="note"><b>C 的代码风格比别的语言更重要：</b>没有类帮你分组，命名和注释就是唯一的「结构」。</div></section>
+
+<section class="card" id="s25"><h2><span class="num">25</span>动手：学生成绩管理</h2>
+<p>目标：录入几个学生、算平均分、找最高分。<b>用到结构体、数组、函数、循环</b>——正好把前面串起来。</p>
+<pre><code>#include &lt;stdio.h&gt;
+
+#define N 3
+
+typedef struct {
+    char name[20];
+    int score;
+} Student;
+
+void printAll(Student list[], int n) {
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d. %s\t%d\n", i + 1, list[i].name, list[i].score);
+    }
+}
+
+double average(Student list[], int n) {
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += list[i].score;
+    return n == 0 ? 0 : (double) sum / n;
+}
+
+int best(Student list[], int n) {
+    int idx = 0;
+    for (int i = 1; i &lt; n; i++) {
+        if (list[i].score &gt; list[idx].score) idx = i;
+    }
+    return idx;
+}
+
+int main(void) {
+    Student list[N];
+
+    for (int i = 0; i &lt; N; i++) {
+        printf("第 %d 个学生，姓名 分数：", i + 1);
+        scanf("%19s %d", list[i].name, &amp;list[i].score);
+    }
+
+    printAll(list, N);
+    printf("平均分：%.1f\n", average(list, N));
+    int b = best(list, N);
+    printf("最高分：%s %d\n", list[b].name, list[b].score);
+    return 0;
+}</code></pre>
+<h3>这段代码在讲什么</h3>
+<table>
+<tr><th>第 1 步</th><td>用 <code>typedef struct</code> 定义「一个学生长什么样」</td></tr>
+<tr><th>第 2 步</th><td>三个函数各做一件事：打印、算平均、找最高</td></tr>
+<tr><th>第 3 步</th><td>数组和长度一起传——<b>C 的数组不知道自己多长</b></td></tr>
+<tr><th>第 4 步</th><td><code>scanf("%19s")</code> 限长度，防止名字太长撑爆数组</td></tr>
+</table>
+<div class="note"><b>练手方向（自己动手改）：</b>加「按分数排序」；加「低于 60 分标记不及格」；把结果写进文件「成绩.txt」。</div></section>
+
+<section class="card" id="s26"><h2><span class="num">26</span>独立项目：写一个通讯录</h2>
+<p>这一节<b>没有完整代码</b>。给你需求、验收标准、和卡住时的提示。</p>
+<h3>要做什么</h3>
+<table>
+<tr><th>1</th><td><b>添加</b>：姓名、电话，存进数组</td></tr>
+<tr><th>2</th><td><b>显示</b>：列出全部联系人</td></tr>
+<tr><th>3</th><td><b>查找</b>：按姓名查电话</td></tr>
+<tr><th>4</th><td><b>保存</b>：退出时写进文件，下次启动自动读回来</td></tr>
+</table>
+<h3>验收标准</h3>
+<table>
+<tr><th>1</th><td>最多存 20 个，满了要提示「通讯录已满」</td></tr>
+<tr><th>2</th><td>查找不存在的名字，要有提示，不能崩</td></tr>
+<tr><th>3</th><td>退出再进，数据还在</td></tr>
+<tr><th>4</th><td>输入选项乱输，程序能回到菜单</td></tr>
+<tr><th>5</th><td>至少有 3 个函数，每个不超过 30 行</td></tr>
+</table>
+<h3>卡住时的提示</h3>
+<table>
+<tr><th>提示 1</th><td>联系人用 <code>typedef struct { char name[20]; char phone[20]; } Contact;</code></td></tr>
+<tr><th>提示 2</th><td>数组加一个计数变量 <code>int count</code>，比用 <code>sizeof</code> 猜长度靠谱</td></tr>
+<tr><th>提示 3</th><td>存文件：<code>fprintf(fp, "%s %s\n", list[i].name, list[i].phone);</code></td></tr>
+<tr><th>提示 4</th><td>读文件：<code>while (fscanf(fp, "%19s %19s", name, phone) == 2)</code>，返回 2 表示两个字段都读到了</td></tr>
+</table>
+<div class="note"><b>做完之后：</b>加一个「删除联系人」——删除时要把后面的元素往前挪一格。这一步是数组操作的经典练习。</div></section>
+
+<section class="card" id="s27"><h2><span class="num">27</span>学完之后往哪走</h2>
+<table>
+<tr><th>阶段</th><th>做什么</th><th>达到什么算过关</th></tr>
+<tr><td>第 1 周</td><td>把这 28 节敲一遍，两个项目各写一次</td><td>不看教程能写出结构体 + 指针的基本用法</td></tr>
+<tr><td>第 2–3 周</td><td>学数据结构：链表、栈、队列</td><td>能用指针自己实现一个链表</td></tr>
+<tr><td>第 2 个月</td><td>方向一：C++（类、STL）；方向二：嵌入式（STM32、寄存器）</td><td>各选一个，做出一个能演示的东西</td></tr>
+<tr><td>第 3 个月</td><td>读一点开源代码，比如一个小型的 C 项目</td><td>能说清它的目录结构和编译方式</td></tr>
+</table>
+<h3>几个真值得收藏的地方</h3>
+<table>
+<tr><th>cppreference</th><td>C 标准库的字典，查函数原型最快</td></tr>
+<tr><th>《C 程序设计语言》</th><td>K&amp;R，薄，但每页都有东西</td></tr>
+<tr><th>LeetCode 简单题</th><td>用 C 写数组、字符串题，指针会越来越熟</td></tr>
+</table>
+<div class="note"><b>一句提醒：</b>C 的学习曲线在<b>指针</b>那里突然变陡。别在那一节放弃——过了指针，后面全是它的应用。</div></section>
+
+<section class="card" id="s28"><h2><span class="num">28</span>结语</h2>
+<p>C 是最诚实的语言。</p>
+<p>你写错一个下标，它就真的把别人的数据盖掉；你忘了 free，它就真的占着内存不放。没有垃圾回收替你兜底，也没有异常机制帮你兜住——<b>出问题，就是你在某个地方想错了</b>。</p>
+<p>这种诚实很烦，但也很值钱：学完 C 再看 Python 的列表、Java 的数组，你会知道它们底下是什么。</p>
+<div class="note"><b>三个忠告：</b><br>① <b>编译带上 -Wall。</b>警告是你唯一免费的助手。<br>② <b>指针看不懂就画图。</b>谁指向谁，画一遍就通了。<br>③ <b>能跑 ≠ 没错。</b>C 的 bug 常常安静地待着，等你演示那天才炸。</div>
+<p style="text-align:right;color:#7dd3fc;">—— 龙潜猫隐</p></section>
+
+                <p style="margin-top:34px;"><a class="breadcrumb" href="index.html">← 回到语言目录</a></p>
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">C 语言 · 2026-10-22 建</div>
+            <div>语言学习项目 · 第三门语言</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">每一节都能单独看，卡在哪一节就回哪一节</div>
+        </footer>
+
+        <script>
+        (function () {
+            var toc = document.querySelector(".toc");
+            var secs = document.querySelectorAll("main section.card");
+            for (var i = 0; i < secs.length; i++) {
+                if (!secs[i].id) continue;
+                var h2 = secs[i].querySelector("h2");
+                if (!h2) continue;
+                var clone = h2.cloneNode(true);
+                var numEl = clone.querySelector(".num");
+                var num = numEl ? numEl.textContent : "";
+                if (numEl) clone.removeChild(numEl);
+                var label = (num ? num + " " : "") + clone.textContent.trim();
+                var a = document.createElement("a");
+                a.href = "#" + secs[i].id;
+                a.textContent = label;
+                a.title = label;
+                a.style.cssText = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+                toc.appendChild(a);
+            }
+            var bar = document.createElement("div");
+            bar.className = "progress";
+            document.body.appendChild(bar);
+            window.addEventListener("scroll", function () {
+                var el = document.documentElement;
+                var max = el.scrollHeight - el.clientHeight;
+                bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+            });
+        })();
+        </script>
+        <script src="../../assets/update-popup.js?v=20261022"></script>
+    </body>
+</html>
+
