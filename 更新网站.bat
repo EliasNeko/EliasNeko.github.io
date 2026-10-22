@@ -55,10 +55,20 @@ git push
 if not errorlevel 1 goto ok
 
 echo.
+echo [提示] 第一次没推上去，可能是代理没开，改用直连再试一次...
+git -c "http.https://github.com.proxy=" push
+if not errorlevel 1 goto ok
+
+echo.
 echo [失败] 连不上 GitHub。改动已经存在本地快照里，不会丢。
 echo        30 秒后自动重试一次...
 ping -n 31 127.0.0.1 >nul
 git push
+if not errorlevel 1 goto ok
+
+echo.
+echo [提示] 第一次没推上去，可能是代理没开，改用直连再试一次...
+git -c "http.https://github.com.proxy=" push
 if not errorlevel 1 goto ok
 
 echo.
