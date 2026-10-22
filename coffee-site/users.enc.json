@@ -1,0 +1,9 @@
+{
+  "v": 1,
+  "alg": "PBKDF2-SHA256+AES-GCM",
+  "iter": 150000,
+  "salt": "7c51ce2f367dd607bddee024a0412ddf",
+  "iv": "IOduFGJnBQ2PnblV",
+  "data": "MDUgQMINfGdwR6b4OnUzpMySLQ3T0nm3W48Fa53LVLNkyzEQoDBKJrtaSSxMUwMMU6m8qSkphECkTADFvVck76xDL6HenehR4o9bzVB2zVJWnE252NUSZVpj7M5OCmQbC3Rt2lVEorPcmnggkM49dmSslK7Ig5dxtn4KPrVyLMcFGF6ae6jZdzUBv/TpwhTaqoeTWkrhTJID9jMrtKpvir1HYengtTESAa52kmeUyXl2WNP+jrLvxUKlueRcHeG72wFDV8BEZeHIhFySqHZKnaof9KSFfycs9jZDGMG2vsa9B330Ww2sdYJA4/beLGYwwU2XjcNzqgFnlfxTgGBt+5X3GgJNUYcwjBEGjrjtqKgKrabO4MTAzfS98WZKN5C+SUBSNRuXv7gH48i+GQE=",
+  "saved": "2026-10-22T04:24:00.749Z"
+}

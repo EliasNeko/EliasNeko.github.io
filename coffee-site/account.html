@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会员登记 · 猫和鱼的回忆咖啡店</title>
+<style>
+    /* 咖啡店的配色：深褐底 + 金线 */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        min-height: 100vh;
+        padding: 44px 20px 90px;
+        font-family: "Microsoft YaHei", sans-serif;
+        color: #f3e7d3;
+        background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%);
+    }
+
+    .wrap { width: min(480px, 100%); margin: 0 auto; }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 26px;
+        color: rgba(201, 183, 156, 0.75);
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-decoration: none;
+    }
+    .back:hover { color: #c9a86a; }
+
+    .kicker { color: #c9a86a; font-size: 12px; letter-spacing: 6px; margin-bottom: 10px; }
+
+    h1 { font-size: 30px; font-weight: normal; letter-spacing: 4px; margin-bottom: 10px; }
+
+    .sub { color: #c9b79c; font-size: 13px; line-height: 1.9; margin-bottom: 26px; }
+
+    .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid rgba(201, 168, 106, 0.18);
+    }
+
+    .tab {
+        padding: 12px 22px;
+        border: 0;
+        background: transparent;
+        color: rgba(201, 183, 156, 0.6);
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 3px;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        transition: 0.25s;
+    }
+    .tab:hover { color: #e8d6b4; }
+    .tab.active { color: #c9a86a; border-bottom-color: #c9a86a; }
+
+    .card {
+        padding: 26px 24px;
+        background: #1a1512;
+        border: 1px solid rgba(201, 168, 106, 0.22);
+        border-radius: 18px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .field { margin-bottom: 16px; }
+
+    label { display: block; margin-bottom: 7px; color: #c9b79c; font-size: 12px; letter-spacing: 2px; }
+    label .opt { color: rgba(201, 183, 156, 0.45); letter-spacing: 1px; }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid rgba(201, 168, 106, 0.22);
+        border-radius: 10px;
+        background: #14100e;
+        color: #f3e7d3;
+        font-family: inherit;
+        font-size: 14px;
+        outline: none;
+        transition: 0.25s;
+    }
+
+    input:focus { border-color: rgba(201, 168, 106, 0.6); box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.08); }
+    input::placeholder { color: rgba(201, 183, 156, 0.35); }
+
+    .submit {
+        width: 100%;
+        margin-top: 6px;
+        padding: 13px 20px;
+        border: 1px solid #c9a86a;
+        border-radius: 999px;
+        background: #c9a86a;
+        color: #14100e;
+        font-family: inherit;
+        font-size: 14px;
+        letter-spacing: 4px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+    .submit:hover { background: #dcbe86; border-color: #dcbe86; }
+    .submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .msg { min-height: 22px; margin-top: 14px; font-size: 13px; line-height: 1.8; letter-spacing: 1px; }
+    .msg.ok { color: #9ec9a0; }
+    .msg.err { color: #e29a8e; }
+
+    .hidden { display: none; }
+
+    .quota {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px dashed rgba(201, 168, 106, 0.16);
+        color: rgba(201, 183, 156, 0.55);
+        font-size: 12px;
+        letter-spacing: 1px;
+        line-height: 1.9;
+    }
+
+    .session {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+        padding: 12px 16px;
+        border: 1px solid rgba(201, 168, 106, 0.28);
+        border-radius: 12px;
+        background: rgba(201, 168, 106, 0.08);
+        font-size: 13px;
+        letter-spacing: 1px;
+        color: #e8d6b4;
+    }
+    .session.show { display: flex; }
+    .session button {
+        border: 0; background: transparent;
+        color: rgba(201, 183, 156, 0.7);
+        font-family: inherit; font-size: 12px; letter-spacing: 1px;
+        cursor: pointer; text-decoration: underline;
+    }
+    .session button:hover { color: #c9a86a; }
+
+    .admin-link {
+        display: block;
+        margin-top: 22px;
+        padding: 14px 18px;
+        border: 1px dashed rgba(201, 168, 106, 0.2);
+        border-radius: 12px;
+        color: rgba(201, 183, 156, 0.55);
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: 0.25s;
+    }
+    .admin-link:hover { color: #c9a86a; border-color: rgba(201, 168, 106, 0.4); }
+
+    .foot {
+        margin-top: 26px;
+        text-align: center;
+        color: rgba(201, 183, 156, 0.35);
+        font-size: 11.5px;
+        letter-spacing: 2px;
+        line-height: 2;
+    }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <a class="back" href="index.html">← 回到店里</a>
+
+    <div class="session" id="sessionBar">
+        <span id="sessionText"></span>
+        <button id="logoutBtn" type="button">退出登录</button>
+    </div>
+
+    <p class="kicker">猫 和 鱼 的 回 忆 咖 啡 店</p>
+    <h1>会员登记</h1>
+    <p class="sub">登记之后，进「私人学习企划」不用再输口令；没登记的客人，仍然是游客。</p>
+
+    <div class="tabs">
+        <button class="tab active" id="tabLogin" type="button">登 录</button>
+        <button class="tab" id="tabRegister" type="button">注 册</button>
+    </div>
+
+    <section class="card" id="panelLogin">
+        <form id="loginForm" autocomplete="off">
+            <div class="field">
+                <label for="loginName">用户名</label>
+                <input type="text" id="loginName" placeholder="登记时填的用户名">
+            </div>
+            <div class="field">
+                <label for="loginPass">密码</label>
+                <input type="password" id="loginPass" placeholder="密码">
+            </div>
+            <button class="submit" type="submit">进 入</button>
+            <p class="msg" id="loginMsg"></p>
+        </form>
+    </section>
+
+    <section class="card hidden" id="panelRegister">
+        <form id="regForm" autocomplete="off">
+            <div class="field">
+                <label for="regName">用户名</label>
+                <input type="text" id="regName" placeholder="2 - 12 个字，登录时用">
+            </div>
+            <div class="field">
+                <label for="regPass">密码</label>
+                <input type="password" id="regPass" placeholder="至少 4 位">
+            </div>
+            <div class="field">
+                <label for="regPass2">确认密码</label>
+                <input type="password" id="regPass2" placeholder="再输一次">
+            </div>
+            <div class="field">
+                <label for="regContact">QQ 号 或 微信号</label>
+                <input type="text" id="regContact" placeholder="留一个能找到你的">
+            </div>
+            <div class="field">
+                <label for="regEmail">邮箱 <span class="opt">（选填）</span></label>
+                <input type="email" id="regEmail" placeholder="不填也可以">
+            </div>
+            <button class="submit" id="regBtn" type="submit">登 记</button>
+            <p class="msg" id="regMsg"></p>
+        </form>
+        <p class="quota" id="quota">这台设备还能登记 2 个账号</p>
+    </section>
+
+    <a class="admin-link" href="admin.html">注册名单 · 站长后台（加密 / 解密 / 导出）→</a>
+
+    <p class="foot">
+        密码以哈希形式保存，公开名单里看不到明文。<br />
+        © 2026 龙潜猫隐
+    </p>
+</div>
+
+<script src="config.js"></script>
+<script src="member.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    var MAX_PER_DEVICE = 2;
+
+    var tabLogin = document.getElementById("tabLogin");
+    var tabRegister = document.getElementById("tabRegister");
+    var panelLogin = document.getElementById("panelLogin");
+    var panelRegister = document.getElementById("panelRegister");
+
+    var loginForm = document.getElementById("loginForm");
+    var regForm = document.getElementById("regForm");
+    var loginMsg = document.getElementById("loginMsg");
+    var regMsg = document.getElementById("regMsg");
+    var quota = document.getElementById("quota");
+
+    var remoteUsers = [];
+
+    /* 后端地址：留空 = 和网页同一个地址（用 java Server 打开网页时就是这样）。
+       以后后端部署到别的域名，把这里改成 https://你的域名 即可。 */
+    var API = window.COFFEE_API || "";
+    var serverMode = false;
+
+    /* Supabase：有这两个值就走云端，不用开电脑 */
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
+    var sbMode = !!(SB_URL && SB_KEY);
+
+    var SB_HEADERS = {
+        "apikey": SB_KEY,
+        "Authorization": "Bearer " + SB_KEY,
+        "Content-Type": "application/json"
+    };
+
+    /* 注册：交给 Supabase 的函数，一次写两张表 */
+    function sbRegister(user, finish, fail) {
+        fetch(SB_URL + "/rest/v1/rpc/register_user", {
+            method: "POST",
+            headers: SB_HEADERS,
+            body: JSON.stringify({
+                p_name: user.name,
+                p_salt: user.salt,
+                p_hash: user.hash,
+                p_contact: user.contact,
+                p_email: user.email,
+                p_device: user.device,
+                p_time: user.time
+            })
+        }).then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+        }).then(function (out) {
+            if (out && out.ok) return finish("登记成功，正在带你回店里…");
+            if (out && out.error === "duplicate") return fail("这个名字已经有人用了，换一个吧。");
+            return fail("登记没成功，稍后再试（" + (out && out.error ? out.error : "未知原因") + "）。");
+        }).catch(function () {
+            fail("连不上云端，检查一下网络再试。");
+        });
+    }
+
+    /* 登录：先按名字取盐，再让服务器比对哈希 */
+    function sbLogin(name, pass, done, fail) {
+        fetch(SB_URL + "/rest/v1/users?select=salt&name=eq." + encodeURIComponent(name), {
+            headers: SB_HEADERS
+        }).then(function (res) {
+            return res.ok ? res.json() : [];
+        }).then(function (rows) {
+            if (!rows || !rows.length) {
+                fail("没找到这个账号，用户名或密码不对。");
+                return;
+            }
+            return Member.hashPass(pass, rows[0].salt).then(function (h) {
+                return fetch(SB_URL + "/rest/v1/rpc/check_login", {
+                    method: "POST",
+                    headers: SB_HEADERS,
+                    body: JSON.stringify({ p_name: name, p_hash: h })
+                });
+            }).then(function (res) {
+                return res.json();
+            }).then(function (ok) {
+                if (ok === true) done();
+                else fail("没找到这个账号，用户名或密码不对。");
+            });
+        }).catch(function () {
+            fail("连不上云端，检查一下网络再试。");
+        });
+    }
+
+    function checkServer() {
+        if (typeof fetch !== "function") return;
+        fetch(API + "/api/health", { cache: "no-store", headers: { "ngrok-skip-browser-warning": "1" } })
+            .then(function (r) { serverMode = r.ok; })
+            .catch(function () { serverMode = false; });
+    }
+
+    if (!Member.ok()) {
+        alert("这个浏览器不支持加密接口，请用较新的 Chrome 或 Edge 打开。");
+    }
+
+    /* 线上公开名单：只有用户名、盐、哈希 */
+    function loadRemote() {
+        if (typeof fetch !== "function") return;
+        fetch("users.json", { cache: "no-store" })
+            .then(function (res) { return res.ok ? res.json() : []; })
+            .then(function (data) {
+                if (Object.prototype.toString.call(data) === "[object Array]") remoteUsers = data;
+            })
+            .catch(function () { /* 本地打开时读不到，忽略 */ });
+    }
+
+    function allNames() {
+        var names = remoteUsers.map(function (u) { return u.name; });
+        Member.localUsers().forEach(function (u) {
+            if (names.indexOf(u.name) < 0) names.push(u.name);
+        });
+        return names;
+    }
+
+    function sameDevice() {
+        var id = Member.deviceId();
+        return Member.localUsers().filter(function (u) { return u.device === id; });
+    }
+
+    function refreshQuota() {
+        var used = sameDevice().length;
+        var left = MAX_PER_DEVICE - used;
+        quota.textContent = left > 0
+            ? "这台设备还能登记 " + left + " 个账号"
+            : "这台设备已经登记满 " + MAX_PER_DEVICE + " 个账号了";
+        document.getElementById("regBtn").disabled = left <= 0;
+    }
+
+    function showLogin() {
+        panelLogin.classList.remove("hidden");
+        panelRegister.classList.add("hidden");
+        tabLogin.classList.add("active");
+        tabRegister.classList.remove("active");
+        loginMsg.textContent = "";
+    }
+
+    function showRegister() {
+        panelRegister.classList.remove("hidden");
+        panelLogin.classList.add("hidden");
+        tabRegister.classList.add("active");
+        tabLogin.classList.remove("active");
+        regMsg.textContent = "";
+        refreshQuota();
+    }
+
+    tabLogin.addEventListener("click", showLogin);
+    tabRegister.addEventListener("click", showRegister);
+
+    /* ---------- 注册 ---------- */
+    regForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var name = document.getElementById("regName").value.trim();
+        var pass = document.getElementById("regPass").value;
+        var pass2 = document.getElementById("regPass2").value;
+        var contact = document.getElementById("regContact").value.trim();
+        var email = document.getElementById("regEmail").value.trim();
+
+        function fail(text) {
+            regMsg.className = "msg err";
+            regMsg.textContent = text;
+        }
+
+        if (name.length < 2 || name.length > 12) return fail("用户名要 2 到 12 个字。");
+        if (/\s/.test(name)) return fail("用户名里不能有空格。");
+        if (pass.length < 4) return fail("密码至少 4 位。");
+        if (pass !== pass2) return fail("两次输入的密码不一样。");
+        if (!contact) return fail("留一个 QQ 号或微信号吧，方便找到你。");
+        if (email && email.indexOf("@") < 0) return fail("邮箱格式看着不对。");
+        if (sameDevice().length >= MAX_PER_DEVICE) {
+            return fail("这台设备已经登记满 " + MAX_PER_DEVICE + " 个账号了。");
+        }
+        if (allNames().indexOf(name) >= 0) return fail("这个名字已经有人用了，换一个吧。");
+
+        var salt = Member.randomHex(16);
+
+        Member.hashPass(pass, salt).then(function (hash) {
+            var user = {
+                name: name,
+                pass: pass,          /* 只留在本机，用来给站长看 */
+                salt: salt,
+                hash: hash,          /* 公开名单里只放这个 */
+                contact: contact,
+                email: email,
+                time: Member.nowStr(),
+                created: Member.nowStr().slice(0, 10),
+                device: Member.deviceId()
+            };
+
+            function finish(text) {
+                var list = Member.localUsers();
+                list.push(user);
+                if (!Member.write(Member.USERS_KEY, list)) {
+                    return fail("浏览器不让存数据，检查一下隐私设置。");
+                }
+
+                var pub = Member.publicEntries();
+                pub.push(Member.toPublic(user));
+                Member.write(Member.PUBLIC_KEY, pub);
+
+                Member.saveSession(name);
+
+                regMsg.className = "msg ok";
+                regMsg.textContent = text;
+                refreshQuota();
+
+                setTimeout(function () { window.location.href = "index.html"; }, 1200);
+            }
+
+            /* 优先走 Supabase（不用开电脑） */
+            if (sbMode) return sbRegister(user, finish, fail);
+
+            /* 连不上后端时，退回到「只记在本机」 */
+            if (!serverMode) return finish("登记好了，正在带你回店里…");
+
+            fetch(API + "/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "1" },
+                body: JSON.stringify({
+                    name: user.name,
+                    salt: user.salt,
+                    hash: user.hash,
+                    contact: user.contact,
+                    email: user.email,
+                    time: user.time,
+                    device: user.device
+                })
+            }).then(function (res) {
+                if (res.status === 409) return fail("这个名字已经有人用了，换一个吧。");
+                if (!res.ok) return fail("服务器没存上（" + res.status + "），等会儿再试。");
+                finish("登记成功，正在带你回店里…");
+            }).catch(function () {
+                finish("服务器暂时连不上，先记在这台设备上，正在带你回店里…");
+            });
+        }).catch(function () {
+            fail("密码处理失败，换个浏览器试试。");
+        });
+    });
+
+    /* ---------- 登录 ---------- */
+    loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        var name = document.getElementById("loginName").value.trim();
+        var pass = document.getElementById("loginPass").value;
+
+        function fail(text) {
+            loginMsg.className = "msg err";
+            loginMsg.textContent = text;
+        }
+
+        if (!name || !pass) return fail("用户名和密码都要填。");
+
+        function done() {
+            Member.saveSession(name);
+            loginMsg.className = "msg ok";
+            loginMsg.textContent = "登录成功，正在带你回店里…";
+            setTimeout(function () { window.location.href = "index.html"; }, 900);
+        }
+
+        /* 没有后端时：先看本机，再看线上公开名单 */
+        function localLogin() {
+            var local = Member.localUsers().filter(function (u) { return u.name === name; })[0];
+            if (local) {
+                Member.hashPass(pass, local.salt).then(function (h) {
+                    if (h === local.hash) done();
+                    else fail("没找到这个账号，用户名或密码不对。");
+                });
+                return;
+            }
+
+            var entry = remoteUsers.filter(function (u) { return u.name === name; })[0];
+            if (!entry) return fail("没找到这个账号，用户名或密码不对。");
+
+            Member.hashPass(pass, entry.salt).then(function (h) {
+                if (h === entry.hash) done();
+                else fail("没找到这个账号，用户名或密码不对。");
+            });
+        }
+
+        /* 优先走 Supabase */
+        if (sbMode) {
+            sbLogin(name, pass, done, fail);
+            return;
+        }
+
+        /* 有后端：问服务器。密码原文不外发，只发算好的哈希 */
+        if (serverMode) {
+            fetch(API + "/api/salt?name=" + encodeURIComponent(name), { cache: "no-store", headers: { "ngrok-skip-browser-warning": "1" } })
+                .then(function (res) {
+                    if (!res.ok) throw new Error("no-user");
+                    return res.json();
+                })
+                .then(function (data) {
+                    return Member.hashPass(pass, data.salt).then(function (h) {
+                        return fetch(API + "/api/login", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "1" },
+                            body: JSON.stringify({ name: name, hash: h })
+                        });
+                    });
+                })
+                .then(function (res) {
+                    if (res.ok) done();
+                    else fail("没找到这个账号，用户名或密码不对。");
+                })
+                .catch(function () { localLogin(); });
+            return;
+        }
+
+        localLogin();
+    });
+
+    /* ---------- 登录状态条 ---------- */
+    function renderSession() {
+        var me = Member.session();
+        var bar = document.getElementById("sessionBar");
+        if (me && me.name) {
+            document.getElementById("sessionText").textContent = "已登录：" + me.name + " · 进书房不用口令了";
+            bar.classList.add("show");
+            document.getElementById("loginName").value = me.name;
+        } else {
+            bar.classList.remove("show");
+        }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+        Member.logout();
+        renderSession();
+        loginMsg.className = "msg ok";
+        loginMsg.textContent = "已经退出登录。";
+    });
+
+    checkServer();
+    loadRemote();
+    refreshQuota();
+    renderSession();
+})();
+</script>
+</body>
+</html>

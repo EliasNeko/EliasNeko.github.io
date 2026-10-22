@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HTML5 商业网站设计与制作 · 专业课程库 · 龙潜猫隐和小鱼的个人class</title>
+        <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .breadcrumb { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; }
+            .breadcrumb:hover { color: var(--accent); }
+            .card h3 { margin: 26px 0 12px; font-size: 15px; font-weight: normal; color: var(--accent-2); letter-spacing: 1px; }
+            .card h3:first-of-type { margin-top: 6px; }
+            .card p + p { margin-top: 12px; }
+            kbd { display: inline-block; padding: 1px 7px; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; background: rgba(56,189,248,.07); color: var(--accent-2); font-size: 12.5px; font-family: Consolas, monospace; }
+            .lead { color: var(--muted); font-size: 14px; }
+            .unit { display: inline-block; font-size: 11px; letter-spacing: 2px; color: var(--accent); border: 1px solid var(--line-2); border-radius: 999px; padding: 1px 10px; margin-left: 8px; vertical-align: middle; }
+
+            .ebook {
+                display: inline-flex; align-items: center; gap: 9px;
+                margin-top: 20px; padding: 10px 22px;
+                border: 1px solid var(--line-2); border-radius: 999px;
+                color: var(--accent-2); text-decoration: none;
+                font-size: 13.5px; letter-spacing: 2px;
+                background: rgba(56, 189, 248, 0.05);
+                transition: 0.25s;
+            }
+            .ebook:hover { border-color: var(--accent); color: #ffffff; background: rgba(56, 189, 248, 0.14); transform: translateY(-2px); box-shadow: 0 12px 26px rgba(2, 6, 15, 0.5); }
+            .ebook .ico { font-size: 15px; letter-spacing: 0; }
+
+            /* 让长代码词在表格里能断行，避免整页横向撑破；只在桌面宽度改两栏 */
+            @media (min-width: 861px) { .layout { grid-template-columns: 232px minmax(0, 1fr); } }
+            .layout > main { min-width: 0; }
+            th, td { overflow-wrap: anywhere; }
+            td code, th code { white-space: normal; }
+        </style>
+    </head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">专业课程 · 软件技术 · 专业基础课</p>
+            <h1>HTML5 商业网站设计与制作</h1>
+            <p class="sub">70 学时 · 4.5 学分 · 两个项目：蓝梦音乐网（跟着做）+ 时空电影网（自己做）</p>
+            <div class="meta">
+                <span>小节 <b>23</b></span>
+                <span>学时 <b>70</b></span>
+                <span>项目 <b>2</b></span>
+                <span>更新 <b>2026-10-22</b></span>
+            </div>
+
+            <p><a class="ebook" href="https://book.yunzhan365.com/vuwl/hvlo/mobile/index.html" target="_blank" rel="noopener"><span class="ico">📖</span>配套电子书 · 在线翻阅 ↗</a></p>
+
+            <p class="series">这门课对应教材《HTML5商业网站设计与制作》（周庞荣、顾挺 主编，中国铁道出版社）。教材把知识点分散在各个任务里；这份课程库按「先懂原理、再会写、最后知道坑」重新理了一遍，并补上成书之后行业里通行的写法。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+
+            <main>
+                <a class="breadcrumb" href="../语言学习/index.html">← 回到语言目录</a>
+
+<section class="card" id="s00"><h2><span class="num">00</span>开课说明：这门课到底在教什么</h2>
+<p>一句话：<b>把一个「设计稿」变成能在浏览器里点、能自适应手机、能上线的静态网站。</b></p>
+<p>它不教你后端，不教数据库，不教框架。它教的是前端最底下那层地基——<b>HTML 说「这是什么东西」，CSS 说「它长什么样」</b>。你以后学的 Vue、React、Bootstrap，全部是盖在这层地基上的楼。</p>
+
+<h3>课程档案（来自课程标准）</h3>
+<table>
+<tr><th>课程名称</th><td>HTML 网页设计（教材：HTML5 商业网站设计与制作）</td></tr>
+<tr><th>性质</th><td>必修课 · 专业基础课 · 理实一体</td></tr>
+<tr><th>适用专业</th><td>软件技术</td></tr>
+<tr><th>学时 / 学分</th><td>70 学时 / 4.5 学分（理论 35 + 实践 35）</td></tr>
+<tr><th>考核</th><td>平时 40%（考勤 30 · 表现 40 · 作业 30）+ 课终 60%（笔试 60 · 机试 40）</td></tr>
+<tr><th>教学项目</th><td><b>蓝梦音乐网</b>（教师引导，边讲边做）· <b>时空电影网</b>（学生独立完成）</td></tr>
+<tr><th>配套电子书</th><td>同版教材的在线翻页版，<a href="https://book.yunzhan365.com/vuwl/hvlo/mobile/index.html" target="_blank" rel="noopener" style="color:var(--accent-2);">点这里打开 ↗</a></td></tr>
+</table>
+
+<h3>教材单元 ↔ 本库小节</h3>
+<p>教材按「单元 + 引导训练 / 独立训练」组织。本库保留它的顺序和项目，但把每个训练背后的知识点单独拎出来讲透，再补上教材成书之后行业里已经变了的部分（浮动 → Flex/Grid，frameset → iframe，marquee → CSS 动画）。</p>
+<table>
+<tr><th>教材单元</th><th>教材里的训练</th><th>本库对应</th></tr>
+<tr><td>单元 1 初识网页</td><td>制作欢迎页</td><td>01 · 02</td></tr>
+<tr><td>单元 2 使用网页标签</td><td>音乐节网页 / 美化音乐节</td><td>03 · 04</td></tr>
+<tr><td>单元 3 表格、表单</td><td>歌手网页 / 注册页面</td><td>05 · 06</td></tr>
+<tr><td>单元 4 用 CSS 美化网页</td><td>美化音乐节 / 美化注册页</td><td>07 · 08 · 09 · 10</td></tr>
+<tr><td>单元 5 DIV+CSS 页面设计</td><td>首页布局 / 首页制作</td><td>11 · 12 · 13 · 15 · 16</td></tr>
+<tr><td>单元 6 定位与 JS 特效</td><td>滑动轮播</td><td>14 · 19</td></tr>
+<tr><td>单元 7 移动端网页</td><td>移动端首页</td><td>17</td></tr>
+<tr><td>单元 8 使用框架</td><td>后台管理框架</td><td>18</td></tr>
+<tr><td>（课程标准补充）综合项目</td><td>完成时空电影网</td><td>20</td></tr>
+</table>
+
+<h3>怎么用这个库</h3>
+<table>
+<tr><th>上课前</th><td>先看本节 01–02，把「网页是什么」和「骨架怎么搭」弄明白，课上听任务就不会懵</td></tr>
+<tr><th>上课时</th><td>跟着老师做蓝梦音乐网，卡在哪一节就回来查哪一节</td></tr>
+<tr><th>下课后</th><td>打开 20 节，用时空电影网自己写一遍——<b>这门课的分数，八成在这里</b></td></tr>
+<tr><th>考前</th><td>翻 21 节的知识点总表，笔试考的就是那张表</td></tr>
+</table>
+<div class="note"><b>一句实话：</b>这门课最容易挂的人，不是不会写标签的，是「看着教程能抄出来、关掉教程就不会」的。所以每一节后面都有「自己动手」——那一步不能省。</div></section>
+
+<section class="card" id="s01"><h2><span class="num">01</span>网页是怎么到你屏幕上的</h2>
+<p>很多人学了一学期 HTML，还是说不清「你敲的那些尖括号，最后怎么就变成一张网页了」。这一节把这条路走一遍。</p>
+
+<h3>四个词，别混</h3>
+<table>
+<tr><th>因特网（Internet）</th><td>全球的电脑连成的那张网。是路。</td></tr>
+<tr><th>万维网（WWW）</th><td>跑在这张网上的一项服务：用浏览器看网页。是路上跑的一种车。</td></tr>
+<tr><th>网站</th><td>一堆放在同一台服务器上、互相链接的网页。是一栋楼。</td></tr>
+<tr><th>网页</th><td>一个 <code>.html</code> 文件，浏览器读它、画它。是楼里的一个房间。</td></tr>
+</table>
+<p>关系是：<b>因特网 ⊃ 万维网 ⊃ 网站 ⊃ 网页</b>。<code>www.qq.com</code> 是万维网上的一个网站，<code>www.qq.com/index.html</code> 是它的首页网页。</p>
+
+<h3>URL 拆开看</h3>
+<pre><code>https://www.example.com:443/music/list.html?id=3&amp;page=2#top
+└─┬─┘   └──────┬──────┘└┬┘└──────┬──────┘└──────┬─────┘└┬┘
+ 协议        域名      端口     路径          查询参数  锚点</code></pre>
+<table>
+<tr><th>协议</th><td><code>http</code> / <code>https</code>（加密），还有 <code>file://</code>（本地文件，双击打开就是它）</td></tr>
+<tr><th>域名</th><td>服务器的门牌号，DNS 负责把域名翻译成 IP</td></tr>
+<tr><th>端口</th><td>一台服务器上有很多服务，端口区分它们。http 默认 80，https 默认 443，可以省略</td></tr>
+<tr><th>路径</th><td>服务器上文件的位置。<b>大小写敏感</b>——本地 Windows 不敏感，服务器敏感，这是上线翻车第一名</td></tr>
+<tr><th>查询参数</th><td><code>?key=value&amp;key2=value2</code>，给服务器带话</td></tr>
+<tr><th>锚点</th><td><code>#top</code>，只在页面内部跳，不发给服务器</td></tr>
+</table>
+
+<h3>一次访问发生了什么</h3>
+<table>
+<tr><th>1</th><td>你在地址栏敲网址，浏览器问 DNS：这个域名对应哪个 IP</td></tr>
+<tr><th>2</th><td>浏览器向那个 IP 的 80/443 端口发一个 HTTP 请求：<code>GET /index.html</code></td></tr>
+<tr><th>3</th><td>服务器把 <code>index.html</code> 的内容原样发回来（状态码 200）</td></tr>
+<tr><th>4</th><td>浏览器读 HTML，遇到 <code>&lt;link&gt;</code> 和 <code>&lt;script&gt;</code> 就再去要 CSS 和 JS 文件</td></tr>
+<tr><th>5</th><td>浏览器把 HTML 变成 DOM 树、把 CSS 变成样式规则，算每个盒子放哪、多大，最后画到屏幕上</td></tr>
+</table>
+<div class="note"><b>记住第 4、5 步：</b>浏览器<b>只认三样东西</b>——HTML、CSS、JavaScript。你写的 React、Vue、Sass，最终都要变成这三样才有人看得懂。<b>前端的尽头是这三样，退路也是这三样。</b></div>
+
+<h3>HTML 文档的结构</h3>
+<pre><code>&lt;!DOCTYPE html&gt;              &lt;!-- 告诉浏览器：我是 HTML5 --&gt;
+&lt;html lang="zh-CN"&gt;          &lt;!-- 根元素，lang 声明语言 --&gt;
+&lt;head&gt;                       &lt;!-- 给浏览器看的信息，不显示在页面上 --&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;蓝梦音乐网&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;                       &lt;!-- 给人看的内容，全写在这里 --&gt;
+    &lt;h1&gt;欢迎进入蓝梦音乐网&lt;/h1&gt;
+    &lt;p&gt;这里有你想听的每一首歌。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<table>
+<tr><th><code>&lt;!DOCTYPE html&gt;</code></th><td>必须是第一行。没有它，浏览器会切到「怪异模式」，很多 CSS 会莫名其妙不生效</td></tr>
+<tr><th><code>&lt;head&gt;</code></th><td>标题、字符集、外链 CSS、SEO 信息。这里的东西<b>不会出现在页面上</b>（除了 <code>&lt;title&gt;</code> 显示在标签栏）</td></tr>
+<tr><th><code>&lt;body&gt;</code></th><td>页面上你能看见的一切</td></tr>
+<tr><th><code>charset="UTF-8"</code></th><td>不写或者写错，中文就是一堆「锟斤拷」</td></tr>
+</table>
+
+<h3>第一个网页：三分钟跑起来</h3>
+<table>
+<tr><th>第 1 步</th><td>新建文件夹 <code>lanmeng</code>，在里面新建文本文件，改名 <code>index.html</code>（<b>扩展名一定要是 .html</b>，看不到扩展名就去「查看 → 文件扩展名」打开）</td></tr>
+<tr><th>第 2 步</th><td>用编辑器打开（HBuilderX / VS Code / 记事本都行，课程要求用 HBuilderX），把上面那段代码敲进去</td></tr>
+<tr><th>第 3 步</th><td>双击 <code>index.html</code>，或者 HBuilderX 里按 <kbd>Alt</kbd> + <kbd>B</kbd> 在浏览器打开</td></tr>
+<tr><th>第 4 步</th><td>改一个字，保存，回浏览器按 <kbd>F5</kbd> 刷新，看变化</td></tr>
+</table>
+<div class="note"><b>三个新手坑：</b><br>① 文件名是 <code>index.html.txt</code>——系统默认隐藏扩展名，你以为改了其实没改。<br>② 中文路径 / 空格路径——本地能开，传到服务器就可能 404。<b>文件夹和文件名全部用英文小写 + 短横线。</b><br>③ 改完不保存就刷新——编辑器标签上有个小圆点，就是没保存。</div>
+
+<h3>HBuilderX 里要认识的四个地方</h3>
+<table>
+<tr><th>项目管理器</th><td>左边，管文件。新建项目时选「基本 HTML 项目」，它会自动生成骨架</td></tr>
+<tr><th>编辑区</th><td>中间。输入 <code>!</code> 再按 <kbd>Tab</kbd>，能一键生成 HTML5 骨架（Emmet 语法）</td></tr>
+<tr><th>预览</th><td><kbd>Alt</kbd> + <kbd>B</kbd>，内置浏览器打开；右键可「在外部浏览器打开」</td></tr>
+<tr><th>控制台</th><td>浏览器里按 <kbd>F12</kbd>，Console 看报错、Elements 看结构、Styles 看样式从哪来——<b>这三个面板，是你以后最常用的三个工具</b></td></tr>
+</table>
+<div class="note"><b>自己动手：</b>做一个「欢迎进入时空电影网」的页面。要求：标题、一句话介绍、一张图（先用占位图）、页脚写你的名字。不用 CSS，能显示出来就算过。<b>这一步做的，就是教材单元 1 的独立训练。</b></div></section>
+
+<section class="card" id="s02"><h2><span class="num">02</span>HTML 骨架与常用标签</h2>
+<p>HTML 的标签只有两类：<b>容器</b>（有开始有结束，里面装东西）和<b>空元素</b>（自己一个，没有结束标签）。记住这个分类，就不会再写出 <code>&lt;img&gt;&lt;/img&gt;</code> 这种怪东西。</p>
+
+<h3>标题：h1 到 h6</h3>
+<pre><code>&lt;h1&gt;蓝梦音乐网&lt;/h1&gt;
+&lt;h2&gt;本周推荐&lt;/h2&gt;
+&lt;h3&gt;华语流行&lt;/h3&gt;</code></pre>
+<table>
+<tr><th>是什么</th><td>六级标题，数字越小越重要、字越大（浏览器默认样式）</td></tr>
+<tr><th>规则</th><td>一个页面<b>只放一个 h1</b>（相当于文章大标题），往下按层级用，别跳级（h2 下面直接 h4）</td></tr>
+<tr><th>坑</th><td>h1 不是「最大的字」，是「最重要的标题」。想让字大，用 CSS 改 <code>font-size</code>，别拿 h1 当排版工具</td></tr>
+</table>
+
+<h3>段落、换行、横线</h3>
+<pre><code>&lt;p&gt;第一段。段落之间浏览器会自动留空隙。&lt;/p&gt;
+&lt;p&gt;第二段。&lt;br&gt;这里强制换行，但还算同一段。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;横线下面又是新的一段。&lt;/p&gt;</code></pre>
+<table>
+<tr><th><code>&lt;p&gt;</code></th><td>段落。块级元素，独占一行，上下有默认外边距</td></tr>
+<tr><th><code>&lt;br&gt;</code></th><td>换行。空元素。**只用在「同一段里必须断行」的地方**（地址、诗歌）</td></tr>
+<tr><th><code>&lt;hr&gt;</code></th><td>水平分割线，语义是「话题转换」。空元素</td></tr>
+</table>
+<div class="note"><b>最经典的错误用法：</b>用一堆 <code>&lt;br&gt;&lt;br&gt;&lt;br&gt;</code> 来拉开间距。间距是 CSS 的事（<code>margin</code>），<code>&lt;br&gt;</code> 是「文字换行」的事。你用三个 br 撑出来的距离，换个字号就全乱了。</div>
+
+<h3>图片 img</h3>
+<pre><code>&lt;img src="images/logo.png" alt="蓝梦音乐网标志" width="120"&gt;
+&lt;img src="../assets/banner.jpg" alt="音乐节海报"&gt;</code></pre>
+<table>
+<tr><th><code>src</code></th><td>图片路径。相对路径 <code>images/a.png</code>；上一级 <code>../a.png</code>；绝对路径只在同域名下可靠</td></tr>
+<tr><th><code>alt</code></th><td>图挂了显示的文字，也是读屏软件念的内容。<b>必填</b>，装饰图写 <code>alt=""</code></td></tr>
+<tr><th><code>width / height</code></th><td>只写一个，另一个按比例自动算。两个都写死，容易压扁</td></tr>
+<tr><th>格式</th><td>照片用 <code>.jpg</code>，图标/透明背景用 <code>.png</code> 或 <code>.webp</code>，动图 <code>.gif</code>，矢量 <code>.svg</code></td></tr>
+</table>
+<div class="note"><b>路径三连坑：</b>① 文件名大小写（<code>Logo.png</code> ≠ <code>logo.png</code>）；② 中文名（<code>图片1.png</code> 在服务器上经常乱码）；③ 反斜杠（HTML 里写 <code>images\a.png</code> 是错的，必须 <code>/</code>）。</div>
+
+<h3>特殊符号：不能直接打的字符</h3>
+<p><code>&lt;</code> 和 <code>&gt;</code> 在 HTML 里有特殊含义，想显示它们本身，要用实体字符。</p>
+<table>
+<tr><th><code>&amp;lt;</code></th><td>&lt;</td><th><code>&amp;gt;</code></th><td>&gt;</td><th><code>&amp;amp;</code></th><td>&amp;</td></tr>
+<tr><th><code>&amp;nbsp;</code></th><td>不换行空格</td><th><code>&amp;copy;</code></th><td>©</td><th><code>&amp;reg;</code></th><td>®</td></tr>
+<tr><th><code>&amp;yen;</code></th><td>¥</td><th><code>&amp;times;</code></th><td>×</td><th><code>&amp;mdash;</code></th><td>—</td></tr>
+</table>
+<div class="note"><b>为什么不建议用 <code>&amp;nbsp;</code> 排版：</b>它是不换行空格，连打五个就是「五个不能断开的空格」，窗口一窄整段话会溢出去。缩进用 CSS 的 <code>text-indent</code>，间距用 <code>margin</code>。</div>
+
+<h3>注释</h3>
+<pre><code>&lt;!-- 这是注释，浏览器不显示，也不会执行 --&gt;
+&lt;!-- 可以多行
+     用来标注「这块是导航」 --&gt;</code></pre>
+
+<h3>div 和 span：两个「没有含义」的盒子</h3>
+<pre><code>&lt;div class="nav"&gt;      &lt;!-- 块级：独占一行，用来装一大块 --&gt;
+    &lt;span&gt;首页&lt;/span&gt;   &lt;!-- 行内：跟着文字走，用来包一小段 --&gt;
+    &lt;span&gt;歌单&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+<table>
+<tr><th><code>&lt;div&gt;</code></th><td>块级容器，没有语义，纯粹为了布局和分组</td></tr>
+<tr><th><code>&lt;span&gt;</code></th><td>行内容器，没有语义，纯粹为了给一小段文字单独上样式</td></tr>
+</table>
+<div class="note"><b>能不用 div 就别用：</b>页眉用 <code>&lt;header&gt;</code>，导航用 <code>&lt;nav&gt;</code>，正文用 <code>&lt;main&gt;</code>，一节用 <code>&lt;section&gt;</code>，页脚用 <code>&lt;footer&gt;</code>。语义化标签和 div 长得一样，但读屏软件、搜索引擎、三个月后的你，都更看得懂。</div>
+
+<h3>自己动手</h3>
+<p>做「蓝梦音乐网 · 音乐节」页面的<strong>第一版</strong>：一个大标题、一张海报图、两段介绍、一条分割线、页脚。要求全部用语义标签，不用一个 <code>&lt;br&gt;</code> 排版。<b>这就是教材单元 2 的引导训练 2-1。</b></p></section>
+
+<section class="card" id="s03"><h2><span class="num">03</span>文字格式化与列表</h2>
+<p>教材把「文本格式化标签」和「列表标签」放在同一课。它们确实是一类——<b>都是「让一段文字有结构」</b>。区别是：前者标语气，后者标条理。</p>
+
+<h3>语气标签：哪些要重点，哪些是引用</h3>
+<pre><code>&lt;p&gt;这首歌&lt;strong&gt;一定要听&lt;/strong&gt;，&lt;em&gt;真的&lt;/em&gt;。&lt;/p&gt;
+&lt;p&gt;原价 &lt;del&gt;¥99&lt;/del&gt;，现价 &lt;ins&gt;¥49&lt;/ins&gt;。&lt;/p&gt;
+&lt;p&gt;公式：H&lt;sub&gt;2&lt;/sub&gt;O，面积：a&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;这一句是重点&lt;/mark&gt;，&lt;small&gt;这一句是补充&lt;/small&gt;&lt;/p&gt;</code></pre>
+<table>
+<tr><th><code>&lt;strong&gt;</code></th><td>重要。默认加粗。<b>语义是「重要」，不是「加粗」</b></td></tr>
+<tr><th><code>&lt;em&gt;</code></th><td>强调语气。默认斜体。语义是「重读」</td></tr>
+<tr><th><code>&lt;del&gt;</code> / <code>&lt;ins&gt;</code></th><td>删除 / 插入。电商划线价就用 del</td></tr>
+<tr><th><code>&lt;sub&gt;</code> / <code>&lt;sup&gt;</code></th><td>下标 / 上标</td></tr>
+<tr><th><code>&lt;mark&gt;</code></th><td>高亮，默认黄底</td></tr>
+<tr><th><code>&lt;small&gt;</code></th><td>小一号的补充说明（版权、注释）</td></tr>
+<tr><th><code>&lt;b&gt;</code> / <code>&lt;i&gt;</code></th><td>只改外观，不带语义。书上会讲，实际项目里少用，能用 strong/em 就用它们</td></tr>
+</table>
+<div class="note"><b>一句话：</b><code>&lt;b&gt;</code> 是「加粗」，<code>&lt;strong&gt;</code> 是「重要」。看上去一样，搜索引攀和读屏软件只认后者。</div>
+
+<h3>无序列表 ul：并列的几项</h3>
+<pre><code>&lt;ul&gt;
+    &lt;li&gt;华语流行&lt;/li&gt;
+    &lt;li&gt;欧美摇滚&lt;/li&gt;
+    &lt;li&gt;日系治愈&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<table>
+<tr><th>是什么</th><td>一组并列、没有先后顺序的条目。默认前面是小圆点</td></tr>
+<tr><th>规则</th><td><code>&lt;ul&gt;</code> 里面<b>只能放 <code>&lt;li&gt;</code></b>，不能直接塞文字或别的标签</td></tr>
+<tr><th>用在哪</th><td>导航菜单（<b>实际项目里 90% 的导航都是 ul</b>）、商品列表、特点罗列</td></tr>
+</table>
+
+<h3>有序列表 ol：有先后的几步</h3>
+<pre><code>&lt;ol&gt;
+    &lt;li&gt;注册账号&lt;/li&gt;
+    &lt;li&gt;选择会员&lt;/li&gt;
+    &lt;li&gt;开始听歌&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p>属性：<code>start="5"</code> 从 5 开始，<code>reversed</code> 倒序，<code>type="A"</code> 用字母。<b>步骤、排行榜、教程</b>都用它。</p>
+
+<h3>描述列表 dl：名词 + 解释</h3>
+<pre><code>&lt;dl&gt;
+    &lt;dt&gt;会员&lt;/dt&gt;
+    &lt;dd&gt;每月 ¥15，可无限下载&lt;/dd&gt;
+    &lt;dt&gt;音质&lt;/dt&gt;
+    &lt;dd&gt;普通用户 128kbps，会员 320kbps&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+<p><code>dt</code> 是词条，<code>dd</code> 是解释。做「参数表」「FAQ」「术语表」比表格更合适。</p>
+
+<h3>嵌套：列表里还能放列表</h3>
+<pre><code>&lt;ul&gt;
+    &lt;li&gt;华语
+        &lt;ul&gt;
+            &lt;li&gt;流行&lt;/li&gt;
+            &lt;li&gt;民谣&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;欧美&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+<div class="note"><b>嵌套的唯一规则：</b>子列表必须写在 <code>&lt;li&gt;</code> <b>里面</b>，不能写在两个 <code>&lt;li&gt;</code> 中间。写错了浏览器会自动帮你「修」——修出来的结构和你想的不一样，CSS 就对不上了。</div>
+
+<h3>用 CSS 改列表的样子（先看效果，第 09 节细讲）</h3>
+<pre><code>ul { list-style: none; padding-left: 0; }     /* 去掉小圆点，导航栏必做 */
+ol { list-style: decimal; }
+li { margin: 6px 0; }</code></pre>
+<div class="note"><b>自己动手：</b>给音乐节页面加一个「本周歌单」——用 <code>&lt;ol&gt;</code> 排前三名，用 <code>&lt;ul&gt;</code> 排风格分类，歌曲名用 <code>&lt;strong&gt;</code>，歌手用 <code>&lt;em&gt;</code>。<b>这一节对应教材单元 2 的引导训练 2-2 的「列表」部分。</b></div></section>
+
+<section class="card" id="s04"><h2><span class="num">04</span>图片、音频、视频</h2>
+<p>教材在单元 2 里讲了 <code>&lt;img&gt;</code>、<code>&lt;audio&gt;</code>、<code>&lt;video&gt;</code> 和 <code>&lt;marquee&gt;</code>。前三个是现在还在用的，最后一个只剩考古价值——但考试会考，所以都得知道。</p>
+
+<h3>img 的完整写法</h3>
+<pre><code>&lt;img src="images/poster.jpg"
+     alt="2026 蓝梦音乐节海报"
+     width="640" height="360"
+     loading="lazy"&gt;</code></pre>
+<table>
+<tr><th><code>loading="lazy"</code></th><td>懒加载，滚到才下载。一页几十张图时必加</td></tr>
+<tr><th><code>srcset</code></th><td>给不同屏幕准备不同尺寸的图，手机不下载大图（进阶）</td></tr>
+<tr><th>图片尺寸</th><td>先用图片编辑工具压到实际显示尺寸。一张 4000px 的图缩成 200px 显示，白等多几秒</td></tr>
+</table>
+
+<h3>音频 audio</h3>
+<pre><code>&lt;audio controls&gt;
+    &lt;source src="audio/song.mp3" type="audio/mpeg"&gt;
+    &lt;source src="audio/song.ogg" type="audio/ogg"&gt;
+    你的浏览器不支持音频，&lt;a href="audio/song.mp3"&gt;点这里下载&lt;/a&gt;
+&lt;/audio&gt;</code></pre>
+<table>
+<tr><th><code>controls</code></th><td>显示播放条。不加就是「隐形播放器」，一般都要加</td></tr>
+<tr><th><code>autoplay</code></th><td>自动播放。<b>现代浏览器默认拦截</b>——除非静音或有用户交互</td></tr>
+<tr><th><code>loop</code></th><td>循环</td></tr>
+<tr><th><code>preload</code></th><td><code>none</code> / <code>metadata</code> / <code>auto</code>，省流量的开关</td></tr>
+</table>
+
+<h3>视频 video</h3>
+<pre><code>&lt;video controls width="640" poster="images/cover.jpg"&gt;
+    &lt;source src="video/mv.mp4" type="video/mp4"&gt;
+    你的浏览器不支持视频。
+&lt;/video&gt;</code></pre>
+<p>和 audio 几乎一样，多三个属性：<code>poster</code>（没播放时的封面图）、<code>width/height</code>、<code>muted</code>（静音，配 autoplay 才能自动播）。</p>
+<div class="note"><b>格式选择：</b>视频优先 <code>mp4（H.264）</code>，兼容性最好；音频优先 <code>mp3</code>。别用 <code>.wav</code> 放网页——一首歌几十 MB。<b>能用外链视频平台（B 站、腾讯视频）就外链</b>，自己托管视频的流量费很贵。</div>
+
+<h3>marquee：教材有，现实里别用</h3>
+<pre><code>&lt;marquee direction="left" scrollamount="6" behavior="scroll"&gt;
+    本店今日全场八折
+&lt;/marquee&gt;</code></pre>
+<table>
+<tr><th>是什么</th><td>让内容滚动的老标签，IE 时代的东西</td></tr>
+<tr><th>现状</th><td><b>已废弃</b>。浏览器还能认，但标准里删了，无障碍也差（读屏软件念不了、晕动症用户难受）</td></tr>
+<tr><th>考试怎么办</th><td>知道它怎么写、几个属性什么意思就行，<b>答题时照写，做项目时别用</b></td></tr>
+<tr><th>替代方案</th><td>CSS 动画：<code>@keyframes</code> + <code>transform: translateX()</code>；系统开了「减少动态效果」时用 <code>@media (prefers-reduced-motion)</code> 关掉</td></tr>
+</table>
+<pre><code>/* 现代写法：一条无限滚动的公告 */
+.notice { overflow: hidden; white-space: nowrap; }
+.notice span { display: inline-block; animation: scroll 12s linear infinite; }
+@keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }</code></pre>
+
+<h3>图片的三种常见摆法</h3>
+<table>
+<tr><th>等比缩放</th><td><code>img { max-width: 100%; height: auto; }</code>——最常用，保证不溢出容器</td></tr>
+<tr><th>裁切填充</th><td><code>img { width: 100%; height: 200px; object-fit: cover; }</code>——卡片封面图用这个，不变形</td></tr>
+<tr><th>完整显示</th><td><code>object-fit: contain;</code>——商品图、海报缩略图，宁可留白也不裁</td></tr>
+</table>
+<div class="note"><b>自己动手：</b>给音乐节页面加一个「试听」区块：一张封面图 + 一个 audio 播放器 + 一段视频。<b>没有素材就先用占位图和免费音源</b>（比如 freesound、Pixabay），别去网上随便下别人的歌。</div></section>
+
+<section class="card" id="s05"><h2><span class="num">05</span>表格：先说数据，再说布局<span class="unit">单元 3</span></h2>
+<p>表格在 HTML 里有两个身份：<b>装数据</b>（本职）和<b>排版</b>（旧社会的临时工）。教材两件事都讲，这里把它拆开：数据表格要学扎实，布局表格要知道它为什么被淘汰。</p>
+
+<h3>最小的一张表</h3>
+<pre><code>&lt;table&gt;
+    &lt;caption&gt;2026 年 10 月歌单播放量&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;&lt;th&gt;歌曲&lt;/th&gt;&lt;th&gt;歌手&lt;/th&gt;&lt;th&gt;播放量&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;td&gt;晴天&lt;/td&gt;&lt;td&gt;周杰伦&lt;/td&gt;&lt;td&gt;120 万&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td&gt;起风了&lt;/td&gt;&lt;td&gt;买辣椒也用券&lt;/td&gt;&lt;td&gt;98 万&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+<table>
+<tr><th><code>&lt;table&gt;</code></th><td>整张表</td></tr>
+<tr><th><code>&lt;tr&gt;</code></th><td>一行（table row）</td></tr>
+<tr><th><code>&lt;td&gt;</code></th><td>一个格（table data）</td></tr>
+<tr><th><code>&lt;th&gt;</code></th><td>表头格，默认加粗居中。给读屏软件识别「这一列是什么」</td></tr>
+<tr><th><code>&lt;caption&gt;</code></th><td>表格标题，必须紧跟在 <code>&lt;table&gt;</code> 后面</td></tr>
+<tr><th><code>thead / tbody / tfoot</code></th><td>表头区 / 表体区 / 表尾区。便于样式分组，也便于打印时每页重复表头</td></tr>
+</table>
+<div class="note"><b>规矩：</b>一行里 <code>&lt;td&gt;</code> 的个数要一致（除非合并），否则表格会「缺角」。写完数一遍，是最快的自检方法。</div>
+
+<h3>合并单元格：colspan 与 rowspan</h3>
+<pre><code>&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th colspan="2"&gt;姓名与年龄&lt;/th&gt;   &lt;!-- 横着占 2 格 --&gt;
+        &lt;th&gt;城市&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td rowspan="2"&gt;阿猫&lt;/td&gt;          &lt;!-- 竖着占 2 行 --&gt;
+        &lt;td&gt;18&lt;/td&gt;
+        &lt;td&gt;株洲&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;!-- 这里不用再写「阿猫」那一格，它被上面占了 --&gt;
+        &lt;td&gt;19&lt;/td&gt;
+        &lt;td&gt;长沙&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+<table>
+<tr><th><code>colspan="2"</code></th><td>横跨 2 列，<b>这一行就要少写 1 个 td</b></td></tr>
+<tr><th><code>rowspan="2"</code></th><td>竖跨 2 行，<b>下一行就要少写 1 个 td</b></td></tr>
+</table>
+<div class="note"><b>合并单元格最经典的翻车：</b>只加了 <code>rowspan</code>，忘了把下面那一行对应的 <code>&lt;td&gt;</code> 删掉——表格就整体往右错一格。检查方法：<b>每一行的「td 个数 + 被上面占掉的格数」必须相等</b>。</div>
+
+<h3>细线表格：教材的重点</h3>
+<p>默认表格是「双线 + 有间隙」的老样子。要变成细线表格，有两种写法。</p>
+<pre><code>&lt;!-- 老写法（教材里有，能跑，但别在新项目里用） --&gt;
+&lt;table border="1" cellspacing="0" cellpadding="8"&gt; ... &lt;/table&gt;</code></pre>
+<pre><code>/* 新写法：CSS 控制 */
+table {
+    width: 100%;
+    border-collapse: collapse;   /* 相邻边框合并成一条线，细线的关键 */
+}
+th, td {
+    border: 1px solid #444;      /* 一条 1px 的线 */
+    padding: 8px 12px;           /* 格子里的留白，代替 cellpadding */
+    text-align: left;
+}
+th { background: #1c2740; }
+tr:nth-child(even) td { background: rgba(255,255,255,.03); }  /* 隔行变色 */</code></pre>
+<table>
+<tr><th><code>border="1"</code></th><td>HTML 属性，等于给表格加边框。<b>表现和结构混在一起，不推荐</b></td></tr>
+<tr><th><code>cellspacing</code></th><td>格子之间的间隙，等于 CSS 的 <code>border-spacing</code></td></tr>
+<tr><th><code>cellpadding</code></th><td>格子内边距，等于 CSS 的 <code>padding</code></td></tr>
+<tr><th><code>border-collapse</code></th><td><code>separate</code>（默认，双线）/ <code>collapse</code>（合并，细线）</td></tr>
+</table>
+
+<h3>为什么表格不再用来布局</h3>
+<table>
+<tr><th>当年怎么用</th><td>整页切成「上中下、左中右」，全部用 <code>&lt;table&gt;</code> 的格子摆</td></tr>
+<tr><th>为什么不灵了</th><td>① 结构臃肿，一层套一层，改一处动全身；② 代码没有语义，读屏软件念成一堆「表格」；③ 手机上根本排不开；④ 内容和样式死绑，换皮肤等于重写</td></tr>
+<tr><th>现在用什么</th><td>结构用 <code>&lt;div&gt;</code> + 语义标签，布局用 Flex（15 节）和 Grid（16 节）</td></tr>
+<tr><th>考试怎么办</th><td>教材单元 3 要求「用一张表格实现简单布局」，<b>会做、会解释原理就行</b>；真做项目，用 Flex</td></tr>
+</table>
+<div class="note"><b>分辨口诀：</b>装的是<b>数据</b>（歌单、成绩、价格）→ 用 table；装的是<b>版块</b>（导航、侧栏、页脚）→ 用 div + Flex/Grid。</div>
+
+<h3>表格的响应式（手机上别撑破屏）</h3>
+<pre><code>.table-wrap { width: 100%; overflow-x: auto; }  /* 外层包一个，窄屏就能左右滑 */
+table { min-width: 520px; }</code></pre>
+<div class="note"><b>自己动手：</b>做「蓝梦音乐网 · 歌手」页面：一张歌手表（头像、名字、代表作、出道年），要求前两行的「代表作」跨两列，最后一列用 rowspan 合并同一位歌手的两个奖项。<b>教材单元 3 引导训练 3-1。</b></div></section>
+
+<section class="card" id="s06"><h2><span class="num">06</span>表单：网页唯一能「收东西」的地方<span class="unit">单元 3</span></h2>
+<p>网页上 99% 的内容是「给你看」的，只有表单是「让你填」。注册、登录、搜索、下单、留言——全是表单。这一节把它拆成三层：<b>装东西的 form、填东西的控件、送出去的方式。</b></p>
+
+<h3>第一层：form 容器</h3>
+<pre><code>&lt;form action="/register" method="post"&gt;
+    ...
+&lt;/form&gt;</code></pre>
+<table>
+<tr><th><code>action</code></th><td>提交到哪。空着或省略 = 提交给当前页面</td></tr>
+<tr><th><code>method</code></th><td><code>get</code>（默认，参数拼在网址后面，能被看到、能收藏、有长度限制）/ <code>post</code>（放在请求体里，适合密码、大文件）</td></tr>
+<tr><th><code>enctype</code></th><td>有文件上传时必须写 <code>multipart/form-data</code>，否则只能传过去一个文件名</td></tr>
+<tr><th><code>novalidate</code></th><td>关掉浏览器自带的校验（自己写 JS 校验时才用）</td></tr>
+</table>
+<div class="note"><b>最重要的一句话：</b><b>没有 <code>name</code> 属性的控件，不会被提交。</b>后端收到的是「name = value」这样的键值对，<code>name</code> 是你给它起的字段名，<code>value</code> 是用户填的内容。少写一个 name，那个框就是白填。</div>
+
+<h3>第二层：input 的十几种类型</h3>
+<pre><code>&lt;form action="/register" method="post"&gt;
+    &lt;label for="user"&gt;用户名&lt;/label&gt;
+    &lt;input type="text" id="user" name="username" placeholder="4-12 位字符" required&gt;
+
+    &lt;label for="pwd"&gt;密码&lt;/label&gt;
+    &lt;input type="password" id="pwd" name="password" minlength="6" required&gt;
+
+    &lt;label for="mail"&gt;邮箱&lt;/label&gt;
+    &lt;input type="email" id="mail" name="email" placeholder="name@example.com"&gt;
+
+    &lt;label for="phone"&gt;手机&lt;/label&gt;
+    &lt;input type="tel" id="phone" name="phone" pattern="1[3-9]\d{9}"&gt;
+
+    &lt;input type="radio" id="m" name="gender" value="male" checked&gt;
+    &lt;label for="m"&gt;男&lt;/label&gt;
+    &lt;input type="radio" id="f" name="gender" value="female"&gt;
+    &lt;label for="f"&gt;女&lt;/label&gt;
+
+    &lt;input type="checkbox" id="agree" name="agree" value="yes"&gt;
+    &lt;label for="agree"&gt;我已阅读并同意用户协议&lt;/label&gt;
+
+    &lt;input type="file" name="avatar" accept="image/*"&gt;
+    &lt;input type="date" name="birthday"&gt;
+    &lt;input type="number" name="age" min="1" max="120"&gt;
+    &lt;input type="hidden" name="source" value="web"&gt;
+
+    &lt;button type="submit"&gt;注册&lt;/button&gt;
+    &lt;button type="reset"&gt;重填&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<table>
+<tr><th><code>text</code> / <code>password</code></th><td>单行文本 / 密文（只是显示成点，<b>不加密</b>，加密靠 https）</td></tr>
+<tr><th><code>email</code> / <code>tel</code> / <code>url</code></th><td>带格式提示的文本框，手机上会弹对应键盘</td></tr>
+<tr><th><code>number</code> / <code>range</code></th><td>数字 / 滑块，配合 <code>min</code> <code>max</code> <code>step</code></td></tr>
+<tr><th><code>radio</code></th><td>单选。<b>同一组的 name 必须一样</b>，否则每个都是独立单选，全都能选</td></tr>
+<tr><th><code>checkbox</code></th><td>多选。同组 name 一样时，后端收到的是数组</td></tr>
+<tr><th><code>file</code></th><td>文件选择，form 要配 <code>enctype</code>，<code>accept</code> 限定类型</td></tr>
+<tr><th><code>date / time / color</code></th><td>日期 / 时间 / 取色器，浏览器自带控件</td></tr>
+<tr><th><code>hidden</code></th><td>看不见但要提交的值（比如来源、订单号）</td></tr>
+<tr><th><code>submit / reset / button</code></th><td>提交 / 重置 / 纯按钮（不提交，留给 JS 绑事件）</td></tr>
+</table>
+
+<h3>第三层：下拉、多行文本、分组</h3>
+<pre><code>&lt;label for="city"&gt;城市&lt;/label&gt;
+&lt;select id="city" name="city"&gt;
+    &lt;option value=""&gt;请选择&lt;/option&gt;
+    &lt;option value="changsha"&gt;长沙&lt;/option&gt;
+    &lt;option value="zhuzhou" selected&gt;株洲&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;select name="style" multiple size="3"&gt;
+    &lt;optgroup label="华语"&gt;
+        &lt;option value="pop"&gt;流行&lt;/option&gt;
+        &lt;option value="folk"&gt;民谣&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/select&gt;
+
+&lt;textarea name="intro" rows="5" cols="40" placeholder="介绍一下你自己"&gt;&lt;/textarea&gt;
+
+&lt;fieldset&gt;
+    &lt;legend&gt;账号信息&lt;/legend&gt;
+    &lt;!-- 一组相关的控件 --&gt;
+&lt;/fieldset&gt;</code></pre>
+<table>
+<tr><th><code>select</code></th><td>下拉。<b>提交的是 option 的 value，不是显示的文字</b>——value 不写，提交的就是文字本身，中文会变乱码</td></tr>
+<tr><th><code>multiple size</code></th><td>多选 + 显示几行</td></tr>
+<tr><th><code>optgroup</code></th><td>给选项分组，只有 label，没有 value</td></tr>
+<tr><th><code>textarea</code></th><td>多行文本，<b>没有 value 属性</b>，内容写在标签中间</td></tr>
+<tr><th><code>fieldset / legend</code></th><td>把一组控件框起来，legend 是框上的标题</td></tr>
+</table>
+
+<h3>第四层：不用写 JS 就有的校验</h3>
+<table>
+<tr><th><code>required</code></th><td>必填</td></tr>
+<tr><th><code>placeholder</code></th><td>提示文字，<b>不是默认值</b>，用户一打字就消失</td></tr>
+<tr><th><code>pattern</code></th><td>正则校验，比如手机号 <code>1[3-9]\d{9}</code></td></tr>
+<tr><th><code>minlength / maxlength</code></th><td>长度限制</td></tr>
+<tr><th><code>min / max / step</code></th><td>数值范围</td></tr>
+<tr><th><code>autocomplete</code></th><td>让浏览器记住，<code>on</code> / <code>off</code></td></tr>
+</table>
+<div class="note"><b>但要清醒：</b>这些校验只挡「手滑」，<b>挡不住坏人</b>。前端校验是体验，<b>后端校验才是安全</b>。用户按 F12 就能把 required 删掉。</div>
+
+<h3>点「提交」之后发生了什么</h3>
+<table>
+<tr><th>1</th><td>浏览器检查校验，不通过就弹提示，不发请求</td></tr>
+<tr><th>2</th><td>把所有带 name 的控件拼成 <code>name=value&amp;name=value</code></td></tr>
+<tr><th>3</th><td>按 method 发出去：get 拼在网址后，post 放在请求体</td></tr>
+<tr><th>4</th><td>服务器返回新页面，<b>浏览器整页跳转</b>——这就是为什么「提交后页面刷新了」</td></tr>
+</table>
+<div class="note"><b>没有后端时怎么看效果：</b>把 method 改成 <code>get</code>，action 留空，提交后看地址栏——你填的东西全在问号后面，这就是「表单数据长什么样」最直观的一课。</div>
+
+<h3>自己动手</h3>
+<p>做「蓝梦音乐网 · 注册页面」：用户名、密码、确认密码、邮箱、性别（单选）、喜欢的曲风（多选）、城市（下拉）、头像（文件）、个人简介（多行）、同意协议（复选）、提交 + 重置。<b>要求：每个控件都有 label，每个控件都有 name，不写一行 JS 就能被浏览器校验。</b>这是教材单元 3 引导训练 3-2。</p></section>
+
+<section class="card" id="s07"><h2><span class="num">07</span>CSS 入门：语法、写法、谁说了算<span class="unit">单元 4</span></h2>
+<p>HTML 是骨架，CSS 是皮肤。没有 CSS 的网页，就是一份 Word 文档。</p>
+
+<h3>一条 CSS 由三部分组成</h3>
+<pre><code>h1 { color: #38bdf8; font-size: 32px; }
+└┬┘  └──────┬──────┘
+选择器        声明（属性: 值;）
+</code></pre>
+<table>
+<tr><th>选择器</th><td>「谁」——挑中哪些元素</td></tr>
+<tr><th>属性</th><td>「改什么」——颜色、大小、位置</td></tr>
+<tr><th>值</th><td>「改成什么」</td></tr>
+</table>
+<div class="note"><b>CSS 写错不报错。</b>少一个分号、冒号写成中文的、选择器漏了点——浏览器不会告诉你，它只是<b>悄悄跳过那一行</b>。所以「样式没生效」时，第一件事不是重写，是去 F12 的 Styles 面板看这条规则在不在、有没有被划掉。</div>
+
+<h3>三种写法：行内、内部、外部</h3>
+<pre><code>&lt;!-- 1. 行内样式：直接写在标签上 --&gt;
+&lt;h1 style="color: red;"&gt;标题&lt;/h1&gt;
+
+&lt;!-- 2. 内部样式表：写在 head 里的 style 中 --&gt;
+&lt;style&gt;
+    h1 { color: red; }
+&lt;/style&gt;
+
+&lt;!-- 3. 外部样式表：单独一个 .css 文件，link 进来 --&gt;
+&lt;link rel="stylesheet" href="css/style.css"&gt;</code></pre>
+<table>
+<tr><th>行内</th><td>优先级最高，但和结构混在一起。<b>只在用 JS 动态改样式、或改别人的老页面时用</b></td></tr>
+<tr><th>内部</th><td>只对当前页面生效。适合单页小项目、临时调试</td></tr>
+<tr><th>外部</th><td><b>标准做法</b>。一份样式管全站，改一处全站变；浏览器还能缓存</td></tr>
+</table>
+<div class="note"><b>一句话：</b>「一份数据，四处生效」——这句话用在 CSS 上就是：能写进外部样式表的，就别写行内。</div>
+
+<h3>层叠：同一条属性被写了两遍，听谁的</h3>
+<p>CSS 全称 Cascading Style Sheets，<b>层叠</b>就是它的第一性原理。规则按下面的顺序比，前一条赢了就不用看后一条：</p>
+<table>
+<tr><th>1</th><td><b>!important</b> —— 谁写了谁赢（<b>慎用，用了以后很难改</b>）</td></tr>
+<tr><th>2</th><td><b>来源</b> —— 浏览器默认 &lt; 用户样式 &lt; 作者样式（就是你写的）</td></tr>
+<tr><th>3</th><td><b>优先级（权重）</b> —— 见下表</td></tr>
+<tr><th>4</th><td><b>先后顺序</b> —— 权重一样，后写的赢</td></tr>
+</table>
+
+<h3>优先级怎么算</h3>
+<table>
+<tr><th>1000</th><td>行内 style="..."</td></tr>
+<tr><th>100</th><td>ID 选择器 <code>#top</code></td></tr>
+<tr><th>10</th><td>类 <code>.nav</code>、属性 <code>[type="text"]</code>、伪类 <code>:hover</code></td></tr>
+<tr><th>1</th><td>元素 <code>div</code>、伪元素 <code>::before</code></td></tr>
+<tr><th>0</th><td>通配符 <code>*</code>、继承来的样式</td></tr>
+</table>
+<pre><code>p            { color: black; }   /* 0,0,1 */
+.note p      { color: gray;  }   /* 0,1,1  ← 赢 */
+#main p      { color: blue;  }   /* 1,0,1  ← 再赢 */
+&lt;p style="color:red"&gt;            /* 1,0,0,0 行内 ← 最赢 */</code></pre>
+<div class="note"><b>别背数字，记三句话：</b>① ID 比类大，类比元素大；② 写得越「具体」越赢；③ <b>能不写 !important 就别写</b>——它是最后的创可贴，不是日常药。</div>
+
+<h3>继承：有些属性会「传下去」</h3>
+<table>
+<tr><th>会继承</th><td><code>color</code>、<code>font-*</code>、<code>line-height</code>、<code>text-align</code>、<code>letter-spacing</code>、<code>visibility</code></td></tr>
+<tr><th>不继承</th><td><code>margin</code>、<code>padding</code>、<code>border</code>、<code>background</code>、<code>width</code>、<code>height</code>、<code>display</code>、<code>position</code></td></tr>
+</table>
+<p>所以在 <code>body</code> 上写一次 <code>color</code> 和 <code>font-family</code>，全站文字都会跟着变——这就是「全局字体」最省事的写法。</p>
+
+<h3>注释</h3>
+<pre><code>/* 这是 CSS 注释，可以多行 */
+/* 注意：不是 // ，也不是 &lt;!-- --&gt; */</code></pre>
+<div class="note"><b>自己动手：</b>把音乐节页面的样式从「行内」全部搬到外部 <code>style.css</code>，用 <code>&lt;link&gt;</code> 引入。对比一下：改一次主色，需要改几个地方？<b>教材单元 4 的三种应用方式，这一练就懂。</b></div></section>
+
+<section class="card" id="s08"><h2><span class="num">08</span>选择器大全：怎么精准挑中那个元素<span class="unit">单元 4</span></h2>
+<p>选择器是 CSS 的「瞄准镜」。挑不中，样式再好也白搭。教材要求掌握 6 种，这里给全 12 种，外加优先级和命名。</p>
+
+<h3>基础四种</h3>
+<pre><code>p        { }   /* 元素：所有 p 标签 */
+.active  { }   /* 类：class="active" 的所有元素（最常用） */
+#header  { }   /* ID：id="header" 的那一个（一页只能一个） */
+h1, h2, h3 { } /* 群组：逗号，三个一起挑 */</code></pre>
+<div class="note"><b>新手第一大坑：</b>类选择器<b>必须带点</b>。<code>.nav</code> 是「class 叫 nav 的元素」，<code>nav</code> 是「nav 标签」。少一个点，样式就完全没反应。这是初学者最常犯、也最容易查半天的错。</div>
+
+<h3>组合：后代、子、兄弟</h3>
+<pre><code>.nav li      { }  /* 后代：.nav 里所有层级的 li（子孙都算） */
+.nav &gt; li    { }  /* 子：只算 .nav 的直接儿子 */
+h2 + p       { }  /* 相邻兄弟：紧挨着 h2 的下一个 p */
+h2 ~ p       { }  /* 通用兄弟：h2 后面所有同级 p */</code></pre>
+<table>
+<tr><th><code>空格</code> vs <code>&gt;</code></th><td>空格是「里面任意层级」，<code>&gt;</code> 是「里面第一层」。<b>能用 <code>&gt;</code> 就用 <code>&gt;</code></b>，影响范围小，不容易误伤</td></tr>
+<tr><th>用途</th><td>导航菜单 <code>.nav li</code>、表单 <code>.form &gt; label</code>、标题下方第一段 <code>h2 + p</code>（去掉上边距）</td></tr>
+</table>
+
+<h3>属性与伪类</h3>
+<pre><code>input[type="text"]      { }  /* 属性选择器：type 是 text 的 input */
+a[href^="http"]         { }  /* 以 http 开头 */
+a[href$=".pdf"]         { }  /* 以 .pdf 结尾 */
+
+a:hover                 { }  /* 鼠标悬停 */
+li:first-child          { }  /* 第一个 */
+li:last-child           { }  /* 最后一个 */
+li:nth-child(2n)        { }  /* 偶数行（2n+1 是奇数） */
+li:not(:last-child)     { }  /* 除了最后一个 */
+input:focus             { }  /* 获得焦点 */
+input:checked           { }  /* 被选中 */
+input:disabled          { }  /* 禁用 */
+p:empty                 { }  /* 里面什么都没有 */</code></pre>
+<div class="note"><b>两个高频用法：</b>① 导航最后一项不要右边框：<code>.nav li:not(:last-child) { border-right: 1px solid #333; }</code>；② 表格隔行变色：<code>tr:nth-child(even) { background: #0d1524; }</code>。</div>
+
+<h3>伪元素：往元素里「塞」内容</h3>
+<pre><code>.title::before {
+    content: "";
+    display: inline-block;
+    width: 4px; height: 18px;
+    background: #38bdf8;
+    margin-right: 10px;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}</code></pre>
+<table>
+<tr><th><code>::before</code> / <code>::after</code></th><td>在元素内容前 / 后插入内容，<b>必须写 <code>content</code></b></td></tr>
+<tr><th>能干什么</th><td>装饰性小竖条、角标、清除浮动、图标、引号、水印大字</td></tr>
+<tr><th>注意</th><td>内容是「装饰」，别把正文塞进去——读屏软件读不到，复制也复制不走</td></tr>
+</table>
+
+<h3>优先级速查（配合 07 节）</h3>
+<table>
+<tr><th>写法</th><td>权重</td></tr>
+<tr><th><code>*</code></th><td>0</td></tr>
+<tr><th><code>li</code></th><td>1</td></tr>
+<tr><th><code>.nav li</code></th><td>11</td></tr>
+<tr><th><code>li:nth-child(2)</code></th><td>11</td></tr>
+<tr><th><code>#nav li</code></th><td>101</td></tr>
+<tr><th><code>style="..."</code></th><td>1000</td></tr>
+</table>
+<div class="note"><b>实战建议：</b>选择器<b>够用就行，别写太长</b>。<code>div.header &gt; ul.nav &gt; li &gt; a</code> 这种能写但没必要——权重高到以后想覆盖只能上 !important。<b>一层类选择器能解决，就别堆三层。</b></div>
+
+<h3>命名：让三个月后的你看得懂</h3>
+<table>
+<tr><th>好名字</th><td><code>.site-header</code>、<code>.song-card</code>、<code>.btn-primary</code>、<code>.is-active</code></td></tr>
+<tr><th>坏名字</th><td><code>.red</code>（以后改成蓝色怎么办）、<code>.div1</code>、<code>.a</code>、<code>.box2</code></td></tr>
+<tr><th>规则</th><td>小写 + 连字符；<b>按「是什么」命名，不按「长什么样」命名</b>；状态类统一加 <code>is-</code> 前缀</td></tr>
+</table>
+<div class="note"><b>自己动手：</b>把注册页面的样式全部改用类选择器（不用 ID、不用行内），每个类名都起得让同学一眼看懂。然后故意写错一个选择器，去 F12 里找它为什么没生效。<b>教材单元 4 的选择器部分，就考这个。</b></div></section>
+
+<section class="card" id="s09"><h2><span class="num">09</span>美化文本：让字「好读」比「好看」重要</h2>
+<p>教材把「美化文本」和「美化图片」分成两个任务。先说文本——因为<b>网页 80% 的内容是字</b>，字排不好，图再漂亮也像地摊广告。</p>
+
+<h3>字体：font-family 要写一串</h3>
+<pre><code>body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}</code></pre>
+<table>
+<tr><th>为什么写一串</th><td>浏览器从左往右找，<b>找到第一个装了的就用</b>。最后一定放一个通用族名兜底</td></tr>
+<tr><th>通用族</th><td><code>sans-serif</code> 无衬线（屏幕首选）、<code>serif</code> 衬线、<code>monospace</code> 等宽（代码）</td></tr>
+<tr><th>中文字体</th><td>Windows 用「微软雅黑」，Mac 用「苹方」。<b>别用「宋体」做正文</b>，屏幕上发虚</td></tr>
+<tr><th>字体文件</th><td>想用特殊字体，<code>@font-face</code> 引入；中文字体动辄 5-10MB，<b>网页上慎用</b></td></tr>
+</table>
+
+<h3>字号与行高：两个必须一起调的数字</h3>
+<pre><code>body  { font-size: 16px; line-height: 1.8; }
+h1    { font-size: 2rem;  line-height: 1.3; }
+.small{ font-size: 13px;  }
+</code></pre>
+<table>
+<tr><th><code>font-size</code></th><td>正文 16px 起步，手机上别小于 14px（小于 14 用户要放大）</td></tr>
+<tr><th><code>line-height</code></th><td><b>写不带单位的数字</b>（1.8），它按「自己的字号」算；写 <code>28px</code> 是死值，换个字号就崩</td></tr>
+<tr><th>经验值</th><td>正文 1.7–1.9；标题 1.2–1.4（标题行高要小，看起来才「紧」）</td></tr>
+</table>
+<div class="note"><b>一句话：</b>行高是<b>「呼吸」</b>。1.2 的行高像挤公交，2.2 的行高像站操场，1.8 才是正常走路。</div>
+
+<h3>字重、颜色、装饰</h3>
+<pre><code>.title   { font-weight: 700; }        /* 100-900，常用 400 常规 / 700 加粗 */
+.muted   { color: #93a9c9; }          /* 次要信息用低对比度 */
+.hint    { color: rgba(147,169,201,.7); }
+a        { color: #38bdf8; text-decoration: none; }
+a:hover  { text-decoration: underline; }
+del      { color: #5d6f8c; }</code></pre>
+<table>
+<tr><th>颜色写法</th><td><code>#38bdf8</code> 十六进制 / <code>rgb(56,189,248)</code> / <code>rgba(56,189,248,.5)</code> 带透明度 / <code>hsl()</code></td></tr>
+<tr><th>对比度</th><td>正文和背景的对比度至少 4.5:1。<b>浅灰字 + 白底 = 看不清</b>，这是年轻设计师最常犯的错</td></tr>
+<tr><th>链接</th><td>去掉下划线可以，但<b>一定要有颜色区分</b>，否则用户不知道哪里能点</td></tr>
+</table>
+
+<h3>排版：对齐、缩进、间距</h3>
+<pre><code>p {
+    text-align: justify;      /* 两端对齐，中文段落首选 */
+    text-indent: 2em;         /* 首行缩进两个字 */
+    letter-spacing: 0.5px;    /* 字间距，中文适当加一点更透气 */
+    margin: 0 0 1em;          /* 段落之间用 margin，不用 &lt;br&gt; */
+}</code></pre>
+<table>
+<tr><th><code>text-align</code></th><td><code>left</code> / <code>right</code> / <code>center</code> / <code>justify</code>（两端对齐，中文排版开关）</td></tr>
+<tr><th><code>text-indent</code></th><td>首行缩进。<code>2em</code> = 两个字宽，<b>比敲空格规范</b></td></tr>
+<tr><th>行宽</th><td>中文一行 <b>35–45 个字</b>最好读。太宽，眼睛换行会串行</td></tr>
+<tr><th><code>text-wrap: pretty</code></th><td>新的换行优化，减少「最后一行只剩一个字」。<b>只管孤字，不管断词</b></td></tr>
+</table>
+
+<h3>阴影与描边</h3>
+<pre><code>h1 { text-shadow: 0 2px 12px rgba(56,189,248,.35); }
+.title { -webkit-text-stroke: 1px rgba(255,255,255,.2); }  /* 描边字，慎用 */</code></pre>
+<div class="note"><b>三个「别」：</b>① 别用 <code>&lt;br&gt;&lt;br&gt;</code> 控段落间距；② 别用 <code>&amp;nbsp;</code> 做缩进；③ 别在一段里塞三种字号三种颜色——<b>层级靠「大小」和「灰度」，不靠「彩虹」</b>。</div>
+
+<h3>自己动手</h3>
+<p>给音乐节页面的正文定一套排版：字体栈、16px 字号、1.8 行高、两端对齐、首行缩进 2em、段距 1em；标题用 1.3 行高。<b>验收标准：把窗口拉窄拉宽，字始终好读，没有一行长得离谱。</b></p></section>
+
+<section class="card" id="s10"><h2><span class="num">10</span>美化图片与背景：卡片感是怎么来的</h2>
+<p>「好看」的网页，八成来自三件事：<b>圆角、阴影、留白</b>。这一节把它们全讲完，顺便把背景和渐变一次说清。</p>
+
+<h3>尺寸与不变形</h3>
+<pre><code>img {
+    max-width: 100%;      /* 不撑破容器 */
+    height: auto;         /* 保持比例 */
+    display: block;       /* 去掉图片底部的神秘 4px 缝隙 */
+}
+
+.cover {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;    /* 裁切填满，不变形 */
+    object-position: center 30%;  /* 裁的时候保哪里 */
+}</code></pre>
+<div class="note"><b>那个 4px 缝隙：</b>图片默认是「行内元素」，和文字一样按基线对齐，下面会留一条基线空隙。<code>display: block</code> 一行解决。这个坑几乎每个人都踩过一次。</div>
+
+<h3>圆角、阴影：卡片的两件套</h3>
+<pre><code>.card {
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(2, 6, 15, .45);
+    border: 1px solid rgba(96, 165, 250, .2);
+    overflow: hidden;          /* 让子元素（比如图片）跟着圆角裁 */
+}
+
+.avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;        /* 正圆 */
+    object-fit: cover;
+}</code></pre>
+<table>
+<tr><th><code>border-radius</code></th><td>四个角可以分开写：<code>16px 16px 0 0</code>（只有上半圆角，卡片顶部用）</td></tr>
+<tr><th><code>box-shadow</code></th><td><code>水平偏移 垂直偏移 模糊 颜色</code>。<b>阴影颜色用深色透明，别用纯黑</b></td></tr>
+<tr><th>层次感</th><td>阴影别太黑太重。真实世界的光是「柔」的——大模糊、低透明度，最像真的</td></tr>
+</table>
+
+<h3>背景：background 五个属性</h3>
+<pre><code>.hero {
+    background-color: #070c17;
+    background-image: url("images/banner.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+/* 简写，顺序随意，但 size 要跟 position 用 / 隔开 */
+.hero { background: #070c17 url("images/banner.jpg") center / cover no-repeat; }</code></pre>
+<table>
+<tr><th><code>background-size</code></th><td><code>cover</code> 填满（可能裁）/ <code>contain</code> 完整显示（可能留白）/ <code>100% auto</code></td></tr>
+<tr><th><code>background-attachment</code></th><td><code>fixed</code> 做「视差」效果，移动端有兼容问题，慎用</td></tr>
+<tr><th>多重背景</th><td>逗号隔开，<b>先写的在上面</b>：<code>background: url(a.png), url(b.png);</code></td></tr>
+</table>
+
+<h3>渐变：不找图也能做出高级感</h3>
+<pre><code>.btn {
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+}
+.overlay {
+    background: linear-gradient(to top, rgba(7,12,23,.95), rgba(7,12,23,0) 60%);
+}</code></pre>
+<table>
+<tr><th><code>linear-gradient</code></th><td>角度 + 颜色节点。<code>135deg</code> 是左上到右下</td></tr>
+<tr><th><code>radial-gradient</code></th><td>从中心往外散，做「光晕」最像</td></tr>
+<tr><th>遮罩用法</th><td>图片上压一层「从黑到透明」的渐变，文字就压得住——<b>首屏大图配标题的标准做法</b></td></tr>
+</table>
+
+<h3>交互：hover 的一点点变化</h3>
+<pre><code>.card {
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card:hover {
+    transform: translateY(-4px);
+    border-color: #38bdf8;
+    box-shadow: 0 18px 40px rgba(2,6,15,.55);
+}
+img:hover { filter: brightness(1.08) saturate(1.1); }</code></pre>
+<div class="note"><b>克制的原则：</b>动效是「提示这块能点」，不是「看我多会动」。<b>位移不超过 6px、时长 200–300ms</b>，就够了。另外记得尊重系统设置：<code>@media (prefers-reduced-motion: reduce) { * { transition: none; } }</code></div>
+
+<h3>自己动手</h3>
+<p>做一张「歌单卡片」：封面图（object-fit cover）+ 圆角 + 阴影 + 悬停上浮 + 歌名/歌手两级文字。做三个一样的卡片，用 Grid 排一行。<b>这张卡片，就是整个音乐网首页的积木。</b></p></section>
+
+<section class="card" id="s11"><h2><span class="num">11</span>盒子模型：所有布局的地基<span class="unit">单元 5</span></h2>
+<p>浏览器眼里，页面上<b>每一个元素都是一个矩形盒子</b>。盒子有四个圈，从里到外：内容 → 内边距 → 边框 → 外边距。</p>
+
+<h3>四层结构</h3>
+<pre><code>┌─────────────────────────────┐  ← margin（外边距，盒子外面的空气）
+│  ┌───────────────────────┐  │  ← border（边框）
+│  │  ┌─────────────────┐  │  │  ← padding（内边距，内容和边框之间的空气）
+│  │  │    content      │  │  │
+│  │  └─────────────────┘  │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘</code></pre>
+<pre><code>.box {
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #38bdf8;
+    margin: 16px;
+}</code></pre>
+<table>
+<tr><th>实际占多宽</th><td>默认（<code>content-box</code>）：300 + 20×2 + 2×2 = <b>344px</b>，再加 margin 16×2 = <b>376px</b></td></tr>
+<tr><th>这就是「明明写了 300px，怎么把版面撑破了」的原因</th><td>padding 和 border 是<b>往外加</b>的</td></tr>
+</table>
+
+<h3>box-sizing：一行救全站</h3>
+<pre><code>*, *::before, *::after { box-sizing: border-box; }</code></pre>
+<p>加上这一行之后，<code>width: 300px</code> 就是<b>「连 padding 和 border 一起算，总宽 300」</b>。你做响应式、算百分比、写 Grid 的时候，再也不用减来减去。</p>
+<div class="note"><b>直接抄走：</b>现在几乎所有项目的第一行 CSS 都是它。教材里可能没强调，但<b>不写这一行，你会多花一倍时间调宽度</b>。</div>
+
+<h3>margin 的两个怪脾气</h3>
+<table>
+<tr><th>上下相邻</th><td>两个盒子的上下 margin 不会相加，<b>取大的那个</b>（20 和 30 相邻，间距是 30，不是 50）</td></tr>
+<tr><th>父子塌陷</th><td>子元素的 margin-top 会「穿透」父元素，跑到父元素外面去——父元素跟着往下掉</td></tr>
+</table>
+<pre><code>/* 三种解法，任选其一 */
+.parent { padding-top: 1px; }        /* 给父元素一点内边距 */
+.parent { overflow: hidden; }        /* 触发 BFC */
+.parent { display: flow-root; }      /* 最干净，专门为这个发明的 */</code></pre>
+<div class="note"><b>负 margin 能用吗？</b>能，常用来让元素「贴边溢出」或修正 1px 缝隙。但它是双刃剑——<b>新手先别用</b>，能用 padding/transform 解决的，就别用负 margin。</div>
+
+<h3>溢出：内容比盒子大怎么办</h3>
+<pre><code>.box { overflow: hidden; }   /* 超出部分裁掉（也常用来清浮动、做圆角裁切） */
+.box { overflow: auto; }     /* 需要时出滚动条，最常用 */
+.box { overflow: scroll; }   /* 永远有滚动条 */
+.box { overflow-x: auto; white-space: nowrap; }  /* 只横向滚动，做标签栏 */</code></pre>
+
+<h3>居中：盒子模型的第一个实战</h3>
+<pre><code>/* 1. 块级元素水平居中 */
+.box { width: 600px; margin: 0 auto; }
+
+/* 2. 文字水平居中 */
+.title { text-align: center; }
+
+/* 3. 一个盒子在页面正中（老办法，现在用 Flex 更省事） */
+.center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+/* 4. 一个盒子在页面正中（现代办法） */
+body { display: grid; place-items: center; min-height: 100vh; }</code></pre>
+
+<h3>百分比参照谁</h3>
+<table>
+<tr><th><code>width: 50%</code></th><td>父元素<b>内容宽度</b>的 50%</td></tr>
+<tr><th><code>padding: 10%</code></th><td>父元素<b>宽度</b>的 10%（上下 padding 也按宽度算，这是个老坑）</td></tr>
+<tr><th><code>height: 100%</code></th><td>父元素高度——<b>父元素没写高度时，它等于 auto，100% 就失效</b></td></tr>
+<tr><th><code>margin: auto</code></th><td>左右 auto 才居中；上下 auto 在普通文档流里不居中</td></tr>
+</table>
+<div class="note"><b>自己动手：</b>做一个「三栏卡片」：每张卡片 300px 宽、内边距 20px、边框 1px、外边距 16px。<b>先不加 box-sizing</b>，量一下实际宽度；再加上，再量一次。亲眼看见差别，比背十遍定义管用。</div></section>
+
+<section class="card" id="s12"><h2><span class="num">12</span>文档流与 display：元素怎么排队</h2>
+<p>不写任何 CSS 的时候，页面也有布局——它叫<b>标准文档流</b>：块级元素从上往下摞，行内元素从左往右排。所有布局技巧，本质都是「打破这个默认排队」。</p>
+
+<h3>三种显示类型</h3>
+<table>
+<tr><th>块级 block</th><td><code>div p h1 ul li table form header section</code></td><td>独占一行；宽高、上下 margin 都有效；不写宽度时默认撑满父元素</td></tr>
+<tr><th>行内 inline</th><td><code>span a strong em img input label</code></td><td>跟文字排队；<b>width/height 无效</b>；上下 margin 无效，只有左右有效</td></tr>
+<tr><th>行内块 inline-block</th><td>用 display 手动改</td><td>像文字一样排队，但<b>能设宽高</b>——按钮、标签、小图标用得多</td></tr>
+</table>
+<pre><code>span { width: 200px; }           /* 无效！行内元素不认宽 */
+span { display: inline-block; width: 200px; }  /* 有效 */
+
+div { display: inline; }         /* 块变行内，宽高失效 */
+a   { display: block; }          /* 行内变块，能撑满整行，做导航最常用 */
+li  { display: inline-block; }   /* 横排菜单的经典写法 */</code></pre>
+<div class="note"><b>为什么导航链接常写 <code>display: block</code>：</b>链接是行内的，只有文字区域能点。<b>改成块级后，整个格子都能点</b>，鼠标手感立刻不一样。这是「可用性」而不是「好看」的改动。</div>
+
+<h3>行内元素的两个坑</h3>
+<pre><code>/* 坑 1：inline-block 之间有看不见的空白 */
+&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;   /* 换行写就有 4px 缝隙 */
+ul { font-size: 0; }      /* 父元素字号归零，再给 li 设回字号 */
+li { display: inline-block; font-size: 16px; }
+
+/* 坑 2：行内元素按基线对齐 */
+img { vertical-align: middle; }   /* 或者 display: block */</code></pre>
+
+<h3>隐藏一个元素的三种方式</h3>
+<table>
+<tr><th><code>display: none</code></th><td>彻底消失，<b>不占位置</b>，读屏也读不到。做标签页切换、弹窗默认隐藏</td></tr>
+<tr><th><code>visibility: hidden</code></th><td>看不见，<b>但还占着位置</b>。做「占位不跳版」的隐藏</td></tr>
+<tr><th><code>opacity: 0</code></th><td>透明，还占位置，<b>还能点</b>。做淡入淡出动画</td></tr>
+</table>
+<div class="note"><b>要「淡出且不占位」：</b><code>transition</code> 配 <code>visibility</code>，或者动画结束后再加 <code>display: none</code>。单用 opacity 做不到「消失」，它只是「看不见」。</div>
+
+<h3>垂直居中：这个问题的半部历史</h3>
+<pre><code>/* 单行文字：行高等于高度 */
+.btn { height: 44px; line-height: 44px; }
+
+/* 行内块 / 图片：vertical-align */
+.box { height: 200px; line-height: 200px; }  /* 父元素设行高 */
+.box img { vertical-align: middle; }
+
+/* 现代：Flex，直接说人话 */
+.box { display: flex; align-items: center; justify-content: center; }</code></pre>
+
+<h3>块级 vs 行内：一张判断表</h3>
+<table>
+<tr><th>要独占一行、能设宽高</th><td>用块级（div / 语义标签）</td></tr>
+<tr><th>要跟文字排在一起、能设宽高</th><td>inline-block</td></tr>
+<tr><th>只是包一小段文字上色</th><td>span（行内）</td></tr>
+<tr><th>要横排一堆等宽块</th><td><b>别用 inline-block，用 Flex</b></td></tr>
+</table>
+<div class="note"><b>自己动手：</b>用 <code>inline-block</code> 排一个横向导航，量一下两个 li 之间的缝隙；再用父元素 <code>font-size: 0</code> 解决它。然后全部换成 <code>display: flex</code>，对比代码量——你会明白 15 节为什么存在。</div></section>
+
+<section class="card" id="s13"><h2><span class="num">13</span>浮动与清除浮动：一个时代的遗产<span class="unit">单元 5</span></h2>
+<p>教材单元 5 的核心就是「DIV+CSS + 盒子模型 + 浮动」。这套东西统治了网页布局十几年，<b>考试必考、老项目必见</b>，但新项目已经基本不用。所以这一节要学两个东西：<b>它怎么用</b>，和<b>它为什么退场</b>。</p>
+
+<h3>float 是干什么的</h3>
+<p>它本来是为<b>「文字环绕图片」</b>设计的——像杂志里图片旁边绕着文字。后来被人拿来排版，一用就是十几年。</p>
+<pre><code>img.left { float: left; margin: 0 16px 12px 0; }
+&lt;img class="left" src="cover.jpg" alt=""&gt;
+&lt;p&gt;这一段文字会自动绕着图片排……&lt;/p&gt;</code></pre>
+<pre><code>.col-left  { float: left;  width: 220px; }
+.col-right { float: right; width: 220px; }
+.main      { margin: 0 240px; }   /* 中间栏用 margin 让位 */</code></pre>
+<table>
+<tr><th><code>float: left / right</code></th><td>元素靠左 / 靠右，<b>脱离标准文档流</b>，后面的行内内容会绕开它</td></tr>
+<tr><th><code>float: none</code></th><td>默认值，不浮动</td></tr>
+<tr><th>代价</th><td>父元素「看不见」浮动的孩子，高度变成 0——<b>这就是「高度塌陷」</b></td></tr>
+</table>
+
+<h3>高度塌陷长什么样</h3>
+<pre><code>&lt;div class="wrapper"&gt;
+    &lt;div class="box"&gt;我浮动了&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="next"&gt;我会盖上去&lt;/div&gt;</code></pre>
+<p>结果：<code>.wrapper</code> 高度是 0，<code>.next</code> 直接叠到浮动元素下面，版面全乱。<b>这不是 bug，是浮动脱离文档流的必然结果。</b></p>
+
+<h3>三种清除方法</h3>
+<pre><code>/* 1. 额外标签法（最老，最不推荐：多了一个没意义的 div） */
+&lt;div style="clear: both;"&gt;&lt;/div&gt;
+
+/* 2. 父元素 overflow: hidden（最简单，但会裁掉溢出内容） */
+.wrapper { overflow: hidden; }
+
+/* 3. clearfix：伪元素，最经典 */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.clearfix { zoom: 1; }   /* 兼容 IE6/7 的老写法，现在可以不要 */</code></pre>
+<table>
+<tr><th><code>clear: left / right / both</code></th><td>「我这一侧不许有浮动元素」——把元素推到所有浮动元素下面</td></tr>
+<tr><th><code>overflow: hidden</code></th><td>触发 BFC（块级格式化上下文），父元素会包住浮动子元素</td></tr>
+<tr><th><code>display: flow-root</code></th><td>专门为「包住浮动」发明的新值，<b>干净、没有副作用</b>，现代首选</td></tr>
+</table>
+
+<h3>为什么今天不用浮动了</h3>
+<table>
+<tr><th>浮动的痛点</th><td>要清浮动、要算宽度、要处理高度塌陷、垂直居中几乎没法做、顺序调整要改 HTML</td></tr>
+<tr><th>Flex 怎么解决</th><td>一行 <code>display: flex</code>，横排自动、等高自动、居中一行属性、顺序用 <code>order</code> 改</td></tr>
+<tr><th>结论</th><td><b>新项目用 Flex/Grid；浮动用来看懂老代码、应付考试、做文字环绕</b></td></tr>
+</table>
+
+<h3>用浮动搭一个两栏（教材里的样子）</h3>
+<pre><code>&lt;div class="layout clearfix"&gt;
+    &lt;aside class="sidebar"&gt;侧栏&lt;/aside&gt;
+    &lt;main class="content"&gt;正文&lt;/main&gt;
+&lt;/div&gt;
+
+.layout  { width: 1000px; margin: 0 auto; }
+.sidebar { float: left;  width: 240px; }
+.content { float: right; width: 740px; }   /* 240 + 740 + 间隙 = 1000 */</code></pre>
+<div class="note"><b>算宽度是这个时代最烦的事：</b>两栏宽度 + 间距必须刚好等于父容器，多 1px 就掉行。这也是为什么后来大家改用百分比和 Flex ——<b>不能让「人肉加法」决定版面能不能站住</b>。</div>
+
+<h3>自己动手</h3>
+<p>用浮动把音乐网首页拆成「左导航 240px + 右内容自适应」，然后<b>故意不给父元素清浮动</b>，看页面塌成什么样；再分别用 <code>overflow: hidden</code>、<code>flow-root</code>、clearfix 修好。<b>这个对比，比看十遍定义都值。</b></p></section>
+
+<section class="card" id="s14"><h2><span class="num">14</span>定位与 z-index：谁在上面，谁钉在屏幕上<span class="unit">单元 6</span></h2>
+<p>浮动解决「横着排」，定位解决「<b>脱离排队，放到任意位置</b>」。导航跟着滚、按钮贴右下角、图片上压个角标、弹窗盖住全屏——全是定位。</p>
+
+<h3>五个 position 值</h3>
+<table>
+<tr><th><code>static</code></th><td>默认。老老实实排队，<code>top/left</code> 写了也没用</td></tr>
+<tr><th><code>relative</code></th><td>相对<b>自己原来的位置</b>偏移，<b>原来的位置还占着</b>（别人不会补上来）</td></tr>
+<tr><th><code>absolute</code></th><td>相对<b>最近一个「定位过的」祖先</b>偏移，<b>完全脱离文档流</b>，不占位置</td></tr>
+<tr><th><code>fixed</code></th><td>相对<b>浏览器窗口</b>偏移，滚动时不动。固定导航、回到顶部按钮</td></tr>
+<tr><th><code>sticky</code></th><td>滚到某个位置前是 relative，之后变成 fixed。<b>吸顶目录、吸底结算栏</b></td></tr>
+</table>
+<pre><code>.badge {
+    position: absolute;
+    top: 8px; right: 8px;      /* 相对最近定位祖先的右上角 */
+}
+.card { position: relative; }  /* 给卡片一个「定位参照」，badge 才不会跑出页面 */
+
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+body    { padding-top: 64px; }  /* 固定导航会盖住内容，要给 body 让位 */
+
+.sticky-title { position: sticky; top: 0; }  /* 滚到顶就吸住 */</code></pre>
+<div class="note"><b>absolute 的第一坑：</b>它找的是「最近一个 <code>position</code> 不是 static 的祖先」。如果所有祖先都没定位，它就相对<b>整个页面</b>定位——所以你明明想放卡片右上角，它跑到了网页右上角。<b>解法：给父元素加 <code>position: relative</code>。</b></div>
+
+<h3>z-index：谁盖住谁</h3>
+<pre><code>.modal   { position: fixed; z-index: 1000; }   /* 弹窗 */
+.mask    { position: fixed; z-index: 999;  }   /* 遮罩 */
+.nav     { position: fixed; z-index: 100;  }   /* 导航 */
+</code></pre>
+<table>
+<tr><th>生效前提</th><td><b>只对定位元素生效</b>（position 不是 static），或者 flex/grid 的子项</td></tr>
+<tr><th>数值</th><td>数字大的在上。<b>同值时，后写的在上</b></td></tr>
+<tr><th>层级表</th><td>别写 9999、99999——<b>定一张表</b>：内容 1、悬浮按钮 100、导航 500、遮罩 900、弹窗 1000</td></tr>
+<tr><th>堆叠上下文</th><td>父元素有 <code>transform</code>、<code>opacity &lt; 1</code>、<code>filter</code> 时，会新建一层——<b>子元素 z-index 再大也跳不出这层</b>。这是「z-index 明明很大却不生效」的头号原因</td></tr>
+</table>
+
+<h3>四个真实场景</h3>
+<pre><code>/* 1. 图片角标 */
+.card { position: relative; }
+.card .tag { position: absolute; left: 0; top: 0; background: #38bdf8; color: #04121f; padding: 2px 10px; border-radius: 0 0 10px 0; }
+
+/* 2. 回到顶部 */
+.to-top { position: fixed; right: 24px; bottom: 24px; width: 44px; height: 44px; border-radius: 50%; }
+
+/* 3. 弹窗遮罩 */
+.mask { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; }
+/* inset: 0 等于 top/right/bottom/left 全 0，新的简写 */
+
+/* 4. 轮播的左右箭头 */
+.slider { position: relative; }
+.slider .prev, .slider .next { position: absolute; top: 50%; transform: translateY(-50%); }
+.slider .prev { left: 12px; }
+.slider .next { right: 12px; }</code></pre>
+
+<h3>居中三件套（定位版）</h3>
+<pre><code>/* 老方法：translate 补偿自身一半宽高 */
+.center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+/* 新方法：inset + margin auto */
+.center { position: absolute; inset: 0; margin: auto; width: 300px; height: 200px; }</code></pre>
+<div class="note"><b>自己动手：</b>给音乐网首页加三样东西——固定顶部导航（滚动不消失）、卡片右上角「HOT」角标、右下角回到顶部按钮。<b>三个东西，三种定位，一次全练到。</b>这就是教材单元 6 的开场。</div></section>
+
+<section class="card" id="s15"><h2><span class="num">15</span>Flex 布局：一行代码换一个时代</h2>
+<p>2017 年之后，前端布局基本只剩两件事：<b>一维用 Flex，二维用 Grid</b>。教材成书时还在讲浮动，但你现在做的每一个项目，都应该用 Flex 起手。</p>
+
+<h3>它是什么</h3>
+<pre><code>.box { display: flex; }   /* 父元素写上这一行，孩子自动横排 */</code></pre>
+<p>写完之后，这个盒子变成<b>「弹性容器」</b>，它的直接子元素变成<b>「弹性项目」</b>。容器里出现一根看不见的<b>主轴</b>（默认从左到右），所有项目沿着主轴排。</p>
+
+<h3>容器的六个属性</h3>
+<pre><code>.box {
+    display: flex;
+    flex-direction: row;          /* 主轴方向：row 横 / column 竖 */
+    flex-wrap: wrap;              /* 放不下时换行（默认 nowrap 硬挤） */
+    justify-content: space-between; /* 主轴对齐：靠边分 */
+    align-items: center;          /* 交叉轴对齐：垂直居中 */
+    align-content: center;        /* 多行时的行间对齐（wrap 后才有效） */
+    gap: 16px;                    /* 项目间距，替代一堆 margin */
+}</code></pre>
+<table>
+<tr><th><code>justify-content</code></th><td><code>flex-start</code> 靠头 / <code>center</code> / <code>flex-end</code> 靠尾 / <code>space-between</code> 两端（衔接导航）/ <code>space-around</code> / <code>space-evenly</code></td></tr>
+<tr><th><code>align-items</code></th><td><code>stretch</code> 默认拉满 / <code>center</code> 居中 / <code>flex-start</code> / <code>flex-end</code> / <code>baseline</code> 文字基线对齐</td></tr>
+<tr><th><code>gap</code></th><td><b>告别「最后一个孩子不要 margin-right」</b>，一个 gap 全解决</td></tr>
+</table>
+
+<h3>项目的三个属性</h3>
+<pre><code>.item { flex: 1; }              /* 简写：占满剩余空间，等分 */
+.item { flex: 1 1 200px; }      /* 长 1 · 缩 1 · 基础 200px */
+.item { align-self: flex-end; } /* 单个项目单独对齐 */
+.item { order: 2; }             /* 改变显示顺序，不改 HTML */</code></pre>
+<table>
+<tr><th><code>flex-grow</code></th><td>剩余空间怎么分，0 = 不参与</td></tr>
+<tr><th><code>flex-shrink</code></th><td>空间不够时缩不缩，0 = 不许缩</td></tr>
+<tr><th><code>flex-basis</code></th><td>基准宽度，写 <code>auto</code> 就看 width</td></tr>
+</table>
+
+<h3>五种立刻能用的写法</h3>
+<pre><code>/* 1. 导航：logo 靠左，菜单靠右 */
+.nav { display: flex; justify-content: space-between; align-items: center; }
+
+/* 2. 完美居中（等价于「怎么这么难」的那三十年） */
+.center { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+/* 3. 三栏等高 */
+.layout { display: flex; }
+.layout &gt; * { flex: 1; }
+
+/* 4. 卡片底部按钮对齐（不用量高度） */
+.card { display: flex; flex-direction: column; }
+.card .btn { margin-top: auto; }   /* 自动吃掉剩余空间 */
+
+/* 5. 标签栏换行 */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }</code></pre>
+
+<h3>两个必踩的坑</h3>
+<pre><code>/* 坑 1：文字太长把项目撑破 → 加 min-width: 0 */
+.item { flex: 1; min-width: 0; }
+.item .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 坑 2：flex-basis 和 width 打架 → 记住 basis 优先 */
+.child { flex-basis: 200px; width: 100px; }  /* 实际按 200px */
+</code></pre>
+<div class="note"><b>为什么要 <code>min-width: 0</code>：</b>Flex 项目的默认最小宽度是「内容宽度」，文字不换行时它宁可撑破也不缩。<b>加了 0，它才肯配合缩到容器里</b>——这是省略号不生效的头号原因。</div>
+
+<h3>自己动手</h3>
+<p>把音乐网首页做成：固定导航（logo + 菜单两端对齐）、首屏垂直居中、三张歌单卡片等宽、每张卡片底部按钮对齐。<b>全程不许用 float，不许写死高度。</b></p></section>
+
+<section class="card" id="s16"><h2><span class="num">16</span>Grid 布局：二维棋盘</h2>
+<p>Flex 只管一根轴，Grid 能同时管行和列——<b>先画格子，再往里放东西</b>。做整页布局、卡片墙，它比 Flex 还省事。</p>
+
+<h3>三行代码，一个响应式卡片墙</h3>
+<pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}</code></pre>
+<table>
+<tr><th><code>repeat(auto-fit, ...)</code></th><td>「能放几列放几列」，自动算</td></tr>
+<tr><th><code>minmax(260px, 1fr)</code></th><td>每列最窄 260px，最宽平分剩余</td></tr>
+<tr><th>结果</th><td>宽屏 4 列，平板 2 列，手机 1 列——<b>不用写一行媒体查询</b></td></tr>
+</table>
+<div class="note"><b>对比一下：</b>同样的效果用浮动要写 @media 三个断点、算宽度、清浮动。这一行，就是「工具选错了，活该加班」。</div>
+
+<h3>定义行列</h3>
+<pre><code>.layout {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;   /* 固定 + 弹性 + 固定 */
+    grid-template-rows: 64px 1fr 80px;
+    grid-template-areas:
+        "header header header"
+        "side   main   aside"
+        "footer footer footer";
+    gap: 16px;
+    min-height: 100vh;
+}
+.header { grid-area: header; }
+.side   { grid-area: side; }
+.main   { grid-area: main; }
+.aside  { grid-area: aside; }
+.footer { grid-area: footer; }</code></pre>
+<p><b>这是目前写「整页布局」最直观的写法</b>：看代码就知道版面长什么样，改顺序改一个单词。</p>
+
+<h3>常用属性速查</h3>
+<table>
+<tr><th><code>grid-template-columns</code></th><td>定义列宽：<code>1fr 1fr</code>、<code>repeat(3, 1fr)</code>、<code>200px auto</code></td></tr>
+<tr><th><code>gap</code></th><td><code>gap: 16px</code> / <code>row-gap</code> <code>column-gap</code> 分开写</td></tr>
+<tr><th><code>justify-items / align-items</code></th><td>格子内元素水平 / 垂直对齐</td></tr>
+<tr><th><code>place-items: center</code></th><td>两个一起写，居中神器</td></tr>
+<tr><th><code>grid-column: span 2</code></th><td>这个元素横跨两列</td></tr>
+</table>
+
+<h3>Flex 还是 Grid？</h3>
+<table>
+<tr><th>一排东西，一维</th><td>Flex（导航、按钮组、标签栏）</td></tr>
+<tr><th>整页版式 / 卡片墙，二维</th><td>Grid</td></tr>
+<tr><th>两者能混用吗</th><td>能，而且很常见：<b>Grid 定大格子，格子里用 Flex 排内容</b></td></tr>
+</table>
+
+<h3>一个完整的卡片墙</h3>
+<pre><code>&lt;div class="songs"&gt;
+    &lt;article class="song"&gt;
+        &lt;img src="images/1.jpg" alt="晴天"&gt;
+        &lt;h3&gt;晴天&lt;/h3&gt;
+        &lt;p&gt;周杰伦&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;!-- 再来三个 --&gt;
+&lt;/div&gt;
+
+.songs { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.song  { background: #0d1524; border-radius: 14px; overflow: hidden; }
+.song img { width: 100%; height: 160px; object-fit: cover; display: block; }
+.song h3, .song p { padding: 0 14px; }
+.song p { color: #93a9c9; font-size: 13px; padding-bottom: 14px; }</code></pre>
+<div class="note"><b>自己动手：</b>用 Grid 重写第 15 节那个首页。要求：整页三行（头/中/脚）、中间三栏、卡片区自动换列。<b>写完数一下代码行数——通常会比 Flex 版少一半。</b></div></section>
+
+<section class="card" id="s17"><h2><span class="num">17</span>响应式与移动端：一套代码，两种屏幕<span class="unit">单元 7</span></h2>
+<p>教材叫「制作移动网页」。今天的做法不是「再做一个手机版」，而是<b>同一份 HTML，靠 CSS 自动适配</b>。这一节是整门课最值钱的一节——<b>手机流量早就是大头了</b>。</p>
+
+<h3>第一件事：viewport</h3>
+<pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></pre>
+<p>没有这一行，手机会假装自己有 980px 宽，然后把整页缩小塞进屏幕——字小到看不清。<b>这一行是所有移动端适配的前提，缺了它，后面全白写。</b></p>
+<table>
+<tr><th><code>width=device-width</code></th><td>页面宽度 = 设备宽度</td></tr>
+<tr><th><code>initial-scale=1</code></th><td>初始不放大不缩小</td></tr>
+<tr><th>别加 <code>user-scalable=no</code></th><td>禁止缩放，对老人和视力不好的人很不友好，很多审查会直接扣分</td></tr>
+</table>
+
+<h3>媒体查询：到某个宽度就换一套样式</h3>
+<pre><code>/* 移动优先：默认样式写手机，屏幕变大再增强 */
+.card { padding: 16px; }
+
+@media (min-width: 768px) {
+    .card { padding: 24px; }
+}
+
+@media (min-width: 1024px) {
+    .layout { display: grid; grid-template-columns: 240px 1fr; }
+}</code></pre>
+<table>
+<tr><th>语法</th><td><code>@media (条件) { 规则 }</code>，条件可以是宽度、方向、分辨率、是否支持某特性</td></tr>
+<tr><th><code>min-width</code> vs <code>max-width</code></th><td><code>min-width</code> 是「大于等于」，配移动优先；<code>max-width</code> 是「小于等于」，配桌面优先。<b>别混着写</b>，容易互相覆盖</td></tr>
+<tr><th>断点选哪几个</th><td>别看设备，看<b>内容什么时候挤坏</b>。常用 480 / 768 / 1024 / 1280</td></tr>
+</table>
+
+<h3>常见断点表</h3>
+<table>
+<tr><th>&lt; 480px</th><td>手机竖屏：单列、字号 15–16px、按钮铺满</td></tr>
+<tr><th>480–768px</th><td>手机横屏 / 小平板：两列</td></tr>
+<tr><th>768–1024px</th><td>平板：侧栏收起或变窄</td></tr>
+<tr><th>&gt; 1024px</th><td>桌面：完整布局</td></tr>
+</table>
+
+<h3>单位：px、em、rem、vw</h3>
+<table>
+<tr><th><code>px</code></th><td>绝对像素。简单直接，但用户改浏览器字号时不跟随</td></tr>
+<tr><th><code>em</code></th><td>相对<b>父元素字号</b>。嵌套时会层层相乘，容易失控</td></tr>
+<tr><th><code>rem</code></th><td>相对<b>根元素（html）字号</b>。全站一个基准，<b>推荐做字号和间距</b></td></tr>
+<tr><th><code>%</code></th><td>相对父元素。流式布局的基础</td></tr>
+<tr><th><code>vw / vh</code></th><td>视口宽 / 高的 1%。<code>100vh</code> 做满屏首屏</td></tr>
+</table>
+<pre><code>html { font-size: 16px; }      /* 1rem = 16px */
+h1   { font-size: 2rem; }      /* 32px */
+.box { padding: 1.5rem; }      /* 24px */
+
+/* 字号随屏幕流动，不用媒体查询 */
+h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); }</code></pre>
+<div class="note"><b><code>clamp(最小, 理想, 最大)</code></b> 是响应式字号最省事的写法：小屏不塌、大屏不炸。教材里没有，但现在的项目里到处都是。</div>
+
+<h3>流式布局：让宽度自己伸缩</h3>
+<pre><code>.wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.col  { width: 50%; }                 /* 两栏 */
+img   { max-width: 100%; height: auto; }</code></pre>
+<p><code>max-width</code> 是响应式的灵魂：<b>「最多这么宽，屏幕小了就跟着缩」</b>。比写死 <code>width: 1100px</code> 稳得多。</p>
+
+<h3>手机上必须处理的六件事</h3>
+<table>
+<tr><th>1. 点击区域</th><td>按钮最小 44×44px，手指没那么准</td></tr>
+<tr><th>2. 输入框字号</th><td>小于 16px，iOS 会自动放大页面，很烦</td></tr>
+<tr><th>3. hover</th><td>手机没有 hover，<b>别把关键功能藏在 hover 里</b>。用 <code>@media (hover: hover)</code> 包起来</td></tr>
+<tr><th>4. 横向滚动</th><td>检查是不是有元素超出屏幕——给 body 加 <code>overflow-x: hidden</code> 是遮丑，不是解决</td></tr>
+<tr><th>5. 1px 边框</th><td>高清屏上 1px 会变粗，可用 <code>transform: scaleY(.5)</code> 或直接接受</td></tr>
+<tr><th>6. 图片</th><td>手机流量贵，<code>srcset</code> + 压缩，别把 2MB 的图塞给手机</td></tr>
+</table>
+
+<h3>媒体查询写在哪</h3>
+<pre><code>/* 方式一：集中写在 CSS 末尾 */
+/* 方式二：跟在各自模块后面（推荐，改起来方便） */
+
+.nav { display: flex; }
+@media (max-width: 768px) {
+    .nav { flex-direction: column; }
+}</code></pre>
+<div class="note"><b>自己动手：</b>把首页做成三档：手机上单列、卡片纵向；平板上两列；桌面上侧栏 + 内容。验收：<b>把浏览器窗口从最宽拖到最窄，全程没有横向滚动条、没有字挤成一坨、没有元素飞出屏幕。</b>这是教材单元 7 的独立训练。</div></section>
+
+<section class="card" id="s18"><h2><span class="num">18</span>框架与 iframe：一个已死，一个还在用<span class="unit">单元 8</span></h2>
+<p>教材讲「框架」，指的是 <code>&lt;frameset&gt;</code>——把浏览器窗口切成几块，每块装一个页面。这个技术<b>在 HTML5 里已经被删了</b>。但教材还讲，考试还考，而且它留下的「后台管理系统布局」需求，今天还在。</p>
+
+<h3>frameset 长什么样（了解即可）</h3>
+<pre><code>&lt;!-- HTML4 的老写法，HTML5 已废弃，现代浏览器仍兼容 --&gt;
+&lt;frameset cols="200px, *"&gt;
+    &lt;frame src="menu.html" name="menu"&gt;
+    &lt;frame src="main.html" name="main"&gt;
+&lt;/frameset&gt;</code></pre>
+<table>
+<tr><th><code>frameset</code></th><td>替代 body，整个页面就是它</td></tr>
+<tr><th><code>cols / rows</code></th><td>左右切 / 上下切</td></tr>
+<tr><th><code>frame</code></th><td>每一格里装的页面</td></tr>
+<tr><th>为什么被删</th><td>网址不变（不能分享、不能收藏）、SEO 不友好、打印和手机上一团糟、无障碍差、<code>&lt;body&gt;</code> 都写不了</td></tr>
+</table>
+
+<h3>iframe：内联框架，还活着</h3>
+<pre><code>&lt;iframe src="https://player.bilibili.com/player.html?bvid=BV1xx411c7mD"
+        width="640" height="360"
+        title="视频播放器"
+        loading="lazy"
+        allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
+<table>
+<tr><th>现代用途</th><td>嵌视频（B 站/腾讯）、嵌地图（高德/百度）、嵌支付、嵌第三方客服、后台里加载子页面</td></tr>
+<tr><th><code>sandbox</code></th><td>权限白名单，<b>嵌别人的页面一定要加</b>，防止它执行脚本、弹窗、跳转</td></tr>
+<tr><th><code>loading="lazy"</code></th><td>滚到才加载，省流量</td></tr>
+<tr><th>安全</th><td>跨域 iframe 之间不能直接读对方 DOM。要通信得用 <code>postMessage</code>；对方不设 <code>X-Frame-Options</code> 才能被嵌</td></tr>
+</table>
+
+<h3>后台管理系统的布局（教材那个训练的现代做法）</h3>
+<pre><code>&lt;div class="admin"&gt;
+    &lt;header class="topbar"&gt;蓝梦音乐网 · 后台&lt;/header&gt;
+    &lt;aside class="side"&gt;菜单&lt;/aside&gt;
+    &lt;main class="work"&gt;内容区&lt;/main&gt;
+&lt;/div&gt;
+
+.admin {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 56px 1fr;
+    grid-template-areas:
+        "top top"
+        "side work";
+    height: 100vh;
+}
+.topbar { grid-area: top; }
+.side   { grid-area: side; overflow-y: auto; }
+.work   { grid-area: work; overflow: auto; }</code></pre>
+<p><b>对比一下：</b>用 frameset 做，切出来的每一块都是独立页面，点菜单要 <code>target="main"</code>；用 Grid 做，切换内容只是换 <code>main</code> 里的 HTML——<b>网址能变、能前进后退、能做单页应用</b>。这就是取代它的原因。</p>
+
+<h3>什么时候真的该用 iframe</h3>
+<table>
+<tr><th>该用</th><td>内容来自<b>别人的网站</b>、且你不需要控制它（视频、地图、第三方表单）</td></tr>
+<tr><th>不该用</th><td>自己的页面之间切换、整站布局、为了「省事」把页面拆开</td></tr>
+</table>
+<div class="note"><b>考试提示：</b>教材里的 frameset 写法要会（<code>rows</code>、<code>cols</code>、<code>frame</code>、<code>target</code>、<code>noresize</code>、<code>scrolling</code>），答题时按书上写；<b>但项目里请用 Grid</b>，阅卷老师看到现代写法只会加分。</div>
+
+<h3>自己动手</h3>
+<p>做「时空电影网 · 后台首页」：顶部一条、左侧菜单、右侧内容区，用 Grid 实现；再到内容区里嵌一个 B 站视频（iframe），加上 <code>loading="lazy"</code> 和 <code>allowfullscreen</code>。</p></section>
+
+<section class="card" id="s19"><h2><span class="num">19</span>JavaScript 最小集：只为做出那个轮播<span class="unit">单元 6</span></h2>
+<p>这门课不要求你成为 JS 工程师，但单元 6 的「滑动轮播」绕不开它。这一节只讲做出轮播所需的 <b>最小那一撮</b>——够用，且不讲废的。</p>
+
+<h3>放在哪：script 的位置</h3>
+<pre><code>&lt;script src="js/main.js" defer&gt;&lt;/script&gt;
+
+&lt;script&gt;
+    // 或者直接写在页面底部，&lt;/body&gt; 之前
+&lt;/script&gt;</code></pre>
+<table>
+<tr><th>写在 <code>&lt;head&gt;</code></th><td>HTML 还没解析，<code>querySelector</code> 找不到元素 → 报 null</td></tr>
+<tr><th>写在 <code>&lt;/body&gt;</code> 前</th><td>元素都齐了，最稳妥的老写法</td></tr>
+<tr><th><code>defer</code></th><td>下载不阻塞，DOM 解析完再执行。<b>现代项目的标准做法</b></td></tr>
+</table>
+
+<h3>五个必须会的动作</h3>
+<pre><code>// 1. 声明变量
+const title = "晴天";        // 不能改
+let index = 0;               // 能改
+// var 是老的，作用域会漏，别用
+
+// 2. 找到元素
+const box = document.querySelector(".slider");     // 第一个
+const all = document.querySelectorAll(".slide");    // 全部（类数组）
+
+// 3. 改内容
+box.textContent = "你好";                 // 纯文本，安全
+box.innerHTML = "&lt;b&gt;你好&lt;/b&gt;";       // 能解析标签，别把用户输入塞进来
+
+// 4. 改样式 / 改类（推荐改类）
+box.style.transform = "translateX(-100%)";
+box.classList.add("active");
+box.classList.remove("active");
+box.classList.toggle("active");           // 有就去掉，没有就加上
+
+// 5. 监听事件
+const btn = document.querySelector(".next");
+btn.addEventListener("click", function () {
+    console.log("点了");
+});</code></pre>
+
+<h3>轮播：完整实现</h3>
+<pre><code>&lt;div class="slider"&gt;
+    &lt;div class="slides" id="slides"&gt;
+        &lt;img src="images/1.jpg" alt=""&gt;
+        &lt;img src="images/2.jpg" alt=""&gt;
+        &lt;img src="images/3.jpg" alt=""&gt;
+    &lt;/div&gt;
+    &lt;button class="prev"&gt;‹&lt;/button&gt;
+    &lt;button class="next"&gt;›&lt;/button&gt;
+    &lt;div class="dots" id="dots"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+<pre><code>/* 样式：一条横向长条，超出裁掉 */
+.slider { position: relative; overflow: hidden; border-radius: 14px; }
+.slides { display: flex; transition: transform .45s ease; }
+.slides img { flex: 0 0 100%; width: 100%; height: 380px; object-fit: cover; }
+.prev, .next { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(0,0,0,.45); color: #fff; font-size: 22px; cursor: pointer; }
+.prev { left: 12px; } .next { right: 12px; }</code></pre>
+<pre><code>// 逻辑：核心只有一句——改 transform，把长条整体左移
+const slides = document.getElementById("slides");
+const total  = slides.children.length;
+let index = 0;
+
+function go(i) {
+    index = (i + total) % total;           // 越界就绕回来（循环轮播）
+    slides.style.transform = "translateX(" + (-index * 100) + "%)";
+}
+
+document.querySelector(".next").addEventListener("click", function () { go(index + 1); });
+document.querySelector(".prev").addEventListener("click", function () { go(index - 1); });</code></pre>
+<h3>加上自动播放和指示点</h3>
+<pre><code>let timer = setInterval(function () { go(index + 1); }, 3000);
+
+// 鼠标移上去暂停（体验细节，考试不考但很加分）
+const slider = document.querySelector(".slider");
+slider.addEventListener("mouseenter", function () { clearInterval(timer); });
+slider.addEventListener("mouseleave", function () {
+    timer = setInterval(function () { go(index + 1); }, 3000);
+});
+
+// 指示点：生成 + 高亮
+const dots = document.getElementById("dots");
+for (let i = 0; i &lt; total; i++) {
+    const d = document.createElement("span");
+    d.className = "dot";
+    d.addEventListener("click", function () { go(i); });
+    dots.appendChild(d);
+}
+function refreshDots() {
+    document.querySelectorAll(".dot").forEach(function (d, i) {
+        d.classList.toggle("active", i === index);
+    });
+}</code></pre>
+<div class="note"><b>把 refreshDots() 放进 go() 里</b>——每次切换都刷新指示点。这是新手最容易忘的一步：轮播动了，小圆点不动。</div>
+
+<h3>三个坑</h3>
+<table>
+<tr><th>变量提升</th><td>循环里用 <code>var</code> 绑事件，点哪个都是最后一个。改成 <code>let</code></td></tr>
+<tr><th>定时器不清</th><td>来回切页面，定时器越积越多，轮播越转越快。切走时 <code>clearInterval</code></td></tr>
+<tr><th>报错看不见</th><td>按钮没反应，先按 <kbd>F12</kbd> 看 Console 的红字——<b>浏览器早就把错误和行号写在那里了</b></td></tr>
+</table>
+<div class="note"><b>什么时候不用 JS：</b>只是「渐显、位移、变色」这类纯视觉变化，用 CSS 的 <code>transition</code> 和 <code>@keyframes</code>，性能更好、代码更少。<b>JS 只管「什么时候变」，「怎么变」交给 CSS。</b></div>
+
+<h3>自己动手</h3>
+<p>给首页做轮播：三张图、左右按钮、自动播放、指示点、鼠标悬停暂停。<b>先做「点一下换一张」，再做自动播放，最后加指示点——一次只加一个功能，坏了好找。</b>这是教材单元 6 的引导训练。</p></section>
+
+<section class="card" id="s20"><h2><span class="num">20</span>综合项目：把「时空电影网」做完<span class="unit">综合</span></h2>
+<p>教材里「蓝梦音乐网」是老师带着做的<b>引导项目</b>，「时空电影网」是你要<b>独立完成</b>的项目。课程标准的最后 12 学时全给它，课程考核的机试也主要看它。<b>这一节不是教案，是给你的施工图。</b></p>
+
+<h3>要交什么</h3>
+<table>
+<tr><th>首页</th><td>轮播 + 影片推荐（Grid 卡片墙）+ 页脚</td></tr>
+<tr><th>内地电影</th><td>表格页：片名 / 导演 / 年份 / 票房，含合并单元格</td></tr>
+<tr><th>电影节</th><td>图文混排：主视觉、介绍段落、获奖名单（列表）</td></tr>
+<tr><th>注册</th><td>完整表单：账号、密码、确认密码、邮箱、性别、喜好、头像、简介、协议</td></tr>
+<tr><th>登录</th><td>简化版表单（可选，加分）</td></tr>
+<tr><th>后台首页</th><td>Grid 布局：顶栏 + 侧栏 + 内容区</td></tr>
+<tr><th>移动端</th><td>上面每一项都要能在手机上正常看（<b>不是另做一个手机站</b>）</td></tr>
+</table>
+
+<h3>目录结构（照这个建，别乱）</h3>
+<pre><code>shikong-movie\
+├── index.html            首页
+├── mainland.html         内地电影
+├── festival.html         电影节
+├── register.html         注册
+├── login.html            登录
+├── admin.html            后台首页
+├── css\
+│   ├── reset.css         统一各浏览器默认样式
+│   └── style.css         你自己写的全部样式
+├── js\
+│   └── slider.js         轮播
+├── images\               图片（全部英文小写名）
+└── README.md             写清楚：做了什么、怎么打开、哪里没做完</code></pre>
+<div class="note"><b>为什么要求这么细：</b>老师打开你的文件夹，<b>三秒就能判断你是不是认真做的</b>。命名混乱、文件全堆在桌面、css 和图片混在一起——内容再好也先扣印象分。</div>
+
+<h3>六周的施工顺序</h3>
+<table>
+<tr><th>第 1 周</th><td>建目录、写 reset.css、把五个页面的空壳搭出来（只有 header / main / footer），<b>先跑通页面之间的跳转</b></td></tr>
+<tr><th>第 2 周</th><td>内容页：表格（内地电影）、列表和图文（电影节）、表单（注册）</td></tr>
+<tr><th>第 3 周</th><td>CSS 基础：字体、颜色、间距、链接、按钮。目标：<b>看起来像同一个网站</b></td></tr>
+<tr><th>第 4 周</th><td>首页布局：Flex 导航 + Grid 卡片墙 + 页脚。桌面版完成</td></tr>
+<tr><th>第 5 周</th><td>轮播 + 定位细节（角标、固定导航）</td></tr>
+<tr><th>第 6 周</th><td>响应式：三档断点全部过一遍，手机模拟器逐页检查</td></tr>
+</table>
+
+<h3>验收标准（照着给自己打分）</h3>
+<table>
+<tr><th>结构</th><td>每个页面都有 <code>&lt;!DOCTYPE html&gt;</code>、<code>charset</code>、<code>viewport</code>、<code>title</code>；标签全部闭合，缩进一致</td></tr>
+<tr><th>语义</th><td>用了 header / nav / main / section / footer；标题层级不乱跳；图片都有 alt</td></tr>
+<tr><th>样式</th><td>样式全部在外部 CSS；<b>没有一行行内 style</b>；类名看得懂</td></tr>
+<tr><th>布局</th><td>用 Flex/Grid，<b>没有用表格排版</b>；没有写死高度导致的文字溢出</td></tr>
+<tr><th>响应式</th><td>360px 宽下没有横向滚动条；导航能收起；图片不撑破</td></tr>
+<tr><th>交互</th><td>轮播能用，鼠标悬停有反馈，按钮点了有反应</td></tr>
+<tr><th>细节</th><td>所有链接都能跳（<b>没有「网页无法访问」</b>）；没有 404 的图片</td></tr>
+<tr><th>代码</th><td>自己写的。可以借鉴结构，<b>但颜色、间距、类名必须是自己的</b></td></tr>
+</table>
+
+<h3>常见的十个扣分点</h3>
+<table>
+<tr><th>1</th><td>导航链接点了 404（文件名写错、大小写不对）</td></tr>
+<tr><th>2</th><td>图片路径是 <code>C:\Users\...\图片1.jpg</code>——换成别人电脑全挂</td></tr>
+<tr><th>3</th><td>手机上横向滚动条，某个 fixed 宽度 1200px 的元素</td></tr>
+<tr><th>4</th><td>表单没写 name，提交后一片空白</td></tr>
+<tr><th>5</th><td>用了表格布局，或者满屏 <code>position: absolute</code></td></tr>
+<tr><th>6</th><td>标题用 h1 到处堆，或者用 <code>&lt;div&gt;</code> 加 font-size 假装标题</td></tr>
+<tr><th>7</th><td>样式全写行内，改一个颜色改二十处</td></tr>
+<tr><th>8</th><td>中文文件名、空格文件名，传到服务器变乱码</td></tr>
+<tr><th>9</th><td>轮播的定时器没清，切页面越转越快</td></tr>
+<tr><th>10</th><td>交之前没在 <b>另一个浏览器</b> 打开过（Chrome 好着，Edge 崩了）</td></tr>
+</table>
+
+<h3>素材从哪来（别乱下）</h3>
+<table>
+<tr><th>图片</th><td>Pixabay、Unsplash、Pexels——免费可商用；<b>别用百度图片搜来的图</b></td></tr>
+<tr><th>图标</th><td>iconfont、Lucide、Bootstrap Icons（SVG，随便缩）</td></tr>
+<tr><th>字体</th><td>系统字体就够；真要特殊字体，用 Google Fonts 或思源系列</td></tr>
+<tr><th>视频</th><td>直接嵌 B 站 / 腾讯视频的 iframe，别自己托管</td></tr>
+</table>
+<div class="note"><b>最后一步：把它放到网上。</b>你这台电脑已经装过 Git 和 GitHub CLI，也做过一次 Pages 部署——建个新仓库，推上去，<b>你就有了一个能发给别人的作品链接</b>。能上线的东西，才算做完了。</div>
+
+<h3>提交前自查（一项一项打勾）</h3>
+<pre><code>□ 六个页面都能打开，互相能跳
+□ 手机宽度下没有横向滚动
+□ 图片全部显示（没有破图）
+□ 表单每一项都能填、有提示
+□ 轮播自动播放，左右按钮能用
+□ 控制台（F12）没有红色报错
+□ 换一个浏览器打开，样式没垮
+□ 文件夹里没有多余文件（草稿、截图、.zip）
+□ README 写清楚了怎么打开</code></pre></section>
+
+<section class="card" id="s21"><h2><span class="num">21</span>知识点总表：这一学期到底记了什么</h2>
+<p>考前只看这一节。三张表：<b>标签表、属性表、坑表</b>。看不懂的，回到对应小节。</p>
+
+<h3>一、HTML 标签（按用途）</h3>
+<table>
+<tr><th>文档</th><td><code>!DOCTYPE</code> <code>html</code> <code>head</code> <code>body</code> <code>meta</code> <code>title</code> <code>link</code> <code>script</code> <code>style</code></td></tr>
+<tr><th>结构</th><td><code>header</code> <code>nav</code> <code>main</code> <code>section</code> <code>article</code> <code>aside</code> <code>footer</code> <code>div</code> <code>span</code></td></tr>
+<tr><th>文字</th><td><code>h1-h6</code> <code>p</code> <code>br</code> <code>hr</code> <code>strong</code> <code>em</code> <code>b</code> <code>i</code> <code>del</code> <code>ins</code> <code>mark</code> <code>small</code> <code>sub</code> <code>sup</code> <code>blockquote</code> <code>code</code> <code>pre</code></td></tr>
+<tr><th>列表</th><td><code>ul</code> <code>ol</code> <code>li</code> <code>dl</code> <code>dt</code> <code>dd</code></td></tr>
+<tr><th>媒体</th><td><code>img</code> <code>audio</code> <code>video</code> <code>source</code> <code>iframe</code> <code>canvas</code> <code>svg</code></td></tr>
+<tr><th>表格</th><td><code>table</code> <code>caption</code> <code>thead</code> <code>tbody</code> <code>tfoot</code> <code>tr</code> <code>th</code> <code>td</code></td></tr>
+<tr><th>表单</th><td><code>form</code> <code>input</code> <code>label</code> <code>select</code> <code>option</code> <code>optgroup</code> <code>textarea</code> <code>button</code> <code>fieldset</code> <code>legend</code> <code>datalist</code></td></tr>
+<tr><th>链接</th><td><code>a</code>（href / target / title / download / rel）</td></tr>
+</table>
+
+<h3>二、CSS 属性（按用途）</h3>
+<table>
+<tr><th>文字</th><td><code>font-family</code> <code>font-size</code> <code>font-weight</code> <code>line-height</code> <code>color</code> <code>text-align</code> <code>text-indent</code> <code>text-decoration</code> <code>letter-spacing</code> <code>text-shadow</code></td></tr>
+<tr><th>盒模型</th><td><code>width</code> <code>height</code> <code>padding</code> <code>margin</code> <code>border</code> <code>box-sizing</code> <code>border-radius</code> <code>box-shadow</code> <code>overflow</code></td></tr>
+<tr><th>背景</th><td><code>background-color</code> <code>background-image</code> <code>background-size</code> <code>background-position</code> <code>background-repeat</code> <code>linear-gradient</code></td></tr>
+<tr><th>布局</th><td><code>display</code> <code>flex</code> 系 <code>grid</code> 系 <code>gap</code> <code>float</code> <code>clear</code> <code>position</code> <code>top/right/bottom/left</code> <code>z-index</code></td></tr>
+<tr><th>交互</th><td><code>:hover</code> <code>:focus</code> <code>:active</code> <code>transition</code> <code>transform</code> <code>animation</code> <code>filter</code> <code>cursor</code></td></tr>
+<tr><th>响应式</th><td><code>@media</code> <code>clamp()</code> <code>min()</code> <code>max()</code> <code>rem</code> <code>vw</code> <code>vh</code></td></tr>
+</table>
+
+<h3>三、二十个坑（每个都有人踩过）</h3>
+<table>
+<tr><th>1</th><td>类选择器忘了点：<code>nav {}</code> 找的是标签，<code>.nav {}</code> 才是类</td></tr>
+<tr><th>2</th><td>CSS 写错不报错，只是不生效——去 F12 的 Styles 看</td></tr>
+<tr><th>3</th><td><code>href</code> 少了 <code>#</code>：<code>#story</code> 是本页跳，<code>story</code> 是找文件</td></tr>
+<tr><th>4</th><td>行内元素设 width 无效，要加 <code>display: inline-block/block</code></td></tr>
+<tr><th>5</th><td>图片底下莫名 4px，<code>display: block</code> 解决</td></tr>
+<tr><th>6</th><td>padding 把盒子撑大——加 <code>box-sizing: border-box</code></td></tr>
+<tr><th>7</th><td>margin 上下塌陷，父子兄弟都中招</td></tr>
+<tr><th>8</th><td>浮动父元素高度 0——<code>flow-root</code> / clearfix</td></tr>
+<tr><th>9</th><td>absolute 找不到祖先，跑到页面角上——父元素加 <code>position: relative</code></td></tr>
+<tr><th>10</th><td>z-index 失效——父元素有 transform/opacity，或者没设定位</td></tr>
+<tr><th>11</th><td>Flex 里省略号不生效——<code>min-width: 0</code></td></tr>
+<tr><th>12</th><td>高度 100% 失效——父元素没写高度</td></tr>
+<tr><th>13</th><td>表单控件没 name，提交是空的</td></tr>
+<tr><th>14</th><td>radio 不同 name，变成各自独立</td></tr>
+<tr><th>15</th><td>label 没关联 for/id，点文字选不上</td></tr>
+<tr><th>16</th><td>中文/大写文件名，上线 404</td></tr>
+<tr><th>17</th><td><code>&lt;br&gt;&lt;br&gt;</code> 控间距，换字号就崩</td></tr>
+<tr><th>18</th><td><code>&amp;nbsp;</code> 做缩进，窄屏溢出</td></tr>
+<tr><th>19</th><td>媒体查询 max 和 min 混写，互相覆盖</td></tr>
+<tr><th>20</th><td>定时器没清，越跑越快</td></tr>
+</table>
+
+<h3>四、考试怎么对应</h3>
+<table>
+<tr><th>笔试（60%）</th><td>概念（网页/网站/万维网/因特网）、标签作用、属性含义、选择器优先级、盒子模型计算、浮动与定位的区别、响应式原理</td></tr>
+<tr><th>机试（40%）</th><td>给一个页面效果图 / 文字描述，限时做出来：结构 + 样式 + 一个小交互。评分看<b>还原度、代码规范、能不能跑</b></td></tr>
+<tr><th>平时（40%）</th><td>考勤、课堂表现、随堂作业——<b>这一块最容易丢分，也最容易拿满</b></td></tr>
+</table>
+
+<h3>五、复习顺序（三天足够）</h3>
+<table>
+<tr><th>第 1 天</th><td>把这 22 节从头到尾读一遍，<b>只读不写</b>，建立地图</td></tr>
+<tr><th>第 2 天</th><td>合上书，默写：HTML 骨架、三种 CSS 引入、盒子模型四层、Flex 五个属性、媒体查询语法</td></tr>
+<tr><th>第 3 天</th><td>不看任何代码，从零做一个「个人主页」：导航 + 首屏 + 三张卡片 + 一个表单 + 手机适配</td></tr>
+</table>
+<div class="note"><b>最后一句话：</b>这门课真正教你的不是标签，是<b>「把一句话描述，翻译成浏览器看得懂的结构和样式」</b>。这个能力，换成 Vue、换成 React、换成小程序，都还在用。</div></section>
+
+<section class="card" id="s22"><h2><span class="num">22</span>结语：写给这门课结束之后的你</h2>
+<p>学完这门课，你能做出一个像样的静态网站。但更重要的是，你知道了<b>网页是可以被「拆开看」的</b>——任何你喜欢的网站，按 F12，它的结构、样式、甚至动效的写法，都摊在你面前。</p>
+<p>这就是前端最迷人的地方：<b>整个互联网都是你的教材</b>。</p>
+<table>
+<tr><th>接下来可以走</th><td>JavaScript 深入 → Vue/React → 小程序；或者 CSS 动画、可视化；或者干脆做设计</td></tr>
+<tr><th>可以回来看</th><td>你这个「时空电影网」，三个月后再打开，会挑出一堆毛病——<b>那说明你进步了</b></td></tr>
+<tr><th>别做的事</th><td>别停在「能跑就行」。同样一个页面，写十遍和写一遍的人，差的是审美和手感</td></tr>
+</table>
+<div class="note"><b>一句题外话：</b>这门课的教材是 2020 年编的，里面有些写法（frameset、marquee、表格布局）今天已经不用了。你不用纠结「书上为什么这么写」——<b>书里是那个时代的标准答案，这里补上现在通行的写法</b>。两个都知道，你就比只会一个的人多一层判断。</div>
+<p style="text-align:right;color:#7dd3fc;">—— 龙潜猫隐</p></section>
+
+                <p style="margin-top:34px;"><a class="breadcrumb" href="../语言学习/index.html">← 回到语言目录</a></p>
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">HTML5 商业网站设计与制作 · 2026-10-22 建立</div>
+            <div>依据课程标准与教材目录重编</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">教材：周庞荣、顾挺 主编《HTML5商业网站设计与制作》· 中国铁道出版社</div>
+        </footer>
+
+        <script>
+        (function () {
+            var toc = document.querySelector(".toc");
+            var secs = document.querySelectorAll("main section.card");
+            for (var i = 0; i < secs.length; i++) {
+                if (!secs[i].id) continue;
+                var h2 = secs[i].querySelector("h2");
+                if (!h2) continue;
+                var clone = h2.cloneNode(true);
+                var numEl = clone.querySelector(".num");
+                var num = numEl ? numEl.textContent : "";
+                if (numEl) clone.removeChild(numEl);
+                var unitEl = clone.querySelector(".unit");
+                if (unitEl) clone.removeChild(unitEl);
+                var label = (num ? num + " " : "") + clone.textContent.trim();
+                var a = document.createElement("a");
+                a.href = "#" + secs[i].id;
+                a.textContent = label;
+                a.title = label;
+                a.style.cssText = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+                toc.appendChild(a);
+            }
+            var bar = document.createElement("div");
+            bar.className = "progress";
+            document.body.appendChild(bar);
+            window.addEventListener("scroll", function () {
+                var el = document.documentElement;
+                var max = el.scrollHeight - el.clientHeight;
+                bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+            });
+        })();
+        </script>
+        <script src="../../assets/update-popup.js"></script>
+    </body>
+</html>
+

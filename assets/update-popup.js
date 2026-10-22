@@ -77,6 +77,7 @@
         wrap.className = "up-mask";
         wrap.innerHTML =
             '<div class="up-card" role="dialog" aria-modal="true" aria-label="更新日志">' +
+                '<p class="up-notice">本网站及代码在 Git 上均开源，且将一直免费 FREE！本站仅供大学生或需要参加考试的社会人士参考学习使用。任何人都可以模仿、参考、学习，但请勿用于商业用途，或做出违反互联网法律等违规的事情！</p>' +
                 (lines ? '<p class="up-kicker">今日更新 · ' + today + "</p>" : '<p class="up-kicker">今 日 · ' + today + "</p>") +
                 body +
                 '<p class="up-contact">有想法、发现 bug、想催更 —— <a href="mailto:hyyzcn0115@163.com">hyyzcn0115@163.com</a> · 龙潜猫隐</p>' +
@@ -87,14 +88,18 @@
         css.textContent =
             ".up-mask{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.62);opacity:0;transition:opacity .25s}" +
             ".up-mask.show{opacity:1}" +
-            ".up-card{width:100%;max-width:420px;background:" + panel + ";border:1px solid " + accent + "44;border-radius:14px;padding:24px 22px 18px;box-shadow:0 24px 60px rgba(0,0,0,.55);transform:translateY(14px);transition:transform .28s}" +
+            ".up-card{width:100%;max-width:420px;max-height:86vh;display:flex;flex-direction:column;background:" + panel + ";border:1px solid " + accent + "44;border-radius:14px;padding:24px 22px 18px;box-shadow:0 24px 60px rgba(0,0,0,.55);transform:translateY(14px);transition:transform .28s}" +
             ".up-mask.show .up-card{transform:translateY(0)}" +
+            ".up-notice{margin:0 0 18px;padding:11px 13px;border:1px solid " + accent + "33;border-radius:8px;background:" + accent + "0d;color:" + text + ";font-size:11.5px;line-height:1.85;letter-spacing:.3px}" +
             ".up-kicker{margin:0 0 14px;font-size:12px;letter-spacing:3px;color:" + accent + "}" +
-            ".up-list{margin:0 0 16px;padding-left:18px;color:" + text + ";font-size:14px;line-height:1.9}" +
+            ".up-list{flex:1 1 auto;min-height:0;max-height:46vh;overflow-y:auto;margin:0 0 16px;padding:0 8px 0 18px;color:" + text + ";font-size:14px;line-height:1.9}" +
+            ".up-list::-webkit-scrollbar{width:5px}" +
+            ".up-list::-webkit-scrollbar-thumb{background:" + accent + "55;border-radius:5px}" +
+            "@media (max-height:620px){.up-list{max-height:34vh}}" +
             ".up-none{margin:0 0 16px;color:" + text + ";font-size:14px;line-height:1.9}" +
-            ".up-contact{margin:0 0 16px;font-size:12px;color:rgba(200,210,225,.5)}" +
+            ".up-contact{flex:0 0 auto;margin:0 0 16px;font-size:12px;color:rgba(200,210,225,.5)}" +
             ".up-contact a{color:" + accent + ";text-decoration:none;border-bottom:1px solid " + accent + "55}" +
-            ".up-ok{width:100%;padding:11px;border:1px solid " + accent + ";border-radius:8px;background:none;color:" + accent + ";font-size:14px;letter-spacing:2px;cursor:pointer}" +
+            ".up-ok{flex:0 0 auto;width:100%;padding:11px;border:1px solid " + accent + ";border-radius:8px;background:none;color:" + accent + ";font-size:14px;letter-spacing:2px;cursor:pointer}" +
             ".up-ok:hover{background:" + accent + "1a}";
 
         document.head.appendChild(css);

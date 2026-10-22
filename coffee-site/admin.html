@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>站长后台 · 注册名单</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        min-height: 100vh;
+        padding: 40px 20px 80px;
+        font-family: "Microsoft YaHei", sans-serif;
+        color: #f3e7d3;
+        background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%);
+    }
+
+    .wrap { width: min(820px, 100%); margin: 0 auto; }
+
+    .back { display: inline-block; margin-bottom: 24px; color: rgba(201, 183, 156, 0.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back:hover { color: #c9a86a; }
+
+    h1 { font-size: 26px; font-weight: normal; letter-spacing: 4px; margin-bottom: 8px; }
+    .sub { color: #c9b79c; font-size: 13px; line-height: 1.9; margin-bottom: 24px; }
+
+    .card {
+        padding: 22px;
+        margin-bottom: 18px;
+        background: #1a1512;
+        border: 1px solid rgba(201, 168, 106, 0.22);
+        border-radius: 16px;
+    }
+
+    h2 { font-size: 14px; font-weight: normal; letter-spacing: 3px; color: #c9a86a; margin-bottom: 14px; }
+
+    label { display: block; margin: 12px 0 6px; color: #c9b79c; font-size: 12px; letter-spacing: 2px; }
+
+    input[type="password"], input[type="file"] {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1px solid rgba(201, 168, 106, 0.22);
+        border-radius: 10px;
+        background: #14100e;
+        color: #f3e7d3;
+        font-family: inherit;
+        font-size: 13px;
+    }
+
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+    button {
+        padding: 10px 18px;
+        border: 1px solid rgba(201, 168, 106, 0.45);
+        border-radius: 999px;
+        background: transparent;
+        color: #c9a86a;
+        font-family: inherit;
+        font-size: 13px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+    button:hover { background: rgba(201, 168, 106, 0.12); }
+
+    .msg { min-height: 20px; margin-top: 12px; font-size: 12.5px; line-height: 1.9; }
+    .msg.ok { color: #9ec9a0; }
+    .msg.err { color: #e29a8e; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 12.5px; }
+    th, td { padding: 9px 10px; border-bottom: 1px solid rgba(201, 168, 106, 0.14); text-align: left; color: #d9cdb8; }
+    th { color: #c9a86a; font-weight: normal; letter-spacing: 1px; }
+    td.empty { color: rgba(201, 183, 156, 0.45); text-align: center; padding: 18px; }
+
+    .note {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border-left: 2px solid rgba(201, 168, 106, 0.35);
+        background: rgba(201, 168, 106, 0.05);
+        color: rgba(201, 183, 156, 0.6);
+        font-size: 12px;
+        line-height: 1.95;
+    }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <a class="back" href="account.html">← 回到会员登记</a>
+    <h1>站长后台</h1>
+    <p class="sub">本页仅供站长使用。注册数据由后端保存，公开的名单只含用户名、盐和哈希。<br>加密后的名单需要站长口令才能打开，口令不会保存在任何地方。</p>
+
+    <div class="card">
+        <h2>一、从服务器拉取名单</h2>
+        <label for="admKey">后台密钥</label>
+        <input type="password" id="admKey" placeholder="server/admin.key 里的那一行">
+        <div class="row">
+            <button id="fetchBtn" type="button">拉取服务器名单</button>
+        </div>
+        <p class="msg" id="fetchMsg"></p>
+        <div id="serverBox"></div>
+        <div class="note">密钥在 <b>server/admin.key</b> 里（或环境变量 ADMIN_KEY），只用于这一次请求。名单返回后可直接用下面的「加密并下载」存档。</div>
+    </div>
+
+    <div class="card">
+        <h2>二、本机注册记录</h2>
+        <div class="row">
+            <button id="showBtn" type="button">显示本机记录</button>
+            <button id="pubBtn" type="button">下载公开名单 users.json</button>
+        </div>
+        <p class="msg" id="listMsg"></p>
+        <div id="tableBox"></div>
+    </div>
+
+    <div class="card">
+        <h2>三、加密名单（上传到 GitHub 的那份）</h2>
+        <label for="encPass">站长口令（至少 6 位）</label>
+        <input type="password" id="encPass" placeholder="用于加密名单，不会保存在任何地方">
+        <div class="row">
+            <button id="encBtn" type="button">加密并下载 users.enc.json</button>
+        </div>
+        <p class="msg" id="encMsg"></p>
+        <div class="note">加密用 AES-GCM，口令只在加密的瞬间使用，不会写进文件。<b>口令遗失后，这份名单无法恢复</b>，建议另行保存。</div>
+    </div>
+
+    <div class="card">
+        <h2>四、解密查看（验证用）</h2>
+        <label for="encFile">选择 users.enc.json</label>
+        <input type="file" id="encFile" accept=".json,application/json">
+        <label for="decPass">站长口令</label>
+        <input type="password" id="decPass" placeholder="加密时用的那个口令">
+        <div class="row">
+            <button id="decBtn" type="button">解密并查看</button>
+            <button id="saveBtn" type="button">下载明文 JSON</button>
+        </div>
+        <p class="msg" id="decMsg"></p>
+        <div id="decBox"></div>
+        <div class="note">明文名单建议只保存在本地：<b>.gitignore</b> 已排除 <b>本地注册记录.json</b> 与后端数据文件，不会被推送。</div>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script src="member.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    var decrypted = null;
+    var API = window.COFFEE_API || "";   /* 后端地址：config.js 里改 */
+    var currentList = null;       /* 当前要加密的名单：服务器优先，其次本机 */
+
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
+    var sbMode = !!(SB_URL && SB_KEY);
+
+    /* 接了 Supabase 的话，名单要去 Supabase 后台看 */
+    if (sbMode) {
+        var tip = document.createElement("p");
+        tip.className = "note";
+        tip.innerHTML = "当前使用 <b>Supabase</b>：注册名单请在 Supabase 后台查看 —— Table Editor → <b>users</b>（账号）与 <b>profiles</b>（QQ / 邮箱）。手机也能看。";
+        document.querySelector(".wrap").insertBefore(tip, document.querySelector(".card"));
+    }
+
+    function esc(s) {
+        return String(s == null ? "" : s)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function table(rows) {
+        if (!rows || !rows.length) {
+            return '<table><tr><td class="empty">还没有记录</td></tr></table>';
+        }
+        var html = "<table><tr><th>用户名</th><th>密码 / 哈希</th><th>QQ / 微信</th><th>邮箱</th><th>时间</th></tr>";
+        rows.forEach(function (u) {
+            var secret = u.pass ? esc(u.pass) : (u.hash ? esc(u.hash.slice(0, 12)) + "…" : "—");
+            html += "<tr><td>" + esc(u.name) + "</td><td>" + secret + "</td><td>" +
+                    esc(u.contact) + "</td><td>" + esc(u.email || "—") + "</td><td>" + esc(u.time) + "</td></tr>";
+        });
+        return html + "</table>";
+    }
+
+    /* 〇、从服务器拉名单 */
+    document.getElementById("fetchBtn").addEventListener("click", function () {
+        var key = document.getElementById("admKey").value;
+        var msg = document.getElementById("fetchMsg");
+
+        if (sbMode) {
+            msg.className = "msg ok";
+            msg.textContent = "当前用 Supabase，名单在 Supabase 后台 Table Editor 里看，不需要密钥。";
+            return;
+        }
+
+        if (!key) {
+            msg.className = "msg err";
+            msg.textContent = "先填后台密钥。";
+            return;
+        }
+
+        msg.className = "msg";
+        msg.textContent = "正在拉取…";
+
+        fetch(API + "/api/users?key=" + encodeURIComponent(key), { cache: "no-store", headers: { "ngrok-skip-browser-warning": "1" } })
+            .then(function (res) {
+                if (res.status === 403) throw new Error("密钥不对。");
+                if (!res.ok) throw new Error("服务器返回 " + res.status + "。");
+                return res.json();
+            })
+            .then(function (rows) {
+                currentList = rows;
+                document.getElementById("serverBox").innerHTML = table(rows);
+                msg.className = "msg ok";
+                msg.textContent = "共 " + rows.length + " 条。下面「加密并下载」会用这份名单。";
+            })
+            .catch(function (e) {
+                msg.className = "msg err";
+                msg.textContent = e.message + "（如果没启动后端，先用 java Server 跑起来）";
+            });
+    });
+
+    /* 一、显示本机 */
+    document.getElementById("showBtn").addEventListener("click", function () {
+        var list = Member.localUsers();
+        currentList = list;
+        document.getElementById("tableBox").innerHTML = table(list);
+        document.getElementById("listMsg").className = "msg ok";
+        document.getElementById("listMsg").textContent = "本机共 " + list.length + " 条记录。";
+    });
+
+    /* 二、公开名单：本机的 + 线上已有的，合成一份 */
+    document.getElementById("pubBtn").addEventListener("click", function () {
+        var local = Member.publicEntries();
+        var msg = document.getElementById("listMsg");
+        if (!local.length) {
+            msg.className = "msg err";
+            msg.textContent = "本机还没有注册记录。";
+            return;
+        }
+
+        function merge(remote) {
+            var list = Object.prototype.toString.call(remote) === "[object Array]" ? remote.slice() : [];
+            local.forEach(function (u) {
+                var exists = list.some(function (x) { return x.name === u.name; });
+                if (!exists) list.push(u);
+            });
+            return list;
+        }
+
+        fetch("users.json", { cache: "no-store" })
+            .then(function (r) { return r.ok ? r.json() : []; })
+            .catch(function () { return []; })
+            .then(function (remote) {
+                var list = merge(remote);
+                Member.download("users.json", JSON.stringify(list, null, 2));
+                msg.className = "msg ok";
+                msg.textContent = "下载好了，共 " + list.length + " 条。替换 coffee-site/users.json，其他设备就能用这些账号登录。";
+            });
+    });
+
+    /* 三、加密 */
+    document.getElementById("encBtn").addEventListener("click", function () {
+        var pass = document.getElementById("encPass").value;
+        var msg = document.getElementById("encMsg");
+        var list = currentList && currentList.length ? currentList : Member.localUsers();
+
+        if (list.length === 0) {
+            msg.className = "msg err";
+            msg.textContent = "本机还没有注册记录，没东西可加密。";
+            return;
+        }
+        if (pass.length < 6) {
+            msg.className = "msg err";
+            msg.textContent = "口令至少 6 位。";
+            return;
+        }
+
+        msg.className = "msg";
+        msg.textContent = "正在加密…";
+
+        Member.encryptList(list, pass).then(function (blob) {
+            Member.download("users.enc.json", JSON.stringify(blob, null, 2));
+            msg.className = "msg ok";
+            msg.textContent = "加密完成，已下载 users.enc.json。把它替换到 coffee-site/ 里再推送。";
+        }).catch(function () {
+            msg.className = "msg err";
+            msg.textContent = "加密失败，换个浏览器试试。";
+        });
+    });
+
+    /* 四、解密 */
+    document.getElementById("decBtn").addEventListener("click", function () {
+        var file = document.getElementById("encFile").files[0];
+        var pass = document.getElementById("decPass").value;
+        var msg = document.getElementById("decMsg");
+
+        if (!file) {
+            msg.className = "msg err";
+            msg.textContent = "先选一个 users.enc.json。";
+            return;
+        }
+        if (pass.length < 6) {
+            msg.className = "msg err";
+            msg.textContent = "口令至少 6 位。";
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function () {
+            var blob;
+            try { blob = JSON.parse(reader.result); }
+            catch (e) {
+                msg.className = "msg err";
+                msg.textContent = "这个文件不是有效的 JSON。";
+                return;
+            }
+
+            Member.decryptList(blob, pass).then(function (rows) {
+                decrypted = rows;
+                document.getElementById("decBox").innerHTML = table(rows);
+                msg.className = "msg ok";
+                msg.textContent = "解密成功，共 " + rows.length + " 条。";
+            }).catch(function () {
+                msg.className = "msg err";
+                msg.textContent = "解不开：口令不对，或者文件被改过。";
+            });
+        };
+        reader.readAsText(file);
+    });
+
+    /* 五、下载明文 */
+    document.getElementById("saveBtn").addEventListener("click", function () {
+        var msg = document.getElementById("decMsg");
+        if (!decrypted) {
+            msg.className = "msg err";
+            msg.textContent = "先解密一次。";
+            return;
+        }
+        Member.download("本地注册记录.json", JSON.stringify(decrypted, null, 2));
+        msg.className = "msg ok";
+        msg.textContent = "已下载「本地注册记录.json」。这个文件已被 .gitignore 挡住，不会被推上去。";
+    });
+})();
+</script>
+</body>
+</html>

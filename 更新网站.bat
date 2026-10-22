@@ -1,51 +1,74 @@
 @echo off
-chcp 65001 >nul
+title ¸üÐÂÍøÕ¾ - ÁúÇ±Ã¨Òþ
 cd /d "%~dp0"
 set "PATH=%PATH%;C:\Program Files\Git\cmd"
-title æ›´æ–°ç½‘ç«™ - é¾™æ½œçŒ«éš
 
 echo ============================================
-echo    æ›´æ–°ç½‘ç«™
+echo    ¸üÐÂÍøÕ¾  £¨Ö»ÉÏ´«¸ÃÉÏ´«µÄ£©
 echo ============================================
 echo.
-echo è¿™æ¬¡æ”¹åŠ¨è¿‡çš„æ–‡ä»¶ï¼š
+
+if not exist ".gitignore" echo. > .gitignore
+findstr /C:"server/users.jsonl" ".gitignore" >nul 2>&1
+if errorlevel 1 echo server/users.jsonl>> ".gitignore"
+findstr /C:"server/orders.jsonl" ".gitignore" >nul 2>&1
+if errorlevel 1 echo server/orders.jsonl>> ".gitignore"
+findstr /C:"server/admin.key" ".gitignore" >nul 2>&1
+if errorlevel 1 echo server/admin.key>> ".gitignore"
+
+echo Õâ´Î¸Ä¶¯¹ýµÄÎÄ¼þ£º
 echo.
 git status --short
 echo.
 
-set "msg="
-set /p "msg=è¿™æ¬¡æ”¹äº†ä»€ä¹ˆï¼Ÿï¼ˆç›´æŽ¥å›žè½¦ = æ—¥å¸¸æ›´æ–°ï¼‰: "
-if not defined msg set "msg=æ—¥å¸¸æ›´æ–°"
-
 git add -A
+
+echo ×¼±¸ÉÏ´«µÄÎÄ¼þÇåµ¥£º
+echo.
+git diff --cached --name-only
+echo.
+
+git diff --cached --name-only | findstr /I /C:"users.jsonl" /C:"users.local" /C:"orders.jsonl" >nul
+if not errorlevel 1 (
+    echo [ÒÑÍ£Ö¹] ´ýÉÏ´«ÁÐ±íÀï³öÏÖÁË²»¸ÃÉÏ´«µÄÊý¾ÝÎÄ¼þ¡£
+    echo           ÒÑ×Ô¶¯³·ÏÂ£¬ÇëÈË¹¤¼ì²é .gitignore¡£
+    git reset --quiet
+    echo.
+    pause
+    exit /b 1
+)
+
 git diff --cached --quiet
 if errorlevel 1 goto commit
-echo æ²¡æœ‰æ£€æµ‹åˆ°æ”¹åŠ¨ï¼Œä»€ä¹ˆéƒ½æ²¡å‘ç”Ÿã€‚
+echo Ã»ÓÐ¼ì²âµ½¸Ä¶¯£¬Ê²Ã´¶¼Ã»·¢Éú¡£
 goto done
 
 :commit
+set "msg="
+set /p "msg=Õâ´Î¸ÄÁËÊ²Ã´£¿£¨Ö±½Ó»Ø³µ = ÈÕ³£¸üÐÂ£©: "
+if not defined msg set "msg=ÈÕ³£¸üÐÂ"
+
 git commit -m "%msg%"
 echo.
-echo æ­£åœ¨ä¸Šä¼ ...
+echo ÕýÔÚÉÏ´«...
 git push
 if not errorlevel 1 goto ok
 
 echo.
-echo [å¤±è´¥] è¿žä¸ä¸Š GitHubã€‚æ”¹åŠ¨å·²ç»å­˜åœ¨æœ¬åœ°å¿«ç…§é‡Œï¼Œä¸ä¼šä¸¢ã€‚
-echo        30 ç§’åŽè‡ªåŠ¨é‡è¯•ä¸€æ¬¡...
+echo [Ê§°Ü] Á¬²»ÉÏ GitHub¡£¸Ä¶¯ÒÑ¾­´æÔÚ±¾µØ¿ìÕÕÀï£¬²»»á¶ª¡£
+echo        30 Ãëºó×Ô¶¯ÖØÊÔÒ»´Î...
 ping -n 31 127.0.0.1 >nul
 git push
 if not errorlevel 1 goto ok
 
 echo.
-echo [å¤±è´¥] é‡è¯•ä¹Ÿæ²¡æˆåŠŸã€‚æ£€æŸ¥ç½‘ç»œï¼Œæˆ–è€…è¿‡ä¼šå„¿å†åŒå‡»ä¸€æ¬¡ã€‚
-echo        å¦‚æžœä»£ç†è½¯ä»¶ micore æ²¡å¼€ï¼Œå…ˆæ‰“å¼€å®ƒâ€”â€”GitHub ç›´è¿žè¿žä¸ä¸Šã€‚
-echo        æœ¬åœ°å¿«ç…§å·²ç»ä¿å­˜ï¼Œä¸‹æ¬¡é‡è¯•ä¸ä¼šä¸¢ä¸œè¥¿ã€‚
+echo [Ê§°Ü] ÖØÊÔÒ²Ã»³É¹¦¡£¼ì²éÍøÂç£¬»òÕß¹ý»á¶ùÔÙË«»÷Ò»´Î¡£
+echo        Èç¹û´úÀíÈí¼þ micore Ã»¿ª£¬ÏÈ´ò¿ªËü¡£
 goto done
 
 :ok
 echo.
-echo [OK] å·²ä¸Šä¼ ã€‚å¤§çº¦ 30 ç§’åŽç”Ÿæ•ˆï¼š
+echo [OK] ÒÑÉÏ´«¡£´óÔ¼ 30 ÃëºóÉúÐ§£º
 echo      https://eliasneko.github.io/coffee-site/
 
 :done

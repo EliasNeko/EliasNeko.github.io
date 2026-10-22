@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
@@ -263,7 +263,7 @@ document.getElementById("buy").onclick = function () {
 &lt;link rel="stylesheet" href="style.css"&gt;     外部（推荐）
 &lt;style&gt; .card { … } &lt;/style&gt;                内部
 &lt;div style="color:red"&gt;…&lt;/div&gt;              内联（优先级高，少用）</code></pre>
-                    <div class="note"><b>备注：</b>外部样式表能被所有页面共用，改一处全站变。这就是为什么我们后来把样式抽成了 <code>lesson.css</code>。</div>
+                    <div class="note"><b>备注：</b>外部样式表能被所有页面共用，改一处全站变。这正是它比行内样式更值得用的原因。</div>
                 </section>
 
                 <section class="card" id="s18">
@@ -740,7 +740,7 @@ const saved = JSON.parse(localStorage.getItem("cart") || "[]");</code></pre>
   .then(res =&gt; res.json())
   .then(data =&gt; console.log("服务器说：", data))
   .catch(err =&gt; console.error("出错了", err));</code></pre>
-                    <div class="note"><b>备注：</b>前端把数据交给后端，后端存进数据库。这就是我们下一步要给咖啡店接的 Java 接口——<code>/api/orders</code>。</div>
+                    <div class="note"><b>备注：</b>前端把数据交给后端，后端存进数据库。比如前端去请求 <code>/api/orders</code>，把订单真的存下来。</div>
                 </section>
 
                 <section class="card" id="s49">
@@ -788,7 +788,7 @@ document.getElementById("add").addEventListener("click", function () {
         <footer>
             <div class="stamp">基础篇 · 2026-10-21 建</div>
             <div>HTML5 + CSS + JavaScript · 五十个基础点</div>
-            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">常读常新 · 有新的就补在这里</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">常读常新 · 需要的时候回来查</div>
         </footer>
 
         <script src="lessons.js"></script>

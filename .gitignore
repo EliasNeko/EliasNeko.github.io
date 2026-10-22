@@ -1,6 +1,17 @@
 # 私人文件：只留在本地，不进仓库、不上网站
 小鱼的记忆.md
+主线进度.md
 first.html
+
+# 会员的明文记录（只有站长本地留一份）
+coffee-site/本地注册记录.json
+coffee-site/users.local.json
+
+# 后端数据：有真实的注册信息和订单，绝不进仓库
+server/users.jsonl
+server/orders.jsonl
+server/*.class
+server/admin.key
 
 # 系统垃圾文件
 Thumbs.db

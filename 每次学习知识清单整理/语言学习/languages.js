@@ -21,7 +21,7 @@ var LANGUAGES = [
         name: "Java",
         level: "筹备中",
         tagline: "写一次，到处运行",
-        desc: "这门你正在学。等咖啡店接上真正的后端，它会一起补进来。",
+        desc: "写一次，到处运行。等咖啡店的 Java 后端做完，这一门就补上。",
         meta: "预计下一门",
         file: "",
         open: false
