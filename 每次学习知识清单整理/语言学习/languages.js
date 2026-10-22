@@ -8,6 +8,7 @@
 var LANGUAGES = [
     {
         id: "python",
+        pinned: true,
         name: "Python",
         level: "零基础",
         tagline: "最像人话的一门语言",
@@ -18,6 +19,7 @@ var LANGUAGES = [
     },
     {
         id: "java",
+        pinned: true,
         name: "Java",
         level: "零基础",
         tagline: "写一次，到处运行",
@@ -28,6 +30,7 @@ var LANGUAGES = [
     },
     {
         id: "c",
+        pinned: true,
         name: "C 语言",
         level: "零基础",
         tagline: "贴着机器写代码",
@@ -38,6 +41,7 @@ var LANGUAGES = [
     },
     {
         id: "javascript",
+        pinned: true,
         name: "JavaScript",
         level: "零基础",
         tagline: "让网页活起来",

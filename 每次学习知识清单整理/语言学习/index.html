@@ -5,6 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>语言学习 · 从零开始 · 龙潜猫隐和小鱼的个人class</title>
         <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .lang-card .pin {
+                font-size: 10px;
+                letter-spacing: 2px;
+                color: #04121f;
+                background: linear-gradient(120deg, #a5f3fc, var(--accent));
+                border-radius: 999px;
+                padding: 2px 8px;
+                align-self: center;
+            }
+        </style>
     </head>
     <body>
         <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
@@ -25,8 +36,17 @@
         </header>
 
         <div class="idx-wrap">
-            <p class="idx-sec">选择一门语言</p>
+            <p class="idx-sec">置顶语言 · 四门都在</p>
             <div class="lang-grid" id="lang-grid"></div>
+
+            <p class="idx-sec">杂项 · 小众语言与知识点</p>
+            <a class="lang-card" href="misc.html" style="max-width:560px; border-color: rgba(167, 139, 250, 0.3);">
+                <div class="lh"><span class="lname">杂项语言 / 知识点</span><span class="lv">筹备中</span></div>
+                <div class="ltag">小众冷门语言 · MySQL / Anaconda / Node.js</div>
+                <div class="ld">第一栏放不常接触的小众语言，第二栏放工具与概念（数据库、环境、运行时）。先上架目录，内容一门一门补。</div>
+                <div class="lm">2 个栏目 · 先看目录</div>
+                <div class="lgo">进去看看 →</div>
+            </a>
 
             <p class="idx-sec">考证</p>
             <a class="lang-card" href="考试.html" style="max-width:520px;">
@@ -74,7 +94,7 @@
             var openCount = 0;
             var soonCount = 0;
 
-            LANGUAGES.forEach(function (l) {
+            LANGUAGES.slice().sort(function (a, b) { return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0); }).forEach(function (l) {
                 if (l.open) openCount++; else soonCount++;
 
                 var el = document.createElement(l.open ? "a" : "div");
@@ -83,6 +103,7 @@
 
                 el.innerHTML =
                     '<div class="lh"><span class="lname">' + l.name + '</span>' +
+                    (l.pinned ? '<span class="pin">置顶</span>' : '') +
                     '<span class="lv">' + l.level + '</span></div>' +
                     '<div class="ltag">' + l.tagline + '</div>' +
                     '<div class="ld">' + l.desc + '</div>' +
