@@ -83,6 +83,13 @@
                 z-index: 10;/*让导航栏在最上层显示*/
             }
 
+            .nav-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                min-width: 0;
+            }
+
             .logo {
                 color: #c9a86a;
                 font-size: 22px;
@@ -697,7 +704,10 @@
         <body>
             <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
             <nav class="nav">
-                <a class="logo" href="#">猫🐱 and 鱼🐟️</a>
+                <div class="nav-left">
+                    <a class="logo" href="#">猫🐱 and 鱼🐟️</a>
+                    <a class="nav-account" id="accountEntry" href="account.html">登录</a>
+                </div>
                 <div class="nav-right">
                     <ul class="nav-links">
                         <li><a href="#menu">菜单</a></li>
@@ -705,7 +715,6 @@
                         <li><a href="#store">门店</a></li>
                         <li><a href="#contact">联系</a></li>
                     </ul>
-                    <a class="nav-account" id="accountEntry" href="account.html">登录</a>
                     <div class="wallet" id="wallet" title="游客每天 ¥60，登录后每天 ¥500">
                         <span class="wallet-label">今日余额</span>
                         <strong id="walletBalance">¥ 500</strong>
