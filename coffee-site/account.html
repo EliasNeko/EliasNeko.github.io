@@ -266,6 +266,19 @@
     var SB_KEY = window.SUPABASE_KEY || "";
     var sbMode = !!(SB_URL && SB_KEY);
 
+    /* 带超时的请求：手机网络差时不要一直转圈 */
+    function fetchTimeout(url, opts, ms) {
+        opts = opts || {};
+        if (typeof AbortController === "undefined") return fetch(url, opts);
+        var ctrl = new AbortController();
+        var timer = setTimeout(function () { ctrl.abort(); }, ms || 9000);
+        var o = {};
+        for (var k in opts) { if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k]; }
+        o.signal = ctrl.signal;
+        return fetch(url, o).then(function (r) { clearTimeout(timer); return r; },
+            function (e) { clearTimeout(timer); throw e; });
+    }
+
     var SB_HEADERS = {
         "apikey": SB_KEY,
         "Authorization": "Bearer " + SB_KEY,
@@ -274,7 +287,7 @@
 
     /* 注册：交给 Supabase 的函数，一次写两张表 */
     function sbRegister(user, finish, fail) {
-        fetch(SB_URL + "/rest/v1/rpc/register_user", {
+        fetchTimeout(SB_URL + "/rest/v1/rpc/register_user", {
             method: "POST",
             headers: SB_HEADERS,
             body: JSON.stringify({
@@ -294,15 +307,15 @@
             if (out && out.error === "duplicate") return fail("这个名字已经有人用了，换一个吧。");
             return fail("登记没成功，稍后再试（" + (out && out.error ? out.error : "未知原因") + "）。");
         }).catch(function () {
-            fail("连不上云端，检查一下网络再试。");
+            fail("连不上云端。这个网络可能访问不了 supabase.co，换个网络或开代理再试。");
         });
     }
 
     /* 登录：先按名字取盐，再让服务器比对哈希 */
     function sbLogin(name, pass, done, fail) {
-        fetch(SB_URL + "/rest/v1/users?select=salt&name=eq." + encodeURIComponent(name), {
+        fetchTimeout(SB_URL + "/rest/v1/users?select=salt&name=eq." + encodeURIComponent(name), {
             headers: SB_HEADERS
-        }).then(function (res) {
+        }, 9000).then(function (res) {
             return res.ok ? res.json() : [];
         }).then(function (rows) {
             if (!rows || !rows.length) {
@@ -310,11 +323,11 @@
                 return;
             }
             return Member.hashPass(pass, rows[0].salt).then(function (h) {
-                return fetch(SB_URL + "/rest/v1/rpc/check_login", {
+                return fetchTimeout(SB_URL + "/rest/v1/rpc/check_login", {
                     method: "POST",
                     headers: SB_HEADERS,
                     body: JSON.stringify({ p_name: name, p_hash: h })
-                });
+                }, 9000);
             }).then(function (res) {
                 return res.json();
             }).then(function (ok) {
@@ -322,7 +335,7 @@
                 else fail("没找到这个账号，用户名或密码不对。");
             });
         }).catch(function () {
-            fail("连不上云端，检查一下网络再试。");
+            fail("连不上云端。这个网络可能访问不了 supabase.co，换个网络或开代理再试。");
         });
     }
 
