@@ -31,7 +31,7 @@
         ".chat-ball .dot{position:absolute;top:6px;right:6px;width:10px;height:10px;border-radius:50%;background:#f87171;display:none}",
         ".chat-ball .dot.show{display:block}",
         ".chat-btn{border:1px solid rgba(201,168,106,.4);background:none;color:inherit;font:inherit;font-size:12px;letter-spacing:1px;padding:6px 14px;border-radius:999px;cursor:pointer}",
-        ".chat-drop{position:absolute;z-index:130;min-width:210px;padding:10px;border-radius:14px;background:#0d1524;border:1px solid rgba(56,189,248,.35);box-shadow:0 18px 40px rgba(0,0,0,.55);font-family:'Microsoft YaHei',sans-serif}",
+        ".chat-drop{position:fixed;z-index:130;min-width:210px;padding:10px;border-radius:14px;background:#0d1524;border:1px solid rgba(56,189,248,.35);box-shadow:0 18px 40px rgba(0,0,0,.55);font-family:'Microsoft YaHei',sans-serif}",
         ".chat-drop.cream{background:#1a1512;border-color:rgba(201,168,106,.4)}",
         ".chat-drop button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;border-radius:8px;background:none;color:#e8f0fd;font:inherit;font-size:13px;cursor:pointer}",
         ".chat-drop.cream button{color:#e8dcc8}",
@@ -391,7 +391,19 @@
         });
 
         document.addEventListener("click", function () { drop.style.display = "none"; });
-        window.addEventListener("resize", function () { if (drop.style.display !== "none") place(); });
+
+        function keepInPlace() {
+            if (drop.style.display === "none") return;
+            var r = anchor.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) {
+                drop.style.display = "none";
+                return;
+            }
+            place();
+        }
+
+        window.addEventListener("resize", keepInPlace);
+        window.addEventListener("scroll", keepInPlace, { passive: true });
     }
 
     function createRoom() {
