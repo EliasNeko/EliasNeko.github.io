@@ -148,6 +148,13 @@
     .avatar-side input[type="file"] { width: 100%; color: #c9b79c; font-size: 12px; margin-bottom: 8px; }
     .avatar-side .submit { margin-top: 10px; }
 
+    .logged-row { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
+    .logged-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(201,168,106,.45); background: #14100e; }
+    .logged-name { margin: 0 0 6px; font-size: 18px; letter-spacing: 2px; color: #f3e7d3; }
+    .logged-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .logged-actions .submit { flex: 1 1 150px; margin-top: 0; }
+    .logged-note { margin: 14px 0 0; font-size: 12px; line-height: 1.9; color: rgba(201,183,156,.5); }
+
     .admin-link {
         display: block;
         margin-top: 22px;
@@ -205,6 +212,21 @@
         你正在<b>微信内置浏览器</b>里打开。微信有时连不上云端，登录失败就点右上角「⋯」→「在浏览器打开」。
     </div>
 
+    <section class="card" id="panelLogged" style="display:none;">
+        <div class="logged-row">
+            <img class="logged-avatar" id="loggedAvatar" alt="">
+            <div>
+                <p class="logged-name" id="loggedName"></p>
+                <p class="hint">你已登录。资料和头像可以在个人资料页里改。</p>
+            </div>
+        </div>
+        <div class="logged-actions">
+            <a class="submit" href="profile.html" style="text-align:center; text-decoration:none; line-height:1.4;">个 人 资 料</a>
+            <button class="submit" id="loggedLogout" type="button" style="background:none; color:#c9a86a;">退 出 登 录</button>
+        </div>
+        <p class="logged-note">退出后回到游客身份：每天余额 ¥60，也没有咖啡收藏。</p>
+    </section>
+
     <div class="tabs">
         <button class="tab active" id="tabLogin" type="button">登 录</button>
         <button class="tab" id="tabRegister" type="button">注 册</button>
@@ -259,7 +281,7 @@
             <img class="avatar-preview" id="avatarPreview" alt="">
             <div class="avatar-side">
                 <input type="file" id="avatarFile" accept="image/*">
-                <p class="hint">自动裁成正方形、压到 128×128，几 KB 到几十 KB，不会占云端空间。</p>
+                <p class="hint">上传后会自动裁成正方形并压缩，头像更清楚，加载也更快。</p>
                 <button class="submit" id="avatarSave" type="button" disabled>保 存 头 像</button>
             </div>
         </div>
@@ -732,14 +754,37 @@
     function renderSession() {
         var me = Member.session();
         var bar = document.getElementById("sessionBar");
+        var logged = document.getElementById("panelLogged");
+        var tabs = document.querySelector(".tabs");
+        var loginPanel = document.getElementById("panelLogin");
+        var regPanel = document.getElementById("panelRegister");
+
         if (me && me.name) {
-            document.getElementById("sessionText").textContent = "已登录：" + me.name + " · 进书房不用口令了";
             bar.classList.add("show");
+            document.getElementById("sessionText").textContent = "已登录：" + me.name + " · 进书房不用口令了";
             document.getElementById("loginName").value = me.name;
+
+            if (logged) logged.style.display = "block";
+            if (tabs) tabs.style.display = "none";
+            if (loginPanel) loginPanel.classList.add("hidden");
+            if (regPanel) regPanel.classList.add("hidden");
+
+            document.getElementById("loggedName").textContent = me.name;
+            var av = document.getElementById("loggedAvatar");
+            var cached = null;
+            try { cached = localStorage.getItem("coffee-avatar:" + me.name); } catch (e) {}
+            if (cached) av.src = cached;
         } else {
             bar.classList.remove("show");
+            if (logged) logged.style.display = "none";
+            if (tabs) tabs.style.display = "";
         }
     }
+
+    document.getElementById("loggedLogout").addEventListener("click", function () {
+        Member.logout();
+        window.location.href = "index.html";
+    });
 
     document.getElementById("logoutBtn").addEventListener("click", function () {
         Member.logout();

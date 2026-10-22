@@ -491,6 +491,51 @@
 
             .nav-avatar.show { display: block; }
 
+            .nav-user { position: relative; display: flex; align-items: center; gap: 8px; }
+
+            .nav-menu {
+                position: absolute;
+                top: 40px;
+                left: 0;
+                min-width: 148px;
+                padding: 8px;
+                background: #1a1512;
+                border: 1px solid rgba(201,168,106,.35);
+                border-radius: 12px;
+                box-shadow: 0 16px 40px rgba(0,0,0,.6);
+                z-index: 80;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-6px);
+                transition: .2s;
+            }
+
+            .nav-user:hover .nav-menu,
+            .nav-menu.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .nav-menu a,
+            .nav-menu button {
+                display: block;
+                width: 100%;
+                padding: 9px 12px;
+                border: 0;
+                border-radius: 8px;
+                background: none;
+                color: #e8dcc8;
+                font-family: inherit;
+                font-size: 13px;
+                text-align: left;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .nav-menu a:hover,
+            .nav-menu button:hover { background: rgba(201,168,106,.12); color: #c9a86a; }
+
             .gate-note {
                 margin-top: 16px;
                 font-size: 12px;
@@ -719,8 +764,14 @@
             <nav class="nav">
                 <div class="nav-left">
                     <a class="logo" href="#">龙潜猫隐</a>
-                    <a class="nav-account" id="accountEntry" href="account.html">登录</a>
-                    <img class="nav-avatar" id="navAvatar" alt="头像">
+                    <div class="nav-user" id="navUser">
+                        <a class="nav-account" id="accountEntry" href="account.html">登录</a>
+                        <img class="nav-avatar" id="navAvatar" alt="头像">
+                        <div class="nav-menu" id="navMenu" style="display:none;">
+                            <a href="profile.html">个人资料</a>
+                            <button type="button" id="navLogout">退出登录</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="nav-right">
                     <ul class="nav-links">
@@ -1038,6 +1089,12 @@
             var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
             var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
+            function renderNavMenu() {
+                var menu = document.getElementById("navMenu");
+                if (!menu) return;
+                menu.style.display = isMember ? "" : "none";
+            }
+
             function renderAvatar() {
                 var img = document.getElementById("navAvatar");
                 if (!img) return;
@@ -1323,6 +1380,31 @@
             render();
             renderFavs();
             renderAvatar();
+            renderNavMenu();
+
+            /* 手机上点一下就展开，点别处收起 */
+            var navUser = document.getElementById("navUser");
+            if (navUser) {
+                navUser.addEventListener("click", function (e) {
+                    if (!isMember) return;
+                    var menu = document.getElementById("navMenu");
+                    if (e.target.closest && e.target.closest("a, button")) return;
+                    menu.classList.toggle("show");
+                    e.stopPropagation();
+                });
+                document.addEventListener("click", function () {
+                    document.getElementById("navMenu").classList.remove("show");
+                });
+            }
+
+            var navLogout = document.getElementById("navLogout");
+            if (navLogout) {
+                navLogout.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    try { localStorage.removeItem(SESSION_KEY); } catch (err) {}
+                    window.location.href = "index.html";
+                });
+            }
         </script>
                     <script src="../assets/update-popup.js?v=20261022"></script>
     <script src="../assets/live.js?v=20261022"></script>
