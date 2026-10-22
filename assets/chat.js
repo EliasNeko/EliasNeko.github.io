@@ -263,13 +263,28 @@
         return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    function fetchMessages() {
+    function fetchMessages(initial) {
         if (!state.room) return;
+
         rpc("chat_fetch", { p_room: state.room, p_after: state.lastId }).then(function (d) {
-            if (!d || !d.ok) return;
+            if (!d || !d.ok) {
+                if (initial) body.innerHTML = '<div class="chat-empty">连不上云端。<br>检查一下网络，再点一次聊天球。</div>';
+                return;
+            }
+
             var list = d.messages || [];
-            if (list.length) renderMessages(list, state.lastId > 0);
-        }).catch(function () {});
+
+            if (list.length) {
+                renderMessages(list, state.lastId > 0);
+                return;
+            }
+
+            if (initial || state.lastId === 0) {
+                body.innerHTML = '<div class="chat-empty">已连接。<br>这里还安静着，说点什么吧。</div>';
+            }
+        }).catch(function () {
+            if (initial) body.innerHTML = '<div class="chat-empty">连不上云端。<br>检查一下网络，再点一次聊天球。</div>';
+        });
     }
 
     function send(bodyText, image) {
@@ -313,7 +328,7 @@
         win.classList.add("show");
         state.open = true;
 
-        fetchMessages();
+        fetchMessages(true);
         clearInterval(state.timer);
         state.timer = setInterval(fetchMessages, 3000);
 
@@ -521,9 +536,12 @@
 
             if (invite) inviteFriend(invite);
             if (friend) {
-                rpc("friend_add", { p_name: s.name, p_hash: s.hash, p_friend: friend }).then(function (d) {
-                    b.textContent = d && d.ok ? "已加" : "失败";
-                    b.disabled = true;
+                rpc("friend_request_send", { p_name: s.name, p_hash: s.hash, p_to: friend }).then(function (d) {
+                    if (d && d.ok) { b.textContent = "已申请"; b.disabled = true; }
+                    else if (d && d.error === "already") { b.textContent = "已是好友"; b.disabled = true; }
+                    else if (d && d.error === "waiting") { b.textContent = "等对方"; b.disabled = true; }
+                    else if (d && d.error === "cooldown") { b.textContent = "稍后再试"; }
+                    else { b.textContent = "失败"; }
                 });
             }
         });
@@ -596,6 +614,61 @@
     }
 
 
+
+    /* ---------- 聊天框里的系统提示 ---------- */
+    function systemNote(t) {
+        if (!state.open) { alert(t); return; }
+        var d = document.createElement("div");
+        d.className = "chat-empty";
+        d.style.cssText = "margin:8px auto;font-size:11.5px;color:#7f93ad;";
+        d.textContent = t;
+        body.appendChild(d);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    /* ---------- 收到好友申请 ---------- */
+    var friendReqShowing = false;
+
+    function showFriendRequest(req) {
+        if (!req || friendReqShowing) return;
+        friendReqShowing = true;
+
+        var mask = document.createElement("div");
+        mask.className = "chat-modal show";
+        mask.innerHTML = '<div class="box" style="max-width:340px">' +
+            '<div class="h"><b>好友申请</b></div>' +
+            '<div class="s" style="font-size:13px;line-height:2;color:#dbe9fb">' +
+            '<b id="frFrom" style="color:#7dd3fc;font-weight:normal"></b> 想加你为好友。' +
+            '</div>' +
+            '<div class="s" style="display:flex;gap:10px;padding-bottom:16px">' +
+            '<button class="chat-btn" id="frYes" style="flex:1;background:rgba(56,189,248,.18)">同 意</button>' +
+            '<button class="chat-btn" id="frNo" style="flex:1">拒 绝</button>' +
+            '</div></div>';
+        document.body.appendChild(mask);
+
+        mask.querySelector("#frFrom").textContent = req.from;
+
+        function close() { mask.remove(); friendReqShowing = false; }
+
+        mask.querySelector("#frNo").addEventListener("click", function () {
+            var s = me();
+            if (s) rpc("friend_request_answer", { p_name: s.name, p_hash: s.hash, p_id: req.id, p_accept: false });
+            close();
+            systemNote("已拒绝 " + req.from + " 的好友申请。");
+        });
+
+        mask.querySelector("#frYes").addEventListener("click", function () {
+            var s = me();
+            if (!s) { close(); return; }
+            rpc("friend_request_answer", { p_name: s.name, p_hash: s.hash, p_id: req.id, p_accept: true }).then(function (d) {
+                close();
+                if (d && d.ok) systemNote("已同意 " + req.from + " 的好友申请。");
+            }).catch(function () { close(); });
+        });
+
+        setTimeout(function () { if (document.body.contains(mask)) close(); }, 30000);
+    }
+
     /* ---------- 收到邀请：弹窗（30 秒有效） ---------- */
     var inviteShowing = false;
 
@@ -650,9 +723,26 @@
                 if (d && d.ok && d.invite) showInvite(d.invite);
             }).catch(function () {});
 
+            rpc("friend_request_pending", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+                if (d && d.ok && d.request && !friendReqShowing) showFriendRequest(d.request);
+            }).catch(function () {});
+
+            rpc("friend_request_result", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+                if (d && d.ok && d.result) {
+                    alert(d.result.to + (d.result.accepted ? " 同意了你的好友申请。" : " 拒绝了你的好友申请。"));
+                }
+            }).catch(function () {});
+
             rpc("invite_take", { p_name: s.name, p_hash: s.hash }).then(function (d) {
-                if (d && d.ok && d.room && state.room !== d.room) {
-                    openChat(d.room, "房间 " + d.room);
+                if (!d || !d.ok) return;
+
+                if (d.status === "accepted" && d.room) {
+                    if (state.room !== d.room) {
+                        openChat(d.room, "房间 " + d.room);
+                        setTimeout(function () { systemNote("对方接受了邀请，你们现在在同一个房间。"); }, 600);
+                    }
+                } else if (d.status === "rejected") {
+                    systemNote("对方拒绝了你的邀请。");
                 }
             }).catch(function () {});
         }, 6000);
