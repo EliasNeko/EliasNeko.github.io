@@ -297,6 +297,19 @@
         state.lastId = 0;
         body.innerHTML = '<div class="chat-empty">正在连接…</div>';
         title.textContent = state.roomName;
+
+        var oldExit = win.querySelector("#chatExit");
+        if (oldExit) oldExit.remove();
+        if (state.room !== "public") {
+            var exitBtn = document.createElement("button");
+            exitBtn.id = "chatExit";
+            exitBtn.type = "button";
+            exitBtn.textContent = "退出房间";
+            exitBtn.style.cssText = "font-size:11.5px;padding:5px 9px;border:1px solid rgba(56,189,248,.35);border-radius:999px;background:none;color:#9fc9f5;margin-right:4px;cursor:pointer;flex:0 0 auto;";
+            exitBtn.addEventListener("click", function () { openChat("public", "公共聊天室"); });
+            win.querySelector(".chat-head").insertBefore(exitBtn, win.querySelector("#chatClose"));
+        }
+
         win.classList.add("show");
         state.open = true;
 
@@ -336,7 +349,8 @@
         function renderMain() {
             drop.innerHTML =
                 '<button data-act="public">公共聊天室 <span style="opacity:.6">（' + state.publicCount + ' 条消息）</span></button>' +
-                '<button data-act="private">1v1 聊天 ▸</button>';
+                '<button data-act="private">1v1 聊天 ▸</button>' +
+                '<button data-act="users">查看在线用户</button>';
         }
 
         function renderPrivate() {
@@ -348,6 +362,7 @@
         }
 
         drop.addEventListener("click", function (e) {
+            e.stopPropagation();
             var b = e.target.closest("button");
             if (!b) return;
             var act = b.getAttribute("data-act");
@@ -358,6 +373,12 @@
             else if (act === "create") { drop.style.display = "none"; createRoom(); }
             else if (act === "join") { drop.style.display = "none"; joinRoom(); }
             else if (act === "users") { drop.style.display = "none"; showOnline(); }
+        });
+
+        anchor.addEventListener("mouseenter", function () {
+            place();
+            renderMain();
+            drop.style.display = "block";
         });
 
         anchor.addEventListener("click", function (e) {
@@ -499,20 +520,20 @@
         }).catch(function () { listEl.innerHTML = '<div class="chat-empty">连不上云端。</div>'; });
     }
 
-    /* 邀请：建一个临时房间，在公共聊天室丢一条带房间号的消息 */
+    /* 邀请：建一个临时房间，发一条邀请给对方（对方收到弹窗） */
     function inviteFriend(name) {
         var s = me();
         if (!s) return;
 
         var room = String(Math.floor(100000 + Math.random() * 900000));
         rpc("chat_create_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: "" }).then(function (d) {
-            if (!d || !d.ok) { alert("邀请没发出去，换个人试试。"); return; }
-            return rpc("chat_send", {
-                p_name: s.name, p_hash: s.hash, p_room: "public",
-                p_body: "📨 " + name + "，来房间 " + room + " 聊两句（1v1，无密码）", p_image: ""
-            }).then(function () {
-                alert("邀请已经发到公共聊天室：房间 " + room + "。对方进去就能看到你。");
-            });
+            if (!d || !d.ok) { alert("房间没建起来，稍后再试。"); return; }
+            return rpc("invite_send", { p_name: s.name, p_hash: s.hash, p_to: name, p_room: room });
+        }).then(function (r) {
+            if (r && r.ok) alert("邀请已发出，等对方接（30 秒内有效）。");
+            else if (r && r.error === "cooldown") alert("刚邀请过，等 30 秒再试。");
+            else if (r && r.error === "self") alert("不能邀请自己。");
+            else alert("邀请没发出去，再试一次。");
         }).catch(function () { alert("连不上云端。"); });
     }
 
@@ -556,6 +577,63 @@
         ping();
         setInterval(ping, 30000);
     }
+
+
+    /* ---------- 收到邀请：弹窗（30 秒有效） ---------- */
+    var inviteShowing = false;
+
+    function showInvite(inv) {
+        if (!inv || inviteShowing) return;
+        inviteShowing = true;
+
+        var mask = document.createElement("div");
+        mask.className = "chat-modal show";
+        mask.innerHTML = '<div class="box" style="max-width:340px">' +
+            '<div class="h"><b>收到 1v1 邀请</b></div>' +
+            '<div class="s" style="font-size:13px;line-height:2;color:#dbe9fb">' +
+            '<b id="invFrom" style="color:#7dd3fc;font-weight:normal"></b> 邀请你进房间 ' +
+            '<b id="invRoom" style="color:#7dd3fc;font-weight:normal"></b>。<br><span style="opacity:.6">30 秒内有效。</span>' +
+            '</div>' +
+            '<div class="s" style="display:flex;gap:10px;padding-bottom:16px">' +
+            '<button class="chat-btn" id="invYes" style="flex:1;background:rgba(56,189,248,.18)">接 受</button>' +
+            '<button class="chat-btn" id="invNo" style="flex:1">拒 绝</button>' +
+            '</div></div>';
+        document.body.appendChild(mask);
+
+        mask.querySelector("#invFrom").textContent = inv.from;
+        mask.querySelector("#invRoom").textContent = inv.room;
+
+        function close() { mask.remove(); inviteShowing = false; }
+
+        mask.querySelector("#invNo").addEventListener("click", function () {
+            var s = me();
+            if (s) rpc("invite_answer", { p_name: s.name, p_hash: s.hash, p_id: inv.id, p_accept: false });
+            close();
+        });
+
+        mask.querySelector("#invYes").addEventListener("click", function () {
+            var s = me();
+            if (!s) { close(); return; }
+            rpc("invite_answer", { p_name: s.name, p_hash: s.hash, p_id: inv.id, p_accept: true }).then(function (d) {
+                close();
+                if (d && d.ok) openChat(d.room, "房间 " + d.room);
+            }).catch(function () { close(); });
+        });
+
+        setTimeout(function () { if (document.body.contains(mask)) close(); }, 30000);
+    }
+
+    /* 每 6 秒问一次：有没有人邀请我 */
+    (function watchInvites() {
+        var s = me();
+        if (!s) return;
+        setInterval(function () {
+            if (inviteShowing) return;
+            rpc("invite_pending", { p_name: s.name, p_hash: s.hash }).then(function (d) {
+                if (d && d.ok && d.invite) showInvite(d.invite);
+            }).catch(function () {});
+        }, 6000);
+    })();
 
     /* 给好友页用的接口 */
     window.ChatAPI = {

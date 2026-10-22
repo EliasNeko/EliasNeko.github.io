@@ -118,13 +118,12 @@
         if (invite) {
             var room = String(Math.floor(100000 + Math.random() * 900000));
             rpc("chat_create_room", { p_name: s.name, p_hash: s.hash, p_room: room, p_password: "" }).then(function (d) {
-                if (!d || !d.ok) { setMsg("邀请没发出去，稍后再试。", false); return; }
-                return rpc("chat_send", {
-                    p_name: s.name, p_hash: s.hash, p_room: "public",
-                    p_body: "📨 " + invite + "，来房间 " + room + " 聊两句（1v1，无密码）", p_image: ""
-                }).then(function () {
-                    setMsg("邀请已发到公共聊天室：房间 " + room, true);
-                });
+                if (!d || !d.ok) { setMsg("房间没建起来，稍后再试。", false); return; }
+                return rpc("invite_send", { p_name: s.name, p_hash: s.hash, p_to: invite, p_room: room });
+            }).then(function (r) {
+                if (r && r.ok) setMsg("邀请已发出，等对方接（30 秒内有效）。", true);
+                else if (r && r.error === "cooldown") setMsg("刚邀请过，等 30 秒再试。", false);
+                else setMsg("邀请没发出去，再试一次。", false);
             }).catch(function () { setMsg("连不上云端。", false); });
         }
     });
