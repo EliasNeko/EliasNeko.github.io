@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anaconda 入门 · 语言学习项目</title>
+<link rel="stylesheet" href="../lesson.css">
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">语言学习项目 · 知识点</p>
+    <h1>Anaconda：把 Python 的环境装进一个盒子</h1>
+    <p class="sub">装个库为什么会打架？虚拟环境是什么？conda 和 pip 有什么区别？一次讲清。</p>
+    <div class="meta"><span><span>10 节</span></span><span><span>难度 低</span></span><span><span>更新 2026-10-23</span></span></div>
+</header>
+
+<div class="idx-wrap">
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>Anaconda 不是一门语言，是一个「Python + 常用科学计算包 + 环境管理」的合集。装了它，numpy、pandas、jupyter 这些不用一个个折腾。</p>
+<p>它真正的价值是 <b>conda</b>：让你在同一个电脑上装好几个互不干扰的 Python 环境。</p>
+<div class="note"><b>适合谁：</b>被「装个包把另一个项目搞崩」折磨过的人。</div>
+</section>
+<section class="card" id="s02"><h2><span class="num">02</span>装哪个</h2>
+<ul><li><b>Anaconda</b>：完整版，3GB 左右，什么都有</li><li><b>Miniconda</b>：只装 conda + Python，几百 MB，缺什么自己装</li></ul>
+<p>现在更推荐 Miniconda，干净、装得快。装完开新终端：</p>
+<pre><code>conda --version
+conda env list</code></pre>
+<div class="note"><b>坑：</b>Windows 安装时不要勾「Add to PATH」（官方建议），装完用「Anaconda Prompt」打开终端，否则容易和系统自带 Python 打架。</div>
+</section>
+<section class="card" id="s03"><h2><span class="num">03</span>conda 常用命令</h2>
+<pre><code>conda create -n study python=3.11
+conda activate study
+conda install numpy pandas
+conda list
+conda deactivate
+conda remove -n study --all</code></pre>
+<p>记住四条就够日常用：建环境、进环境、装包、退环境。</p>
+<div class="note"><b>坑：</b>每次开新终端默认在 <code>base</code> 环境，装包前先 <code>conda activate 你的环境</code>，不然全装到 base 里。</div>
+</section>
+<section class="card" id="s04"><h2><span class="num">04</span>为什么要环境</h2>
+<p>项目 A 要 numpy 1.20，项目 B 要 numpy 2.0。装在一个 Python 里，只能留一个版本，另一个项目就崩。</p>
+<p>环境就是「每个项目一个独立的 Python 和包目录」。切环境，等于换了一整套依赖。</p>
+<div class="note"><b>坑：</b>环境建在哪个盘要注意——默认在 C 盘用户目录，装多了很占空间。可以在 <code>.condarc</code> 里改 <code>envs_dirs</code>。</div>
+</section>
+<section class="card" id="s05"><h2><span class="num">05</span>pip 和 conda 的区别</h2>
+<ul><li><b>pip</b>：Python 官方的包管理器，只装 Python 包，从 PyPI 下</li><li><b>conda</b>：跨语言，能装 Python 包，也能装编译器、CUDA 这类「非 Python」的东西</li></ul>
+<p>同一个环境里混用没问题，但建议：<b>能用 conda 就 conda，conda 没有再用 pip</b>，减少依赖冲突。</p>
+<div class="note"><b>坑：</b>用 pip 装完，conda 不一定知道；<code>conda list</code> 可能不显示。查包用 <code>pip list</code> 对照着看。</div>
+</section>
+<section class="card" id="s06"><h2><span class="num">06</span>依赖冲突怎么解</h2>
+<p>报 <code>Solving environment: failed</code> 时，先别急着卸了重装，按顺序试：</p>
+<ol><li>换个源：<code>conda config --add channels conda-forge</code></li><li>指定版本：<code>conda install numpy=1.26</code></li><li>实在不行，新建一个干净环境，只装这次要用的</li></ol>
+<div class="note"><b>坑：</b>在 base 环境里反复装、卸，是最容易把环境搞坏的做法。给每个项目单开环境，坏了直接删。</div>
+</section>
+<section class="card" id="s07"><h2><span class="num">07</span>Jupyter</h2>
+<pre><code>conda activate study
+conda install jupyter
+jupyter notebook</code></pre>
+<p>浏览器会打开一个页面，能一格一格跑代码，结果直接显示在下面。做数据分析、写实验报告很顺手。</p>
+<div class="note"><b>坑：</b>在 A 环境装的 jupyter，切到 B 环境后看不到 B 的包——要给 B 装 <code>ipykernel</code> 并注册：<code>python -m ipykernel install --user --name study</code>。</div>
+</section>
+<section class="card" id="s08"><h2><span class="num">08</span>把环境交给别人</h2>
+<pre><code>conda env export &gt; environment.yml
+conda env create -f environment.yml</code></pre>
+<p>第一条在自己的环境里导出，第二条在别人的电脑上还原。课程设计交作业、换电脑，都靠它。</p>
+<div class="note"><b>坑：</b>导出的 yml 里带 <code>prefix:</code>（你电脑的绝对路径），别人用之前删掉那一行。</div>
+</section>
+<section class="card" id="s09"><h2><span class="num">09</span>动手项目：给数据分析建个干净环境</h2>
+<p><b>要求：</b>建一个叫 <code>data</code> 的环境（Python 3.11），装 numpy、pandas、matplotlib、jupyter，写个 notebook 读一个 CSV，画一张图。</p>
+<p><b>验收：</b><code>conda env list</code> 能看到 data；notebook 里能 import 三个包；导出的 environment.yml 能在另一台机器还原。</p>
+</section>
+<section class="card" id="s10"><h2><span class="num">10</span>往哪走</h2>
+<p>环境弄顺之后，再去学 pip 的 <code>requirements.txt</code>、虚拟环境 <code>venv</code>（不装 conda 时的替代方案）。</p>
+<div class="note"><b>一句话：</b>Anaconda 解决的不是「装包」，是「这个项目用哪套包」——环境分得清，bug 就少一半。</div>
+</section>
+</div>
+
+<footer>
+    <div class="stamp">Anaconda · 2026-10-23</div>
+    <div>语言学习项目 · 龙潜猫隐</div>
+</footer>
+
+<script src="../../assets/update-popup.js?v=20261022"></script>
+<script src="../../assets/live.js?v=20261022"></script>
+<script src="../../assets/chat.js?v=20261022"></script>
+</body>
+</html>

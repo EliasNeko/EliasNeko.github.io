@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rust 入门 · 语言学习项目</title>
+<link rel="stylesheet" href="../lesson.css">
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">语言学习项目 · 系统级语言</p>
+    <h1>Rust：不靠垃圾回收的内存安全</h1>
+    <p class="sub">它用「所有权」在编译期就把内存问题拦下来。学起来陡，但学完你会真正明白内存在干什么。</p>
+    <div class="meta"><span><span>12 节</span></span><span><span>难度 偏高</span></span><span><span>更新 2026-10-23</span></span></div>
+</header>
+
+<div class="idx-wrap">
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>Rust 是一门编译型语言，主打两件事：<b>内存安全</b>和<b>不靠垃圾回收</b>。C 和 C++ 里最容易出的问题（用了已经释放的内存、两个指针同时改一块数据），Rust 在<b>编译的时候</b>就给你拦下来。</p>
+<p>代价是：你得先理解它的「所有权」规则，否则代码会一直编译不过。这一门课的重点就是这条规则，而不是语法。</p>
+<div class="note"><b>适合谁：</b>学完 C 或 Java，想弄明白「内存到底怎么管的」的人。Rust 找工作的岗位不算多，但学完再看别的语言，会清楚很多。</div>
+</section>
+<section class="card" id="s02"><h2><span class="num">02</span>装工具链</h2>
+<p>Rust 用 <code>rustup</code> 管工具链，一条命令装好编译器 <code>rustc</code>、包管理 <code>cargo</code> 和文档。</p>
+<pre><code># Windows 去 rustup.rs 下载 rustup-init.exe，双击一路回车
+# 装完开一个新终端
+rustc --version
+cargo --version</code></pre>
+<p>新建项目不要手写目录，用 cargo：</p>
+<pre><code>cargo new hello
+cd hello
+cargo run</code></pre>
+<div class="note"><b>坑：</b>装完不重开终端，会提示找不到 <code>cargo</code>——环境变量要新进程才读得到。</div>
+</section>
+<section class="card" id="s03"><h2><span class="num">03</span>变量默认不能改</h2>
+<p>别的语言里变量随便改，Rust 默认<b>不可变</b>，要改必须写 <code>mut</code>。</p>
+<pre><code>fn main() {
+    let x = 5;
+    // x = 6;          // 编译不过：cannot assign twice to immutable variable
+    let mut y = 5;
+    y = 6;             // 可以
+    println!("{x} {y}");
+}</code></pre>
+<p>看着麻烦，其实是在帮你：一个变量如果从头到尾没变过，读代码的人就不用担心它中途被谁改了。</p>
+<div class="note"><b>坑：</b><code>let x = 5; let x = "abc";</code> 是允许的，这叫<b>遮蔽</b>（shadowing），不是改类型，是新变量盖住了旧的。</div>
+</section>
+<section class="card" id="s04"><h2><span class="num">04</span>所有权：一个值只有一个主人</h2>
+<p>Rust 的核心规则只有三条：每个值有且只有一个主人；主人离开作用域，值就被释放；值可以「借」给别人，但借的时候有规矩。</p>
+<pre><code>fn main() {
+    let s1 = String::from("咖啡");
+    let s2 = s1;              // 所有权从 s1 移到 s2
+    // println!("{s1}");      // 编译不过：s1 已经被移走
+    println!("{s2}");
+}</code></pre>
+<p>这和 Java 的「两个变量指向同一个对象」不一样：Rust 直接把 s1 作废，避免两个地方同时释放同一块内存。</p>
+<div class="note"><b>坑：</b>整数、布尔、字符这类固定大小的类型会<b>复制</b>而不是移动，所以 <code>let a = 1; let b = a; println!("{a}")</code> 是能编过的。别拿这个规律去套 String。</div>
+</section>
+<section class="card" id="s05"><h2><span class="num">05</span>借用：&amp; 和 &amp;mut</h2>
+<p>不想交出所有权，就「借」：<code>&amp;x</code> 是只读借用，<code>&amp;mut x</code> 是可写借用。</p>
+<pre><code>fn len(s: &amp;String) -&gt; usize {
+    s.len()
+}
+
+fn push(s: &amp;mut String) {
+    s.push_str("！");
+}
+
+fn main() {
+    let mut s = String::from("好");
+    println!("{}", len(&amp;s));
+    push(&amp;mut s);
+    println!("{s}");
+}</code></pre>
+<p>规矩：同一时间，<b>要么</b>多个只读借用，<b>要么</b>一个可写借用。不能又要读又要写。</p>
+<div class="note"><b>坑：</b>这句规则会把你习惯的写法拦下来，比如「一边遍历一边往 Vec 里 push」。正确做法是先收集要改的东西，循环结束后再改。</div>
+</section>
+<section class="card" id="s06"><h2><span class="num">06</span>String 和 &amp;str</h2>
+<p><code>String</code> 是能增长的字符串（堆上），<code>&amp;str</code> 是「借来的一段文本」，函数参数一般用 <code>&amp;str</code>，因为 String 能自动转过去。</p>
+<pre><code>fn greet(name: &amp;str) {
+    println!("你好，{name}");
+}
+
+fn main() {
+    let a = String::from("阿猫");
+    greet(&amp;a);        // String -&gt; &str
+    greet("小鱼");     // 字面量本来就是 &str
+}</code></pre>
+<div class="note"><b>坑：</b>不要写 <code>fn f(s: String)</code> 然后到处传引用——参数用 <code>&amp;str</code> 更通用，调用方不用交出所有权。</div>
+</section>
+<section class="card" id="s07"><h2><span class="num">07</span>结构体和方法</h2>
+<pre><code>struct Coffee {
+    name: String,
+    price: u32,
+}
+
+impl Coffee {
+    fn new(name: &amp;str, price: u32) -&gt; Self {
+        Self { name: name.to_string(), price }
+    }
+    fn describe(&amp;self) -&gt; String {
+        format!("{} 卖 {} 元", self.name, self.price)
+    }
+}
+
+fn main() {
+    let c = Coffee::new("耶加雪啡", 32);
+    println!("{}", c.describe());
+}</code></pre>
+<div class="note"><b>坑：</b><code>&amp;self</code> 是只读方法，<code>&amp;mut self</code> 是能改字段的方法，<code>self</code> 会把对象吃掉。新手常把该用 <code>&amp;self</code> 的写成 <code>self</code>，结果对象用一次就没了。</div>
+</section>
+<section class="card" id="s08"><h2><span class="num">08</span>枚举、match 和 Option</h2>
+<pre><code>enum Drink { Coffee, Tea, Juice }
+
+fn price(d: Drink) -&gt; u32 {
+    match d {
+        Drink::Coffee =&gt; 32,
+        Drink::Tea =&gt; 18,
+        Drink::Juice =&gt; 22,
+    }
+}</code></pre>
+<p>Rust 没有 null，用 <code>Option&lt;T&gt;</code> 表示「可能有、可能没有」：</p>
+<pre><code>fn find(name: &amp;str) -&gt; Option&lt;u32&gt; {
+    if name == "咖啡" { Some(32) } else { None }
+}
+
+match find("咖啡") {
+    Some(p) =&gt; println!("{p} 元"),
+    None =&gt; println!("没找到"),
+}</code></pre>
+<div class="note"><b>坑：</b><code>match</code> 必须把所有分支写全，漏一个编译不过。这不是啰嗦，是逼你想清楚「没有的情况怎么办」。</div>
+</section>
+<section class="card" id="s09"><h2><span class="num">09</span>Result 和问号</h2>
+<p>会失败的操作用 <code>Result&lt;T, E&gt;</code>，不要用 <code>unwrap()</code> 糊过去——它一失败就直接 panic。</p>
+<pre><code>use std::fs;
+
+fn read_name() -&gt; Result&lt;String, std::io::Error&gt; {
+    let text = fs::read_to_string("name.txt")?;
+    Ok(text.trim().to_string())
+}
+
+fn main() {
+    match read_name() {
+        Ok(n) =&gt; println!("名字：{n}"),
+        Err(e) =&gt; println!("读文件失败：{e}"),
+    }
+}</code></pre>
+<div class="note"><b>坑：</b><code>?</code> 只能用在返回 Result（或 Option）的函数里。写在 <code>fn main()</code> 里会报错，除非 main 也返回 Result。</div>
+</section>
+<section class="card" id="s10"><h2><span class="num">10</span>Vec 和 HashMap</h2>
+<pre><code>use std::collections::HashMap;
+
+let mut list: Vec&lt;i32&gt; = vec![3, 1, 2];
+list.push(5);
+list.sort();
+
+let mut stock: HashMap&lt;&amp;str, i32&gt; = HashMap::new();
+stock.insert("咖啡", 10);
+stock.insert("茶", 4);
+
+if let Some(n) = stock.get("咖啡") {
+    println!("咖啡剩 {n}");
+}</code></pre>
+<div class="note"><b>坑：</b><code>list[10]</code> 越界会直接 panic；用 <code>list.get(10)</code> 拿 Option 才安全。</div>
+</section>
+<section class="card" id="s11"><h2><span class="num">11</span>动手项目：命令行待办</h2>
+<p><b>要求：</b>做一个 <code>todo</code> 命令，支持 <code>add 内容</code>、<code>list</code>、<code>done 编号</code>，数据存 <code>todo.txt</code>，一行一条，完成的用 <code>[x]</code> 开头。</p>
+<p><b>验收：</b>加三条、列出来、完成第二条、再列出来；关掉终端重开，数据还在；文件不存在时不崩，当成空列表。</p>
+<p><b>提示：</b></p>
+<ul><li>读文件用 <code>fs::read_to_string</code>，文件不存在返回 <code>Err</code>，用 <code>if let Ok</code> 处理</li><li>写文件用 <code>fs::write</code>，把整个 Vec 拼成字符串再写，别折腾追加</li><li>命令行参数用 <code>std::env::args()</code>，第一个是程序名，从第二个开始才是你的参数</li></ul>
+</section>
+<section class="card" id="s12"><h2><span class="num">12</span>往哪走</h2>
+<p>把「所有权」弄明白之后，再去碰 <code>trait</code>、泛型、生命周期，会顺很多。想做后端看 <code>axum</code>，想做命令行工具看 <code>clap</code>。</p>
+<div class="note"><b>一句话：</b>Rust 不是难在语法，是难在它不肯让你糊弄内存。糊弄不了，也就不会半夜被段错误叫醒。</div>
+</section>
+</div>
+
+<footer>
+    <div class="stamp">Rust · 2026-10-23</div>
+    <div>语言学习项目 · 龙潜猫隐</div>
+</footer>
+
+<script src="../../assets/update-popup.js?v=20261022"></script>
+<script src="../../assets/live.js?v=20261022"></script>
+<script src="../../assets/chat.js?v=20261022"></script>
+</body>
+</html>

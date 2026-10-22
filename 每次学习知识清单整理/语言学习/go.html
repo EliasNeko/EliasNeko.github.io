@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Go 入门 · 语言学习项目</title>
+<link rel="stylesheet" href="../lesson.css">
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">语言学习项目 · 后端语言</p>
+    <h1>Go：语法少，天生会并发</h1>
+    <p class="sub">一个 goroutine 就是一条轻量线程。云原生那一整套，多半是它写的。</p>
+    <div class="meta"><span><span>11 节</span></span><span><span>难度 中等</span></span><span><span>更新 2026-10-23</span></span></div>
+</header>
+
+<div class="idx-wrap">
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>Go 是 Google 做的后端语言，语法少、编译快、天生支持并发。Docker、Kubernetes、很多云服务都是它写的。</p>
+<p>它没有继承、没有泛型滥用的空间（新版有泛型，但用得克制），写法基本只有一种——所以团队里不太会为“风格”吵架。</p>
+<div class="note"><b>适合谁：</b>想写后端、又嫌 Java 那一套太重的人。</div>
+</section>
+<section class="card" id="s02"><h2><span class="num">02</span>装好、跑起来</h2>
+<p>去 go.dev 下载安装包，装完开新终端：</p>
+<pre><code>go version
+mkdir hello &amp;&amp; cd hello
+go mod init hello</code></pre>
+<p>新建 <code>main.go</code>：</p>
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("你好，Go")
+}</code></pre>
+<pre><code>go run main.go</code></pre>
+<div class="note"><b>坑：</b>一个目录里只能有一个 <code>package main</code>；入口函数必须叫 <code>main</code>，没有返回值、没有参数。</div>
+</section>
+<section class="card" id="s03"><h2><span class="num">03</span>变量和类型</h2>
+<pre><code>var a int = 10
+b := 20            // 短声明，只能在函数里用
+const Pi = 3.14
+
+var (
+    name string = "咖啡"
+    price int   = 32
+)</code></pre>
+<p>Go 是强类型，<code>int</code> 和 <code>int64</code> 不能直接相加，要显式转换：<code>int64(a)</code>。</p>
+<div class="note"><b>坑：</b>声明了不用的变量会<b>编译报错</b>（不是警告）。用 <code>_</code> 丢掉不需要的返回值。</div>
+</section>
+<section class="card" id="s04"><h2><span class="num">04</span>函数和多返回值</h2>
+<pre><code>func div(a, b int) (int, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("除数不能是 0")
+    }
+    return a / b, nil
+}
+
+q, err := div(10, 2)
+if err != nil {
+    fmt.Println("出错：", err)
+}</code></pre>
+<p>多返回值是 Go 处理错误的根：<b>结果 + error</b> 一起返回，调用方必须自己判断。</p>
+</section>
+<section class="card" id="s05"><h2><span class="num">05</span>切片和 map</h2>
+<pre><code>nums := []int{1, 2, 3}
+nums = append(nums, 4)
+
+stock := map[string]int{"咖啡": 10}
+stock["茶"] = 4
+if n, ok := stock["咖啡"]; ok {
+    fmt.Println(n)
+}</code></pre>
+<div class="note"><b>坑一：</b><code>append</code> 可能换一块新内存，所以要把返回值赋回去（<code>nums = append(...)</code>），直接 <code>append(nums, 4)</code> 不接返回值等于没加。</div>
+<div class="note"><b>坑二：</b>map 直接取不存在的键返回零值，不报错；用 <code>v, ok := m[k]</code> 才能分清「值是 0」和「没有这个键」。</div>
+<div class="note"><b>坑三：</b>map 不是并发安全的，多个 goroutine 同时写会直接 panic，要么加锁，要么用 <code>sync.Map</code>。</div>
+</section>
+<section class="card" id="s06"><h2><span class="num">06</span>结构体和方法</h2>
+<pre><code>type Coffee struct {
+    Name  string
+    Price int
+}
+
+func (c Coffee) Describe() string {
+    return fmt.Sprintf("%s 卖 %d 元", c.Name, c.Price)
+}
+
+func (c *Coffee) Raise(n int) {
+    c.Price += n
+}</code></pre>
+<p>值接收者 <code>(c Coffee)</code> 拿到的是副本，改不动原对象；要改就用指针接收者 <code>(c *Coffee)</code>。</p>
+</section>
+<section class="card" id="s07"><h2><span class="num">07</span>接口</h2>
+<pre><code>type Speaker interface {
+    Speak() string
+}
+
+type Cat struct{}
+func (Cat) Speak() string { return "喵" }
+
+func say(s Speaker) { fmt.Println(s.Speak()) }
+
+say(Cat{})</code></pre>
+<p>Go 的接口是<b>隐式</b>的：只要方法签名对上了，就自动实现，不用写 <code>implements</code>。</p>
+<div class="note"><b>坑：</b>接口值为 nil 不代表它里面装的指针也是 nil。见过「明明判断了 err == nil 还是崩」的，多半是这个。</div>
+</section>
+<section class="card" id="s08"><h2><span class="num">08</span>错误处理</h2>
+<p>Go 没有 try/catch。错误就是一个普通返回值，一层层往上带：</p>
+<pre><code>data, err := os.ReadFile("a.txt")
+if err != nil {
+    return fmt.Errorf("读文件失败: %w", err)
+}</code></pre>
+<p><code>%w</code> 会把原始错误包起来，上层可以用 <code>errors.Is</code> / <code>errors.As</code> 判断具体类型。</p>
+<div class="note"><b>坑：</b><code>panic</code> 是给「程序真的没法继续」用的，不要拿它当异常抛。网上很多教程随手 panic，别学。</div>
+</section>
+<section class="card" id="s09"><h2><span class="num">09</span>goroutine 和 channel</h2>
+<pre><code>ch := make(chan string)
+
+go func() {
+    ch &lt;- "咖啡好了"
+}()
+
+fmt.Println(&lt;-ch)</code></pre>
+<p>一个 <code>go</code> 关键字就是一条轻量线程；channel 用来在它们之间传数据，代替共享内存加锁。</p>
+<div class="note"><b>坑：</b>循环里起 goroutine 时，别直接闭包捕获循环变量，要 <code>go func(x int){...}(i)</code> 传进去——否则所有 goroutine 可能拿到最后一个值（Go 1.22 之后每轮是新变量，但旧代码常见这个 bug）。</div>
+</section>
+<section class="card" id="s10"><h2><span class="num">10</span>动手项目：并发抓标题</h2>
+<p><b>要求：</b>给 3 个网址，用 goroutine 同时抓，抓完打印每个网址的 HTTP 状态码；任何一个失败不能拖垮其他两个。</p>
+<p><b>验收：</b>总耗时接近最慢的那一个（不是三个相加）；断网时打印错误但不崩。</p>
+<p><b>提示：</b></p>
+<ul><li>用 <code>net/http</code> 的 <code>http.Get</code>，记得 <code>defer resp.Body.Close()</code></li><li>用 <code>sync.WaitGroup</code> 等三个都结束</li><li>结果用 channel 收，或者每个 goroutine 写自己那格切片（提前分配好长度，别并发 append）</li></ul>
+</section>
+<section class="card" id="s11"><h2><span class="num">11</span>往哪走</h2>
+<p>把标准库的 <code>net/http</code>、<code>encoding/json</code> 用熟，再去看 Gin 或 Fiber 这种框架，会快很多。数据库用 <code>database/sql</code> 加驱动。</p>
+<div class="note"><b>一句话：</b>Go 的哲学是「少即是多」——语法少，写法统一，出了问题大家都能看懂。</div>
+</section>
+</div>
+
+<footer>
+    <div class="stamp">Go · 2026-10-23</div>
+    <div>语言学习项目 · 龙潜猫隐</div>
+</footer>
+
+<script src="../../assets/update-popup.js?v=20261022"></script>
+<script src="../../assets/live.js?v=20261022"></script>
+<script src="../../assets/chat.js?v=20261022"></script>
+</body>
+</html>

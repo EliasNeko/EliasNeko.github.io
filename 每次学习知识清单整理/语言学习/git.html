@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Git 入门 · 语言学习项目</title>
+<link rel="stylesheet" href="../lesson.css">
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<header class="top">
+    <p class="kicker">语言学习项目 · 知识点</p>
+    <h1>Git：代码的时光机</h1>
+    <p class="sub">commit、branch、merge、冲突怎么解——你已经在用它了，但可能只用了三个命令。</p>
+    <div class="meta"><span><span>10 节</span></span><span><span>难度 低</span></span><span><span>更新 2026-10-23</span></span></div>
+</header>
+
+<div class="idx-wrap">
+<section class="card" id="s01"><h2><span class="num">01</span>三个区</h2>
+<p>Git 的绝大多数困惑，都来自没分清这三个区：</p>
+<ul><li><b>工作区</b>：你正在改的文件</li><li><b>暂存区</b>：<code>git add</code> 之后，准备提交的那部分</li><li><b>仓库</b>：<code>git commit</code> 之后，真正记进历史的那一版</li></ul>
+<p>文件从工作区 → 暂存区 → 仓库，一步一步走。</p>
+</section>
+<section class="card" id="s02"><h2><span class="num">02</span>第一次提交</h2>
+<pre><code>git init
+git status
+git add index.html
+git commit -m "第一个页面"</code></pre>
+<p>提交前先 <code>git status</code>，确认加进去的是你想加的文件。</p>
+<div class="note"><b>坑：</b>第一次提交前要配名字和邮箱，否则会提示 <code>Please tell me who you are</code>：<code>git config --global user.name "名字"</code>、<code>git config --global user.email "邮箱"</code>。</div>
+</section>
+<section class="card" id="s03"><h2><span class="num">03</span>看历史、看改动</h2>
+<pre><code>git log --oneline
+git diff
+git diff --cached
+git show 提交号</code></pre>
+<p><code>git diff</code> 看「工作区 vs 暂存区」，<code>git diff --cached</code> 看「暂存区 vs 上次提交」。提交前扫一眼，能少很多「怎么把这个文件也提交了」。</p>
+</section>
+<section class="card" id="s04"><h2><span class="num">04</span>分支</h2>
+<pre><code>git branch feature
+git checkout feature
+git switch -c feature2
+git branch
+git merge feature</code></pre>
+<p>分支就是「从某个点分出去的一条线」。改新功能先开分支，改坏了直接删，不影响主线。</p>
+<div class="note"><b>坑：</b><code>checkout</code> 既能切分支又能还原文件，容易误操作；新版本用 <code>switch</code> 切分支、<code>restore</code> 还原文件，更清楚。</div>
+</section>
+<section class="card" id="s05"><h2><span class="num">05</span>合并冲突</h2>
+<p>两个人改了同一个文件的同一段，合并时 Git 不知道怎么选，就会在文件里留下标记：</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+你这一版的代码
+=======
+对方那一版的代码
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature</code></pre>
+<p>处理办法：手动改成最终想要的样子，删掉 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>、<code>=======</code>、<code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 这三行，再 <code>git add</code> + <code>git commit</code>。</p>
+<div class="note"><b>坑：</b>冲突标记没删干净就提交，代码里会残留这些符号，运行时报语法错误。</div>
+</section>
+<section class="card" id="s06"><h2><span class="num">06</span>远程仓库</h2>
+<pre><code>git remote add origin https://github.com/用户名/仓库.git
+git push -u origin main
+git pull
+git clone https://github.com/用户名/仓库.git</code></pre>
+<p><code>push</code> 是把自己的提交传上去，<code>pull</code> 是把别人的拉下来。<b>push 之前先 pull</b>，能少很多冲突。</p>
+<div class="note"><b>坑：</b>push 被拒（<code>fetch first</code>）说明远端有你没有的提交，先 <code>git pull --rebase</code> 再 push，别硬推。</div>
+</section>
+<section class="card" id="s07"><h2><span class="num">07</span>.gitignore</h2>
+<pre><code>node_modules/
+*.log
+.env
+server/users.jsonl</code></pre>
+<p>写进 <code>.gitignore</code> 的文件，Git 就当没看见。密码、密钥、用户数据、依赖目录，都该在这里。</p>
+<div class="note"><b>坑：</b>已经提交过的文件，再加进 .gitignore 没用，要先 <code>git rm --cached 文件名</code> 再提交。</div>
+</section>
+<section class="card" id="s08"><h2><span class="num">08</span>撤销</h2>
+<pre><code>git restore index.html          # 丢掉工作区的改动
+git restore --staged index.html # 从暂存区撤回
+git reset --soft HEAD~1         # 撤销上一次提交，改动留着
+git revert 提交号               # 再做一次“反向提交”</code></pre>
+<div class="note"><b>坑：</b><code>git reset --hard</code> 会连工作区的改动一起删，且找不回来。用之前先 <code>git status</code> 看清楚。</div>
+</section>
+<section class="card" id="s09"><h2><span class="num">09</span>动手项目：把项目推上 GitHub</h2>
+<p><b>要求：</b>给一个本地项目建仓库，写 <code>.gitignore</code>（排除 node_modules 和密码文件），提交，推到 GitHub，改一次再推一次。</p>
+<p><b>验收：</b>GitHub 网页上能看到两次提交；<code>git status</code> 显示干净；<code>.gitignore</code> 里的文件没出现在仓库里。</p>
+<p><b>提示：</b>推送失败先看提示是「认证」还是「冲突」，两种解法完全不同。</p>
+</section>
+<section class="card" id="s10"><h2><span class="num">10</span>往哪走</h2>
+<p>把 add/commit/push/pull 用顺，再看 <code>git rebase</code>、<code>git stash</code>、PR（Pull Request）流程。</p>
+<div class="note"><b>一句话：</b>Git 不是备份，是「让每一次改动都有理由」——提交信息写清楚，三个月后的你会感谢现在的你。</div>
+</section>
+</div>
+
+<footer>
+    <div class="stamp">Git · 2026-10-23</div>
+    <div>语言学习项目 · 龙潜猫隐</div>
+</footer>
+
+<script src="../../assets/update-popup.js?v=20261022"></script>
+<script src="../../assets/live.js?v=20261022"></script>
+<script src="../../assets/chat.js?v=20261022"></script>
+</body>
+</html>
