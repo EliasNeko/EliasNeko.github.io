@@ -19,11 +19,11 @@ var LANGUAGES = [
     {
         id: "java",
         name: "Java",
-        level: "筹备中",
+        level: "零基础",
         tagline: "写一次，到处运行",
-        desc: "写一次，到处运行。等咖啡店的 Java 后端做完，这一门就补上。",
-        meta: "预计下一门",
-        file: "",
-        open: false
+        desc: "从 JVM 讲到你自己写一个记账本。后端、安卓、大数据，国内大厂的后端一半是它。",
+        meta: "28 节 · 含 2 个动手项目",
+        file: "java.html",
+        open: true
     }
 ];
