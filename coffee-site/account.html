@@ -155,6 +155,21 @@
     }
     .admin-link:hover { color: #c9a86a; border-color: rgba(201, 168, 106, 0.4); }
 
+    .wx-tip {
+        display: none;
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border: 1px solid rgba(201, 168, 106, 0.35);
+        border-radius: 12px;
+        background: rgba(201, 168, 106, 0.08);
+        color: #e8d6b4;
+        font-size: 12.5px;
+        line-height: 1.9;
+        letter-spacing: .5px;
+    }
+    .wx-tip.show { display: block; }
+    .wx-tip b { color: #c9a86a; font-weight: normal; }
+
     .foot {
         margin-top: 26px;
         text-align: center;
@@ -178,6 +193,10 @@
     <p class="kicker">猫 和 鱼 的 回 忆 咖 啡 店</p>
     <h1>会员登记</h1>
     <p class="sub">登记之后，进「私人学习企划」不用再输口令；没登记的客人，仍然是游客。</p>
+
+    <div class="wx-tip" id="wxTip">
+        你正在<b>微信内置浏览器</b>里打开。微信有时连不上云端，登录失败就点右上角「⋯」→「在浏览器打开」。
+    </div>
 
     <div class="tabs">
         <button class="tab active" id="tabLogin" type="button">登 录</button>
@@ -243,6 +262,13 @@
 
     var MAX_PER_DEVICE = 2;
 
+    /* 微信内置浏览器经常连不上第三方接口，提前说一声 */
+    var inWeChat = /MicroMessenger/i.test(navigator.userAgent);
+    if (inWeChat) {
+        var wxTip = document.getElementById("wxTip");
+        if (wxTip) wxTip.classList.add("show");
+    }
+
     var tabLogin = document.getElementById("tabLogin");
     var tabRegister = document.getElementById("tabRegister");
     var panelLogin = document.getElementById("panelLogin");
@@ -307,7 +333,7 @@
             if (out && out.error === "duplicate") return fail("这个名字已经有人用了，换一个吧。");
             return fail("登记没成功，稍后再试（" + (out && out.error ? out.error : "未知原因") + "）。");
         }).catch(function () {
-            fail("连不上云端。这个网络可能访问不了 supabase.co，换个网络或开代理再试。");
+            fail("连不上云端。" + (inWeChat ? "微信里经常这样，点右上角「⋯」→「在浏览器打开」再试。" : "换个网络再试。"));
         });
     }
 
@@ -347,7 +373,9 @@
     }
 
     if (!Member.ok()) {
-        alert("这个浏览器不支持加密接口，请用较新的 Chrome 或 Edge 打开。");
+        alert(inWeChat
+            ? "微信内置浏览器不支持加密接口。请点右上角「⋯」→「在浏览器打开」再注册。"
+            : "这个浏览器不支持加密接口，请用较新的 Chrome 或 Edge 打开。");
     }
 
     /* 线上公开名单：只有用户名、盐、哈希 */
