@@ -156,6 +156,9 @@
                 online = {};
                 if (d && d.ok) (d.users || []).forEach(function (u) { online[u.name] = true; });
                 renderAccounts();
+                fillGrantUsers();
+                renderGrants();
+                renderBans();
             }).catch(function () {
                 document.getElementById("accounts").textContent = "连不上云端，稍后再刷新。";
             });
@@ -272,11 +275,6 @@
         saveBans(list); renderAccounts(); renderBans(); toast("已解除");
     });
 
-    var origLoad = load;
-    load = function () {
-        origLoad();
-        setTimeout(function () { if (users.length) { fillGrantUsers(); renderGrants(); renderBans(); } }, 900);
-    };
     load();
 })();
 </script>
