@@ -491,6 +491,7 @@
         mask.innerHTML =
             '<div class="box">' +
             '<div class="h"><b>在线用户</b><button type="button" class="x">×</button></div>' +
+            '<div class="s" style="padding-bottom:0;"><span id="onlineStats" style="font-size:12px;color:#8fb3d9;letter-spacing:.5px;">正在统计…</span></div>' +
             '<div class="s"><input type="text" id="onlineSearch" placeholder="搜索用户名…"></div>' +
             '<div class="list" id="onlineList"><div class="chat-empty">正在获取…</div></div>' +
             '</div>';
@@ -508,7 +509,7 @@
             var rows = users.filter(function (u) { return !k || u.name.toLowerCase().indexOf(k) >= 0; });
 
             if (!rows.length) {
-                listEl.innerHTML = '<div class="chat-empty">没有找到人。</div>';
+                listEl.innerHTML = '<div class="chat-empty">没有找到人。<br><span style="font-size:11.5px;opacity:.7;">游客不在这个名单里。</span></div>';
                 return;
             }
             listEl.innerHTML = "";
@@ -549,6 +550,22 @@
         rpc("chat_online", { p_name: s.name, p_hash: s.hash }).then(function (d) {
             if (d && d.ok) { users = d.users || []; render(""); }
             else listEl.innerHTML = '<div class="chat-empty">拿不到在线名单。</div>';
+
+            /* 统计：设备在线 - 正式用户 = 游客 */
+            var device = "";
+            try { device = localStorage.getItem("coffee-device-id") || ""; } catch (e) {}
+            if (!device) device = "probe-" + Date.now();
+
+            rpc("heartbeat", { p_device: device }).then(function (hb) {
+                var dev = (hb && hb.online) || 0;
+                var mem = users.length;
+                var guest = Math.max(0, dev - mem);
+                var el = document.getElementById("onlineStats");
+                if (el) el.innerHTML = "在线 <b style='color:#7dd3fc;font-weight:normal'>" + dev + "</b>（正式用户：" + mem + " · 游客：" + guest + "）";
+            }).catch(function () {
+                var el = document.getElementById("onlineStats");
+                if (el) el.textContent = "正式用户：" + users.length + "（游客数暂时取不到）";
+            });
         }).catch(function () { listEl.innerHTML = '<div class="chat-empty">连不上云端。</div>'; });
     }
 

@@ -40,7 +40,7 @@
         ".live-widget .live-dot{width:7px;height:7px;border-radius:50%;background:" + dotColor + ";box-shadow:0 0 8px " + dotColor + "88;animation:livePulse 2s infinite}" +
         "@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.35}}" +
         ".live-widget b{color:" + strongColor + ";font-weight:normal}" +
-        "@media (max-width:520px){.live-widget{bottom:10px;font-size:11px;padding:6px 12px;letter-spacing:0}}";
+        "@media (max-width:520px){.live-widget{bottom:10px;font-size:11px;padding:6px 12px;letter-spacing:0}.live-widget b{font-size:11px}}";
     document.head.appendChild(css);
 
     var text = box.querySelector(".live-text");
@@ -55,7 +55,12 @@
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
             if (!d) return;
-            text.innerHTML = "在线 <b>" + d.online + "</b> · 注册 <b>" + d.users + "</b>";
+            if (typeof d.members === "number") {
+                var guests = Math.max(0, d.online - d.members);
+                text.innerHTML = "在线 <b>" + d.online + "</b>（正式 <b>" + d.members + "</b> · 游客 <b>" + guests + "</b>）· 注册 <b>" + d.users + "</b>";
+            } else {
+                text.innerHTML = "在线 <b>" + d.online + "</b> · 注册 <b>" + d.users + "</b>";
+            }
         })
         .catch(function () { /* 连不上就保持 — */ });
     }

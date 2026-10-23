@@ -12,11 +12,11 @@
         <header class="top">
             <p class="kicker">工具 · 关键词词典</p>
             <h1>查一个词，就懂一件事</h1>
-            <p class="sub">HTML5 · CSS · JavaScript &nbsp;|&nbsp; 共 <b id="kw-count" style="color:var(--accent-2);font-weight:normal;">0</b> 条，随时补充</p>
+            <p class="sub">HTML5 · CSS · JavaScript · Python · Java · C · SQL · Git … &nbsp;|&nbsp; 共 <b id="kw-count" style="color:var(--accent-2);font-weight:normal;">0</b> 条，随时补充</p>
 
             <div class="kw-search" style="margin-top:34px;">
                 <span class="icon">⌕</span>
-                <input id="q" type="text" autocomplete="off" placeholder="试试：&lt;title&gt; 是什么意思 / flex / querySelector">
+                <input id="q" type="text" autocomplete="off" placeholder="试试：&lt;title&gt; / flex / 指针 / 所有权 / GROUP BY">
                 <button class="clear" id="clear" type="button" title="清空">×</button>
             </div>
 
@@ -45,6 +45,7 @@
         </footer>
 
         <script src="keywords.js"></script>
+        <script src="keywords-lang.js?v=20261023"></script>
         <script src="lessons.js"></script>
         <script>
     document.getElementById("kw-count").textContent = KEYWORDS.length;
@@ -178,7 +179,7 @@
     }
 
     /* ---------- 热门词条 ---------- */
-    var FEATURED = ["<title>", "flex", "grid", "querySelector", "localStorage", ":hover", "position", "map"];
+    var FEATURED = ["<title>", "flex", "grid", "querySelector", "localStorage", "指针", "闭包", "SELECT", "commit", "所有权"];
     var chips = document.getElementById("chips");
     FEATURED.forEach(function (name) {
       var b = document.createElement("button");
@@ -229,8 +230,8 @@
     renderLessonNav("关键词.html");
   </script>
 
-                <script src="../assets/update-popup.js?v=20261022"></script>
-    <script src="../assets/live.js?v=20261023"></script>
-    <script src="../assets/chat.js?v=20261023"></script>
+                <script src="../assets/update-popup.js?v=20261023"></script>
+    <script src="../assets/live.js?v=20261024"></script>
+    <script src="../assets/chat.js?v=20261024"></script>
 </body>
     </html>

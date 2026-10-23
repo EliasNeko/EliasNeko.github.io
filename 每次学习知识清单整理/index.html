@@ -1,79 +1,901 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>知识清单 · 总目录 · 龙潜猫隐的个人学习网页</title>
-        <link rel="stylesheet" href="lesson.css">
-    </head>
-    <body>
-        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识库 · 龙潜猫隐的个人学习网页</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    :root {
+        --anime-pink: #f472b6;
+        --anime-violet: #a78bfa;
+        --anime-glow: rgba(56, 189, 248, .35);
+    }
 
-        <header class="top">
-            <p class="kicker">龙潜猫隐的个人学习网页 · 知识清单</p>
-            <p class="device" id="device">正在识别设备…</p>
-            <h1>一周一课，都在这儿</h1>
-            <p class="sub">每学完一次，就多一期。点开任意一期，可以左右翻页。</p>
+    body {
+        background:
+            radial-gradient(1200px 600px at 15% -5%, rgba(56, 189, 248, .10), transparent 60%),
+            radial-gradient(900px 500px at 95% 10%, rgba(167, 139, 250, .10), transparent 60%),
+            radial-gradient(800px 600px at 50% 110%, rgba(244, 114, 182, .07), transparent 60%),
+            var(--bg, #070c17);
+    }
 
-            <div class="meta">
-                <span>期数 <b id="stat-count">0</b></span>
-                <span>知识点 <b id="stat-points">0</b></span>
-                <span>踩过的坑 <b id="stat-pits">0</b></span>
+    /* ---------- 背景漂浮的字 ---------- */
+    .fx-layer {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .fx-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: .5;
+        animation: orbFloat 18s ease-in-out infinite alternate;
+    }
+
+    .fx-orb.a { width: 340px; height: 340px; left: -80px; top: 8%; background: rgba(56, 189, 248, .18); }
+    .fx-orb.b { width: 300px; height: 300px; right: -60px; top: 38%; background: rgba(167, 139, 250, .16); animation-delay: -6s; }
+    .fx-orb.c { width: 260px; height: 260px; left: 42%; bottom: -90px; background: rgba(244, 114, 182, .12); animation-delay: -11s; }
+
+    @keyframes orbFloat {
+        from { transform: translate3d(0, 0, 0) scale(1); }
+        to   { transform: translate3d(30px, -40px, 0) scale(1.12); }
+    }
+
+    .fx-glyph {
+        position: absolute;
+        color: rgba(125, 211, 252, .16);
+        font-family: "Consolas", monospace;
+        font-size: 22px;
+        letter-spacing: 2px;
+        animation: glyphDrift linear infinite;
+        user-select: none;
+        white-space: nowrap;
+    }
+
+    @keyframes glyphDrift {
+        from { transform: translateY(12vh) rotate(0deg); opacity: 0; }
+        12%  { opacity: 1; }
+        88%  { opacity: 1; }
+        to   { transform: translateY(-112vh) rotate(8deg); opacity: 0; }
+    }
+
+    .fx-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(56, 189, 248, .035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56, 189, 248, .035) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+    }
+
+    .top, .idx-wrap, footer { position: relative; z-index: 1; }
+
+    /* ---------- 头部 ---------- */
+    .top h1 {
+        text-wrap: balance;
+        background: linear-gradient(100deg, #eaf6ff 10%, #7dd3fc 45%, #c4b5fd 75%, #f9a8d4 95%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: hue 12s linear infinite;
+    }
+
+    @keyframes hue { to { filter: hue-rotate(12deg); } }
+
+    .hero-sub { margin-top: 14px; color: var(--muted); font-size: 13.5px; line-height: 2; }
+
+    .hero-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 22px; }
+
+    .hero-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 18px;
+        border: 1px solid rgba(56, 189, 248, .28);
+        border-radius: 999px;
+        color: #bfe0ff;
+        font-size: 13px;
+        text-decoration: none;
+        background: rgba(11, 20, 36, .55);
+        backdrop-filter: blur(8px);
+        transition: .25s;
+    }
+
+    .hero-link:hover {
+        border-color: var(--accent);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(56, 189, 248, .18);
+    }
+
+    /* ---------- 大搜索 ---------- */
+    .mega-search {
+        margin: 40px auto 0;
+        width: min(680px, 100%);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 20px;
+        border: 1px solid rgba(56, 189, 248, .30);
+        border-radius: 999px;
+        background: rgba(8, 15, 28, .78);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 18px 50px rgba(2, 8, 20, .55), inset 0 1px 0 rgba(255, 255, 255, .04);
+        transition: .25s;
+    }
+
+    .mega-search:focus-within {
+        border-color: var(--accent);
+        box-shadow: 0 18px 60px rgba(56, 189, 248, .22), inset 0 1px 0 rgba(255, 255, 255, .06);
+    }
+
+    .mega-search .icon { color: var(--accent); font-size: 18px; }
+
+    .mega-search input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: none;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 15px;
+        letter-spacing: .5px;
+    }
+
+    .mega-search input::placeholder { color: rgba(157, 176, 203, .55); }
+
+    .mega-search kbd {
+        padding: 3px 8px;
+        border: 1px solid rgba(125, 211, 252, .25);
+        border-radius: 6px;
+        color: rgba(157, 176, 203, .7);
+        font-size: 11px;
+        font-family: inherit;
+    }
+
+    .search-scope {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--dim);
+    }
+
+    .search-scope span { opacity: .75; }
+
+    .search-scope a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed rgba(56, 189, 248, .35); }
+
+    /* ---------- 分区 ---------- */
+    .sec { margin-top: 74px; }
+
+    .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+
+    .sec-title { display: flex; align-items: center; gap: 14px; }
+
+    .sec-num {
+        width: 34px; height: 34px;
+        display: inline-flex; align-items: center; justify-content: center;
+        border: 1px solid rgba(56, 189, 248, .35);
+        border-radius: 10px;
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 0;
+        background: rgba(56, 189, 248, .08);
+    }
+
+    .sec-title h2 { margin: 0; font-size: 21px; font-weight: normal; letter-spacing: 2px; }
+
+    .sec-sub { margin: 6px 0 0; color: var(--dim); font-size: 12.5px; letter-spacing: 1px; }
+
+    .sec-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(56,189,248,.25), transparent); min-width: 40px; }
+
+    /* ---------- 分类 tab ---------- */
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .tab {
+        padding: 7px 16px;
+        border: 1px solid rgba(56, 189, 248, .22);
+        border-radius: 999px;
+        background: rgba(10, 18, 32, .55);
+        color: var(--muted);
+        font-family: inherit;
+        font-size: 12.5px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: .22s;
+    }
+
+    .tab:hover { border-color: rgba(56, 189, 248, .5); color: #cfeaff; }
+
+    .tab.on {
+        background: linear-gradient(135deg, rgba(56, 189, 248, .22), rgba(167, 139, 250, .18));
+        border-color: rgba(125, 211, 252, .65);
+        color: #eaf6ff;
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, .12), 0 8px 24px rgba(56, 189, 248, .12);
+    }
+
+    /* ---------- 卡片网格 ---------- */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 18px; }
+    .cards[hidden] { display: none; }
+
+    .kcard {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 20px 20px 16px;
+        border: 1px solid rgba(80, 130, 200, .22);
+        border-radius: 16px;
+        background: linear-gradient(165deg, rgba(14, 24, 42, .92), rgba(9, 16, 30, .92));
+        color: inherit;
+        text-decoration: none;
+        overflow: hidden;
+        transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+
+    .kcard::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(420px 160px at 12% -10%, rgba(56, 189, 248, .16), transparent 70%);
+        opacity: 0;
+        transition: opacity .3s;
+        pointer-events: none;
+    }
+
+    .kcard:hover {
+        transform: translateY(-4px);
+        border-color: rgba(125, 211, 252, .45);
+        box-shadow: 0 22px 50px rgba(2, 8, 20, .6), 0 0 0 1px rgba(56, 189, 248, .12);
+    }
+
+    .kcard:hover::before { opacity: 1; }
+
+    .kcard .kt { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .kcard .kt h3 { margin: 0; font-size: 16.5px; font-weight: normal; letter-spacing: 1px; }
+    .kcard .tag { font-size: 10.5px; padding: 2px 8px; border: 1px solid rgba(125, 211, 252, .28); border-radius: 999px; color: #9fd8ff; letter-spacing: 1px; }
+    .kcard .tag.pink { color: #f9c2e0; border-color: rgba(244, 114, 182, .35); }
+    .kcard .tag.gold { color: #f3d9a4; border-color: rgba(201, 168, 106, .4); }
+    .kcard .kd { color: var(--muted); font-size: 12.8px; line-height: 1.9; }
+
+    .kcard .km { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 12px; color: var(--dim); font-size: 11.5px; letter-spacing: .5px; }
+
+    .kcard .go { color: var(--accent); letter-spacing: 1px; }
+    .kcard.soon { opacity: .62; cursor: default; }
+    .kcard.soon:hover { transform: none; box-shadow: none; border-color: rgba(80,130,200,.22); }
+
+    .card-empty { padding: 34px 20px; border: 1px dashed rgba(80, 130, 200, .28); border-radius: 16px; color: var(--dim); font-size: 13px; text-align: center; line-height: 2; }
+
+    /* ---------- 底部 ---------- */
+    footer { margin-top: 90px; }
+    footer .stamp { color: var(--accent); }
+
+    /* ---------- 教材封面 ---------- */
+    .kcard.book {
+        display: grid;
+        grid-template-columns: 104px 1fr;
+        gap: 18px;
+        align-items: start;
+    }
+
+    @media (min-width: 760px) {
+        .kcard.book { grid-column: span 2; }
+    }
+
+    .kcover {
+        width: 96px;
+        height: 132px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(125, 211, 252, .25);
+        background: #0b1424;
+        box-shadow: 0 10px 24px rgba(2, 8, 20, .45);
+    }
+
+    .kcover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .kbody { min-width: 0; display: flex; flex-direction: column; gap: 8px; height: 100%; }
+
+    /* ---------- 特效开关 / 路线图 ---------- */
+    .float-tools {
+        position: fixed;
+        right: 22px;
+        bottom: 168px;
+        z-index: 90;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .float-btn {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(125, 211, 252, .28);
+        border-radius: 50%;
+        background: rgba(9, 17, 31, .8);
+        color: #9fd8ff;
+        font-size: 17px;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: .25s;
+        position: relative;
+    }
+
+    .float-btn:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 26px rgba(56, 189, 248, .22);
+    }
+
+    .float-btn .tip {
+        position: absolute;
+        right: 52px;
+        top: 50%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        padding: 5px 10px;
+        border-radius: 8px;
+        background: rgba(8, 15, 28, .95);
+        border: 1px solid rgba(125, 211, 252, .22);
+        color: #cfeaff;
+        font-size: 11.5px;
+        letter-spacing: 1px;
+        opacity: 0;
+        pointer-events: none;
+        transition: .2s;
+    }
+
+    .float-btn:hover .tip { opacity: 1; }
+
+    /* ---------- 弹层 ---------- */
+    .sheet-mask {
+        position: fixed;
+        inset: 0;
+        z-index: 150;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(2, 6, 15, .72);
+        backdrop-filter: blur(6px);
+    }
+
+    .sheet-mask.show { display: flex; }
+
+    .sheet {
+        width: min(640px, 94vw);
+        max-height: 82vh;
+        overflow-y: auto;
+        padding: 26px 26px 22px;
+        border-radius: 20px;
+        border: 1px solid rgba(125, 211, 252, .35);
+        background: linear-gradient(165deg, #0e1829, #091120);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+    }
+
+    .sheet h3 { margin: 0 0 6px; font-size: 20px; font-weight: normal; letter-spacing: 2px; color: #eaf6ff; }
+    .sheet p { color: var(--muted); font-size: 13px; line-height: 1.9; }
+    .sheet .close { float: right; border: 0; background: none; color: #8fb3d9; font-size: 22px; cursor: pointer; }
+
+    .road { margin-top: 18px; padding: 16px 18px; border: 1px solid rgba(80, 130, 200, .22); border-radius: 14px; background: rgba(10, 18, 32, .6); }
+    .road b { display: block; margin-bottom: 6px; color: #9fd8ff; font-weight: normal; font-size: 14px; letter-spacing: 1px; }
+    .road span { color: var(--muted); font-size: 12.8px; line-height: 2; }
+
+    /* ---------- 编辑器横幅 ---------- */
+    .editor-banner {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 26px;
+        padding: 16px 20px;
+        border: 1px solid rgba(125, 211, 252, .22);
+        border-radius: 16px;
+        background: linear-gradient(100deg, rgba(56, 189, 248, .08), rgba(167, 139, 250, .06));
+        color: var(--text);
+        text-decoration: none;
+        transition: .25s;
+    }
+
+    .editor-banner:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .editor-banner .eb-icon { font-size: 26px; }
+
+    .editor-banner .eb-text b { display: block; font-weight: normal; font-size: 15px; letter-spacing: 1px; margin-bottom: 4px; }
+    .editor-banner .eb-text span { color: var(--dim); font-size: 12.5px; }
+    .editor-banner .eb-go { margin-left: auto; color: var(--accent); font-size: 13px; letter-spacing: 1px; white-space: nowrap; }
+
+    @media (max-width: 640px) {
+        .kcard.book { grid-template-columns: 76px 1fr; }
+        .kcover { width: 76px; height: 104px; }
+        .editor-banner { gap: 12px; padding: 14px 16px; }
+        .editor-banner .eb-go { display: none; }
+        .float-tools { right: 14px; bottom: 150px; }
+    }
+
+    @media (max-width: 640px) {
+        .sec { margin-top: 56px; }
+        .cards { grid-template-columns: 1fr; }
+        .mega-search { padding: 8px 14px; }
+        .hero-links { gap: 8px; }
+
+        .top h1 { font-size: clamp(25px, 7.6vw, 32px); letter-spacing: 1px; }
+
+        .sec-head { display: block; }
+        .sec-title { gap: 10px; }
+        .sec-title h2 { font-size: 18px; letter-spacing: 1px; line-height: 1.5; }
+        .sec-sub { margin-top: 8px; }
+        .tabs { margin-top: 14px; }
+        .tab { padding: 6px 13px; font-size: 12px; }
+
+        .kcard { padding: 17px 16px 14px; }
+        .mega-search kbd { display: none; }
+    }
+</style>
+</head>
+<body>
+
+<div class="fx-layer" aria-hidden="true">
+    <div class="fx-grid"></div>
+    <div class="fx-orb a"></div>
+    <div class="fx-orb b"></div>
+    <div class="fx-orb c"></div>
+    <div id="fx-glyphs"></div>
+</div>
+
+<div class="float-tools">
+    <button class="float-btn" id="fxToggle" type="button">✨<span class="tip" id="fxTip">背景特效：开</span></button>
+    <button class="float-btn" id="roadBtn" type="button">🗺<span class="tip">学习路线图</span></button>
+</div>
+
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">龙潜猫隐的个人学习网页 · 知识库</p>
+    <h1>把学过的东西，都收在这里</h1>
+    <p class="hero-sub">教材、语言、知识点、练习、还有正在做的项目 —— 一个入口，全都能找到。</p>
+
+    <div class="meta">
+        <span>内容 <b id="stat-tutorials">0</b></span>
+        <span>语言 <b id="stat-langs">0</b></span>
+        <span>词条 <b id="stat-words">0</b></span>
+        <span>项目 <b id="stat-projects">0</b></span>
+    </div>
+
+    <div class="mega-search">
+        <span class="icon">⌕</span>
+        <input id="q" type="text" autocomplete="off" placeholder="搜教材、语言、知识点、日期、标签，或一个词…">
+        <kbd>Enter</kbd>
+    </div>
+
+    <div class="search-scope">
+        <span>搜不到就去</span>
+        <a href="关键词.html">关键词词典</a>
+        <span>·</span>
+        <a href="#sec-lang">单语言教程</a>
+        <span>·</span>
+        <a href="../coffee-site/index.html">咖啡店</a>
+    </div>
+
+    <p class="hero-links">
+        <a class="hero-link" href="#sec-book">📚 电子教材</a>
+        <a class="hero-link" href="#sec-lang">⌨ 单语言教程</a>
+        <a class="hero-link" href="#sec-know">🧩 该懂的知识</a>
+        <a class="hero-link" href="#sec-practice">🛠 实践应用</a>
+        <a class="hero-link" href="#sec-project">🚧 项目进行中</a>
+    </p>
+</header>
+
+<div class="idx-wrap">
+
+    <a class="editor-banner" href="编辑器.html">
+        <span class="eb-icon">💻</span>
+        <span class="eb-text">
+            <b>龙潜猫隐在用的编程语言代码编辑器</b>
+            <span>VS Code + 这些插件 —— 我怎么用它写 HTML / Java / C / Python，你也可以照着装</span>
+        </span>
+        <span class="eb-go">进去看看 →</span>
+    </a>
+
+    <!-- ============ 1. 电子教材笔记本 ============ -->
+    <section class="sec" id="sec-book">
+        <div class="sec-head">
+            <div>
+                <div class="sec-title"><span class="sec-num">01</span><h2>龙潜猫隐的电子教材笔记本</h2></div>
+                <p class="sec-sub">上课用的教材、自己整理的笔记，按专业分类放</p>
             </div>
-
-            <p class="series">基础篇常年置顶 · 一期一期往下读 · 键盘 ← → 可以翻页</p>
-        </header>
-
-        <div class="idx-wrap">
-
-            <a class="lang-banner" href="语言学习/index.html">
-                <span class="ico">⌘</span>
-                <span>想从零学一门语言？ <b>语言学习项目</b> —— 从「它是什么」讲到「你自己写一个项目」，一门一门来。</span>
-                <span class="go">去选 →</span>
-            </a>
-
-            <a class="kw-banner" href="关键词.html">
-                <span class="ico">⌕</span>
-                <span>卡住了？查 <b>关键词词典</b> —— <code>&lt;title&gt; 是什么意思</code>、<code>flex</code>、<code>querySelector</code>，一次只讲一个词。</span>
-                <span class="go">去查 →</span>
-            </a>
-
-            <div class="idx-tools">
-                <div class="idx-search">
-                    <span class="icon">⌕</span>
-                    <input id="idx-search" type="text" placeholder="搜期号、日期、标题或标签…" autocomplete="off">
-                </div>
-                <p class="idx-hint">共 <span id="stat-count-2">0</span> 期 · 按时间顺序</p>
+            <div class="tabs" data-tabs="book">
+                <button class="tab on" data-tab="major">软件技术专业</button>
+                <button class="tab" data-tab="math">数学</button>
+                <button class="tab" data-tab="english">英语</button>
             </div>
-
-            <p class="idx-sec">学习清单</p>
-            <div class="idx-grid" id="idx-grid"></div>
-
-            <p class="idx-sec">我们的项目</p>
-            <div class="idx-grid" id="idx-projects"></div>
-
-            <div class="idx-empty" id="idx-empty" style="display:none;">
-                没有找到匹配的内容，换个关键词试试。
-            </div>
-
         </div>
 
-        <footer>
-            <div class="stamp">总目录 · 2026-10-21 建</div>
-            <div>龙潜猫隐 · 2026</div>
-            <div style="margin-top:6px; font-size:12px;">每一期都标了知识点和踩过的坑，按时间往下读就行</div>
-        </footer>
+        <div class="cards" data-panel="book" data-group="major">
+            <a class="kcard book" href="商业网站设计/index.html" data-search="html5 商业网站设计与制作 专业 教材 网页 课程">
+                <div class="kcover"><img src="../assets/教材-html5商业网站.jpg" alt="HTML5 商业网站设计与制作 教材封面"></div>
+                <div class="kbody">
+                    <div class="kt"><h3>HTML5 商业网站设计与制作</h3><span class="tag gold">专业核心</span><span class="tag pink">对应二级 Web</span></div>
+                    <div class="kd">23 节，对应软件技术专业的必修课。从标签、样式讲到整站布局，配一个「时光电影网」项目验收。</div>
+                    <div class="km"><span>23 节 · 含电子书</span><span class="go">打开 →</span></div>
+                </div>
+            </a>
+        </div>
 
-        <script src="lessons.js"></script>
-        <script>
-    renderIndex();
-    renderDevice("device");
-    var c2 = document.getElementById("stat-count-2");
-    if (c2) c2.textContent = LESSONS.filter(function (l) { return l.kind !== "base"; }).length;
-    </script>
+        <div class="cards" data-panel="book" data-group="math" hidden>
+            <div class="card-empty">数学教材还没定。<br>等确定了放进来，会和专业课用同一套笔记格式。</div>
+        </div>
 
-                <script src="../assets/update-popup.js?v=20261022"></script>
-    <script src="../assets/live.js?v=20261023"></script>
-    <script src="../assets/chat.js?v=20261023"></script>
+        <div class="cards" data-panel="book" data-group="english" hidden>
+            <div class="card-empty">英语还在挑教材。<br>先空着，不硬凑。</div>
+        </div>
+    </section>
+
+    <!-- ============ 2. 计算机编程单语言教程 ============ -->
+    <section class="sec" id="sec-lang">
+        <div class="sec-head">
+            <div>
+                <div class="sec-title"><span class="sec-num">02</span><h2>计算机编程单语言教程</h2></div>
+                <p class="sec-sub">一门语言一套完整的路：它是什么 → 能干什么 → 核心语法 → 坑 → 自己写一个<br><span style="opacity:.8;">标「二级」的，可参加全国计算机等级考试（NCRE）对应科目</span></p>
+            </div>
+            <div class="tabs" data-tabs="lang">
+                <button class="tab on" data-tab="main">主流语言 · 就业常用</button>
+                <button class="tab" data-tab="niche">小众语言 · 特定领域</button>
+            </div>
+        </div>
+
+        <div class="cards" data-panel="lang" data-group="main">
+            <a class="kcard" href="语言学习/python.html" data-search="python 主流 二级 数据分析 爬虫">
+                <div class="kt"><h3>Python</h3><span class="tag">主流</span><span class="tag pink">二级 Python</span></div>
+                <div class="kd">最像人话的一门。数据分析、爬虫、自动化、AI，基本都从这开始。</div>
+                <div class="km"><span>27 节 · 含 2 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/java.html" data-search="java 主流 二级 后端 jvm">
+                <div class="kt"><h3>Java</h3><span class="tag">主流</span><span class="tag pink">二级 Java</span></div>
+                <div class="kd">写一次，到处运行。国内大厂后端一半是它，安卓也靠它打底。</div>
+                <div class="km"><span>28 节 · 含 2 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/c.html" data-search="c 语言 主流 二级 指针 内存">
+                <div class="kt"><h3>C 语言</h3><span class="tag">主流</span><span class="tag pink">二级 C</span></div>
+                <div class="kd">贴着机器写代码。学完你会明白，别的语言替你做了多少事。</div>
+                <div class="km"><span>28 节 · 含 2 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/js.html" data-search="javascript js 主流 web 二级 前端">
+                <div class="kt"><h3>JavaScript</h3><span class="tag">主流</span><span class="tag pink">二级 Web</span></div>
+                <div class="kd">浏览器唯一一定会执行的语言。DOM、事件、fetch，最后写一个待办清单。</div>
+                <div class="km"><span>29 节 · 含 2 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+        </div>
+
+        <div class="cards" data-panel="lang" data-group="niche" hidden>
+            <a class="kcard" href="语言学习/rust.html" data-search="rust 小众 系统 内存 所有权">
+                <div class="kt"><h3>Rust</h3><span class="tag">小众</span></div>
+                <div class="kd">没有垃圾回收，也不会崩。用「所有权」在编译期解决内存问题。</div>
+                <div class="km"><span>12 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/go.html" data-search="go golang 小众 后端 并发">
+                <div class="kt"><h3>Go</h3><span class="tag">小众</span></div>
+                <div class="kd">语法少，天生会并发。Docker、K8s 那一套云原生工具都是它写的。</div>
+                <div class="km"><span>11 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/lua.html" data-search="lua 小众 游戏 脚本 嵌入">
+                <div class="kt"><h3>Lua</h3><span class="tag">小众</span></div>
+                <div class="kd">几百 KB 的解释器，常被嵌进游戏引擎和硬件里，给它们加一层可改的逻辑。</div>
+                <div class="km"><span>11 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/kotlin.html" data-search="kotlin 小众 安卓 jvm">
+                <div class="kt"><h3>Kotlin</h3><span class="tag">小众</span></div>
+                <div class="kd">跑在 JVM 上，能直接用 Java 的库。安卓现在的官方语言。</div>
+                <div class="km"><span>11 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ 3. 该懂的知识 ============ -->
+    <section class="sec" id="sec-know">
+        <div class="sec-head">
+            <div>
+                <div class="sec-title"><span class="sec-num">03</span><h2>学习语言的同时应该了解的知识</h2></div>
+                <p class="sec-sub">不算语言，但不会它们，语言也写不完整</p>
+            </div>
+        </div>
+
+        <div class="cards">
+            <a class="kcard" href="语言学习/mysql.html" data-search="mysql 数据库 sql 二级 知识点">
+                <div class="kt"><h3>MySQL</h3><span class="tag">工具</span><span class="tag pink">二级 MySQL</span></div>
+                <div class="kd">数据最终住在哪。表、索引、事务，最后用 JDBC 和后端连起来。</div>
+                <div class="km"><span>13 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/anaconda.html" data-search="anaconda conda 环境 python 知识点">
+                <div class="kt"><h3>Anaconda</h3><span class="tag">工具</span></div>
+                <div class="kd">把 Python 的环境装进一个盒子。环境、依赖、冲突，一次讲清。</div>
+                <div class="km"><span>10 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/node.html" data-search="node nodejs npm express 后端 知识点">
+                <div class="kt"><h3>Node.js</h3><span class="tag">工具</span></div>
+                <div class="kd">让 JS 跑在服务器上。npm、Express、async/await 都从这讲。</div>
+                <div class="km"><span>10 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <a class="kcard" href="语言学习/git.html" data-search="git 版本控制 github 知识点">
+                <div class="kt"><h3>Git</h3><span class="tag">工具</span></div>
+                <div class="kd">代码的时光机。三个区、分支、冲突、推送，一次理清。</div>
+                <div class="km"><span>10 节 · 含 1 个项目</span><span class="go">开始学 →</span></div>
+            </a>
+
+            <div class="kcard soon" data-search="计算机网络 http tcp 知识点 筹备">
+                <div class="kt"><h3>计算机网络基础</h3><span class="tag">筹备中</span></div>
+                <div class="kd">HTTP 为什么是无状态的、TCP 三次握手到底在握什么——面试和排错都绕不开。</div>
+                <div class="km"><span>计划中</span><span class="go">还没写</span></div>
+            </div>
+
+            <div class="kcard soon" data-search="linux 命令行 知识点 筹备">
+                <div class="kt"><h3>Linux 常用命令</h3><span class="tag">筹备中</span></div>
+                <div class="kd">服务器上没有图形界面。cd、ls、grep、chmod、ssh，够你用很久。</div>
+                <div class="km"><span>计划中</span><span class="go">还没写</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ 4. 多语言实践应用 ============ -->
+    <section class="sec" id="sec-practice">
+        <div class="sec-head">
+            <div>
+                <div class="sec-title"><span class="sec-num">04</span><h2>多语言实践应用</h2></div>
+                <p class="sec-sub">学完之后，动手把它们拼起来</p>
+            </div>
+        </div>
+
+        <div class="cards">
+            <a class="kcard" href="基础知识.html" data-search="html css javascript 基础全书 实践 多语言">
+                <div class="kt"><h3>HTML5 + CSS + JavaScript 基础全书</h3><span class="tag">长期置顶</span></div>
+                <div class="kd">三个语言怎么分工、怎么融合：标签、属性、选择器、布局、DOM，随时回来查。</div>
+                <div class="km"><span>50 个知识点 · 可当手册</span><span class="go">打开 →</span></div>
+            </a>
+
+            <a class="kcard" href="练习任务.html" data-search="练习 任务 作业 python java c sql git 动手">
+                <div class="kt"><h3>练习任务清单</h3><span class="tag">动手</span></div>
+                <div class="kd">12 门课各 3 个任务，从易到难。做完跑通就算过，不用交，也没有标准答案。</div>
+                <div class="km"><span>36 个任务</span><span class="go">挑一个 →</span></div>
+            </a>
+
+            <a class="kcard" href="知识点清单-001-2026-10-20.html" data-search="001 笔记 一屏首页 flex grid">
+                <div class="kt"><h3>第 001 期 · 从「一个网页」到「一屏首页」</h3><span class="tag">练习笔记</span></div>
+                <div class="kd">骨架、选择器、Flex 与 Grid，把一个页面真正立起来。</div>
+                <div class="km"><span>2026-10-20 · 16 点</span><span class="go">翻开 →</span></div>
+            </a>
+
+            <a class="kcard" href="知识点清单-002-2026-10-21.html" data-search="002 笔记 整页 中文排版 页脚">
+                <div class="kt"><h3>第 002 期 · 从「一屏」到「一整页」</h3><span class="tag">练习笔记</span></div>
+                <div class="kd">Grid 复用、:not()、中文排版、页脚，一页的收尾功夫。</div>
+                <div class="km"><span>2026-10-21 · 17 点</span><span class="go">翻开 →</span></div>
+            </a>
+
+            <a class="kcard" href="知识点清单-003-2026-10-22.html" data-search="003 笔记 事件委托 localStorage 渲染">
+                <div class="kt"><h3>第 003 期 · 从「点一下」到「记得你」</h3><span class="tag">练习笔记</span></div>
+                <div class="kd">事件委托、localStorage、JSON、渲染，页面开始有记忆。</div>
+                <div class="km"><span>2026-10-22 · 17 点</span><span class="go">翻开 →</span></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ 5. 项目进行中 ============ -->
+    <section class="sec" id="sec-project">
+        <div class="sec-head">
+            <div>
+                <div class="sec-title"><span class="sec-num">05</span><h2>龙潜猫隐的项目进行中…</h2></div>
+                <p class="sec-sub">自己的项目，边做边学，做完了也放这</p>
+            </div>
+        </div>
+
+        <div class="cards">
+            <a class="kcard" href="../coffee-site/index.html" data-search="咖啡店 项目 html5 会员 聊天室">
+                <div class="kt"><h3>龙潜猫隐的咖啡店</h3><span class="tag gold">已上线</span></div>
+                <div class="kd">六屏齐全的单页站：菜单、故事、门店、会员、购物车、咖啡故事；后来加了云端会员和聊天室。</div>
+                <div class="km"><span>HTML5 · CSS · JS · Supabase</span><span class="go">进去看看 →</span></div>
+            </a>
+
+            <div class="kcard soon" data-search="项目 筹备 下一个">
+                <div class="kt"><h3>第二个项目</h3><span class="tag">筹备中</span></div>
+                <div class="kd">想做一个能记学习进度的工具站。等主线（Java 后端）接上订单，就开工。</div>
+                <div class="km"><span>计划中</span><span class="go">还没开始</span></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="idx-empty" id="idx-empty" style="display:none;">
+        没有找到匹配的内容。换个说法，或者去 <a href="关键词.html" style="color:var(--accent);">词典</a> 查一个词。
+    </div>
+
+</div>
+
+<div class="sheet-mask" id="roadMask">
+    <div class="sheet">
+        <button class="close" id="roadClose" type="button">×</button>
+        <h3>学习路线图</h3>
+        <p>不用所有东西都学。挑一条能走通的，走完再换线。</p>
+
+        <div class="road">
+            <b>① 前端 · 做看得见的东西</b>
+            <span>HTML / CSS 打底 → JavaScript 让页面动起来 → 基础全书当手册 → 咖啡店项目练手 → 再补 Git 和 Node.js</span>
+        </div>
+
+        <div class="road">
+            <b>② 后端 · 让数据有地方去</b>
+            <span>Java 或 Python 任选一门 → MySQL 存数据 → Git 管版本 → Linux 会几手命令 → 把咖啡店的订单接上真接口</span>
+        </div>
+
+        <div class="road">
+            <b>③ 数据 / 考级 · 稳一点的路</b>
+            <span>Python 打底 → MySQL 会查会建表 → Anaconda 管环境 → 按二级大纲刷真题 → 有闲再碰数据结构</span>
+        </div>
+
+        <p style="margin-top:16px;">每条线都不要求你先把另一条学完。卡住了就回目录，从最小的那一节重新开始。</p>
+    </div>
+</div>
+
+<footer>
+    <div class="stamp">知识库 · 2026-10-23 重构</div>
+    <div>龙潜猫隐 · 2026</div>
+    <div style="margin-top:6px; font-size:12px;">教材、语言、知识点、练习、项目 —— 一个入口全找到</div>
+</footer>
+
+<script src="lessons.js"></script>
+<script src="keywords.js"></script>
+<script src="keywords-lang.js"></script>
+<script>
+(function () {
+    "use strict";
+
+    /* ---------- 背景漂浮字 ---------- */
+    var glyphs = ["{ }", "</>", "01", "const", "∫", "∑", "語", "学", "node", "sql", "&&", "=>", "λ", "git", "10.23", "return"];
+    var layer = document.getElementById("fx-glyphs");
+    for (var i = 0; i < 16; i++) {
+        var g = document.createElement("span");
+        g.className = "fx-glyph";
+        g.textContent = glyphs[i % glyphs.length];
+        g.style.left = (Math.random() * 100) + "%";
+        g.style.fontSize = (16 + Math.random() * 16) + "px";
+        g.style.animationDuration = (18 + Math.random() * 22) + "s";
+        g.style.animationDelay = (-Math.random() * 30) + "s";
+        g.style.opacity = (0.35 + Math.random() * 0.5).toFixed(2);
+        layer.appendChild(g);
+    }
+
+    /* ---------- 分区 tab ---------- */
+    document.querySelectorAll("[data-tabs]").forEach(function (bar) {
+        var key = bar.getAttribute("data-tabs");
+        bar.addEventListener("click", function (e) {
+            var btn = e.target.closest(".tab");
+            if (!btn) return;
+
+            bar.querySelectorAll(".tab").forEach(function (b) { b.classList.remove("on"); });
+            btn.classList.add("on");
+
+            var group = btn.getAttribute("data-tab");
+            document.querySelectorAll('[data-panel="' + key + '"]').forEach(function (p) {
+                p.hidden = p.getAttribute("data-group") !== group;
+            });
+        });
+    });
+
+    /* ---------- 搜索 ---------- */
+    var input = document.getElementById("q");
+    var empty = document.getElementById("idx-empty");
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".kcard"));
+
+    function norm(s) {
+        return String(s || "").toLowerCase();
+    }
+
+    function search() {
+        var q = norm(input.value.trim());
+        var hit = 0;
+
+        cards.forEach(function (c) {
+            var text = norm(c.textContent) + " " + norm(c.getAttribute("data-search") || "");
+            var ok = !q || text.indexOf(q) >= 0;
+            c.style.display = ok ? "" : "none";
+            if (ok) hit++;
+        });
+
+        /* 搜的时候把所有分类都展开，不然会漏 */
+        if (q) {
+            document.querySelectorAll("[data-panel]").forEach(function (p) { p.hidden = false; });
+        } else {
+            document.querySelectorAll("[data-tabs]").forEach(function (bar) {
+                var on = bar.querySelector(".tab.on");
+                if (!on) return;
+                var key = bar.getAttribute("data-tabs");
+                var group = on.getAttribute("data-tab");
+                document.querySelectorAll('[data-panel="' + key + '"]').forEach(function (p) {
+                    p.hidden = p.getAttribute("data-group") !== group;
+                });
+            });
+        }
+
+        empty.style.display = (q && hit === 0) ? "block" : "none";
+    }
+
+    input.addEventListener("input", search);
+
+    input.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter") return;
+
+        var visible = cards.filter(function (c) { return c.style.display !== "none"; });
+        if (visible.length) {
+            visible[0].scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+        }
+
+        var q = input.value.trim();
+        if (q) location.href = "关键词.html?q=" + encodeURIComponent(q);
+    });
+
+    /* 从词典带过来的词 */
+    var fromUrl = new URLSearchParams(location.search).get("q");
+    if (fromUrl) { input.value = fromUrl; search(); }
+
+    /* ---------- 特效开关 ---------- */
+    var fxLayer = document.querySelector(".fx-layer");
+    var fxCfg = "off";
+    try { fxCfg = localStorage.getItem("kb-fx") || "on"; } catch (e) {}
+
+    function applyFx() {
+        if (!fxLayer) return;
+        fxLayer.style.display = fxCfg === "on" ? "" : "none";
+        var tip = document.getElementById("fxTip");
+        if (tip) tip.textContent = "背景特效：" + (fxCfg === "on" ? "开" : "关");
+    }
+
+    applyFx();
+
+    document.getElementById("fxToggle").addEventListener("click", function () {
+        fxCfg = fxCfg === "on" ? "off" : "on";
+        try { localStorage.setItem("kb-fx", fxCfg); } catch (e) {}
+        applyFx();
+    });
+
+    /* ---------- 学习路线图 ---------- */
+    var roadMask = document.getElementById("roadMask");
+    document.getElementById("roadBtn").addEventListener("click", function () { roadMask.classList.add("show"); });
+    document.getElementById("roadClose").addEventListener("click", function () { roadMask.classList.remove("show"); });
+    roadMask.addEventListener("click", function (e) { if (e.target === roadMask) roadMask.classList.remove("show"); });
+
+    /* ---------- 统计 ---------- */
+    var words = (window.KEYWORDS && KEYWORDS.length) || 0;
+    var langs = document.querySelectorAll('[data-panel="lang"] .kcard').length;
+    var tutorials = document.querySelectorAll('#sec-book .kcard:not(.soon), #sec-lang .kcard:not(.soon), #sec-know .kcard:not(.soon), #sec-practice .kcard').length;
+    var projects = document.querySelectorAll('#sec-project .kcard:not(.soon)').length;
+
+    document.getElementById("stat-tutorials").textContent = tutorials;
+    document.getElementById("stat-langs").textContent = langs;
+    document.getElementById("stat-words").textContent = words || "—";
+    document.getElementById("stat-projects").textContent = projects;
+})();
+</script>
+
+<script src="../assets/update-popup.js?v=20261023"></script>
+<script src="../assets/live.js?v=20261024"></script>
+<script src="../assets/chat.js?v=20261024"></script>
 </body>
-    </html>
+</html>

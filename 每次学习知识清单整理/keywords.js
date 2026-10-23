@@ -412,7 +412,7 @@
   o:"导航条半透明，滚动时下面的文字从它背后经过，被虚化成一片雾。"},
 
   /* ---------------- JavaScript ---------------- */
-  {k:"let", t:"JS", a:["let","const","变量"],
+  {k:"let", t:"JavaScript", a:["let","const","变量"],
   w:"声明变量：let 可以重新赋值，const 声明后不能再指向别的值。",
   u:"默认用 const，确实要改才用 let；不要用 var。",
   c:["const","="],
@@ -422,7 +422,7 @@
   console.log(count, price);`,
   o:"控制台输出「1 28」。若给 price 重新赋值，控制台会报错。"},
 
-  {k:"function", t:"JS", a:["function","函数","箭头函数","=>"],
+  {k:"function", t:"JavaScript", a:["function","函数","箭头函数","=>"],
   w:"把一段逻辑装进盒子并起名，随时调用。",
   u:"函数声明会被提升；箭头函数更短，常配合数组方法使用。",
   c:["return","=>","const"],
@@ -431,7 +431,7 @@
   console.log(add(2, 3), twice(4));`,
   o:"输出「5 8」：第一个函数返回和，第二个箭头函数返回两倍。"},
 
-  {k:"if", t:"JS", a:["if","else","条件","判断"],
+  {k:"if", t:"JavaScript", a:["if","else","条件","判断"],
   w:"按条件决定走哪条路。",
   u:"条件为真执行 if 块，否则走 else；多个条件用 else if。",
   c:["else","===","&&"],
@@ -441,7 +441,7 @@
   else console.log("空");`,
   o:"输出「有」，因为 5 不大于 10，但大于 0。"},
 
-  {k:"forEach", t:"JS", a:["forEach","循环","for","遍历"],
+  {k:"forEach", t:"JavaScript", a:["forEach","循环","for","遍历"],
   w:"遍历数组的每一项，对每一项执行一次函数。",
   u:"没有返回值，只是「对每个都做点什么」。",
   c:["map","filter","push"],
@@ -450,7 +450,7 @@
   });`,
   o:"输出两行：「0 拿铁」「1 美式」——索引从 0 开始。"},
 
-  {k:"map", t:"JS", a:["map","映射","数组方法"],
+  {k:"map", t:"JavaScript", a:["map","映射","数组方法"],
   w:"把数组每一项「变换」成新值，返回一个新数组，原数组不变。",
   u:"常用来把数据变成 HTML 字符串。",
   c:["join","filter","=>"],
@@ -459,7 +459,7 @@
   console.log(doubled);`,
   o:"输出「[56, 60]」，原数组 prices 还是 [28, 30]。"},
 
-  {k:"filter", t:"JS", a:["filter","筛选","过滤"],
+  {k:"filter", t:"JavaScript", a:["filter","筛选","过滤"],
   w:"按条件筛选数组，返回符合条件的新数组。",
   u:"回调返回 true 就保留，false 就丢掉。",
   c:["map","find","length"],
@@ -468,7 +468,7 @@
   console.log(cheap);`,
   o:"输出「[22]」；只留下小于 25 的那一个。"},
 
-  {k:"querySelector", t:"JS", a:["querySelector","选择元素","dom","getElementById"],
+  {k:"querySelector", t:"JavaScript", a:["querySelector","选择元素","dom","getElementById"],
   w:"按 CSS 选择器找到页面上的元素，返回第一个匹配的。",
   u:"要拿全部用 querySelectorAll，得到的是类数组，可以 forEach 遍历。",
   c:["textContent","addEventListener","classList"],
@@ -479,7 +479,7 @@
   </script>`,
   o:"页面上的「你好」变成「你好，小鱼」——文字被 JS 改掉了。"},
 
-  {k:"addEventListener", t:"JS", a:["addEventListener","事件","监听","onclick"],
+  {k:"addEventListener", t:"JavaScript", a:["addEventListener","事件","监听","onclick"],
   w:"给元素绑定事件：点击、输入、滚动、键盘……",
   u:"第一个参数是事件名（不带 on），第二个是处理函数。",
   c:["click","preventDefault","e.target"],
@@ -490,7 +490,7 @@
   });`,
   o:"每点一次按钮，控制台就打印一行，同时阻止按钮的默认行为。"},
 
-  {k:"classList", t:"JS", a:["classList","切换类","add","remove","toggle"],
+  {k:"classList", t:"JavaScript", a:["classList","切换类","add","remove","toggle"],
   w:"增删切换元素上的 class，是最轻量的「改样式」方式。",
   u:"add 加、remove 删、toggle 切、contains 查。",
   c:["class","toggle","风格切换"],
@@ -499,7 +499,7 @@
   box.classList.toggle("dark");`,
   o:"卡片先多了一个 active 类（触发 CSS 里的 .active 样式），再切换 dark 类的有无。"},
 
-  {k:"localStorage", t:"JS", a:["localStorage","本地存储","存数据"],
+  {k:"localStorage", t:"JavaScript", a:["localStorage","本地存储","存数据"],
   w:"把数据存在浏览器里，关掉页面再打开还在。",
   u:"只能存字符串，对象要先 JSON.stringify。",
   c:["JSON.stringify","getItem","购物车"],
@@ -508,7 +508,7 @@
   console.log(n);`,
   o:"控制台输出字符串「3」；关掉浏览器再打开，这个值仍然在。"},
 
-  {k:"JSON", t:"JS", a:["json","stringify","parse","序列化"],
+  {k:"JSON", t:"JavaScript", a:["json","stringify","parse","序列化"],
   w:"JSON 是数据格式；stringify 把对象转成字符串，parse 把字符串转回对象。",
   u:"存 localStorage、发请求时几乎必用。",
   c:["localStorage","fetch","对象"],
@@ -518,7 +518,7 @@
   console.log(JSON.parse(text)[0].name);`,
   o:"先输出一段 JSON 字符串，再输出「拿铁」——数据来回转换没有丢。"},
 
-  {k:"fetch", t:"JS", a:["fetch","请求","接口","ajax"],
+  {k:"fetch", t:"JavaScript", a:["fetch","请求","接口","ajax"],
   w:"向服务器发请求，拿到数据后做下一步。",
   u:"返回 Promise，用 then 或 await 接；POST 时要写 method、headers、body。",
   c:["async","await","JSON"],
@@ -531,7 +531,7 @@
     .then(d => console.log(d));`,
   o:"后端收到订单后返回 JSON，前端在控制台打印出来。"},
 
-  {k:"setTimeout", t:"JS", a:["setTimeout","延时","定时器","setInterval"],
+  {k:"setTimeout", t:"JavaScript", a:["setTimeout","延时","定时器","setInterval"],
   w:"延迟一段时间后执行一次；setInterval 是每隔一段时间执行。",
   u:"单位是毫秒。定时器要记得在合适的时候清掉。",
   c:["setInterval","clearTimeout"],
