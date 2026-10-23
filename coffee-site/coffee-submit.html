@@ -71,6 +71,7 @@
         <div class="done" id="done">
             <p>已经送到站长那里了。</p>
             <p>审核通过后，它会出现在菜单里；卖出的钱会进入你的余额。</p>
+            <p><a style="color:#c9a86a" href="my-coffee.html">看看我的咖啡 →</a></p>
             <p><a style="color:#c9a86a" href="index.html">回店里等一等 →</a></p>
         </div>
     </div>
@@ -161,6 +162,16 @@
         }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
             btn.disabled = false;
             if (d && d.ok) {
+                try {
+                    var key = "coffee-my-submissions-v1:" + me.name;
+                    var list = JSON.parse(localStorage.getItem(key) || "[]");
+                    if (Object.prototype.toString.call(list) !== "[object Array]") list = [];
+                    list.push({
+                        id: d.id, name: name, price: price, story: story,
+                        image: "", status: "pending", created: new Date().toISOString()
+                    });
+                    localStorage.setItem(key, JSON.stringify(list));
+                } catch (e) {}
                 document.getElementById("form").style.display = "none";
                 document.getElementById("done").style.display = "block";
                 return;

@@ -53,6 +53,7 @@
     function usageHours(name) { return usageSeconds(name) / 3600; }
 
     function levelOf(name) {
+        if (name === OWNER_NAME) return LEVELS[6];
         var h = usageHours(name);
         var cur = LEVELS[0];
         for (var i = 0; i < LEVELS.length; i++) {
@@ -207,12 +208,17 @@
         for (var i = 0; i < picked.length; i++) pickedIds[picked[i].id] = true;
 
         var next = LEVELS[lv.lv + 1];
-        var progress = next
-            ? "距离 " + next.name + " 还差 " + fmtHours(Math.max(0, next.min - hours))
-            : "已经到最高等级，谢谢你陪了这家店这么久";
+        var isOwner = name === OWNER_NAME;
+        var progress = isOwner
+            ? "站长等级 · 已满级"
+            : (next
+                ? "距离 " + next.name + " 还差 " + fmtHours(Math.max(0, next.min - hours))
+                : "已经到最高等级，谢谢你陪了这家店这么久");
 
         var html = '<div class="titles-head"><h2>我拥有的头衔</h2><span class="titles-count">已挂 <b id="titlesEquipped">' + picked.length + '</b> / 2</span></div>';
-        html += '<p class="titles-usage">本机累计使用 <b>' + fmtHours(hours) + '</b> · 当前 <b>' + lv.name + '</b> · ' + progress + '</p>';
+        html += '<p class="titles-usage">' + (isOwner
+            ? "站长等级 <b>Lv6 · 镇店之友</b> · 已满级"
+            : "本机累计使用 <b>" + fmtHours(hours) + "</b> · 当前 <b>" + lv.name + "</b> · " + progress) + '</p>';
         html += '<p class="titles-msg" id="titlesMsg"></p>';
 
         var cats = ["normal", "activity", "sealed"];
