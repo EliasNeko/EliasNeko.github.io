@@ -175,7 +175,34 @@ var Member = (function () {
         setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     }
 
+    /* ---------- 站长头衔 ---------- */
+    var OWNER_NAME = "龙潜猫隐";
+
+    function escapeHtml(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+    }
+
+    function isOwner(name) {
+        return String(name == null ? "" : name).trim() === OWNER_NAME;
+    }
+
+    function ownerTag(size) {
+        return '<span class="owner-badge' + (size === "lg" ? " lg" : "") + '" title="站长" aria-label="站长">' +
+               '<span class="crown" aria-hidden="true">♛</span>站长</span>';
+    }
+
+    /* 名字 + 站长徽章；名字会转义，普通用户不受影响 */
+    function displayName(name, size) {
+        return escapeHtml(name) + (isOwner(name) ? ownerTag(size) : "");
+    }
+
     return {
+        OWNER_NAME: OWNER_NAME,
+        isOwner: isOwner,
+        ownerTag: ownerTag,
+        displayName: displayName,
         USERS_KEY: USERS_KEY,
         PUBLIC_KEY: PUBLIC_KEY,
         SESSION_KEY: SESSION_KEY,

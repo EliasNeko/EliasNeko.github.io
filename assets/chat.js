@@ -6,11 +6,36 @@
     if (window.__chatLoaded) return;
     window.__chatLoaded = true;
 
+    /* 站长头衔样式：全站共用，页面已经显式引入就跳过 */
+    (function () {
+        try {
+            if (document.querySelector('link[data-owner-badge]')) return;
+            var cs = document.currentScript;
+            if (!cs || !cs.src) return;
+            var l = document.createElement("link");
+            l.rel = "stylesheet";
+            l.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "owner-badge.css?v=20261025");
+            l.setAttribute("data-owner-badge", "1");
+            document.head.appendChild(l);
+        } catch (e) {}
+    })();
+
     var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
     var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
     var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
 
     var EMOJIS = ["😀","😄","😂","🤣","😊","😍","😘","😎","🤔","😴","😭","😡","🥺","😅","👍","👏","🙏","💪","🎉","🔥","❤️","✨","☕","🍰","🌙","⭐","🌧️","🐱","🐟","🍀","🎵","📚"];
+    var OWNER_NAME = "龙潜猫隐";
+
+    function isOwnerName(name) {
+        return String(name == null ? "" : name).trim() === OWNER_NAME;
+    }
+
+    function ownerBadge(name) {
+        return isOwnerName(name)
+            ? '<span class="owner-badge" title="站长" aria-label="站长"><span class="crown" aria-hidden="true">♛</span>站长</span>'
+            : "";
+    }
 
     /* ---------- 会话 ---------- */
     function session() {
@@ -56,7 +81,7 @@
         ".chat-msg.mine{flex-direction:row-reverse}",
         ".chat-msg.mine .bubble{background:#1e4a6b;color:#e6f4ff}",
         ".chat-win.cream .chat-msg.mine .bubble{background:#3a2c1c;color:#f5e9d6}",
-        ".chat-msg .who{font-size:10.5px;opacity:.55;margin-bottom:2px}",
+        ".chat-msg .who{font-size:10.5px;color:#8fb3d9;margin-bottom:2px;display:flex;align-items:center;flex-wrap:wrap;gap:3px}",
         ".chat-msg img{max-width:160px;border-radius:8px;display:block}",
         ".chat-empty{margin:auto;color:#6b7f9c;font-size:12.5px;text-align:center;line-height:2;padding:20px}",
         ".chat-input{display:flex;gap:6px;padding:10px;border-top:1px solid rgba(120,160,220,.18);align-items:center}",
@@ -80,7 +105,7 @@
         ".chat-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed rgba(120,160,220,.12)}",
         ".chat-row .av{width:32px;height:32px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:#1d2b45;color:#9fc9f5;display:flex;align-items:center;justify-content:center;font-size:12px}",
         ".chat-row .av img{width:100%;height:100%;object-fit:cover}",
-        ".chat-row .n{flex:1;min-width:0;font-size:13px;color:#dbe9fb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+        ".chat-row .n{flex:1;min-width:0;display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:13px;color:#dbe9fb}",
         ".chat-row .ops{display:flex;gap:6px;flex:0 0 auto}",
         ".chat-row .ops button{padding:5px 9px;border:1px solid rgba(56,189,248,.35);border-radius:999px;background:none;color:#9fc9f5;font:inherit;font-size:11px;cursor:pointer}",
         ".chat-row .ops button:hover{background:rgba(56,189,248,.12)}",
@@ -237,7 +262,7 @@
 
             var bubble = document.createElement("div");
             bubble.className = "bubble";
-            bubble.innerHTML = '<div class="who">' + escapeHtml(m.name) + "</div>";
+            bubble.innerHTML = '<div class="who">' + escapeHtml(m.name) + ownerBadge(m.name) + "</div>";
 
             if (m.image) {
                 var im = document.createElement("img");
@@ -515,10 +540,10 @@
             listEl.innerHTML = "";
             rows.forEach(function (u) {
                 var row = document.createElement("div");
-                row.className = "chat-row";
+                row.className = "chat-row" + (isOwnerName(u.name) ? " owner-row" : "");
                 row.innerHTML =
                     '<div class="av">' + (u.avatar ? '<img src="' + u.avatar + '" alt="">' : escapeHtml(u.name.slice(0, 1))) + '</div>' +
-                    '<div class="n">' + escapeHtml(u.name) + '</div>' +
+                    '<div class="n">' + escapeHtml(u.name) + ownerBadge(u.name) + '</div>' +
                     '<div class="ops">' +
                     '<button data-invite="' + escapeHtml(u.name) + '">邀请</button>' +
                     '<button data-friend="' + escapeHtml(u.name) + '">加好友</button>' +

@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>龙潜猫隐的咖啡店</title>
+        <link rel="stylesheet" href="../assets/owner-badge.css?v=20261025" data-owner-badge="1">
         <style>
             /*
             选择器：body、.hero、.btn 是“选中谁”。
@@ -139,7 +140,7 @@
             /*卡片网格*/
             .cards {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+                grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
                 gap: 28px;
             }
 
@@ -463,6 +464,9 @@
 
             /* 顶部导航里的登录入口 */
             .nav-account {
+                display: inline-flex;
+                align-items: center;
+                gap: 2px;
                 padding: 6px 14px;
                 border: 1px solid rgba(201, 168, 106, 0.35);
                 border-radius: 999px;
@@ -769,7 +773,7 @@
                 .nav { height: 58px; padding: 0 12px; }
                 .nav-left { gap: 8px; }
                 .logo { font-size: 14px; letter-spacing: 1px; }
-                .nav-account { padding: 4px 9px; font-size: 11px; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+                .nav-account { padding: 4px 9px; font-size: 11px; max-width: 170px; overflow: hidden; white-space: nowrap; }
                 .nav-avatar { width: 24px; height: 24px; }
                 .wallet { padding: 3px 9px; }
                 .wallet strong { font-size: 12.5px; }
@@ -847,6 +851,16 @@
                             <button class="buy" data-id="dirty" data-name="燕麦dirty"    data-price="19">加入</button>
                         </div>
                     </article>
+
+                    <article class="card">
+                        <div class="card-img">🥥</div>
+                        <h3>生椰拿铁</h3>
+                        <p class="desc">椰香先到，苦后回甘</p>
+                        <div class="card-bottom">
+                            <span class="price">¥ 26</span>
+                            <button class="buy" data-id="shengye" data-name="生椰拿铁" data-price="26">加入</button>
+                        </div>
+                    </article>
                 </div>
             </section>
 
@@ -855,7 +869,7 @@
                 <h2>一个人和一条鱼<br>把学习日子熬成了美好回忆的味道</h2>
 
                 <div class="story-body">
-                    <p>2026 年秋天，2026 年秋天，一个学 HTML5 的男孩做了一个决定：开一家不存在的咖啡店。</p>
+                    <p>2026 年秋天，一个学 HTML5 的男孩做了一个决定：开一家不存在的咖啡店。</p>
                     <p>它没有门面，没有营业执照，也还不会煮咖啡。但它有名字，有菜单，有一张写着「回忆的地图总有一天会被添加在这里」的虚拟地图。</p>
                     <p>后来他想，也许三年以后翻回来，这家店就是他走过的证据，也将是他憧憬的程序温柔乡。</p>
                 </div>
@@ -873,7 +887,7 @@
                         <p>湖南省株洲市石峰区田心大道 18 号</p>
                         <p class="small">湖南铁道职业技术学院（田心南校区）</p>
 
-                        <p class="label">联系制作者：龙潜猫隐</p>
+                        <p class="label">联系制作者：龙潜猫隐 <span class="owner-badge" title="站长" aria-label="站长"><span class="crown" aria-hidden="true">♛</span>站长</span></p>
                         <p>邮箱：<a href="mailto:hyyzcn0115@163.com">hyyzcn0115@163.com</a></p>
                         <p>...</p>
 
@@ -953,6 +967,7 @@
                 </form>
             </div>
 
+            <script src="member.js?v=20261025"></script>
             <script>
             (function () {
                 var PASS = "hyyz5201314";
@@ -980,7 +995,7 @@
                 function open() {
                     var me = currentUser();
                     var who = document.getElementById("gateWho");
-                    if (who) who.textContent = me && me.name ? me.name + "（会员）" : "游客";
+                    if (who) who.innerHTML = me && me.name ? Member.displayName(me.name) + "（会员）" : "游客";
 
                     gate.classList.add("show");
                     input.value = "";
@@ -1018,8 +1033,13 @@
                     var me = currentUser();
                     var acc = document.getElementById("accountEntry");
                     if (acc && me && me.name) {
-                        acc.textContent = me.name;
+                        acc.innerHTML = Member.displayName(me.name);
                         acc.title = "已登录，点击管理账号";
+                        if (Member.isOwner(me.name)) {
+                            acc.classList.add("owner-account");
+                            var av = document.getElementById("navAvatar");
+                            if (av) av.classList.add("owner-avatar-ring");
+                        }
                     }
                 })();
 
@@ -1048,7 +1068,7 @@
             })();
         </script>
 
-                <script src="coffees.js?v=20261023"></script>
+                <script src="coffees.js?v=20261025"></script>
         <script>
             var KEY = "coffee-cart-v1";
             var cart = [];
@@ -1430,6 +1450,6 @@
         </script>
                     <script src="../assets/update-popup.js?v=20261022"></script>
     <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261024"></script>
+    <script src="../assets/chat.js?v=20261025"></script>
 </body>
         </html>
