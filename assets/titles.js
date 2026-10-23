@@ -108,7 +108,8 @@
     }
 
     function allSpecials(name) {
-        return (SPECIAL[name] || []).concat(cloudSpecials(name)).concat(grantsFor(name));
+        /* 云端为准；旧版本机授予只作为兼容读取，不再参与显示，避免清空后残留 */
+        return (SPECIAL[name] || []).concat(cloudSpecials(name));
     }
 
     function owned(name) {

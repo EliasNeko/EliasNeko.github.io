@@ -23,7 +23,7 @@
             if (!document.querySelector('link[data-titles-badge]')) {
                 var t = document.createElement("link");
                 t.rel = "stylesheet";
-                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261029");
+                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261030");
                 t.setAttribute("data-titles-badge", "1");
                 document.head.appendChild(t);
             }
@@ -111,6 +111,91 @@
         document.body.appendChild(a);
     })();
 
+    /* 站长授予新头衔：被授予者浏览网页时收到提示 */
+    (function () {
+        var s = session();
+        if (!s || !s.name) return;
+
+        var KEY = "coffee-titles-seen-v1:" + s.name;
+        var hideTimer = null;
+
+        function profileHref() {
+            return location.pathname.indexOf("/coffee-site/") >= 0
+                ? "profile.html"
+                : "../coffee-site/profile.html";
+        }
+
+        function showToast(list) {
+            var old = document.getElementById("titleToast");
+            if (old) old.remove();
+
+            var chips = "";
+            for (var i = 0; i < list.length && i < 3; i++) {
+                var t = list[i];
+                chips += '<span class="title-chip fx-legend tone-' + escapeHtml(t.tone || "purple") + '">' +
+                    '<span class="tc-ico" aria-hidden="true">' + escapeHtml(t.icon || "✦") + '</span>' +
+                    escapeHtml(t.name) + '</span>';
+            }
+            if (list.length > 3) chips += '<span>等 ' + list.length + ' 个</span>';
+
+            var el = document.createElement("div");
+            el.className = "title-toast";
+            el.id = "titleToast";
+            el.innerHTML = '<button class="tt-close" type="button" aria-label="关闭">×</button>' +
+                '<div class="tt-k">站长亲封 · 新头衔</div>' +
+                '<div class="tt-main">' + chips + '<span>已授予你</span></div>' +
+                '<a class="tt-link" href="' + profileHref() + '">去个人资料看看 →</a>';
+            document.body.appendChild(el);
+            requestAnimationFrame(function () { el.classList.add("show"); });
+
+            el.querySelector(".tt-close").addEventListener("click", function () {
+                el.classList.remove("show");
+                setTimeout(function () { if (el.parentNode) el.remove(); }, 250);
+            });
+
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(function () {
+                el.classList.remove("show");
+                setTimeout(function () { if (el.parentNode) el.remove(); }, 250);
+            }, 9000);
+        }
+
+        function check() {
+            fetch(SB_URL + "/rest/v1/rpc/titles_all", {
+                method: "POST",
+                headers: H,
+                body: "{}"
+            }).then(function (r) { return r.ok ? r.json() : null; }).then(function (all) {
+                if (!all || Object.prototype.toString.call(all) !== "[object Array]") return;
+                var mine = all.filter(function (t) { return t && t.user === s.name; });
+                var raw = null;
+                try { raw = localStorage.getItem(KEY); } catch (e) {}
+
+                var seen = [];
+                if (raw !== null) {
+                    try { seen = JSON.parse(raw) || []; } catch (e) {}
+                }
+
+                var fresh = mine.filter(function (t) { return seen.indexOf(t.id) < 0; });
+                if (fresh.length) {
+                    showToast(fresh);
+                } else if (raw === null && mine.length) {
+                    showToast(mine);
+                }
+
+                try {
+                    localStorage.setItem(KEY, JSON.stringify(mine.map(function (t) { return t.id; })));
+                } catch (e) {}
+            }).catch(function () {});
+        }
+
+        check();
+        setInterval(check, 60000);
+        document.addEventListener("visibilitychange", function () {
+            if (!document.hidden) check();
+        });
+    })();
+
     /* 使用时长：登录用户每 30 秒 +30 秒，存在本机；头衔系统按这个算等级 */
     (function () {
         var s = session();
@@ -190,7 +275,8 @@
         ".chat-row .ops{display:flex;gap:6px;flex:0 0 auto}",
         ".chat-row .ops button{padding:5px 9px;border:1px solid rgba(56,189,248,.35);border-radius:999px;background:none;color:#9fc9f5;font:inherit;font-size:11px;cursor:pointer}",
         ".chat-row .ops button:hover{background:rgba(56,189,248,.12)}",
-        "@media (max-width:560px){.chat-win{right:10px;bottom:150px;width:94vw;height:64vh}.chat-ball{right:14px;bottom:88px}}"
+        "@media (max-width:560px){.chat-win{right:10px;bottom:150px;width:94vw;height:64vh}.chat-ball{right:14px;bottom:88px}}",
+        "@media (max-width:820px){.chat-btn{display:none!important}}"
     ].join("");
     document.head.appendChild(css);
 

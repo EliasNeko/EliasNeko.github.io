@@ -282,6 +282,35 @@
     50% { box-shadow: 0 0 26px rgba(255, 235, 160, 1), 0 0 64px rgba(255, 170, 30, .65), 0 0 110px rgba(139, 92, 246, .4), inset 0 0 16px rgba(255, 255, 255, .35); }
 }
 
+/* 站长授予新头衔时，被授予者浏览网页会看到这条提示 */
+.title-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 170px;
+    z-index: 300;
+    width: min(360px, calc(100vw - 32px));
+    padding: 14px 16px 13px;
+    border: 1px solid rgba(255, 214, 107, .55);
+    border-radius: 14px;
+    background: linear-gradient(165deg, rgba(35, 26, 17, .98), rgba(18, 14, 12, .98));
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .6), 0 0 32px rgba(255, 200, 80, .16);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 16px);
+    transition: opacity .25s, transform .25s;
+}
+.title-toast.show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.tt-k { margin-bottom: 8px; color: #c9a86a; font-size: 10px; letter-spacing: 3px; }
+.tt-main { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; color: #f3e7d3; font-size: 13px; line-height: 1.7; }
+.tt-main .title-chip { margin: 0; }
+.tt-link { display: inline-block; margin-top: 9px; color: #e8d4a8; font-size: 11px; letter-spacing: 1px; text-decoration: none; border-bottom: 1px solid rgba(201, 168, 106, .4); }
+.tt-close { position: absolute; top: 6px; right: 9px; border: 0; background: none; color: rgba(201, 183, 156, .6); font-size: 17px; line-height: 1; cursor: pointer; }
+.tt-close:hover { color: #f3e7d3; }
+
+@media (max-width: 560px) {
+    .title-toast { bottom: 150px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .title-chip { animation: none !important; }
     .title-chip::after { display: none !important; }
