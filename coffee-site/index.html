@@ -728,6 +728,69 @@
             .nav-right { display: flex; align-items: center; gap: 28px; }
             .wallet { display: flex; align-items: baseline; gap: 7px; padding: 6px 14px; border: 1px solid rgba(201,168,106,.35); border-radius: 999px; white-space: nowrap; color: #c9b79c; font-size: 12px; letter-spacing: 1px; transition: border-color .3s; }
             .wallet strong { color: #c9a86a; font-size: 15px; letter-spacing: .5px; }
+
+            /* ---------- 转账 ---------- */
+            .nav-transfer {
+                padding: 6px 14px;
+                border: 1px solid rgba(201,168,106,.45);
+                border-radius: 999px;
+                background: rgba(201,168,106,.08);
+                color: #e0c48c;
+                font-family: inherit;
+                font-size: 12px;
+                letter-spacing: 1px;
+                cursor: pointer;
+                transition: .22s;
+                white-space: nowrap;
+            }
+            .nav-transfer:hover { background: #c9a86a; color: #14100e; border-color: #c9a86a; }
+
+            .transfer-mask {
+                position: fixed; inset: 0; z-index: 160;
+                background: rgba(0,0,0,.62);
+                opacity: 0; pointer-events: none; transition: opacity .25s;
+            }
+            .transfer-mask.show { opacity: 1; pointer-events: auto; }
+
+            .transfer-modal {
+                position: fixed; left: 50%; top: 50%; z-index: 170;
+                width: min(400px, 90vw);
+                padding: 22px 22px 18px;
+                border: 1px solid rgba(201,168,106,.35);
+                border-radius: 18px;
+                background: linear-gradient(165deg, #1d1712, #14100e);
+                box-shadow: 0 30px 80px rgba(0,0,0,.68), 0 0 0 1px rgba(201,168,106,.06);
+                opacity: 0; pointer-events: none;
+                transform: translate(-50%, -48%);
+                transition: opacity .25s, transform .25s;
+            }
+            .transfer-modal.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%); }
+            .transfer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+            .transfer-head h3 { margin: 0; color: #c9a86a; font-size: 17px; font-weight: normal; letter-spacing: 2px; }
+            .transfer-close { border: 0; background: none; color: #c9a86a; font-size: 22px; line-height: 1; cursor: pointer; }
+            .transfer-balance { margin: 0 0 14px; padding: 9px 12px; border-radius: 10px; background: rgba(201,168,106,.08); color: #c9b79c; font-size: 12px; }
+            .transfer-balance strong { color: #e8d4a8; font-size: 15px; margin-left: 4px; }
+            .transfer-field { margin-bottom: 12px; }
+            .transfer-field label { display: block; margin-bottom: 6px; color: #c9b79c; font-size: 11.5px; letter-spacing: 1.5px; }
+            .transfer-field select, .transfer-field input {
+                width: 100%; padding: 11px 12px;
+                border: 1px solid rgba(201,168,106,.25); border-radius: 10px;
+                background: #14100e; color: #f3e7d3;
+                font-family: inherit; font-size: 14px; outline: none;
+            }
+            .transfer-field select:focus, .transfer-field input:focus { border-color: rgba(201,168,106,.6); }
+            .transfer-quick { display: flex; gap: 7px; margin: -2px 0 12px; }
+            .transfer-quick button { flex: 1; padding: 6px; border: 1px solid rgba(201,168,106,.28); border-radius: 8px; background: none; color: #c9a86a; font: inherit; font-size: 11.5px; cursor: pointer; }
+            .transfer-quick button:hover { background: rgba(201,168,106,.12); }
+            .transfer-msg { min-height: 20px; margin: 0 0 6px; font-size: 12px; color: #e29a8e; }
+            .transfer-actions { display: flex; gap: 10px; }
+            .transfer-actions button { flex: 1; padding: 11px; border-radius: 10px; font-family: inherit; font-size: 13px; letter-spacing: 1px; cursor: pointer; }
+            .transfer-cancel { border: 1px solid rgba(201,168,106,.3); background: none; color: #c9b79c; }
+            .transfer-go { border: 1px solid #c9a86a; background: #c9a86a; color: #14100e; }
+            .transfer-go:disabled { opacity: .4; cursor: not-allowed; }
+            .transfer-note { margin: 12px 0 0; color: rgba(201,183,156,.42); font-size: 10.5px; line-height: 1.8; }
+            @media (max-width: 760px) { .nav-transfer { display: none; } }
+
             .cart-buy { margin: 0 20px 10px; padding: 13px; border: 0; border-radius: 10px; background: #c9a86a; color: #14100e; font-size: 15px; letter-spacing: 4px; font-family: inherit; cursor: pointer; transition: background .25s, opacity .25s; }
             .cart-buy:hover { background: #dcc08a; }
             .cart-buy:disabled { opacity: .3; cursor: not-allowed; }
@@ -795,6 +858,7 @@
                         <div class="nav-menu" id="navMenu" style="display:none;">
                             <a href="profile.html">个人资料</a>
                             <a href="friends.html">我的好友</a>
+                            <button type="button" id="navTransfer">转账给好友</button>
                             <button type="button" id="navLogout">退出登录</button>
                         </div>
                     </div>
@@ -806,6 +870,7 @@
                         <li><a href="#store">门店</a></li>
                         <li><a href="#contact">联系</a></li>
                     </ul>
+                    <button class="nav-transfer" id="transferBtn" type="button">转账</button>
                     <div class="wallet" id="wallet" title="游客每天 ¥60，登录后每天 ¥500">
                         <span class="wallet-label">今日余额</span>
                         <strong id="walletBalance">¥ 500</strong>
@@ -953,6 +1018,36 @@
                     <button class="done-back" id="doneBack" type="button">再 逛 逛</button>
                 </div>
             </div>
+
+            <div class="transfer-mask" id="transferMask"></div>
+            <div class="transfer-modal" id="transferModal" role="dialog" aria-modal="true" aria-labelledby="transferTitle">
+                <div class="transfer-head">
+                    <h3 id="transferTitle">转账给好友</h3>
+                    <button class="transfer-close" id="transferClose" type="button" aria-label="关闭">×</button>
+                </div>
+                <p class="transfer-balance">我的余额：<strong id="transferBalance">¥ 0</strong></p>
+                <div class="transfer-field">
+                    <label for="transferFriend">转给谁（仅限好友）</label>
+                    <select id="transferFriend"><option value="">正在读取好友…</option></select>
+                </div>
+                <div class="transfer-field">
+                    <label for="transferAmount">金额</label>
+                    <input id="transferAmount" type="number" min="1" step="1" inputmode="numeric" placeholder="输入整数金额，比如 20">
+                </div>
+                <div class="transfer-quick">
+                    <button type="button" data-amt="10">¥10</button>
+                    <button type="button" data-amt="20">¥20</button>
+                    <button type="button" data-amt="50">¥50</button>
+                    <button type="button" data-amt="100">¥100</button>
+                </div>
+                <p class="transfer-msg" id="transferMsg"></p>
+                <div class="transfer-actions">
+                    <button class="transfer-cancel" id="transferCancel" type="button">取 消</button>
+                    <button class="transfer-go" id="transferGo" type="button">确 认 转 账</button>
+                </div>
+                <p class="transfer-note">咖啡钱包目前保存在本机；转给好友后，对方在同一台设备登录就能看到。站长余额无限，转账不会扣减。</p>
+            </div>
+
             <div class="gate" id="gate">
                 <form class="gate-panel" id="gateForm" autocomplete="off">
                     <h3>私 密 通 道</h3>
@@ -1098,6 +1193,7 @@
 
             var me = currentUser();
             var isMember = !!(me && me.name);
+            var isOwnerUser = isMember && Member.isOwner(me.name);
 
             /* ---------- 钱包：游客每天 60，会员每天 500 ---------- */
             var DEVICE_KEY = "coffee-device-id";
@@ -1105,6 +1201,7 @@
             var DAILY_QUOTA = isMember ? 500 : 60;
 
             function money(v) {
+                if (!isFinite(v)) return "¥ ∞";
                 return "¥ " + (Math.round(v * 100) / 100);
             }
 
@@ -1230,10 +1327,15 @@
             }
 
             function saveWallet() {
+                if (isOwnerUser) return;
                 try { localStorage.setItem(walletKey, JSON.stringify(wallet)); } catch (e) {}
             }
 
             function loadWallet() {
+                if (isOwnerUser) {
+                    wallet = { date: todayStr(), balance: Infinity };
+                    return;
+                }
                 var raw = null;
                 try { raw = localStorage.getItem(walletKey); } catch (e) {}
                 if (raw) {
@@ -1249,7 +1351,135 @@
             }
 
             function renderWallet() {
-                document.getElementById("walletBalance").textContent = money(wallet.balance);
+                var el = document.getElementById("walletBalance");
+                if (el) el.textContent = isOwnerUser ? "¥ ∞" : money(wallet.balance);
+                var box = document.getElementById("wallet");
+                if (box) box.title = isOwnerUser ? "站长余额 · 无限" : "游客每天 ¥60，登录后每天 ¥500";
+            }
+
+            /* ---------- 转账给好友 ---------- */
+            var transferModal = document.getElementById("transferModal");
+            var transferMask = document.getElementById("transferMask");
+            var transferFriend = document.getElementById("transferFriend");
+            var transferAmount = document.getElementById("transferAmount");
+            var transferMsg = document.getElementById("transferMsg");
+
+            function escAttr(s) {
+                return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+            }
+
+            function openTransfer() {
+                if (!isMember) {
+                    if (confirm("转账要先登录。现在去登录 / 注册？")) window.location.href = "account.html";
+                    return;
+                }
+                if (!me.hash) {
+                    alert("登录信息过期了，重新登录一次再来转账。");
+                    window.location.href = "account.html";
+                    return;
+                }
+                if (typeof closeCart === "function") closeCart();
+                var navMenu = document.getElementById("navMenu");
+                if (navMenu) navMenu.classList.remove("show");
+                document.getElementById("transferBalance").textContent = isOwnerUser ? "¥ ∞" : money(wallet.balance);
+                transferAmount.value = "";
+                transferMsg.textContent = "";
+                transferMsg.style.color = "";
+                transferModal.classList.add("show");
+                transferMask.classList.add("show");
+                document.body.style.overflow = "hidden";
+                loadTransferFriends();
+            }
+
+            function closeTransfer() {
+                transferModal.classList.remove("show");
+                transferMask.classList.remove("show");
+                document.body.style.overflow = "";
+            }
+
+            function loadTransferFriends() {
+                transferFriend.innerHTML = '<option value="">正在读取好友…</option>';
+                fetch(SB_URL + "/rest/v1/rpc/friend_list", {
+                    method: "POST",
+                    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+                    body: JSON.stringify({ p_name: me.name, p_hash: me.hash })
+                }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+                    if (!d || !d.ok) {
+                        transferFriend.innerHTML = '<option value="">读不到好友，先去「我的好友」看看</option>';
+                        return;
+                    }
+                    var list = (d.friends || []).filter(function (f) { return f.name && f.name !== me.name; });
+                    if (!list.length) {
+                        transferFriend.innerHTML = '<option value="">还没有好友，先加一个再来</option>';
+                        return;
+                    }
+                    var html = '<option value="">选一个好友</option>';
+                    for (var i = 0; i < list.length; i++) {
+                        html += '<option value="' + escAttr(list[i].name) + '">' + escAttr(list[i].name) + '</option>';
+                    }
+                    transferFriend.innerHTML = html;
+                }).catch(function () {
+                    transferFriend.innerHTML = '<option value="">连不上云端</option>';
+                });
+            }
+
+            function doTransfer() {
+                var friend = transferFriend.value;
+                var amount = Number(transferAmount.value);
+
+                if (!friend) { transferMsg.textContent = "先选一个好友。"; return; }
+                if (!isFinite(amount) || amount <= 0 || Math.floor(amount) !== amount) {
+                    transferMsg.textContent = "金额要是大于 0 的整数。";
+                    return;
+                }
+                if (!isOwnerUser && amount > wallet.balance) {
+                    transferMsg.textContent = "余额不够，今天只剩 " + money(wallet.balance) + "。";
+                    return;
+                }
+
+                var key = WALLET_BASE + deviceId() + ":" + friend;
+                var friendWallet = { date: todayStr(), balance: DAILY_QUOTA };
+                try {
+                    var raw = localStorage.getItem(key);
+                    if (raw) {
+                        var old = JSON.parse(raw);
+                        if (old && old.date === todayStr() && typeof old.balance === "number") friendWallet = old;
+                    }
+                } catch (e) {}
+                friendWallet.balance = friendWallet.balance + amount;
+                try { localStorage.setItem(key, JSON.stringify(friendWallet)); } catch (e) {}
+
+                if (!isOwnerUser) {
+                    wallet.balance = wallet.balance - amount;
+                    saveWallet();
+                    renderWallet();
+                }
+                document.getElementById("transferBalance").textContent = isOwnerUser ? "¥ ∞" : money(wallet.balance);
+                transferMsg.style.color = "#9ec9a0";
+                transferMsg.textContent = "已转给「" + friend + "」" + money(amount) + "，对方在同一台设备登录就能看到。";
+                transferAmount.value = "";
+                setTimeout(closeTransfer, 1100);
+            }
+
+            function bindTransfer() {
+                var btn = document.getElementById("transferBtn");
+                var menuBtn = document.getElementById("navTransfer");
+                if (btn) btn.addEventListener("click", openTransfer);
+                if (menuBtn) menuBtn.addEventListener("click", function (e) { e.stopPropagation(); openTransfer(); });
+                document.getElementById("transferClose").addEventListener("click", closeTransfer);
+                document.getElementById("transferCancel").addEventListener("click", closeTransfer);
+                transferMask.addEventListener("click", closeTransfer);
+                document.getElementById("transferGo").addEventListener("click", doTransfer);
+                var quick = document.querySelectorAll(".transfer-quick button");
+                for (var i = 0; i < quick.length; i++) {
+                    quick[i].addEventListener("click", function () {
+                        transferAmount.value = this.getAttribute("data-amt");
+                        transferAmount.focus();
+                    });
+                }
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape" && transferModal.classList.contains("show")) closeTransfer();
+                });
             }
 
             function render() {
@@ -1395,14 +1625,14 @@
                 var total = 0;
                 for (var i = 0; i < cart.length; i++) total = total + cart[i].price * cart[i].qty;
 
-                if (total > wallet.balance) {
+                if (!isOwnerUser && total > wallet.balance) {
                     alert("今天只剩 " + money(wallet.balance) + " 了。\n明天 0 点会重新变回 ¥500——先挑最想喝的那一杯吧。");
                     return;
                 }
 
                 var bought = cart.slice();
                 addFavs(bought);
-                wallet.balance = wallet.balance - total;
+                if (!isOwnerUser) wallet.balance = wallet.balance - total;
                 saveWallet();
                 renderWallet();
 
@@ -1423,6 +1653,7 @@
             renderFavs();
             renderAvatar();
             renderNavMenu();
+            bindTransfer();
 
             /* 手机上点一下就展开，点别处收起 */
             var navUser = document.getElementById("navUser");
@@ -1450,6 +1681,6 @@
         </script>
                     <script src="../assets/update-popup.js?v=20261022"></script>
     <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261026"></script>
 </body>
         </html>

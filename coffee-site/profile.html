@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>个人资料 · 龙潜猫隐的咖啡店</title>
 <link rel="stylesheet" href="../assets/owner-badge.css?v=20261025" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261026" data-titles-badge="1">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -91,11 +92,14 @@
         <p class="msg" id="msg"></p>
     </div>
 
+    <section class="titles-panel" id="titlesPanel"></section>
+
     <p class="foot">© 2026 龙潜猫隐</p>
 </div>
 
 <script src="config.js?v=20261023"></script>
 <script src="member.js?v=20261025"></script>
+<script src="../assets/titles.js?v=20261026"></script>
 <script>
 (function () {
     "use strict";
@@ -135,7 +139,10 @@
     rpc("get_profile", { p_name: me.name, p_hash: me.hash }).then(function (d) {
         if (!d || !d.ok) { setMsg("读不到资料，重新登录一下。", false); return; }
 
-        document.getElementById("name").innerHTML = Member.displayName(d.name, "lg");
+        var titleApi = window.Titles || null;
+        document.getElementById("name").innerHTML = titleApi
+            ? titleApi.nameHTML(d.name, "lg")
+            : Member.displayName(d.name, "lg");
         document.getElementById("since").textContent = d.time ? "注册于 " + d.time : "";
 
         if (Member.isOwner(d.name)) {
@@ -143,6 +150,18 @@
             document.getElementById("avatar").classList.add("owner-avatar-ring");
             document.getElementById("ownerLine").style.display = "block";
             document.getElementById("since").textContent = d.time ? "注册于 " + d.time : "";
+        }
+
+        if (titleApi) {
+            titleApi.renderPanel(d.name, document.getElementById("titlesPanel"));
+            var tone = titleApi.sealedTone(d.name);
+            if (tone === "purple") {
+                document.querySelector(".card").classList.add("sealed-card");
+                document.getElementById("avatar").classList.add("sealed-avatar-ring");
+                var line = document.getElementById("ownerLine");
+                line.textContent = "站长亲封 · 申鹤的🐶";
+                line.style.display = "block";
+            }
         }
         document.getElementById("contact").value = d.contact || "";
         document.getElementById("email").value = d.email || "";
@@ -219,7 +238,7 @@
     });
 })();
 </script>
-    <script src="../assets/chat.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261026"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
     <script src="../assets/live.js?v=20261024"></script>
 </body>

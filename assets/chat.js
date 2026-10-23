@@ -43,6 +43,19 @@
     }
     function me() { var s = session(); return s && s.name && s.hash ? s : null; }
 
+    /* 使用时长：登录用户每 30 秒 +30 秒，存在本机；头衔系统按这个算等级 */
+    (function () {
+        var s = session();
+        if (!s || !s.name) return;
+        var key = "coffee-usage-v1:" + s.name;
+        setInterval(function () {
+            if (document.visibilityState && document.visibilityState !== "visible") return;
+            var n = 0;
+            try { n = parseFloat(localStorage.getItem(key)) || 0; } catch (e) {}
+            try { localStorage.setItem(key, String(n + 30)); } catch (e) {}
+        }, 30000);
+    })();
+
     function rpc(name, body) {
         return fetch(SB_URL + "/rest/v1/rpc/" + name, { method: "POST", headers: H, body: JSON.stringify(body) })
             .then(function (r) { return r.ok ? r.json() : null; });
