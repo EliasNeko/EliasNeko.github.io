@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>会员登记 · 龙潜猫隐的咖啡店</title>
 <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261029" data-titles-badge="1">
 <style>
     /* 咖啡店的配色：深褐底 + 金线 */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -299,6 +300,7 @@
 
 <script src="config.js?v=20261023"></script>
 <script src="member.js?v=20261025"></script>
+<script src="../assets/titles.js?v=20261029"></script>
 <script>
 (function () {
     "use strict";
@@ -762,7 +764,7 @@
 
         if (me && me.name) {
             bar.classList.add("show");
-            document.getElementById("sessionText").innerHTML = "已登录：" + Member.displayName(me.name) + " · 进书房不用口令了";
+            document.getElementById("sessionText").innerHTML = "已登录：" + (window.Titles ? Titles.nameHTML(me.name) : Member.displayName(me.name)) + " · 进书房不用口令了";
             document.getElementById("loginName").value = me.name;
 
             if (logged) logged.style.display = "block";
@@ -770,7 +772,7 @@
             if (loginPanel) loginPanel.classList.add("hidden");
             if (regPanel) regPanel.classList.add("hidden");
 
-            document.getElementById("loggedName").innerHTML = Member.displayName(me.name, "lg");
+            document.getElementById("loggedName").innerHTML = window.Titles ? Titles.nameHTML(me.name, "lg") : Member.displayName(me.name, "lg");
             if (Member.isOwner(me.name)) {
                 var row = document.querySelector("#panelLogged .logged-row");
                 if (row) row.classList.add("owner-row");
@@ -809,7 +811,7 @@
 })();
 </script>
     <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261028"></script>
+    <script src="../assets/chat.js?v=20261029"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
 </body>
 </html>

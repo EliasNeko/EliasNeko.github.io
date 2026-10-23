@@ -23,7 +23,7 @@
             if (!document.querySelector('link[data-titles-badge]')) {
                 var t = document.createElement("link");
                 t.rel = "stylesheet";
-                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261028");
+                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261029");
                 t.setAttribute("data-titles-badge", "1");
                 document.head.appendChild(t);
             }
@@ -49,7 +49,8 @@
 
     /* 聊天室只显示「站长亲封」里公开的紫色头衔；等级头衔是每个人自己的，不在这里展示 */
     var CHAT_SEALED = {
-        "时雨": { name: "申鹤的🐶", tone: "purple", icon: "❄" }
+        "时雨": { name: "申鹤的🐶", tone: "purple", icon: "❄" },
+        "龙潜猫隐": { name: "loli控", tone: "blue-purple", icon: "✦" }
     };
 
     function sealedChatBadge(name) {
@@ -79,6 +80,24 @@
         }
     })();
     if (window.__chatBanned) return;
+
+    /* 云端封禁：站长工具写入的名单，所有设备都认 */
+    (function () {
+        var s = session();
+        if (!s || !s.name || s.name === "龙潜猫隐") return;
+        fetch(SB_URL + "/rest/v1/rpc/bans_all", {
+            method: "POST",
+            headers: H,
+            body: "{}"
+        }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+            if (Object.prototype.toString.call(list) === "[object Array]" && list.indexOf(s.name) >= 0) {
+                document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#14100e;color:#e8dcc8;font-family:Microsoft YaHei,sans-serif;text-align:center;line-height:2;padding:30px;">' +
+                    '<div><div style="font-size:22px;letter-spacing:3px;color:#c9a86a;margin-bottom:12px;">账号已被站长暂停</div>' +
+                    '这个账号暂时不能在店里使用。<br>如果你觉得是误判，可以给站长发邮件说明。</div></div>';
+                window.__chatBanned = true;
+            }
+        }).catch(function () {});
+    })();
 
     /* 站长工具：只有站长看得到，固定在页面右上角 */
     (function () {

@@ -20,7 +20,7 @@
 
     var SPECIAL = {
         "龙潜猫隐": [
-            { id: "sealed-owner", name: "站长", cat: "sealed", fx: "legend", tone: "gold", icon: "♛" },
+            { id: "sealed-owner", name: "站长", cat: "sealed", fx: "owner", tone: "gold", icon: "♛" },
             { id: "sealed-lolic", name: "loli控", cat: "sealed", fx: "legend", tone: "blue-purple", icon: "✦" }
         ],
         "时雨": [{ id: "sealed-shenhe", name: "申鹤的🐶", cat: "sealed", fx: "legend", tone: "purple", icon: "❄" }]
@@ -31,6 +31,9 @@
     var USAGE_PREFIX = "coffee-usage-v1:";
     var PICK_PREFIX = "coffee-titles-selected-v1:";
     var GRANT_KEY = "coffee-grants-v1";
+    var CLOUD_TITLES = {};
+    var SB_URL = window.SUPABASE_URL || "https://wjvwupcquwjoajdvinkx.supabase.co";
+    var SB_KEY = window.SUPABASE_KEY || "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
     function esc(s) {
         return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -73,8 +76,39 @@
         return Object.prototype.toString.call(g) === "[object Array]" ? g : [];
     }
 
+    function cloudSpecials(name) {
+        return CLOUD_TITLES[name] || [];
+    }
+
+    function loadCloud() {
+        if (typeof fetch !== "function") return Promise.resolve(CLOUD_TITLES);
+        return fetch(SB_URL + "/rest/v1/rpc/titles_all", {
+            method: "POST",
+            headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+            body: "{}"
+        }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+            var map = {};
+            for (var i = 0; i < (list || []).length; i++) {
+                var t = list[i];
+                if (!t || !t.user || !t.name) continue;
+                if (!map[t.user]) map[t.user] = [];
+                map[t.user].push({
+                    id: t.id,
+                    name: t.name,
+                    cat: "sealed",
+                    fx: "legend",
+                    tone: t.tone || "purple",
+                    icon: t.icon || "✦",
+                    cloud: true
+                });
+            }
+            CLOUD_TITLES = map;
+            return map;
+        }).catch(function () { return CLOUD_TITLES; });
+    }
+
     function allSpecials(name) {
-        return (SPECIAL[name] || []).concat(grantsFor(name));
+        return (SPECIAL[name] || []).concat(cloudSpecials(name)).concat(grantsFor(name));
     }
 
     function owned(name) {
@@ -299,6 +333,8 @@
         sealedNameHTML: sealedNameHTML,
         allSpecials: allSpecials,
         allGrants: function () { return readGrants(); },
+        loadCloud: loadCloud,
+        cloudTitles: function () { return CLOUD_TITLES; },
         grantsFor: grantsFor,
         grant: grant,
         revoke: revoke

@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>龙潜猫隐的咖啡店</title>
         <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+        <link rel="stylesheet" href="../assets/titles.css?v=20261029" data-titles-badge="1">
         <style>
             /*
             选择器：body、.hero、.btn 是“选中谁”。
@@ -729,6 +730,50 @@
             .wallet { display: flex; align-items: baseline; gap: 7px; padding: 6px 14px; border: 1px solid rgba(201,168,106,.35); border-radius: 999px; white-space: nowrap; color: #c9b79c; font-size: 12px; letter-spacing: 1px; transition: border-color .3s; }
             .wallet strong { color: #c9a86a; font-size: 15px; letter-spacing: .5px; }
 
+            .checkin-btn {
+                padding: 6px 12px;
+                border: 1px solid rgba(134,239,172,.45);
+                border-radius: 999px;
+                background: rgba(134,239,172,.08);
+                color: #bbf7d0;
+                font-family: inherit;
+                font-size: 11px;
+                letter-spacing: 1px;
+                cursor: pointer;
+                white-space: nowrap;
+                animation: checkinPulse 2.4s ease-in-out infinite;
+            }
+            .checkin-btn[hidden] { display: none; }
+            .checkin-btn:hover { background: rgba(134,239,172,.18); }
+            @keyframes checkinPulse {
+                0%, 100% { box-shadow: 0 0 0 rgba(134,239,172,0); }
+                50% { box-shadow: 0 0 14px rgba(134,239,172,.3); }
+            }
+
+            /* ---------- 咖啡投稿入口 ---------- */
+            .menu-tools {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin: -34px 0 30px;
+            }
+            .brew-btn {
+                padding: 9px 18px;
+                border: 1px dashed rgba(201,168,106,.5);
+                border-radius: 999px;
+                color: #e8d4a8;
+                font-size: 12.5px;
+                letter-spacing: 1px;
+                text-decoration: none;
+                transition: .2s;
+            }
+            .brew-btn:hover { background: rgba(201,168,106,.1); border-style: solid; }
+            .menu-tools span { color: rgba(201,183,156,.38); font-size: 10.5px; letter-spacing: 1px; }
+            .maker { margin: 7px 0 0; color: #c9a86a; font-size: 10.5px; letter-spacing: 1px; }
+            .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
             /* ---------- 转账 ---------- */
             .nav-transfer {
                 padding: 6px 14px;
@@ -870,8 +915,9 @@
                         <li><a href="#store">门店</a></li>
                         <li><a href="#contact">联系</a></li>
                     </ul>
+                    <button class="checkin-btn" id="checkinBtn" type="button" hidden>签到 +50</button>
                     <button class="nav-transfer" id="transferBtn" type="button">转账</button>
-                    <div class="wallet" id="wallet" title="游客每天 ¥60，登录后每天 ¥500">
+                    <div class="wallet" id="wallet" title="会员余额；游客每天 ¥60">
                         <span class="wallet-label">今日余额</span>
                         <strong id="walletBalance">¥ 500</strong>
                     </div>
@@ -885,6 +931,10 @@
             <section class="menu" id="menu">
                 <h2>招牌咖啡</h2>
                 <p class="sub">每一杯，都是当天现烘的豆子，愿它有属于你的那一段回忆</p>
+                <div class="menu-tools">
+                    <a class="brew-btn" href="coffee-submit.html">＋ 我也想制作咖啡</a>
+                    <span>投稿后等站长审核，上架收益归制作者</span>
+                </div>
 
                 <div class="cards">
                     <article class="card">
@@ -921,6 +971,7 @@
                         <div class="card-img">🥥</div>
                         <h3>生椰拿铁</h3>
                         <p class="desc">椰香先到，苦后回甘</p>
+                        <p class="maker">用户：【时雨】投资上架的商品</p>
                         <div class="card-bottom">
                             <span class="price">¥ 26</span>
                             <button class="buy" data-id="shengye" data-name="生椰拿铁" data-price="26">加入</button>
@@ -1164,9 +1215,12 @@
         </script>
 
                 <script src="coffees.js?v=20261025"></script>
+<script src="../assets/titles.js?v=20261029"></script>
         <script>
             var KEY = "coffee-cart-v1";
             var cart = [];
+            var CLOUD_COFFEES = [];
+            var CLOUD_MAP = {};
 
             try {
                 var raw = localStorage.getItem(KEY);
@@ -1234,6 +1288,14 @@
                 menu.style.display = isMember ? "" : "none";
             }
 
+            function renderNavTitles() {
+                if (!isMember || !window.Titles) return;
+                var el = document.getElementById("accountEntry");
+                if (el) el.innerHTML = Titles.nameHTML(me.name);
+                var av = document.getElementById("navAvatar");
+                if (av && Titles.sealedTone(me.name) === "purple") av.classList.add("sealed-avatar-ring");
+            }
+
             function renderAvatar() {
                 var img = document.getElementById("navAvatar");
                 if (!img) return;
@@ -1267,7 +1329,7 @@
                 })
                 .catch(function () {});
             }
-            var wallet = { date: "", balance: DAILY_QUOTA };
+            var wallet = { date: "", balance: 0, infinite: false, checked_in: false, loaded: false };
 
             /* ---------- 我的咖啡收藏：买了之后 10 分钟内能重读 ---------- */
             var FAV_TTL = 10 * 60 * 1000;
@@ -1326,16 +1388,46 @@
                 box.innerHTML = html;
             }
 
+            function cloudRpc(name, body) {
+                return fetch(SB_URL + "/rest/v1/rpc/" + name, {
+                    method: "POST",
+                    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+                    body: JSON.stringify(body || {})
+                }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+            }
+
             function saveWallet() {
-                if (isOwnerUser) return;
+                if (isMember) return;
                 try { localStorage.setItem(walletKey, JSON.stringify(wallet)); } catch (e) {}
             }
 
             function loadWallet() {
                 if (isOwnerUser) {
-                    wallet = { date: todayStr(), balance: Infinity };
+                    wallet = { date: todayStr(), balance: Infinity, infinite: true, checked_in: true, loaded: true };
+                    renderWallet();
                     return;
                 }
+                if (isMember) {
+                    wallet = { balance: 0, infinite: false, checked_in: false, loaded: false };
+                    renderWallet();
+                    cloudRpc("wallet_get", { p_name: me.name, p_hash: me.hash }).then(function (d) {
+                        if (d && d.ok) {
+                            wallet = {
+                                balance: Number(d.balance) || 0,
+                                infinite: !!d.infinite,
+                                checked_in: !!d.checked_in,
+                                loaded: true
+                            };
+                        } else {
+                            wallet.loaded = true;
+                        }
+                        renderWallet();
+                        updateCheckin();
+                    });
+                    return;
+                }
+
+                /* 游客：保持原来的本机钱包，每天 60 */
                 var raw = null;
                 try { raw = localStorage.getItem(walletKey); } catch (e) {}
                 if (raw) {
@@ -1348,13 +1440,41 @@
                     wallet = { date: todayStr(), balance: DAILY_QUOTA };
                     saveWallet();
                 }
+                wallet.loaded = true;
+                renderWallet();
+                updateCheckin();
             }
 
             function renderWallet() {
                 var el = document.getElementById("walletBalance");
-                if (el) el.textContent = isOwnerUser ? "¥ ∞" : money(wallet.balance);
+                if (!el) return;
+                if (isMember && !wallet.loaded) el.textContent = "¥ …";
+                else if (isOwnerUser || wallet.infinite) el.textContent = "¥ ∞";
+                else el.textContent = money(wallet.balance);
                 var box = document.getElementById("wallet");
-                if (box) box.title = isOwnerUser ? "站长余额 · 无限" : "游客每天 ¥60，登录后每天 ¥500";
+                if (box) box.title = (isOwnerUser || wallet.infinite) ? "站长余额 · 无限" : (isMember ? "云端余额 · 签到每天 +50" : "游客每天 ¥60");
+            }
+
+            function updateCheckin() {
+                var b = document.getElementById("checkinBtn");
+                if (!b) return;
+                b.hidden = !(isMember && !isOwnerUser && wallet.loaded && !wallet.checked_in);
+            }
+
+            function doCheckin() {
+                if (!isMember || isOwnerUser) return;
+                var b = document.getElementById("checkinBtn");
+                if (b) b.disabled = true;
+                cloudRpc("wallet_checkin", { p_name: me.name, p_hash: me.hash }).then(function (d) {
+                    if (b) b.disabled = false;
+                    if (!d || !d.ok) { alert("签到失败，稍后再试。"); return; }
+                    wallet.checked_in = true;
+                    wallet.balance = Number(d.balance) || wallet.balance;
+                    wallet.loaded = true;
+                    renderWallet();
+                    updateCheckin();
+                    alert(d.already ? "今天已经签到过了。" : "签到成功，+50 元。");
+                });
             }
 
             /* ---------- 转账给好友 ---------- */
@@ -1432,33 +1552,36 @@
                     transferMsg.textContent = "金额要是大于 0 的整数。";
                     return;
                 }
-                if (!isOwnerUser && amount > wallet.balance) {
-                    transferMsg.textContent = "余额不够，今天只剩 " + money(wallet.balance) + "。";
+                if (!isOwnerUser && wallet.loaded && amount > wallet.balance) {
+                    transferMsg.textContent = "余额不够，现在只剩 " + money(wallet.balance) + "。";
                     return;
                 }
 
-                var key = WALLET_BASE + deviceId() + ":" + friend;
-                var friendWallet = { date: todayStr(), balance: DAILY_QUOTA };
-                try {
-                    var raw = localStorage.getItem(key);
-                    if (raw) {
-                        var old = JSON.parse(raw);
-                        if (old && old.date === todayStr() && typeof old.balance === "number") friendWallet = old;
+                var go = document.getElementById("transferGo");
+                if (go) go.disabled = true;
+                cloudRpc("wallet_transfer", {
+                    p_from: me.name, p_hash: me.hash, p_to: friend, p_amount: amount
+                }).then(function (d) {
+                    if (go) go.disabled = false;
+                    if (!d || !d.ok) {
+                        var map = {
+                            "no-money": "余额不够。",
+                            "not-friend": "对方不在你的好友列表里。",
+                            "no-user": "找不到这个账号。",
+                            "bad-amount": "金额不对。"
+                        };
+                        transferMsg.textContent = map[d && d.error] || "转账失败，稍后再试。";
+                        return;
                     }
-                } catch (e) {}
-                friendWallet.balance = friendWallet.balance + amount;
-                try { localStorage.setItem(key, JSON.stringify(friendWallet)); } catch (e) {}
-
-                if (!isOwnerUser) {
-                    wallet.balance = wallet.balance - amount;
-                    saveWallet();
-                    renderWallet();
-                }
-                document.getElementById("transferBalance").textContent = isOwnerUser ? "¥ ∞" : money(wallet.balance);
-                transferMsg.style.color = "#9ec9a0";
-                transferMsg.textContent = "已转给「" + friend + "」" + money(amount) + "，对方在同一台设备登录就能看到。";
-                transferAmount.value = "";
-                setTimeout(closeTransfer, 1100);
+                    loadWallet();
+                    transferMsg.style.color = "#9ec9a0";
+                    transferMsg.textContent = "已转给「" + friend + "」" + money(amount) + "，云端已到账。";
+                    transferAmount.value = "";
+                    setTimeout(closeTransfer, 1100);
+                }).catch(function () {
+                    if (go) go.disabled = false;
+                    transferMsg.textContent = "连不上云端，转账没发生。";
+                });
             }
 
             function bindTransfer() {
@@ -1598,11 +1721,56 @@
             }
 
             function findCoffee(id) {
+                if (CLOUD_MAP[id]) return CLOUD_MAP[id];
                 if (!id || typeof COFFEES === "undefined") return null;
                 for (var i = 0; i < COFFEES.length; i++) {
                     if (COFFEES[i].id === id) return COFFEES[i];
                 }
                 return null;
+            }
+
+            function loadCloudMenu() {
+                fetch(SB_URL + "/rest/v1/rpc/coffee_list", {
+                    method: "POST",
+                    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+                    body: "{}"
+                }).then(function (r) { return r.ok ? r.json() : null; }).then(function (list) {
+                    if (!list || !list.length) return;
+                    CLOUD_COFFEES = list;
+                    CLOUD_MAP = {};
+                    for (var i = 0; i < list.length; i++) CLOUD_MAP[list[i].id] = list[i];
+                    renderCloudMenu();
+                }).catch(function () {});
+            }
+
+            function renderCloudMenu() {
+                var box = document.querySelector(".menu .cards");
+                if (!box) return;
+                var html = "";
+                for (var i = 0; i < CLOUD_COFFEES.length; i++) {
+                    var c = CLOUD_COFFEES[i];
+                    var local = null;
+                    if (typeof COFFEES !== "undefined") {
+                        for (var j = 0; j < COFFEES.length; j++) if (COFFEES[j].id === c.id) { local = COFFEES[j]; break; }
+                    }
+                    var desc = local ? local.tagline : String(c.story || "").slice(0, 24);
+                    var maker = c.maker === "时雨"
+                        ? "用户：【时雨】投资上架的商品"
+                        : (c.maker === "龙潜猫隐" ? "" : "制作者：" + esc(c.maker));
+                    var img = c.image
+                        ? '<img src="' + escAttr(c.image) + '" alt="">'
+                        : (c.id === "shengye" ? "🥥" : "☕️");
+                    html += '<article class="card">' +
+                        '<div class="card-img">' + img + '</div>' +
+                        '<h3>' + esc(c.name) + '</h3>' +
+                        '<p class="desc">' + esc(desc) + '</p>' +
+                        (maker ? '<p class="maker">' + esc(maker) + '</p>' : '') +
+                        '<div class="card-bottom">' +
+                        '<span class="price">¥ ' + Number(c.price) + '</span>' +
+                        '<button class="buy" data-id="' + escAttr(c.id) + '" data-name="' + escAttr(c.name) + '" data-price="' + Number(c.price) + '">加入</button>' +
+                        '</div></article>';
+                }
+                box.innerHTML = html;
             }
 
             function showDone(items) {
@@ -1625,14 +1793,64 @@
                 var total = 0;
                 for (var i = 0; i < cart.length; i++) total = total + cart[i].price * cart[i].qty;
 
-                if (!isOwnerUser && total > wallet.balance) {
-                    alert("今天只剩 " + money(wallet.balance) + " 了。\n明天 0 点会重新变回 ¥500——先挑最想喝的那一杯吧。");
+                var bought = cart.slice();
+                var buyBtn = this;
+
+                if (isMember) {
+                    if (!me.hash || !wallet.loaded) {
+                        alert("余额还在从云端读取，稍等一下再点。");
+                        return;
+                    }
+                    var units = [];
+                    for (var u = 0; u < cart.length; u++) {
+                        for (var q = 0; q < cart[u].qty; q++) units.push(cart[u].id);
+                    }
+                    buyBtn.disabled = true;
+                    var idx = 0;
+
+                    function finish() {
+                        buyBtn.disabled = false;
+                        addFavs(bought);
+                        cart = [];
+                        save();
+                        render();
+                        loadWallet();
+                        showDone(bought);
+                    }
+
+                    function step() {
+                        if (idx >= units.length) { finish(); return; }
+                        var id = units[idx];
+                        cloudRpc("coffee_buy", { p_buyer: me.name, p_hash: me.hash, p_id: id }).then(function (d) {
+                            if (!d || !d.ok) {
+                                buyBtn.disabled = false;
+                                var why = d && d.error === "no-money" ? "余额不够" : "这杯暂时买不了";
+                                alert(why + "，已经买到的部分不会退，刷新一下购物车再试。");
+                                loadWallet();
+                                return;
+                            }
+                            idx++;
+                            step();
+                        });
+                    }
+                    step();
                     return;
                 }
 
-                var bought = cart.slice();
+                /* 游客：没有云端账户，购买无法给制作者记账，先去登录 */
+                if (!isMember) {
+                    alert("购买需要先登录，收益才能进入咖啡制作者的余额。");
+                    window.location.href = "account.html";
+                    return;
+                }
+
+                /* 游客：本机钱包 */
+                if (total > wallet.balance) {
+                    alert("今天只剩 " + money(wallet.balance) + " 了。");
+                    return;
+                }
                 addFavs(bought);
-                if (!isOwnerUser) wallet.balance = wallet.balance - total;
+                wallet.balance = wallet.balance - total;
                 saveWallet();
                 renderWallet();
 
@@ -1649,11 +1867,15 @@
 
             loadWallet();
             renderWallet();
+            loadCloudMenu();
             render();
             renderFavs();
             renderAvatar();
             renderNavMenu();
+            if (window.Titles) Titles.loadCloud().then(renderNavTitles);
             bindTransfer();
+            var checkinBtn = document.getElementById("checkinBtn");
+            if (checkinBtn) checkinBtn.addEventListener("click", doCheckin);
 
             /* 手机上点一下就展开，点别处收起 */
             var navUser = document.getElementById("navUser");
@@ -1681,6 +1903,6 @@
         </script>
                     <script src="../assets/update-popup.js?v=20261022"></script>
     <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261028"></script>
+    <script src="../assets/chat.js?v=20261029"></script>
 </body>
         </html>

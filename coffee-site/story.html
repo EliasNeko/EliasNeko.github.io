@@ -47,38 +47,63 @@
     <p class="sign">—— 龙潜猫隐</p>
     <a class="back" href="index.html">← 回 到 店 里</a>
 </main>
+<script src="config.js?v=20261023"></script>
 <script src="coffees.js?v=20261025"></script>
 <script>
 (function () {
     var id = new URLSearchParams(location.search).get("id");
-    var coffee = null;
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
 
+    function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+    }
+
+    function missing() {
+        document.getElementById("name").textContent = "这杯还在路上";
+        document.getElementById("tagline").textContent = "也许走错了柜台，也许它还没煮好。";
+        document.getElementById("text").innerHTML = '<p class="missing">回到店里看看吧，那里总有一杯在等你。</p>';
+    }
+
+    function render(coffee) {
+        document.title = coffee.name + " · 一杯咖啡的故事";
+        document.getElementById("name").textContent = coffee.name;
+        var tag = coffee.tagline || "";
+        if (coffee.maker) tag += " · 制作者：" + coffee.maker;
+        document.getElementById("tagline").textContent = tag;
+
+        var lines = Object.prototype.toString.call(coffee.story) === "[object Array]"
+            ? coffee.story
+            : String(coffee.story || "").split(/\n+/).filter(function (x) { return x.trim(); });
+        var html = "";
+        for (var j = 0; j < lines.length; j++) html += "<p>" + esc(lines[j]) + "</p>";
+        document.getElementById("text").innerHTML = html || '<p class="missing">这个故事还没写完。</p>';
+    }
+
+    var coffee = null;
     if (typeof COFFEES !== "undefined") {
         for (var i = 0; i < COFFEES.length; i++) {
             if (COFFEES[i].id === id) { coffee = COFFEES[i]; break; }
         }
     }
+    if (coffee) { render(coffee); return; }
 
-    if (!coffee) {
-        document.getElementById("name").textContent = "这杯还在路上";
-        document.getElementById("tagline").textContent = "也许走错了柜台，也许它还没煮好。";
-        document.getElementById("text").innerHTML = '<p class="missing">回到店里看看吧，那里总有一杯在等你。</p>';
-        return;
-    }
-
-    document.title = coffee.name + " · 一杯咖啡的故事";
-    document.getElementById("name").textContent = coffee.name;
-    document.getElementById("tagline").textContent = coffee.tagline || "";
-
-    var html = "";
-    for (var j = 0; j < coffee.story.length; j++) {
-        html += "<p>" + coffee.story[j] + "</p>";
-    }
-    document.getElementById("text").innerHTML = html;
+    fetch(SB_URL + "/rest/v1/rpc/coffee_list", {
+        method: "POST",
+        headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+        body: "{}"
+    }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+        for (var k = 0; k < (list || []).length; k++) {
+            if (list[k].id === id) { render(list[k]); return; }
+        }
+        missing();
+    }).catch(missing);
 })();
 </script>
     <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261028"></script>
+    <script src="../assets/chat.js?v=20261029"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
 </body>
 </html>

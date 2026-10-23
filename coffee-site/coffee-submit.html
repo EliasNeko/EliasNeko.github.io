@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我也想制作咖啡 · 龙潜猫隐的咖啡店</title>
+<link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; padding: 42px 20px 80px; background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); color: #f3e7d3; font-family: "Microsoft YaHei", sans-serif; }
+    .wrap { width: min(560px, 100%); margin: 0 auto; }
+    .back { display: inline-block; margin-bottom: 20px; color: rgba(201,183,156,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back:hover { color: #c9a86a; }
+    h1 { font-size: 27px; font-weight: normal; letter-spacing: 5px; margin: 0 0 8px; }
+    .sub { color: #c9b79c; font-size: 12.5px; line-height: 1.95; margin: 0 0 22px; }
+    .card { padding: 22px 20px; border: 1px solid rgba(201,168,106,.24); border-radius: 18px; background: #1a1512; box-shadow: 0 22px 60px rgba(0,0,0,.4); }
+    .field { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; color: #c9b79c; font-size: 11.5px; letter-spacing: 1.5px; }
+    input[type="text"], input[type="number"], textarea {
+        width: 100%; padding: 11px 12px; border: 1px solid rgba(201,168,106,.25); border-radius: 10px;
+        background: #14100e; color: #f3e7d3; font-family: inherit; font-size: 14px; outline: none;
+    }
+    textarea { min-height: 130px; resize: vertical; line-height: 1.9; }
+    input:focus, textarea:focus { border-color: rgba(201,168,106,.65); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .hint { color: rgba(201,183,156,.45); font-size: 10.5px; line-height: 1.8; margin-top: 5px; }
+    .preview { width: 100%; height: 180px; margin-top: 8px; border: 1px dashed rgba(201,168,106,.25); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: rgba(201,183,156,.35); font-size: 12px; overflow: hidden; background: #14100e; }
+    .preview img { width: 100%; height: 100%; object-fit: cover; }
+    .submit { width: 100%; margin-top: 6px; padding: 13px; border: 1px solid #c9a86a; border-radius: 999px; background: #c9a86a; color: #14100e; font-family: inherit; font-size: 14px; letter-spacing: 3px; cursor: pointer; }
+    .submit:disabled { opacity: .4; cursor: not-allowed; }
+    .msg { min-height: 22px; margin-top: 12px; font-size: 12px; line-height: 1.9; }
+    .msg.ok { color: #9ec9a0; }
+    .msg.err { color: #e29a8e; }
+    .done { display: none; padding: 24px 10px 10px; text-align: center; line-height: 2; }
+    .done b { color: #c9a86a; font-weight: normal; }
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <a class="back" href="index.html">← 回到店里</a>
+    <h1>我也想制作咖啡</h1>
+    <p class="sub">自己取名、写故事、定价。提交后由站长审核，通过后上架；卖出的钱会进入你的云端余额。</p>
+
+    <div class="card">
+        <form id="form">
+            <div class="row">
+                <div class="field">
+                    <label for="cname">咖啡名字</label>
+                    <input id="cname" type="text" maxlength="20" placeholder="比如：桂花冷萃">
+                </div>
+                <div class="field">
+                    <label for="cprice">价格（元）</label>
+                    <input id="cprice" type="number" min="1" step="1" placeholder="不能超过站长最高价">
+                    <p class="hint" id="maxHint">正在读取站长最高价…</p>
+                </div>
+            </div>
+            <div class="field">
+                <label for="cstory">它的故事</label>
+                <textarea id="cstory" maxlength="2000" placeholder="写给它，也写给买它的人。"></textarea>
+            </div>
+            <div class="field">
+                <label for="cimage">咖啡图片（可选）</label>
+                <input id="cimage" type="file" accept="image/*">
+                <div class="preview" id="preview">还没有选图片</div>
+                <p class="hint">图片会自动压缩；也可以不上传，上架后是一张默认咖啡图。</p>
+            </div>
+            <button class="submit" id="submitBtn" type="submit">提 交 审 核</button>
+            <p class="msg" id="msg"></p>
+        </form>
+        <div class="done" id="done">
+            <p>已经送到站长那里了。</p>
+            <p>审核通过后，它会出现在菜单里；卖出的钱会进入你的余额。</p>
+            <p><a style="color:#c9a86a" href="index.html">回店里等一等 →</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="config.js?v=20261023"></script>
+<script src="member.js?v=20261025"></script>
+<script>
+(function () {
+    "use strict";
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
+    var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
+    var me = Member.session();
+    var msg = document.getElementById("msg");
+    var maxPrice = 32;
+    var imageData = "";
+
+    if (!me || !me.name || !me.hash) {
+        document.getElementById("form").innerHTML = '<p style="line-height:2;text-align:center">先登录才能投稿咖啡。<br><br><a style="color:#c9a86a" href="account.html">去登录 / 注册</a></p>';
+        return;
+    }
+
+    function setMsg(t, ok) {
+        msg.className = "msg " + (ok ? "ok" : "err");
+        msg.textContent = t;
+    }
+
+    fetch(SB_URL + "/rest/v1/rpc/coffee_list", { method: "POST", headers: H, body: "{}" })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (list) {
+            var maxOwner = 32;
+            for (var i = 0; i < (list || []).length; i++) {
+                if (list[i].maker === "龙潜猫隐" && Number(list[i].price) > maxOwner) maxOwner = Number(list[i].price);
+            }
+            maxPrice = maxOwner;
+            document.getElementById("maxHint").textContent = "站长目前最高价 ¥" + maxPrice + "，不能超过它";
+        }).catch(function () {
+            document.getElementById("maxHint").textContent = "站长目前最高价 ¥32，不能超过它";
+        });
+
+    document.getElementById("cimage").addEventListener("change", function () {
+        var f = this.files && this.files[0];
+        if (!f) return;
+        var reader = new FileReader();
+        reader.onload = function (ev) {
+            var img = new Image();
+            img.onload = function () {
+                var max = 1200;
+                var scale = Math.min(1, max / Math.max(img.width, img.height));
+                var canvas = document.createElement("canvas");
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                imageData = canvas.toDataURL("image/jpeg", 0.72);
+                if (imageData.length > 250000) {
+                    imageData = "";
+                    setMsg("图片太大了，换一张小一点的。", false);
+                    return;
+                }
+                document.getElementById("preview").innerHTML = '<img src="' + imageData + '" alt="">';
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(f);
+    });
+
+    document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var name = document.getElementById("cname").value.trim();
+        var price = Number(document.getElementById("cprice").value);
+        var story = document.getElementById("cstory").value.trim();
+
+        if (name.length < 2) { setMsg("名字至少 2 个字。", false); return; }
+        if (!isFinite(price) || price <= 0 || Math.floor(price) !== price) { setMsg("价格要是大于 0 的整数。", false); return; }
+        if (price > maxPrice) { setMsg("不能超过站长最高价 ¥" + maxPrice + "。", false); return; }
+        if (story.length < 10) { setMsg("故事至少写 10 个字。", false); return; }
+
+        var btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        setMsg("正在提交…", true);
+        fetch(SB_URL + "/rest/v1/rpc/coffee_submit", {
+            method: "POST", headers: H,
+            body: JSON.stringify({
+                p_name: me.name, p_hash: me.hash, p_coffee: name,
+                p_story: story, p_price: price, p_image: imageData
+            })
+        }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+            btn.disabled = false;
+            if (d && d.ok) {
+                document.getElementById("form").style.display = "none";
+                document.getElementById("done").style.display = "block";
+                return;
+            }
+            if (d && d.error === "too-expensive") setMsg("价格超过了站长最高价 ¥" + d.max + "。", false);
+            else if (d && d.error === "image-too-large") setMsg("图片太大了，换一张。", false);
+            else setMsg("提交失败，稍后再试。", false);
+        }).catch(function () {
+            btn.disabled = false;
+            setMsg("连不上云端，稍后再试。", false);
+        });
+    });
+})();
+</script>
+</body>
+</html>
