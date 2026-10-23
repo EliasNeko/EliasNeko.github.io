@@ -28,7 +28,7 @@ echo.
 git diff --cached --name-only
 echo.
 
-git diff --cached --name-only | findstr /I /C:"users.jsonl" /C:"users.local" /C:"orders.jsonl" >nul
+git diff --cached --name-only | findstr /I /C:"users.jsonl" /C:"orders.jsonl" /C:"admin.key" /C:"users.local" /C:"users.enc.json" >nul
 if not errorlevel 1 (
     echo [已停止] 待上传列表里出现了不该上传的数据文件。
     echo           已自动撤下，请人工检查 .gitignore。
@@ -36,6 +36,14 @@ if not errorlevel 1 (
     echo.
     pause
     exit /b 1
+)
+for /f "delims=" %%f in ('git diff --cached --name-only') do (
+    git check-ignore -q "%%f" && (
+        echo [已停止] 暂存区里有被 .gitignore 排除的文件：%%f
+        git reset --quiet
+        pause
+        exit /b 1
+    )
 )
 
 git diff --cached --quiet
@@ -59,13 +67,13 @@ for /f "usebackq delims=" %%p in (`powershell -NoProfile -Command "$s=(Get-ItemP
 if defined PROXY (
     echo.
     echo [提示] 第一次没推上去，改用系统代理 %PROXY% 再试...
-    git -c http.proxy=http://%PROXY% push
+    git -c http.proxy=http://%PROXY% -c https.proxy=http://%PROXY% -c http.https://github.com.proxy=http://%PROXY% push
     if not errorlevel 1 goto ok
 )
 
 echo.
 echo [提示] 代理也不行，改用直连再试一次...
-git -c "http.https://github.com.proxy=" push
+git -c "http.https://github.com.proxy=" -c "http.proxy=" -c "https.proxy=" push
 if not errorlevel 1 goto ok
 
 echo.
@@ -80,13 +88,13 @@ for /f "usebackq delims=" %%p in (`powershell -NoProfile -Command "$s=(Get-ItemP
 if defined PROXY (
     echo.
     echo [提示] 第一次没推上去，改用系统代理 %PROXY% 再试...
-    git -c http.proxy=http://%PROXY% push
+    git -c http.proxy=http://%PROXY% -c https.proxy=http://%PROXY% -c http.https://github.com.proxy=http://%PROXY% push
     if not errorlevel 1 goto ok
 )
 
 echo.
 echo [提示] 代理也不行，改用直连再试一次...
-git -c "http.https://github.com.proxy=" push
+git -c "http.https://github.com.proxy=" -c "http.proxy=" -c "https.proxy=" push
 if not errorlevel 1 goto ok
 
 echo.

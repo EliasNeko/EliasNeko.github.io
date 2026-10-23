@@ -1142,3 +1142,107 @@ footer .stamp {
   .lang-banner { flex-wrap: wrap; gap: 10px; }
   .lang-banner .go { margin-left: 0; }
 }
+
+/* ==========================================================
+   数学教材 · 小节详解（2026-10-23）
+   ========================================================== */
+.secs { margin: 16px 0 4px; }
+
+.sec {
+  position: relative;
+  padding: 15px 18px 15px 20px;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.025);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.sec::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), rgba(56, 189, 248, 0.12));
+}
+
+.sec:hover { border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.04); }
+
+.sec h4 {
+  margin: 0 0 7px;
+  font-size: 14.5px;
+  font-weight: normal;
+  line-height: 1.65;
+  letter-spacing: 0.5px;
+  color: #d9ecff;
+}
+
+.sec h4 .n {
+  display: inline-block;
+  margin-right: 9px;
+  padding: 1px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: 5px;
+  color: var(--accent);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 11.5px;
+  letter-spacing: 1px;
+  vertical-align: 1px;
+}
+
+.sec p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.4px;
+  line-height: 1.95;
+}
+
+.sec p + p { margin-top: 5px; }
+
+.sec .f {
+  margin: 8px 0 7px;
+  padding: 7px 12px;
+  border-left: 2px solid rgba(125, 211, 252, 0.45);
+  border-radius: 0 7px 7px 0;
+  background: rgba(56, 189, 248, 0.06);
+  color: #cfe9ff;
+  font-family: "Cascadia Code", Consolas, "Microsoft YaHei", monospace;
+  font-size: 12.9px;
+  line-height: 1.9;
+}
+
+.sec .use b,
+.sec .warn b { font-weight: normal; }
+
+.sec .use b { color: var(--accent-2); }
+.sec .use { color: #a9c8ea; }
+.sec .warn b { color: #f0b27a; }
+.sec .warn { color: #d3a778; }
+
+/* 小节之后接本章小结：拉开距离，给一条分隔线 */
+.secs + .ch-block {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px dashed rgba(80, 130, 200, 0.22);
+}
+
+/* 章节里的「看解答」折叠块 */
+.ch-block details { margin-top: 6px; }
+.ch-block details summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+}
+.ch-block details[open] summary { color: var(--accent-2); }
+.ch-block details .note { margin-top: 8px; }
+.sec { scroll-margin-top: 24px; }
+
+@media (max-width: 720px) {
+  .sec { padding: 13px 14px 13px 16px; }
+  .sec p { font-size: 13px; }
+  .sec .f { font-size: 12.2px; }
+}
