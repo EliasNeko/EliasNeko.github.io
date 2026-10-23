@@ -19,7 +19,10 @@
     ];
 
     var SPECIAL = {
-        "龙潜猫隐": [{ id: "sealed-owner", name: "站长", cat: "sealed", fx: "legend", tone: "gold", icon: "♛" }],
+        "龙潜猫隐": [
+            { id: "sealed-owner", name: "站长", cat: "sealed", fx: "legend", tone: "gold", icon: "♛" },
+            { id: "sealed-lolic", name: "loli控", cat: "sealed", fx: "legend", tone: "blue-purple", icon: "✦" }
+        ],
         "时雨": [{ id: "sealed-shenhe", name: "申鹤的🐶", cat: "sealed", fx: "legend", tone: "purple", icon: "❄" }]
     };
 
@@ -27,6 +30,7 @@
     var FX_LABEL = { 0: "无特效", 1: "特效 1 · 微光", 2: "特效 2 · 流光", 3: "特效 3 · 星辉", "3c": "特效 3+ · 星辉冠冕", legend: "传说 · 站长亲封" };
     var USAGE_PREFIX = "coffee-usage-v1:";
     var PICK_PREFIX = "coffee-titles-selected-v1:";
+    var GRANT_KEY = "coffee-grants-v1";
 
     function esc(s) {
         return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -56,6 +60,23 @@
 
     function categoryOf(lv) { return lv <= 1 ? "normal" : "activity"; }
 
+    function readGrants() {
+        try {
+            var raw = localStorage.getItem(GRANT_KEY);
+            var v = raw ? JSON.parse(raw) : {};
+            return (v && typeof v === "object") ? v : {};
+        } catch (e) { return {}; }
+    }
+
+    function grantsFor(name) {
+        var g = readGrants()[name];
+        return Object.prototype.toString.call(g) === "[object Array]" ? g : [];
+    }
+
+    function allSpecials(name) {
+        return (SPECIAL[name] || []).concat(grantsFor(name));
+    }
+
     function owned(name) {
         var lv = levelOf(name).lv;
         var out = [];
@@ -72,7 +93,7 @@
                 min: t.min
             });
         }
-        var specials = SPECIAL[name] || [];
+        var specials = allSpecials(name);
         for (var j = 0; j < specials.length; j++) out.push(specials[j]);
         return out;
     }
@@ -217,9 +238,47 @@
     }
 
     function sealedTone(name) {
-        var sp = SPECIAL[name] || [];
+        var sp = allSpecials(name);
         for (var i = 0; i < sp.length; i++) if (sp[i].tone) return sp[i].tone;
         return "";
+    }
+
+    /* 好友列表 / 聊天室只展示「站长亲封」，不展示对方私人的等级头衔 */
+    function sealedBadgesHTML(name, size) {
+        var list = allSpecials(name);
+        var html = "";
+        for (var i = 0; i < list.length; i++) html += badgeHTML(list[i], size);
+        return html;
+    }
+
+    function sealedNameHTML(name, size) {
+        return esc(name) + sealedBadgesHTML(name, size);
+    }
+
+    /* 站长工具：本机授予 / 撤销 */
+    function grant(name, title) {
+        var map = readGrants();
+        var list = Object.prototype.toString.call(map[name]) === "[object Array]" ? map[name] : [];
+        var id = title.id || ("grant-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 6));
+        var item = {
+            id: id,
+            name: String(title.name || "").slice(0, 20),
+            cat: "sealed",
+            fx: "legend",
+            tone: title.tone || "purple",
+            icon: title.icon || "✦"
+        };
+        list.push(item);
+        map[name] = list;
+        try { localStorage.setItem(GRANT_KEY, JSON.stringify(map)); } catch (e) {}
+        return item;
+    }
+
+    function revoke(name, id) {
+        var map = readGrants();
+        var list = Object.prototype.toString.call(map[name]) === "[object Array]" ? map[name] : [];
+        map[name] = list.filter(function (t) { return t.id !== id; });
+        try { localStorage.setItem(GRANT_KEY, JSON.stringify(map)); } catch (e) {}
     }
 
     window.Titles = {
@@ -235,6 +294,13 @@
         badgesHTML: badgesHTML,
         badgeHTML: badgeHTML,
         renderPanel: renderPanel,
-        sealedTone: sealedTone
+        sealedTone: sealedTone,
+        sealedBadgesHTML: sealedBadgesHTML,
+        sealedNameHTML: sealedNameHTML,
+        allSpecials: allSpecials,
+        allGrants: function () { return readGrants(); },
+        grantsFor: grantsFor,
+        grant: grant,
+        revoke: revoke
     };
 })();

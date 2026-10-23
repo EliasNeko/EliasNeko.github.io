@@ -102,6 +102,13 @@
     box-shadow: 0 0 10px rgba(192, 132, 252, .8), 0 0 30px rgba(139, 92, 246, .46), inset 0 0 9px rgba(255, 255, 255, .14);
 }
 
+.title-chip.fx-legend.tone-blue-purple {
+    color: #e8ebff;
+    border-color: #8b9cff;
+    background: linear-gradient(120deg, #111a44, #3a2a6b 48%, #141c4a);
+    box-shadow: 0 0 10px rgba(99, 102, 241, .8), 0 0 30px rgba(139, 92, 246, .4), inset 0 0 10px rgba(147, 197, 253, .16);
+}
+
 .title-chip.lg.fx-legend { font-size: 13px; }
 
 @keyframes titleGlow1 {
@@ -177,6 +184,7 @@
 .top-info .name { display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
 .sealed-card { border-color: rgba(216, 180, 254, .5) !important; box-shadow: 0 24px 60px rgba(0, 0, 0, .45), 0 0 42px rgba(139, 92, 246, .18) !important; }
 .sealed-card .owner-line { color: #e9d5ff; text-shadow: 0 0 12px rgba(168, 85, 247, .35); }
+.row.sealed-row { background: linear-gradient(90deg, rgba(168, 85, 247, .13), rgba(139, 92, 246, .02) 70%, transparent) !important; border-bottom-color: rgba(168, 85, 247, .2); }
 .sealed-avatar-ring { border-color: #d8b4fe !important; box-shadow: 0 0 0 4px rgba(192, 132, 252, .14), 0 0 26px rgba(139, 92, 246, .45); }
 
 @media (max-width: 560px) {

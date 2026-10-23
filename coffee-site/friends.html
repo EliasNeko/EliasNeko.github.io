@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>我的好友 · 龙潜猫隐的咖啡店</title>
-<link rel="stylesheet" href="../assets/owner-badge.css?v=20261025" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261028" data-titles-badge="1">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { min-height: 100vh; padding: 40px 20px 90px; font-family: "Microsoft YaHei", sans-serif; color: #f3e7d3;
@@ -44,6 +45,7 @@
 
 <script src="config.js?v=20261023"></script>
 <script src="member.js?v=20261025"></script>
+<script src="../assets/titles.js?v=20261028"></script>
 <script>
 (function () {
     "use strict";
@@ -82,10 +84,13 @@
         listEl.innerHTML = "";
         friends.forEach(function (f) {
             var row = document.createElement("div");
-            row.className = "row" + (Member.isOwner(f.name) ? " owner-row" : "");
+            var tone = window.Titles ? Titles.sealedTone(f.name) : "";
+            row.className = "row" + ((Member.isOwner(f.name) || tone) ? " owner-row" : "") + (tone === "purple" ? " sealed-row" : "");
+            var nameHtml = window.Titles ? Titles.sealedNameHTML(f.name) : Member.displayName(f.name);
+            var avClass = "av" + (Member.isOwner(f.name) ? " owner-avatar-ring" : (tone === "purple" ? " sealed-avatar-ring" : ""));
             row.innerHTML =
-                '<div class="av' + (Member.isOwner(f.name) ? " owner-avatar-ring" : "") + '">' + (f.avatar ? '<img src="' + f.avatar + '" alt="">' : esc(f.name.slice(0, 1))) + '</div>' +
-                '<div class="n">' + Member.displayName(f.name) + '</div>' +
+                '<div class="' + avClass + '">' + (f.avatar ? '<img src="' + f.avatar + '" alt="">' : esc(f.name.slice(0, 1))) + '</div>' +
+                '<div class="n">' + nameHtml + '</div>' +
                 '<div class="ops">' +
                 '<button data-invite="' + esc(f.name) + '">邀请</button>' +
                 '<button class="danger" data-del="' + esc(f.name) + '">删除</button>' +
@@ -132,7 +137,7 @@
     load();
 })();
 </script>
-    <script src="../assets/chat.js?v=20261026"></script>
+    <script src="../assets/chat.js?v=20261028"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
     <script src="../assets/live.js?v=20261024"></script>
 </body>

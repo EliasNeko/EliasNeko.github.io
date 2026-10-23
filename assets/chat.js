@@ -9,14 +9,24 @@
     /* 站长头衔样式：全站共用，页面已经显式引入就跳过 */
     (function () {
         try {
-            if (document.querySelector('link[data-owner-badge]')) return;
             var cs = document.currentScript;
             if (!cs || !cs.src) return;
-            var l = document.createElement("link");
-            l.rel = "stylesheet";
-            l.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "owner-badge.css?v=20261025");
-            l.setAttribute("data-owner-badge", "1");
-            document.head.appendChild(l);
+
+            if (!document.querySelector('link[data-owner-badge]')) {
+                var l = document.createElement("link");
+                l.rel = "stylesheet";
+                l.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "owner-badge.css?v=20261028");
+                l.setAttribute("data-owner-badge", "1");
+                document.head.appendChild(l);
+            }
+
+            if (!document.querySelector('link[data-titles-badge]')) {
+                var t = document.createElement("link");
+                t.rel = "stylesheet";
+                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261028");
+                t.setAttribute("data-titles-badge", "1");
+                document.head.appendChild(t);
+            }
         } catch (e) {}
     })();
 
@@ -37,11 +47,50 @@
             : "";
     }
 
+    /* 聊天室只显示「站长亲封」里公开的紫色头衔；等级头衔是每个人自己的，不在这里展示 */
+    var CHAT_SEALED = {
+        "时雨": { name: "申鹤的🐶", tone: "purple", icon: "❄" }
+    };
+
+    function sealedChatBadge(name) {
+        var t = CHAT_SEALED[String(name || "").trim()];
+        if (!t) return "";
+        return '<span class="title-chip fx-legend tone-' + t.tone + '" title="' + t.name + '">' +
+            '<span class="tc-ico" aria-hidden="true">' + t.icon + '</span>' + t.name + '</span>';
+    }
+
     /* ---------- 会话 ---------- */
     function session() {
         try { return JSON.parse(localStorage.getItem("coffee-session") || "null"); } catch (e) { return null; }
     }
     function me() { var s = session(); return s && s.name && s.hash ? s : null; }
+
+    /* 站长封禁名单：先做本机管理版，配合站长工具使用 */
+    (function () {
+        var s = session();
+        if (!s || !s.name || s.name === "龙潜猫隐") return;
+        var bans = [];
+        try { bans = JSON.parse(localStorage.getItem("coffee-bans-v1") || "[]"); } catch (e) {}
+        if (Object.prototype.toString.call(bans) === "[object Array]" && bans.indexOf(s.name) >= 0) {
+            document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#14100e;color:#e8dcc8;font-family:Microsoft YaHei,sans-serif;text-align:center;line-height:2;padding:30px;">' +
+                '<div><div style="font-size:22px;letter-spacing:3px;color:#c9a86a;margin-bottom:12px;">账号已被站长暂停</div>' +
+                '这个账号暂时不能在店里使用。<br>如果你觉得是误判，可以给站长发邮件说明。</div></div>';
+            window.__chatBanned = true;
+        }
+    })();
+    if (window.__chatBanned) return;
+
+    /* 站长工具：只有站长看得到，固定在页面右上角 */
+    (function () {
+        var s = session();
+        if (!s || s.name !== "龙潜猫隐") return;
+        if (location.pathname.indexOf("owner-tools") >= 0) return;
+        var a = document.createElement("a");
+        a.className = "owner-tool-fab";
+        a.textContent = "站长工具";
+        a.href = location.pathname.indexOf("/coffee-site/") >= 0 ? "owner-tools.html" : "../coffee-site/owner-tools.html";
+        document.body.appendChild(a);
+    })();
 
     /* 使用时长：登录用户每 30 秒 +30 秒，存在本机；头衔系统按这个算等级 */
     (function () {
@@ -275,7 +324,7 @@
 
             var bubble = document.createElement("div");
             bubble.className = "bubble";
-            bubble.innerHTML = '<div class="who">' + escapeHtml(m.name) + ownerBadge(m.name) + "</div>";
+            bubble.innerHTML = '<div class="who">' + escapeHtml(m.name) + ownerBadge(m.name) + sealedChatBadge(m.name) + "</div>";
 
             if (m.image) {
                 var im = document.createElement("img");
@@ -556,7 +605,7 @@
                 row.className = "chat-row" + (isOwnerName(u.name) ? " owner-row" : "");
                 row.innerHTML =
                     '<div class="av">' + (u.avatar ? '<img src="' + u.avatar + '" alt="">' : escapeHtml(u.name.slice(0, 1))) + '</div>' +
-                    '<div class="n">' + escapeHtml(u.name) + ownerBadge(u.name) + '</div>' +
+                    '<div class="n">' + escapeHtml(u.name) + ownerBadge(u.name) + sealedChatBadge(u.name) + '</div>' +
                     '<div class="ops">' +
                     '<button data-invite="' + escapeHtml(u.name) + '">邀请</button>' +
                     '<button data-friend="' + escapeHtml(u.name) + '">加好友</button>' +

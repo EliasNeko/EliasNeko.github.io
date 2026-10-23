@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>站长工具 · 龙潜猫隐的咖啡店</title>
+<link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261028" data-titles-badge="1">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; padding: 36px 20px 80px; background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); color: #f3e7d3; font-family: "Microsoft YaHei", sans-serif; }
+    .wrap { width: min(760px, 100%); margin: 0 auto; }
+    .back { display: inline-block; margin-bottom: 18px; color: rgba(201,183,156,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back:hover { color: #c9a86a; }
+    h1 { font-size: 28px; font-weight: normal; letter-spacing: 6px; margin-bottom: 6px; }
+    .sub { color: #c9b79c; font-size: 12.5px; line-height: 1.9; margin-bottom: 22px; }
+    .card { margin-bottom: 16px; padding: 18px 20px; border: 1px solid rgba(201,168,106,.22); border-radius: 16px; background: #1a1512; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+    .cardhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    h2 { font-size: 16px; font-weight: normal; letter-spacing: 3px; color: #e8d4a8; }
+    .note { margin-top: 12px; color: rgba(201,183,156,.5); font-size: 11px; line-height: 1.9; }
+    .note b { color: #c9a86a; font-weight: normal; }
+    .account { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed rgba(201,168,106,.14); flex-wrap: wrap; }
+    .account:last-child { border-bottom: 0; }
+    .account .nm { min-width: 120px; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+    .account .meta { color: rgba(201,183,156,.45); font-size: 10.5px; min-width: 104px; }
+    .account .tag { font-size: 9.5px; padding: 1px 6px; border-radius: 999px; border: 1px solid rgba(201,168,106,.25); color: #c9a86a; }
+    .account .tag.online { color: #86efac; border-color: rgba(134,239,172,.35); }
+    .account .tag.friend { color: #7dd3fc; border-color: rgba(125,211,252,.35); }
+    .account .tag.banned { color: #fca5a5; border-color: rgba(252,165,165,.35); }
+    .account .ops { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+    button { padding: 6px 10px; border: 1px solid rgba(201,168,106,.35); border-radius: 8px; background: none; color: #e0c48c; font-family: inherit; font-size: 11px; cursor: pointer; }
+    button:hover { background: rgba(201,168,106,.12); }
+    button.danger { border-color: rgba(226,154,142,.4); color: #e29a8e; }
+    button.primary { background: #c9a86a; border-color: #c9a86a; color: #14100e; }
+    .form { display: grid; grid-template-columns: 1fr 1fr 110px 78px; gap: 8px; }
+    .form select, .form input { min-width: 0; padding: 9px 10px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #14100e; color: #f3e7d3; font-family: inherit; font-size: 12px; outline: none; }
+    .form select:focus, .form input:focus { border-color: rgba(201,168,106,.6); }
+    .grants { margin-top: 12px; }
+    .grant { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px dashed rgba(201,168,106,.12); flex-wrap: wrap; font-size: 12px; }
+    .grant .who { color: #c9b79c; }
+    .grant .ttl { display: flex; align-items: center; gap: 4px; }
+    .grant button { margin-left: auto; }
+    .deny { padding: 40px 20px; text-align: center; color: #c9b79c; line-height: 2; }
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 200; padding: 10px 18px; border: 1px solid rgba(201,168,106,.4); border-radius: 999px; background: rgba(20,16,14,.94); color: #f3e7d3; font-size: 12px; opacity: 0; pointer-events: none; transition: .2s; }
+    .toast.show { opacity: 1; }
+    @media (max-width: 640px) { .form { grid-template-columns: 1fr 1fr; } .account .meta { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <a class="back" href="index.html">← 回到店里</a>
+    <h1>站 长 工 具</h1>
+    <p class="sub">只有站长账号能看到。查看全站注册账号、直接加好友、邀请聊天、授予头衔、封禁。</p>
+
+    <div class="deny" id="deny" hidden>这个页面只对站长开放。<br><a style="color:#c9a86a" href="account.html">去登录</a></div>
+
+    <div id="app" hidden>
+        <section class="card">
+            <div class="cardhead"><h2>全站账号</h2><button id="reload" type="button">刷新</button></div>
+            <div id="accounts">正在读取…</div>
+            <p class="note">共 <b id="count">0</b> 个注册账号。加好友 / 邀请会真的写到云端，对方不用再点同意。</p>
+        </section>
+
+        <section class="card">
+            <h2>授予头衔</h2>
+            <div class="form">
+                <select id="grantUser"></select>
+                <input id="grantName" maxlength="20" placeholder="头衔名，比如 申鹤的🐶">
+                <select id="grantTone">
+                    <option value="purple">紫色</option>
+                    <option value="gold">金色</option>
+                    <option value="blue-purple">深蓝紫</option>
+                </select>
+                <button class="primary" id="grantBtn" type="button">授予</button>
+            </div>
+            <div class="grants" id="grants"></div>
+            <p class="note">授予记录保存在站长本机管理台；同一设备切换账号会立即看到。全站生效需要云端头衔表（见 supabase/升级-站长工具.sql）。</p>
+        </section>
+
+        <section class="card">
+            <h2>封禁名单（本机）</h2>
+            <div id="bans"></div>
+            <p class="note">封禁会拦住这个用户名在**这台设备**上的所有页面；解除后恢复。全站封禁需要云端表。</p>
+        </section>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="config.js?v=20261023"></script>
+<script src="member.js?v=20261025"></script>
+<script src="../assets/titles.js?v=20261028"></script>
+<script>
+(function () {
+    "use strict";
+    var SB_URL = window.SUPABASE_URL || "";
+    var SB_KEY = window.SUPABASE_KEY || "";
+    var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
+    var OWNER = "龙潜猫隐";
+    var BAN_KEY = "coffee-bans-v1";
+
+    var me = Member.session();
+    var app = document.getElementById("app");
+    var deny = document.getElementById("deny");
+    if (!me || me.name !== OWNER || !me.hash) {
+        deny.hidden = false;
+        return;
+    }
+    app.hidden = false;
+
+    var users = [];
+    var friends = {};
+    var online = {};
+    var toastEl = document.getElementById("toast");
+    var toastTimer = null;
+
+    function toast(t) {
+        toastEl.textContent = t;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2200);
+    }
+
+    function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+    }
+
+    function rpc(name, body) {
+        return fetch(SB_URL + "/rest/v1/rpc/" + name, { method: "POST", headers: H, body: JSON.stringify(body) })
+            .then(function (r) { return r.ok ? r.json() : null; });
+    }
+
+    function bans() {
+        try { return JSON.parse(localStorage.getItem(BAN_KEY) || "[]") || []; } catch (e) { return []; }
+    }
+    function saveBans(list) {
+        try { localStorage.setItem(BAN_KEY, JSON.stringify(list)); } catch (e) {}
+    }
+    function isBanned(n) { return bans().indexOf(n) >= 0; }
+
+    function load() {
+        document.getElementById("accounts").textContent = "正在读取…";
+        fetch(SB_URL + "/rest/v1/users?select=name,created&order=created.asc", { headers: H })
+            .then(function (r) { return r.ok ? r.json() : []; })
+            .then(function (list) {
+                users = list || [];
+                document.getElementById("count").textContent = users.length;
+                return rpc("friend_list", { p_name: me.name, p_hash: me.hash });
+            }).then(function (d) {
+                friends = {};
+                if (d && d.ok) (d.friends || []).forEach(function (f) { friends[f.name] = true; });
+                return rpc("chat_online", { p_name: me.name, p_hash: me.hash });
+            }).then(function (d) {
+                online = {};
+                if (d && d.ok) (d.users || []).forEach(function (u) { online[u.name] = true; });
+                renderAccounts();
+            }).catch(function () {
+                document.getElementById("accounts").textContent = "连不上云端，稍后再刷新。";
+            });
+    }
+
+    function renderAccounts() {
+        var box = document.getElementById("accounts");
+        if (!users.length) { box.textContent = "还没有注册账号。"; return; }
+        box.innerHTML = "";
+        users.forEach(function (u) {
+            var row = document.createElement("div");
+            row.className = "account";
+            var tags = "";
+            if (online[u.name]) tags += '<span class="tag online">在线</span>';
+            if (friends[u.name]) tags += '<span class="tag friend">好友</span>';
+            if (isBanned(u.name)) tags += '<span class="tag banned">已封禁</span>';
+            row.innerHTML = '<div class="nm">' + (window.Titles ? Titles.sealedNameHTML(u.name) : esc(u.name)) + '</div>' +
+                '<div class="meta">' + esc((u.created || "").slice(0, 10)) + '</div>' + tags +
+                '<div class="ops">' +
+                (u.name === OWNER ? '' :
+                    '<button data-act="friend" data-name="' + esc(u.name) + '">加好友</button>' +
+                    '<button data-act="invite" data-name="' + esc(u.name) + '">邀请聊天</button>' +
+                    '<button data-act="ban" data-name="' + esc(u.name) + '" class="danger">' + (isBanned(u.name) ? '解封' : '封禁') + '</button>') +
+                '</div>';
+            box.appendChild(row);
+        });
+    }
+
+    function renderGrants() {
+        var box = document.getElementById("grants");
+        var all = Titles.allGrants();
+        var html = "";
+        Object.keys(all).forEach(function (name) {
+            (all[name] || []).forEach(function (t) {
+                html += '<div class="grant"><span class="who">' + esc(name) + '</span><span class="ttl">' + Titles.badgeHTML(t) + '</span>' +
+                    '<button data-revoke="' + esc(name) + '" data-id="' + esc(t.id) + '">撤销</button></div>';
+            });
+        });
+        box.innerHTML = html || '<p class="note" style="margin-top:0">还没有授予任何自定义头衔。</p>';
+    }
+
+    function renderBans() {
+        var list = bans();
+        var box = document.getElementById("bans");
+        if (!list.length) { box.innerHTML = '<p class="note" style="margin-top:0">名单是空的。</p>'; return; }
+        box.innerHTML = list.map(function (n) {
+            return '<div class="grant"><span class="who">' + esc(n) + '</span><button style="margin-left:auto" data-unban="' + esc(n) + '">解除</button></div>';
+        }).join("");
+    }
+
+    function fillGrantUsers() {
+        var sel = document.getElementById("grantUser");
+        sel.innerHTML = users.map(function (u) {
+            return '<option value="' + esc(u.name) + '">' + esc(u.name) + '</option>';
+        }).join("");
+    }
+
+    async function invite(name) {
+        var room = String(Math.floor(100000 + Math.random() * 900000));
+        var d = await rpc("chat_create_room", { p_name: me.name, p_hash: me.hash, p_room: room, p_password: "" });
+        if (!d || !d.ok) { toast("房间没建起来"); return; }
+        var r = await rpc("invite_send", { p_name: me.name, p_hash: me.hash, p_to: name, p_room: room });
+        if (r && r.ok) toast("已邀请 " + name + " 进房间 " + room);
+        else if (r && r.error === "cooldown") toast("刚邀请过，等 30 秒");
+        else toast("邀请没发出去");
+    }
+
+    document.getElementById("reload").addEventListener("click", load);
+    document.getElementById("accounts").addEventListener("click", function (e) {
+        var b = e.target.closest("button");
+        if (!b) return;
+        var name = b.getAttribute("data-name");
+        var act = b.getAttribute("data-act");
+        if (act === "friend") {
+            rpc("friend_add", { p_name: me.name, p_hash: me.hash, p_friend: name }).then(function (d) {
+                toast(d && d.ok ? "已把 " + name + " 加为好友" : "加好友失败");
+                load();
+            });
+        } else if (act === "invite") {
+            invite(name);
+        } else if (act === "ban") {
+            var list = bans();
+            var i = list.indexOf(name);
+            if (i >= 0) list.splice(i, 1); else list.push(name);
+            saveBans(list);
+            renderAccounts(); renderBans();
+            toast(i >= 0 ? "已解除 " + name : "已封禁 " + name);
+        }
+    });
+
+    document.getElementById("grantBtn").addEventListener("click", function () {
+        var user = document.getElementById("grantUser").value;
+        var title = document.getElementById("grantName").value.trim();
+        var tone = document.getElementById("grantTone").value;
+        if (!user || !title) { toast("先选账号，再写头衔名"); return; }
+        Titles.grant(user, { name: title, tone: tone, icon: "✦" });
+        document.getElementById("grantName").value = "";
+        renderGrants(); renderAccounts();
+        toast("已授予 " + user + "「" + title + "」");
+    });
+
+    document.getElementById("grants").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-revoke]");
+        if (!b) return;
+        Titles.revoke(b.getAttribute("data-revoke"), b.getAttribute("data-id"));
+        renderGrants(); renderAccounts();
+        toast("已撤销");
+    });
+
+    document.getElementById("bans").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-unban]");
+        if (!b) return;
+        var list = bans().filter(function (n) { return n !== b.getAttribute("data-unban"); });
+        saveBans(list); renderAccounts(); renderBans(); toast("已解除");
+    });
+
+    var origLoad = load;
+    load = function () {
+        origLoad();
+        setTimeout(function () { if (users.length) { fillGrantUsers(); renderGrants(); renderBans(); } }, 900);
+    };
+    load();
+})();
+</script>
+<script src="../assets/chat.js?v=20261028"></script>
+<script src="../assets/update-popup.js?v=20261023"></script>
+</body>
+</html>
