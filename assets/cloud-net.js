@@ -7,7 +7,7 @@
     window.__cloudNetLoaded = true;
 
     var SB = "https://wjvwupcquwjoajdvinkx.supabase.co";
-    var DEFAULT_PROXY = ""; /* 部署 Pages 代理后，可以在这里填默认地址 */
+    var DEFAULT_PROXY = "https://coffee-cloud.pages.dev"; /* Pages 反向代理 */
     var TIMEOUT = 25000;
     var origFetch = window.fetch ? window.fetch.bind(window) : null;
     if (!origFetch) return;
