@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>龙潜猫隐的咖啡店</title>
         <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
-        <link rel="stylesheet" href="../assets/titles.css?v=20261032" data-titles-badge="1">
+        <link rel="stylesheet" href="../assets/titles.css?v=20261035" data-titles-badge="1">
         <style>
             /*
             选择器：body、.hero、.btn 是“选中谁”。
@@ -144,6 +144,14 @@
                 grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
                 gap: 28px;
             }
+            .cards.grouped { display: block; }
+            .menu-group { margin-bottom: 36px; }
+            .menu-group:last-child { margin-bottom: 0; }
+            .group-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 0 0 16px; padding-bottom: 9px; border-bottom: 1px solid rgba(201,168,106,.16); }
+            .group-head h3 { margin: 0; color: #e8d4a8; font-size: 16px; font-weight: normal; letter-spacing: 3px; }
+            .group-head span { color: rgba(201,183,156,.4); font-size: 10.5px; letter-spacing: 1px; }
+            .group-empty { margin: 0; padding: 20px 16px; border: 1px dashed rgba(201,168,106,.18); border-radius: 12px; color: rgba(201,183,156,.38); font-size: 12px; text-align: center; }
+            .menu-group .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 28px; }
 
             .card {
                 background: #1e1815;
@@ -1243,7 +1251,7 @@
         </script>
 
                 <script src="coffees.js?v=20261025"></script>
-<script src="../assets/titles.js?v=20261032"></script>
+<script src="../assets/titles.js?v=20261035"></script>
         <script>
             var KEY = "coffee-cart-v1";
             var cart = [];
@@ -1771,34 +1779,50 @@
                 }).catch(function () {});
             }
 
+            function cloudCard(c) {
+                var local = null;
+                if (typeof COFFEES !== "undefined") {
+                    for (var j = 0; j < COFFEES.length; j++) if (COFFEES[j].id === c.id) { local = COFFEES[j]; break; }
+                }
+                var desc = c.intro || (local ? local.tagline : String(c.story || "").slice(0, 24));
+                var maker = c.maker === "时雨"
+                    ? "用户：【时雨】投资上架的商品"
+                    : (c.maker === "龙潜猫隐" ? "" : "制作者：" + esc(c.maker));
+                var img = c.image
+                    ? '<img src="' + escAttr(c.image) + '" alt="">'
+                    : (c.id === "shengye" ? "🥥" : "☕️");
+                return '<article class="card">' +
+                    '<div class="card-img">' + img + '</div>' +
+                    '<h3>' + esc(c.name) + '</h3>' +
+                    '<p class="desc">' + esc(desc) + '</p>' +
+                    (maker ? '<p class="maker">' + esc(maker) + '</p>' : '') +
+                    '<div class="card-bottom">' +
+                    '<span class="price">¥ ' + Number(c.price) + '</span>' +
+                    '<button class="buy" data-id="' + escAttr(c.id) + '" data-name="' + escAttr(c.name) + '" data-price="' + Number(c.price) + '">加入</button>' +
+                    '</div></article>';
+            }
+
             function renderCloudMenu() {
                 var box = document.querySelector(".menu .cards");
                 if (!box) return;
-                var html = "";
+                var official = [], personal = [];
                 for (var i = 0; i < CLOUD_COFFEES.length; i++) {
-                    var c = CLOUD_COFFEES[i];
-                    var local = null;
-                    if (typeof COFFEES !== "undefined") {
-                        for (var j = 0; j < COFFEES.length; j++) if (COFFEES[j].id === c.id) { local = COFFEES[j]; break; }
-                    }
-                    var desc = local ? local.tagline : String(c.story || "").slice(0, 24);
-                    var maker = c.maker === "时雨"
-                        ? "用户：【时雨】投资上架的商品"
-                        : (c.maker === "龙潜猫隐" ? "" : "制作者：" + esc(c.maker));
-                    var img = c.image
-                        ? '<img src="' + escAttr(c.image) + '" alt="">'
-                        : (c.id === "shengye" ? "🥥" : "☕️");
-                    html += '<article class="card">' +
-                        '<div class="card-img">' + img + '</div>' +
-                        '<h3>' + esc(c.name) + '</h3>' +
-                        '<p class="desc">' + esc(desc) + '</p>' +
-                        (maker ? '<p class="maker">' + esc(maker) + '</p>' : '') +
-                        '<div class="card-bottom">' +
-                        '<span class="price">¥ ' + Number(c.price) + '</span>' +
-                        '<button class="buy" data-id="' + escAttr(c.id) + '" data-name="' + escAttr(c.name) + '" data-price="' + Number(c.price) + '">加入</button>' +
-                        '</div></article>';
+                    if (CLOUD_COFFEES[i].maker === "龙潜猫隐") official.push(CLOUD_COFFEES[i]);
+                    else personal.push(CLOUD_COFFEES[i]);
                 }
-                box.innerHTML = html;
+
+                function group(title, sub, list, empty) {
+                    var cards = "";
+                    for (var k = 0; k < list.length; k++) cards += cloudCard(list[k]);
+                    return '<div class="menu-group">' +
+                        '<div class="group-head"><h3>' + title + '</h3><span>' + sub + '</span></div>' +
+                        (list.length ? '<div class="cards">' + cards + '</div>' : '<p class="group-empty">' + empty + '</p>') +
+                        '</div>';
+                }
+
+                box.innerHTML = group("官方咖啡", "站长上架", official, "站长还没有上架咖啡。") +
+                    group("个人咖啡", "用户投稿 · 收益归制作者", personal, "还没有用户上架的咖啡。");
+                box.classList.add("grouped");
             }
 
             function showDone(items) {

@@ -136,6 +136,9 @@
 /* 星屑：每个亲封头衔有自己的小符号 */
 .title-chip.fx-legend::before,
 .title-chip.fx-owner::before {
+    content: "✦";
+    color: #f8fafc;
+    text-shadow: 0 0 7px rgba(255,255,255,.8);
     position: absolute;
     top: 1px;
     right: 3px;
@@ -178,6 +181,49 @@
     transform: rotate(18deg);
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .75), transparent);
     animation: titleShine 3.8s ease-in-out infinite;
+}
+
+.title-chip.fx-legend.tone-aurora {
+    color: #e8fffb;
+    background: linear-gradient(120deg, #082f38, #126b6b 48%, #3b2a6b) padding-box,
+                linear-gradient(120deg, #5eead4, #60a5fa, #c084fc, #5eead4) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 14px rgba(45, 212, 191, .7), 0 0 34px rgba(96, 165, 250, .35), inset 0 0 10px rgba(255,255,255,.16);
+}
+.title-chip.fx-legend.tone-sakura {
+    color: #fff0f7;
+    background: linear-gradient(120deg, #3b1024, #8f2f5a 50%, #4b1830) padding-box,
+                linear-gradient(120deg, #f9a8d4, #fda4af, #c084fc, #f9a8d4) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 14px rgba(244, 114, 182, .75), 0 0 34px rgba(251, 113, 133, .35), inset 0 0 10px rgba(255,255,255,.18);
+}
+.title-chip.fx-legend.tone-jade {
+    color: #eafff4;
+    background: linear-gradient(120deg, #082f28, #1f6f5c 50%, #0b352d) padding-box,
+                linear-gradient(120deg, #6ee7b7, #34d399, #a7f3d0, #6ee7b7) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 14px rgba(52, 211, 153, .7), 0 0 34px rgba(110, 231, 183, .32), inset 0 0 10px rgba(255,255,255,.16);
+}
+.title-chip.fx-legend.tone-sunset {
+    color: #fff7e6;
+    background: linear-gradient(120deg, #3a1608, #a34a1f 50%, #4a2410) padding-box,
+                linear-gradient(120deg, #fbbf24, #fb923c, #f472b6, #fbbf24) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 14px rgba(251, 146, 60, .75), 0 0 34px rgba(244, 114, 182, .3), inset 0 0 10px rgba(255,255,255,.2);
+}
+.title-chip.fx-legend.tone-abyss {
+    color: #e6f4ff;
+    background: linear-gradient(120deg, #061426, #0b2f5c 50%, #071b33) padding-box,
+                linear-gradient(120deg, #38bdf8, #2563eb, #818cf8, #38bdf8) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 14px rgba(56, 189, 248, .7), 0 0 34px rgba(37, 99, 235, .42), inset 0 0 10px rgba(255,255,255,.14);
+}
+.title-chip.fx-legend.tone-silver {
+    color: #ffffff;
+    background: linear-gradient(120deg, #181b21, #4b5563 50%, #242932) padding-box,
+                linear-gradient(120deg, #f8fafc, #cbd5e1, #94a3b8, #f8fafc) border-box;
+    background-size: 220% 100%, 300% 100%;
+    box-shadow: 0 0 12px rgba(226, 232, 240, .65), 0 0 30px rgba(148, 163, 184, .3), inset 0 0 9px rgba(255,255,255,.2);
 }
 
 .title-chip.lg.fx-legend { font-size: 13px; }

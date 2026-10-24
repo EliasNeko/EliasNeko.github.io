@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>站长工具 · 龙潜猫隐的咖啡店</title>
 <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
-<link rel="stylesheet" href="../assets/titles.css?v=20261032" data-titles-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261035" data-titles-badge="1">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { min-height: 100vh; padding: 36px 20px 80px; background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); color: #f3e7d3; font-family: "Microsoft YaHei", sans-serif; }
@@ -32,7 +32,7 @@
     button:hover { background: rgba(201,168,106,.12); }
     button.danger { border-color: rgba(226,154,142,.4); color: #e29a8e; }
     button.primary { background: #c9a86a; border-color: #c9a86a; color: #14100e; }
-    .form { display: grid; grid-template-columns: 1fr 1fr 110px 78px; gap: 8px; }
+    .form { display: grid; grid-template-columns: 1fr 1fr 110px 96px 78px; gap: 8px; }
     .form select, .form input { min-width: 0; padding: 9px 10px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #14100e; color: #f3e7d3; font-family: inherit; font-size: 12px; outline: none; }
     .grant { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px dashed rgba(201,168,106,.12); flex-wrap: wrap; font-size: 12px; }
     .grant .who { color: #c9b79c; }
@@ -71,6 +71,16 @@
         </section>
 
         <section class="card">
+            <div class="cardhead">
+                <h2>已上架咖啡</h2>
+                <input class="search" id="coffeeSearch" type="text" placeholder="搜咖啡名 / 制作者…">
+                <button id="unpublishAll" class="danger" type="button">一键下架全部</button>
+            </div>
+            <div id="coffeeAll">正在读取…</div>
+            <p class="note">默认显示所有已上架咖啡；搜索后可以单杯下架，或一键把全部已上架咖啡下架。下架后不再出现在菜单，数据保留。</p>
+        </section>
+
+        <section class="card">
             <div class="cardhead"><h2>咖啡审核</h2><button id="reloadCoffee" type="button">刷新</button></div>
             <div id="coffeePending">正在读取…</div>
             <p class="note">同意后上架到菜单；收益进制作者余额。打回后用户可以改完再投。</p>
@@ -82,9 +92,29 @@
                 <select id="grantUser"></select>
                 <input id="grantName" maxlength="20" placeholder="头衔名，比如 申鹤的🐶">
                 <select id="grantTone">
-                    <option value="purple">紫色</option>
-                    <option value="gold">金色</option>
-                    <option value="blue-purple">深蓝紫</option>
+                    <option value="gold">金色 · 王道</option>
+                    <option value="purple">紫色 · 申鹤</option>
+                    <option value="blue-purple">深蓝紫 · 夜航</option>
+                    <option value="aurora">极光青 · 幻境</option>
+                    <option value="sakura">樱粉 · 花信</option>
+                    <option value="jade">翡翠 · 竹青</option>
+                    <option value="sunset">落日橘 · 余晖</option>
+                    <option value="abyss">深海蓝 · 静渊</option>
+                    <option value="silver">银白 · 月华</option>
+                </select>
+                <select id="grantIcon">
+                    <option value="✦">✦ 四角星</option>
+                    <option value="✧">✧ 细星</option>
+                    <option value="❄">❄ 雪花</option>
+                    <option value="♛">♛ 皇冠</option>
+                    <option value="☾">☾ 月牙</option>
+                    <option value="♡">♡ 心</option>
+                    <option value="⚡">⚡ 闪电</option>
+                    <option value="☘">☘ 三叶草</option>
+                    <option value="🐾">🐾 爪印</option>
+                    <option value="🎀">🎀 蝴蝶结</option>
+                    <option value="☕">☕ 咖啡</option>
+                    <option value="★">★ 实星</option>
                 </select>
                 <button class="primary" id="grantBtn" type="button">授予</button>
             </div>
@@ -104,7 +134,7 @@
 
 <script src="config.js?v=20261025"></script>
 <script src="member.js?v=20261025"></script>
-<script src="../assets/titles.js?v=20261032"></script>
+<script src="../assets/titles.js?v=20261035"></script>
 <script>
 (function () {
     "use strict";
@@ -121,8 +151,8 @@
     }
     app.hidden = false;
 
-    var users = [], friends = {}, online = {}, grants = [], bans = [], pending = [];
-    var filterText = "";
+    var users = [], friends = {}, online = {}, grants = [], bans = [], pending = [], allCoffees = [];
+    var filterText = "", coffeeFilter = "";
     var toastEl = document.getElementById("toast");
     var toastTimer = null;
 
@@ -157,7 +187,8 @@
                     rpc("chat_online", { p_name: me.name, p_hash: me.hash }),
                     rpc("titles_all", {}),
                     rpc("bans_all", {}),
-                    rpc("coffee_pending", { p_admin: me.name, p_hash: me.hash })
+                    rpc("coffee_pending", { p_admin: me.name, p_hash: me.hash }),
+                    rpc("coffee_list", {})
                 ]);
             }).then(function (res) {
                 friends = {}; online = {};
@@ -166,11 +197,13 @@
                 grants = Array.isArray(res[3]) ? res[3] : [];
                 bans = Array.isArray(res[4]) ? res[4] : [];
                 pending = (res[5] && res[5].ok) ? (res[5].items || []) : [];
+                allCoffees = Array.isArray(res[6]) ? res[6] : [];
                 fillGrantUsers();
                 renderAccounts();
                 renderGrants();
                 renderBans();
                 renderPending();
+                renderCoffeeAll();
             }).catch(function () {
                 document.getElementById("accounts").textContent = "连不上云端，稍后再刷新。";
             });
@@ -196,7 +229,8 @@
                 (u.name === "龙潜猫隐" ? '' :
                     '<button data-act="friend" data-name="' + esc(u.name) + '">加好友</button>' +
                     '<button data-act="invite" data-name="' + esc(u.name) + '">邀请聊天</button>' +
-                    '<button data-act="ban" data-name="' + esc(u.name) + '" class="danger">' + (bans.indexOf(u.name) >= 0 ? '解封' : '封禁') + '</button>') +
+                    '<button data-act="ban" data-name="' + esc(u.name) + '" class="danger">' + (bans.indexOf(u.name) >= 0 ? '解封' : '封禁') + '</button>' +
+                    '<button data-act="delete" data-name="' + esc(u.name) + '" class="danger">注销</button>') +
                 '</div>';
             box.appendChild(row);
         });
@@ -228,9 +262,29 @@
             return '<div class="coffee"><div class="pic">' + pic + '</div><div class="info">' +
                 '<b>' + esc(c.name) + ' · ¥' + Number(c.price) + '</b>' +
                 '<p>制作者：' + esc(c.maker) + ' · ' + esc((c.created || "").slice(0, 10)) + '</p>' +
-                '<p>' + esc(c.story || "") + '</p></div>' +
+                '<p>' + esc(c.intro || c.story || "") + '</p></div>' +
                 '<div class="ops"><button class="primary" data-review="ok" data-id="' + esc(c.id) + '">同意上架</button>' +
                 '<button class="danger" data-review="no" data-id="' + esc(c.id) + '">打回</button></div></div>';
+        }).join("");
+    }
+
+    function renderCoffeeAll() {
+        var box = document.getElementById("coffeeAll");
+        var list = allCoffees.filter(function (c) {
+            if (!coffeeFilter) return true;
+            return (String(c.name) + " " + String(c.maker)).toLowerCase().indexOf(coffeeFilter) >= 0;
+        });
+        if (!list.length) {
+            box.innerHTML = '<p class="note">' + (allCoffees.length ? "没有匹配的咖啡。" : "现在没有已上架的咖啡。") + '</p>';
+            return;
+        }
+        box.innerHTML = list.map(function (c) {
+            var pic = c.image ? '<img src="' + c.image + '" alt="">' : "☕️";
+            return '<div class="coffee"><div class="pic">' + pic + '</div><div class="info">' +
+                '<b>' + esc(c.name) + ' · ¥' + Number(c.price) + '</b>' +
+                '<p>制作者：' + esc(c.maker) + ' · ' + esc((c.created || "").slice(0, 10)) + '</p>' +
+                '<p>' + esc(c.intro || c.story || "") + '</p></div>' +
+                '<div class="ops"><button class="danger" data-unpublish="' + esc(c.id) + '">下架</button></div></div>';
         }).join("");
     }
 
@@ -280,15 +334,47 @@
                 toast(d && d.ok ? (adding ? "已封禁 " + name : "已解除 " + name) : "操作失败");
                 load();
             });
+        } else if (act === "delete") {
+            if (!confirm("确定注销「" + name + "」？")) return;
+            if (!confirm("注销会删除这个账号的余额、头衔、好友、咖啡和聊天记录，不能恢复。继续？")) return;
+            rpc("admin_delete_user", { p_admin: me.name, p_hash: me.hash, p_user: name }).then(function (d) {
+                toast(d && d.ok ? "已注销 " + name : "注销失败");
+                load();
+            });
         }
+    });
+
+    document.getElementById("coffeeSearch").addEventListener("input", function () {
+        coffeeFilter = this.value.trim().toLowerCase();
+        renderCoffeeAll();
+    });
+
+    document.getElementById("unpublishAll").addEventListener("click", function () {
+        if (!allCoffees.length) { toast("现在没有已上架的咖啡"); return; }
+        if (!confirm("确定一键下架全部 " + allCoffees.length + " 杯已上架咖啡？")) return;
+        rpc("admin_unpublish_all_coffees", { p_admin: me.name, p_hash: me.hash }).then(function (d) {
+            toast(d && d.ok ? "已下架 " + (d.count || 0) + " 杯" : "下架失败");
+            load();
+        });
+    });
+
+    document.getElementById("coffeeAll").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-unpublish]");
+        if (!b) return;
+        if (!confirm("确定下架这杯咖啡？")) return;
+        rpc("admin_unpublish_coffee", { p_admin: me.name, p_hash: me.hash, p_id: b.getAttribute("data-unpublish") }).then(function (d) {
+            toast(d && d.ok ? "已下架" : "下架失败");
+            load();
+        });
     });
 
     document.getElementById("grantBtn").addEventListener("click", function () {
         var user = document.getElementById("grantUser").value;
         var title = document.getElementById("grantName").value.trim();
         var tone = document.getElementById("grantTone").value;
+        var icon = document.getElementById("grantIcon").value;
         if (!user || !title) { toast("先选账号，再写头衔名"); return; }
-        rpc("admin_grant_title", { p_admin: me.name, p_hash: me.hash, p_user: user, p_title: title, p_tone: tone }).then(function (d) {
+        rpc("admin_grant_title", { p_admin: me.name, p_hash: me.hash, p_user: user, p_title: title, p_tone: tone, p_icon: icon }).then(function (d) {
             if (d && d.ok) {
                 document.getElementById("grantName").value = "";
                 toast("已授予 " + user + "「" + title + "」");

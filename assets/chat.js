@@ -23,7 +23,7 @@
             if (!document.querySelector('link[data-titles-badge]')) {
                 var t = document.createElement("link");
                 t.rel = "stylesheet";
-                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261032");
+                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261035");
                 t.setAttribute("data-titles-badge", "1");
                 document.head.appendChild(t);
             }

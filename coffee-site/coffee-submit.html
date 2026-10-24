@@ -57,6 +57,11 @@
                 </div>
             </div>
             <div class="field">
+                <label for="cintro">一句话简介</label>
+                <input id="cintro" type="text" maxlength="60" placeholder="比如：椰香先到，苦后回甘">
+                <p class="hint">会显示在菜单卡片上；故事留在故事页，不会被挤到卡片里。</p>
+            </div>
+            <div class="field">
                 <label for="cstory">它的故事</label>
                 <textarea id="cstory" maxlength="2000" placeholder="写给它，也写给买它的人。"></textarea>
             </div>
@@ -144,9 +149,11 @@
         e.preventDefault();
         var name = document.getElementById("cname").value.trim();
         var price = Number(document.getElementById("cprice").value);
+        var intro = document.getElementById("cintro").value.trim();
         var story = document.getElementById("cstory").value.trim();
 
         if (name.length < 2) { setMsg("名字至少 2 个字。", false); return; }
+        if (intro.length < 2 || intro.length > 60) { setMsg("简介写 2–60 个字。", false); return; }
         if (!isFinite(price) || price <= 0 || Math.floor(price) !== price) { setMsg("价格要是大于 0 的整数。", false); return; }
         if (price > maxPrice) { setMsg("不能超过站长最高价 ¥" + maxPrice + "。", false); return; }
         if (story.length < 10) { setMsg("故事至少写 10 个字。", false); return; }
@@ -158,7 +165,7 @@
             method: "POST", headers: H,
             body: JSON.stringify({
                 p_name: me.name, p_hash: me.hash, p_coffee: name,
-                p_story: story, p_price: price, p_image: imageData
+                p_intro: intro, p_story: story, p_price: price, p_image: imageData
             })
         }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
             btn.disabled = false;
@@ -168,7 +175,7 @@
                     var list = JSON.parse(localStorage.getItem(key) || "[]");
                     if (Object.prototype.toString.call(list) !== "[object Array]") list = [];
                     list.push({
-                        id: d.id, name: name, price: price, story: story,
+                        id: d.id, name: name, intro: intro, price: price, story: story,
                         image: "", status: "pending", created: new Date().toISOString()
                     });
                     localStorage.setItem(key, JSON.stringify(list));
@@ -178,6 +185,8 @@
                 return;
             }
             if (d && d.error === "too-expensive") setMsg("价格超过了站长最高价 ¥" + d.max + "。", false);
+            else if (d && d.error === "bad-intro") setMsg("简介要写 2–60 个字。", false);
+            else if (d && d.error === "bad-story") setMsg("故事至少写 10 个字。", false);
             else if (d && d.error === "image-too-large") setMsg("图片太大了，换一张。", false);
             else setMsg("提交失败，稍后再试。", false);
         }).catch(function () {

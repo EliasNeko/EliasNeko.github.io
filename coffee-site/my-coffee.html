@@ -115,10 +115,11 @@
         var pic = c.image ? '<img src="' + esc(c.image) + '" alt="">' : "☕️";
         var label = status === "approved" ? "已上架" : (status === "pending" ? "等站长审核" : "已打回");
         var note = c.review_note ? " · " + esc(c.review_note) : "";
+        var intro = c.intro || String(c.story || "").slice(0, 60);
         return '<div class="coffee"><div class="pic">' + pic + '</div><div class="info">' +
             '<div class="top"><b>' + esc(c.name) + '</b><span class="price">¥' + Number(c.price) + '</span>' +
             '<span class="status ' + status + '">' + label + '</span></div>' +
-            '<p>' + esc(c.story || "").slice(0, 120) + (note ? '<br>' + note : '') + '</p></div></div>';
+            '<p>' + esc(intro) + (note ? '<br>' + note : '') + '</p></div></div>';
     }
 
     function render(data) {
