@@ -27,6 +27,7 @@ export default {
     const headers = new Headers(request.headers);
     headers.delete("host");
     headers.delete("cf-connecting-ip");
+    headers.delete("content-length");
 
     const init = {
       method: request.method,
@@ -34,11 +35,22 @@ export default {
       redirect: "manual"
     };
     if (request.method !== "GET" && request.method !== "HEAD") {
-      init.body = request.body;
+      init.body = await request.arrayBuffer();
     }
 
-    const res = await fetch(target, init);
+    let res;
+    try {
+      res = await fetch(target, init);
+    } catch (err) {
+      return new Response(JSON.stringify({ error: "proxy-upstream-failed", detail: String(err) }), {
+        status: 502,
+        headers: { "content-type": "application/json; charset=utf-8", ...CORS }
+      });
+    }
     const out = new Headers(res.headers);
+    out.delete("content-encoding");
+    out.delete("content-length");
+    out.delete("transfer-encoding");
     for (const [key, value] of Object.entries(CORS)) out.set(key, value);
     return new Response(res.body, { status: res.status, headers: out });
   }

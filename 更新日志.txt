@@ -96,3 +96,6 @@
 咖啡店：注册 / 登录超时改 20 秒，失败提示改成「换 Wi-Fi / 手机流量或开 VPN」；新增 SUPABASE_PROXY 开关
 全站：新增 cloudflare-proxy 反向代理模板；部署后把地址填进 config 就能绕开被重置的域名
 全站：config 20261024 / chat 20261031 / live 20261025 / titles 20261032
+全站：49 个页面加载 cloud-net.js——Supabase 请求统一 25 秒超时、GET 自动重试、支持 SUPABASE_PROXY 改写
+全站：cloudflare-proxy 的 _worker.js 加固（转发 POST body、CORS、上游 502 兜底）；部署说明在 README
+全站：cloud-net 20261033；代理未部署前，被重置的网络仍需 VPN / 换网络
