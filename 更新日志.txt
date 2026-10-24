@@ -101,3 +101,4 @@
 全站：cloud-net 20261033；代理未部署前，被重置的网络仍需 VPN / 换网络
 全站：Cloudflare Pages 代理已上线 https://coffee-cloud.pages.dev；config / cloud-net 已切到代理
 全站：config 20261025 / cloud-net 20261034；代理的 CORS、POST 转发、直连访问都验证过
+全站：代理上线后新注册「龙潜猫隐test号2」，云端 7 位；本地注册记录已同步，注册链路实测通过
