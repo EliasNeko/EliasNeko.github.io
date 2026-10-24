@@ -138,7 +138,7 @@
     </div>
 </div>
 
-<script src="config.js?v=20261023"></script>
+<script src="config.js?v=20261024"></script>
 <script src="member.js?v=20261025"></script>
 <script>
 (function () {
@@ -148,7 +148,7 @@
     var API = window.COFFEE_API || "";   /* 后端地址：config.js 里改 */
     var currentList = null;       /* 当前要加密的名单：服务器优先，其次本机 */
 
-    var SB_URL = window.SUPABASE_URL || "";
+    var SB_URL = window.SUPABASE_PROXY || window.SUPABASE_URL || "";
     var SB_KEY = window.SUPABASE_KEY || "";
     var sbMode = !!(SB_URL && SB_KEY);
 
@@ -339,8 +339,8 @@
     });
 })();
 </script>
-    <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261030"></script>
+    <script src="../assets/live.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261031"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
 </body>
 </html>

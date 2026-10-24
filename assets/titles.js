@@ -32,7 +32,7 @@
     var PICK_PREFIX = "coffee-titles-selected-v1:";
     var GRANT_KEY = "coffee-grants-v1";
     var CLOUD_TITLES = {};
-    var SB_URL = window.SUPABASE_URL || "https://wjvwupcquwjoajdvinkx.supabase.co";
+    var SB_URL = window.SUPABASE_PROXY || window.SUPABASE_URL || "https://wjvwupcquwjoajdvinkx.supabase.co";
     var SB_KEY = window.SUPABASE_KEY || "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
     function esc(s) {

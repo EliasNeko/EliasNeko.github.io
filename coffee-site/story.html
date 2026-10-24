@@ -47,12 +47,12 @@
     <p class="sign">—— 龙潜猫隐</p>
     <a class="back" href="index.html">← 回 到 店 里</a>
 </main>
-<script src="config.js?v=20261023"></script>
+<script src="config.js?v=20261024"></script>
 <script src="coffees.js?v=20261025"></script>
 <script>
 (function () {
     var id = new URLSearchParams(location.search).get("id");
-    var SB_URL = window.SUPABASE_URL || "";
+    var SB_URL = window.SUPABASE_PROXY || window.SUPABASE_URL || "";
     var SB_KEY = window.SUPABASE_KEY || "";
 
     function esc(s) {
@@ -102,8 +102,8 @@
     }).catch(missing);
 })();
 </script>
-    <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261030"></script>
+    <script src="../assets/live.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261031"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
 </body>
 </html>

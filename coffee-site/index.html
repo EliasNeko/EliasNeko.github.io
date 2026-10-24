@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>龙潜猫隐的咖啡店</title>
         <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
-        <link rel="stylesheet" href="../assets/titles.css?v=20261031" data-titles-badge="1">
+        <link rel="stylesheet" href="../assets/titles.css?v=20261032" data-titles-badge="1">
         <style>
             /*
             选择器：body、.hero、.btn 是“选中谁”。
@@ -1139,6 +1139,7 @@
                 </form>
             </div>
 
+            <script src="config.js?v=20261024"></script>
             <script src="member.js?v=20261025"></script>
             <script>
             (function () {
@@ -1241,7 +1242,7 @@
         </script>
 
                 <script src="coffees.js?v=20261025"></script>
-<script src="../assets/titles.js?v=20261031"></script>
+<script src="../assets/titles.js?v=20261032"></script>
         <script>
             var KEY = "coffee-cart-v1";
             var cart = [];
@@ -1305,7 +1306,7 @@
             var walletKey = WALLET_BASE + deviceId() + (isMember ? ":" + me.name : "");
 
             /* ---------- 顶栏头像 ---------- */
-            var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
+            var SB_URL = window.SUPABASE_PROXY || "https://wjvwupcquwjoajdvinkx.supabase.co";
             var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
             function renderNavMenu() {
@@ -1928,7 +1929,7 @@
             }
         </script>
                     <script src="../assets/update-popup.js?v=20261022"></script>
-    <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261030"></script>
+    <script src="../assets/live.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261031"></script>
 </body>
         </html>

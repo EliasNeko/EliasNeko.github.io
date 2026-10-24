@@ -23,14 +23,14 @@
             if (!document.querySelector('link[data-titles-badge]')) {
                 var t = document.createElement("link");
                 t.rel = "stylesheet";
-                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261031");
+                t.href = cs.src.replace(/chat\.js(?:\?.*)?$/, "titles.css?v=20261032");
                 t.setAttribute("data-titles-badge", "1");
                 document.head.appendChild(t);
             }
         } catch (e) {}
     })();
 
-    var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
+    var SB_URL = window.SUPABASE_PROXY || "https://wjvwupcquwjoajdvinkx.supabase.co";
     var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
     var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
 

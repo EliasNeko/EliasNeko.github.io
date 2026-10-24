@@ -76,12 +76,12 @@
     <p class="note">收益来自云端订单，按售价全额进入制作者余额；退款 / 取消订单暂未开放。</p>
 </div>
 
-<script src="config.js?v=20261023"></script>
+<script src="config.js?v=20261024"></script>
 <script src="member.js?v=20261025"></script>
 <script>
 (function () {
     "use strict";
-    var SB_URL = window.SUPABASE_URL || "";
+    var SB_URL = window.SUPABASE_PROXY || window.SUPABASE_URL || "";
     var SB_KEY = window.SUPABASE_KEY || "";
     var H = { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" };
     var me = Member.session();

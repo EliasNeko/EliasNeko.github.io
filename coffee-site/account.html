@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>会员登记 · 龙潜猫隐的咖啡店</title>
 <link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
-<link rel="stylesheet" href="../assets/titles.css?v=20261031" data-titles-badge="1">
+<link rel="stylesheet" href="../assets/titles.css?v=20261032" data-titles-badge="1">
 <style>
     /* 咖啡店的配色：深褐底 + 金线 */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -298,9 +298,9 @@
     </p>
 </div>
 
-<script src="config.js?v=20261023"></script>
+<script src="config.js?v=20261024"></script>
 <script src="member.js?v=20261025"></script>
-<script src="../assets/titles.js?v=20261031"></script>
+<script src="../assets/titles.js?v=20261032"></script>
 <script>
 (function () {
     "use strict";
@@ -333,7 +333,7 @@
     var serverMode = false;
 
     /* Supabase：有这两个值就走云端，不用开电脑 */
-    var SB_URL = window.SUPABASE_URL || "";
+    var SB_URL = window.SUPABASE_PROXY || window.SUPABASE_URL || "";
     var SB_KEY = window.SUPABASE_KEY || "";
     var sbMode = !!(SB_URL && SB_KEY);
 
@@ -342,7 +342,7 @@
         opts = opts || {};
         if (typeof AbortController === "undefined") return fetch(url, opts);
         var ctrl = new AbortController();
-        var timer = setTimeout(function () { ctrl.abort(); }, ms || 9000);
+        var timer = setTimeout(function () { ctrl.abort(); }, ms || 20000);
         var o = {};
         for (var k in opts) { if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k]; }
         o.signal = ctrl.signal;
@@ -355,6 +355,15 @@
         "Authorization": "Bearer " + SB_KEY,
         "Content-Type": "application/json"
     };
+
+    function cloudFail(err) {
+        if (err && err.status) return "云端返回 HTTP " + err.status + "，稍后再试。";
+        if (err && (err.name === "AbortError" || /abort|timeout|超时/i.test(String(err.message || "")))) {
+            return "云端 20 秒没响应，可能网络太慢。换 Wi-Fi / 手机流量，或开 VPN 再试。";
+        }
+        return "当前网络访问不了 supabase.co（连接被重置），不是账号问题。换 Wi-Fi / 手机流量，或开 VPN 再试。" +
+            (inWeChat ? " 微信里也可以点右上角「⋯」→「在浏览器打开」。" : "");
+    }
 
     /* 注册：交给 Supabase 的函数，一次写两张表 */
     function sbRegister(user, finish, fail) {
@@ -371,14 +380,18 @@
                 p_time: user.time
             })
         }).then(function (res) {
-            if (!res.ok) throw new Error("HTTP " + res.status);
+            if (!res.ok) {
+                var e = new Error("HTTP " + res.status);
+                e.status = res.status;
+                throw e;
+            }
             return res.json();
         }).then(function (out) {
             if (out && out.ok) return finish("登记成功，正在带你回店里…");
             if (out && out.error === "duplicate") return fail("这个名字已经有人用了，换一个吧。");
             return fail("登记没成功，稍后再试（" + (out && out.error ? out.error : "未知原因") + "）。");
-        }).catch(function () {
-            fail("连不上云端。" + (inWeChat ? "微信里经常这样，点右上角「⋯」→「在浏览器打开」再试。" : "换个网络再试。"));
+        }).catch(function (err) {
+            fail(cloudFail(err));
         });
     }
 
@@ -387,8 +400,13 @@
         var lastHash = "";
         fetchTimeout(SB_URL + "/rest/v1/users?select=salt&name=eq." + encodeURIComponent(name), {
             headers: SB_HEADERS
-        }, 9000).then(function (res) {
-            return res.ok ? res.json() : [];
+        }, 20000).then(function (res) {
+            if (!res.ok) {
+                var e2 = new Error("HTTP " + res.status);
+                e2.status = res.status;
+                throw e2;
+            }
+            return res.json();
         }).then(function (rows) {
             if (!rows || !rows.length) {
                 fail("没找到这个账号，用户名或密码不对。");
@@ -400,15 +418,20 @@
                     method: "POST",
                     headers: SB_HEADERS,
                     body: JSON.stringify({ p_name: name, p_hash: h })
-                }, 9000);
+                }, 20000);
             }).then(function (res) {
+                if (!res.ok) {
+                    var e3 = new Error("HTTP " + res.status);
+                    e3.status = res.status;
+                    throw e3;
+                }
                 return res.json();
             }).then(function (ok) {
                 if (ok === true) done(lastHash);
                 else fail("没找到这个账号，用户名或密码不对。");
             });
-        }).catch(function () {
-            fail("连不上云端。这个网络可能访问不了 supabase.co，换个网络或开代理再试。");
+        }).catch(function (err) {
+            fail(cloudFail(err));
         });
     }
 
@@ -810,8 +833,8 @@
     renderAvatarPanel();
 })();
 </script>
-    <script src="../assets/live.js?v=20261024"></script>
-    <script src="../assets/chat.js?v=20261030"></script>
+    <script src="../assets/live.js?v=20261025"></script>
+    <script src="../assets/chat.js?v=20261031"></script>
     <script src="../assets/update-popup.js?v=20261023"></script>
 </body>
 </html>

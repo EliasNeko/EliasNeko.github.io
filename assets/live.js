@@ -7,7 +7,7 @@
     if (window.__liveWidgetLoaded) return;
     window.__liveWidgetLoaded = true;
 
-    var SB_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
+    var SB_URL = window.SUPABASE_PROXY || "https://wjvwupcquwjoajdvinkx.supabase.co";
     var SB_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
     var DEVICE_KEY = "coffee-device-id";

@@ -7,4 +7,8 @@
 window.SUPABASE_URL = "https://wjvwupcquwjoajdvinkx.supabase.co";
 window.SUPABASE_KEY = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
 
+/* 如果 supabase.co 在某些网络被重置，可以在这里填反向代理地址（结尾不带斜杠）。
+   代理要转发 /rest/v1/* 到上面的 SUPABASE_URL；留空就直连。 */
+window.SUPABASE_PROXY = "";
+
 window.COFFEE_API = "";
