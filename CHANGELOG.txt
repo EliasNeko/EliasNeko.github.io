@@ -106,3 +106,10 @@
 站长工具：账号搜索 + 一键注销；咖啡搜索 + 单杯下架 / 一键下架全部；头衔新增 9 种配色和 12 种图标
 全站：titles 20261035；supabase/migrations/012-admin-management.sql 已运行：注销临时账号、aurora + ☾ 头衔授撤、coffee_list 带 intro 都验证通过
 全站：注销 / 单杯下架 / 一键下架全部 / 新简介投稿 / 新头衔图标正式可用
+
+2026-10-26
+全站：项目从 Study Note/自学笔记/和小鱼 迁到 Study Note/xiaoyu-website，所有 git 跟踪文件英文化
+全站：assets 分 js / css / images；coffee-site 脚本进 js；supabase 升级脚本进 migrations；文档进 docs
+全站：更新日志.txt → CHANGELOG.txt，启动网站.bat → start-site.bat，更新网站.bat → update-site.bat
+全站：重排 JS / CSS 缩进，修复静态资源、聊天室 CSS、更新弹窗和咖啡脚本路径；本地预览与线上均无 404
+全站：新增 README.md 与 WEB_PROJECT_MEMORY.md（后者只留本地），旧知识库 URL 改为 knowledge-base/
