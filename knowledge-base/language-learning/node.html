@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Node.js 入门 · 语言学习项目</title>
+<link rel="stylesheet" href="../lesson.css">
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<header class="top">
+    <p class="kicker">语言学习项目 · 知识点</p>
+    <h1>Node.js：让 JS 跑在服务器上</h1>
+    <p class="sub">它不是新语言，是把浏览器的 V8 引擎搬到了电脑上。</p>
+    <div class="meta"><span><span>10 节</span></span><span><span>难度 中等</span></span><span><span>更新 2026-10-23</span></span></div>
+</header>
+
+<div class="idx-wrap">
+<section class="card" id="s01"><h2><span class="num">01</span>它是什么</h2>
+<p>Node.js 不是新语言，是把 Chrome 的 V8 引擎搬到了电脑上，让 JavaScript 能脱离浏览器跑。写后端、写脚本、写工具，都能用它。</p>
+<p>它的特点：单线程 + 事件循环。一段代码在等文件、等网络的时候，会切去干别的，所以一个人也能扛不少请求。</p>
+<div class="note"><b>适合谁：</b>已经会 JS，想让它「出浏览器」的人。</div>
+</section>
+<section class="card" id="s02"><h2><span class="num">02</span>装好、跑起来</h2>
+<pre><code>node -v
+npm -v
+
+node hello.js</code></pre>
+<pre><code>console.log("你好，Node");</code></pre>
+<div class="note"><b>坑：</b><code>node</code> 是运行环境，<code>npm</code> 是包管理器，两个都要有版本号才算装好。装完不重开终端会找不到。</div>
+</section>
+<section class="card" id="s03"><h2><span class="num">03</span>npm 和 package.json</h2>
+<pre><code>npm init -y
+npm install express
+npm install --save-dev nodemon</code></pre>
+<p><code>package.json</code> 记着项目名、依赖、脚本命令；<code>node_modules</code> 是装下来的包，<b>不要提交进 git</b>。</p>
+<pre><code>"scripts": {
+  "start": "node index.js",
+  "dev": "nodemon index.js"
+}</code></pre>
+<div class="note"><b>坑：</b><code>node_modules</code> 一定要写进 <code>.gitignore</code>；别人拿到项目跑一次 <code>npm install</code> 就还原了。</div>
+</section>
+<section class="card" id="s04"><h2><span class="num">04</span>模块</h2>
+<pre><code>// money.js
+function yuan(n) { return "¥ " + n.toFixed(2); }
+module.exports = { yuan };
+
+// index.js
+const { yuan } = require("./money");
+console.log(yuan(32));</code></pre>
+<p>新版也能用 <code>import/export</code>，但要在 package.json 里加 <code>"type": "module"</code>。老项目多半还是 CommonJS，两种都认识最好。</p>
+<div class="note"><b>坑：</b><code>require("./money")</code> 少了 <code>./</code> 会去 <code>node_modules</code> 里找，报「Cannot find module」。</div>
+</section>
+<section class="card" id="s05"><h2><span class="num">05</span>读写文件</h2>
+<pre><code>const fs = require("fs");
+
+const text = fs.readFileSync("a.txt", "utf8");
+fs.writeFileSync("b.txt", text.toUpperCase(), "utf8");</code></pre>
+<p>带 <code>Sync</code> 的是同步，简单但会卡住整个进程；服务器里一般用异步或 Promise 版：</p>
+<pre><code>const fs = require("fs/promises");
+
+async function main() {
+  const text = await fs.readFile("a.txt", "utf8");
+  console.log(text.length);
+}
+main();</code></pre>
+</section>
+<section class="card" id="s06"><h2><span class="num">06</span>用 http 写个服务器</h2>
+<pre><code>const http = require("http");
+
+http.createServer((req, res) =&gt; {
+  res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+  res.end(JSON.stringify({ ok: true, path: req.url }));
+}).listen(3000, () =&gt; {
+  console.log("http://127.0.0.1:3000");
+});</code></pre>
+<div class="note"><b>坑：</b>中文不设 <code>charset=utf-8</code> 会乱码；<code>res.end()</code> 之后不能再写，否则报错。</div>
+</section>
+<section class="card" id="s07"><h2><span class="num">07</span>Express：路由和 JSON</h2>
+<pre><code>const express = require("express");
+const app = express();
+app.use(express.json());
+
+app.get("/api/hello", (req, res) =&gt; res.json({ msg: "你好" }));
+
+app.post("/api/orders", (req, res) =&gt; {
+  res.json({ got: req.body });
+});
+
+app.listen(3000);</code></pre>
+<div class="note"><b>坑：</b>不写 <code>app.use(express.json())</code>，<code>req.body</code> 永远是 undefined——这是新手最常见的「POST 收不到数据」。</div>
+</section>
+<section class="card" id="s08"><h2><span class="num">08</span>async/await 和 fetch</h2>
+<pre><code>async function getTitle(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const html = await res.text();
+  return html.match(/&lt;title&gt;(.*?)&lt;\/title&gt;/)?.[1] || "没有标题";
+}</code></pre>
+<p>await 只能写在 async 函数里；忘记 await，拿到的是 Promise 对象，不是结果。</p>
+<div class="note"><b>坑：</b>Node 18 之前没有全局 fetch，要装 <code>node-fetch</code>。先 <code>node -v</code> 看版本。</div>
+</section>
+<section class="card" id="s09"><h2><span class="num">09</span>动手项目：一个小接口</h2>
+<p><b>要求：</b>写一个服务，<code>GET /api/list</code> 返回数组（从 <code>data.json</code> 读），<code>POST /api/add</code> 往里加一条并写回文件。</p>
+<p><b>验收：</b>curl 或浏览器能看到 JSON；POST 之后 GET 能读到新加的那条；<code>data.json</code> 不存在时当空数组，不崩。</p>
+<p><b>提示：</b>读写用 <code>fs/promises</code>；加锁问题先不管，单用户够用。</p>
+</section>
+<section class="card" id="s10"><h2><span class="num">10</span>往哪走</h2>
+<p>把 Express 的路由、中间件用熟，再看数据库（mysql2、pg）、鉴权（JWT）、部署（Render、Railway）。</p>
+<div class="note"><b>一句话：</b>Node 让同一种语言同时写前台和后台——但「能写」不等于「该写」，职责还是要分清。</div>
+</section>
+</div>
+
+<footer>
+    <div class="stamp">Node.js · 2026-10-23</div>
+    <div>语言学习项目 · 龙潜猫隐</div>
+</footer>
+
+<script src="../../assets/js/update-popup.js?v=20261022"></script>
+<script src="../../assets/js/live.js?v=20261025"></script>
+<script src="../../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

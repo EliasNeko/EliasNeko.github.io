@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高二数学 · 选择性必修第一册 + 第二册 · 电子教材 · 龙潜猫隐</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    .lead { color: var(--muted); font-size: 13.5px; line-height: 2; margin: 0 0 10px; }
+    .ch-block { margin-top: 12px; }
+    .ch-block > b { display: block; margin-bottom: 5px; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; }
+    .ch-block ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .formula { padding: 9px 13px; border-left: 2px solid rgba(56,189,248,.5); background: rgba(56,189,248,.05); border-radius: 0 8px 8px 0; color: #d9ecff; font-size: 13px; line-height: 1.95; font-family: Consolas, "Microsoft YaHei", monospace; }
+    .quiz { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(80,130,200,.22); }
+    .quiz > b { display: block; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; margin-bottom: 5px; }
+    .quiz ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .quiz details { margin-top: 6px; }
+    .quiz summary { cursor: pointer; color: var(--accent); font-size: 12.5px; }
+    .quiz details ol { margin-top: 5px; color: #9ec9a0; }
+    .exam { margin-top: 18px; border: 1px solid rgba(244,114,182,.35); border-radius: 14px; background: rgba(244,114,182,.05); padding: 18px 20px; }
+    .exam h3 { margin: 0 0 8px; font-size: 15px; font-weight: normal; letter-spacing: 1px; color: #f9c2e0; }
+    .exam ol { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 2; }
+    .exam details summary { color: #f9c2e0; }
+    .bookbar { display: flex; gap: 14px; align-items: center; margin: 18px 0 6px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(10,18,32,.5); }
+    .bookbar img { width: 52px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(125,211,252,.25); }
+    .bookbar div { font-size: 12.5px; color: var(--muted); line-height: 1.9; }
+    .bookbar b { color: #cfeaff; font-weight: normal; }
+    .real { margin-top: 18px; border: 1px solid rgba(250,204,21,.35); border-radius: 14px; background: rgba(250,204,21,.05); padding: 18px 20px; }
+    .real h3 { margin: 0 0 8px; font-size: 15px; font-weight: normal; color: #fde68a; letter-spacing: 1px; }
+    .real p, .real li { color: var(--muted); font-size: 13px; line-height: 2; }
+    .real a { color: #fde68a; }
+    @media (max-width: 720px) { .formula { font-size: 12px; } }
+
+    .toc-nav { margin: 0 0 8px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(56,189,248,.05); }
+    .toc-nav p { margin: 0 0 6px; font-size: 12.5px; color: var(--muted); line-height: 2; }
+    .toc-nav b { color: #9fd8ff; font-weight: normal; margin-right: 8px; letter-spacing: 1px; }
+    .toc-nav a { color: #cfeaff; text-decoration: none; margin-right: 12px; border-bottom: 1px dashed rgba(125,211,252,.25); white-space: nowrap; display: inline-block; }
+    .toc-nav a:hover { color: var(--accent); }
+    .sum { margin: 0 0 8px; font-size: 12.5px; line-height: 1.8; }
+    .sum a { color: #cfeaff; text-decoration: none; margin-right: 8px; }
+    .sum a:hover { color: var(--accent); }
+    .sum b { color: var(--accent); font-weight: normal; margin-right: 6px; }
+    .sum span { color: var(--dim); }
+    .part { margin: 34px 0 6px; padding: 10px 16px; border-left: 3px solid var(--accent); background: rgba(56,189,248,.06); border-radius: 0 10px 10px 0; font-size: 14px; letter-spacing: 2px; color: #cfeaff; }
+
+</style>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<header class="top">
+    <p class="kicker">电子教材笔记本 · 数学</p>
+    <h1>高二数学 · 选择性必修第一册 + 第二册</h1>
+    <p class="sub">空间向量、直线与圆、圆锥曲线、数列、导数——高考压轴的主战场。</p>
+    <div class="meta"><span>教材 <b>人教A版</b></span><span>章节 <b>5</b></span><span>更新 <b>2026-10-23</b></span></div>
+    <p class="series"><a href="math.html" style="color:var(--accent);">← 回到数学教材目录</a></p>
+</header>
+<div class="idx-wrap">
+    
+    
+    <section class="card" id="formulas">
+        <h2><span class="num">Σ</span>公式总表 · 本册一页查完</h2>
+        <p class="lead">按章节排好，考前扫一遍。每个公式都对应下面某一章，点编号可跳转。</p>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.9">
+            <tr style="color:#9fd8ff"><th style="text-align:left;padding:6px 8px">章</th><th style="text-align:left;padding:6px 8px">内容</th><th style="text-align:left;padding:6px 8px">核心公式</th></tr>
+            <tr><td>01</td><td>空间向量与立体几何</td><td>a·b = x₁x₂ + y₁y₂ + z₁z₂</td></tr><tr><td>02</td><td>直线和圆的方程</td><td>d = |Ax₀+By₀+C| / √(A²+B²)；弦长 = 2√(r²−d²)</td></tr><tr><td>03</td><td>圆锥曲线的方程</td><td>椭圆 c² = a² − b²；双曲线 c² = a² + b²</td></tr><tr><td>04</td><td>数列</td><td>Sₙ = n(a₁+aₙ)/2；Sₙ = a₁(1−qⁿ)/(1−q)</td></tr><tr><td>05</td><td>一元函数的导数及其应用</td><td>(xⁿ)′ = n xⁿ⁻¹；(ln x)′ = 1/x；(eˣ)′ = eˣ</td></tr>
+        </table></div>
+    </section>
+
+    <section class="card" id="chapter-toc">
+        <h2><span class="num">≡</span>章节目录 · 带小结</h2>
+        <p class="sum"><a href="#s1"><b>01</b>空间向量与立体几何</a><span>把立体图形放进坐标系。</span></p><p class="sum"><a href="#s2"><b>02</b>直线和圆的方程</a><span>解析几何的起点。</span></p><p class="sum"><a href="#s3"><b>03</b>圆锥曲线的方程</a><span>椭圆、双曲线、抛物线。</span></p><p class="sum"><a href="#s4"><b>04</b>数列</a><span>找规律、求通项、求和。</span></p><p class="sum"><a href="#s5"><b>05</b>一元函数的导数及其应用</a><span>瞬时变化率，研究函数最锋利的工具。</span></p>
+    </section>
+<nav class="toc-nav"><p><b>选择性必修 第一册</b><a href="#s1">1 空间向量与立体几何</a><a href="#s2">2 直线和圆的方程</a><a href="#s3">3 圆锥曲线的方程</a></p><p><b>选择性必修 第二册</b><a href="#s4">4 数列</a><a href="#s5">5 一元函数的导数及其应用</a></p></nav>
+<div class="bookbar"><img src="../assets/textbook/math-g3.jpg" alt="选择性必修 第一册（A 版）"><div><b>选择性必修 第一册（A 版）</b><br>空间向量与立体几何、直线和圆的方程、圆锥曲线的方程</div></div><div class="bookbar"><img src="../assets/textbook/math-g4.jpg" alt="选择性必修 第二册（A 版）"><div><b>选择性必修 第二册（A 版）</b><br>数列、一元函数的导数及其应用</div></div>
+
+                        <div class="part">选择性必修 第一册</div>
+
+    <section class="card" id="s1">
+        <h2><span class="num">01</span>空间向量与立体几何</h2>
+        <p class="lead">把立体图形放进坐标系。</p>
+        <div class="secs">
+            <div class="sec" id="s1-1">
+                <h4><span class="n">1.1</span>空间向量及其运算</h4>
+                <p>空间中既有大小又有方向的量叫空间向量，记作 a，大小叫模，记 |a|。空间里任意两个向量都能平移到同一个平面内，所以加法、减法、数乘跟平面向量一模一样：加法用三角形法则或平行四边形法则，减法共起点、指向被减向量。数乘 λa 与 a 共线，λ 大于 0 时同向，λ 小于 0 时反向。共线向量定理说：b 不为零时，a∥b 当且仅当存在唯一实数 λ，使 a=λb。数量积 a·b=|a||b|cosθ，θ 是两向量夹角，结果是实数。它满足交换律和分配律，但不满足结合律。</p>
+                <div class="f">a·b=|a||b|cosθ；|a|²=a·a；cosθ=a·b/(|a||b|)；a⊥b ⇔ a·b=0（a、b 非零）；(λa)·b=λ(a·b)</div>
+                <p class="use"><b>怎么用：</b>求模先平方再开方；求夹角先算数量积和两个模；证垂直只算数量积是不是 0；表示未知向量时沿路径拆成已知向量的和。</p>
+                <p class="warn"><b>易错：</b>数量积是数不是向量，别顺手加箭头；a·b=0 时要说清 a、b 非零才能得垂直；算夹角前要把两个向量起点挪到一起。</p>
+            </div>
+            <div class="sec" id="s1-2">
+                <h4><span class="n">1.2</span>空间向量基本定理</h4>
+                <p>如果三个向量 a、b、c 不共面，那么对空间任一向量 p，都存在唯一的一组实数 x、y、z，使 p=xa+yb+zc。这时 {a,b,c} 叫空间的一个基底，a、b、c 叫基向量。基底不唯一，只要三个向量不共面就能当基底。常用推论：O、A、B、C 四点不共面，对空间任一点 P，有 OP=xOA+yOB+zOC，当且仅当 x+y+z=1 时，P 在平面 ABC 内。</p>
+                <div class="f">p=xa+yb+zc（x、y、z 唯一）；OP=xOA+yOB+zOC；P∈平面ABC ⇔ x+y+z=1</div>
+                <p class="use"><b>怎么用：</b>选基底优先挑长度、夹角都已知的三个不共面向量，通常从一个顶点出发的三条棱；把所求向量写成基底的组合，再代数量积算长度和夹角；证四点共面就用 x+y+z=1。</p>
+                <p class="warn"><b>易错：</b>基底必须不共面，随手抓三个向量不一定行；系数唯一是对同一个基底说的，换基底系数就变；用 x+y+z=1 判共面，前提是 O 不在平面 ABC 内。</p>
+            </div>
+            <div class="sec" id="s1-3">
+                <h4><span class="n">1.3</span>空间向量及其运算的坐标表示</h4>
+                <p>在空间取一点 O 和三个两两垂直的单位向量 i、j、k，建立空间直角坐标系 Oxyz。点 P 的坐标 (x,y,z) 就是 OP=xi+yj+zk 的系数。设 a=(x₁,y₁,z₁)，b=(x₂,y₂,z₂)，加减、数乘、数量积都按分量算。平行用 a=λb 判断，垂直用数量积为 0 判断，模用三个分量平方和开方。坐标法把找角、找距离变成算数，不用总画辅助线。</p>
+                <div class="f">a±b=(x₁±x₂,y₁±y₂,z₁±z₂)；λa=(λx₁,λy₁,λz₁)；a·b=x₁x₂+y₁y₂+z₁z₂；|a|=√(x₁²+y₁²+z₁²)；a⊥b ⇔ x₁x₂+y₁y₂+z₁z₂=0；a∥b ⇔ 存在 λ 使 a=λb</div>
+                <p class="use"><b>怎么用：</b>建系三步：找两两垂直的三条线当 x、y、z 轴，定原点，写各点坐标；向量坐标等于终点坐标减起点坐标；求角、求模、证垂直全代公式，再把结果翻译回几何。</p>
+                <p class="warn"><b>易错：</b>向量坐标是终点减起点，不是终点坐标；平行别硬写成分数，分母为 0 时改用 a=λb；三条轴必须两两垂直，斜着建的系后面全错。</p>
+            </div>
+            <div class="sec" id="s1-4">
+                <h4><span class="n">1.4</span>空间向量的应用</h4>
+                <p>用向量研究位置关系：直线 l 的方向向量记 u，平面 α 的法向量记 n，n 与平面内两个不共线向量都垂直。线线平行看 u₁∥u₂，线面平行看 u·n=0 且直线不在平面内，面面平行看 n₁∥n₂；线线垂直看 u₁·u₂=0，线面垂直看 u∥n，面面垂直看 n₁·n₂=0。距离用点面距公式，夹角分三种：线线角、线面角、二面角，公式里的正弦余弦要分清。</p>
+                <div class="f">点 P 到平面 α 的距离 d=|AP·n|/|n|；线面角 sinθ=|u·n|/(|u||n|)；线线角 cosθ=|u₁·u₂|/(|u₁||u₂|)；二面角 cosθ=±(n₁·n₂)/(|n₁||n₂|)</div>
+                <p class="use"><b>怎么用：</b>先建系写坐标，再求方向向量和法向量；法向量设 n=(x,y,z)，列 n·u₁=0、n·u₂=0，取一个非零解；求角套公式，线面角记得用 sin；最后看图判断二面角是锐是钝，决定正负号。</p>
+                <p class="warn"><b>易错：</b>法向量要垂直平面内两个不共线向量，只垂直一个不够；线面角的正弦等于方向向量与法向量夹角的余弦绝对值，别写反；二面角范围是 [0,π]，算出的负号要结合图形取舍。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>空间向量可以平移到同一平面，加减数乘与平面向量一致</li><li>空间向量基本定理：三个不共面的向量构成基底</li><li>法向量与平面内两个不共线向量都垂直</li><li>线面角用 sin，二面角要结合图形判断锐钝</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">a·b = x₁x₂+y₁y₂+z₁z₂；|a| = √(x₁²+y₁²+z₁²)；cos⟨a,b⟩ = (x₁x₂+y₁y₂+z₁z₂)/(|a||b|)；点 P 到平面 α 的距离 d = |AP·n|/|n|</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>建系：找两两垂直的三条棱，原点放在交点上，写点时先走 x 再走 y 再走 z。</li><li>求法向量：设 n=(x,y,z)，列 n·u₁=0、n·u₂=0，令一个分量取好算的数，解出另外两个。</li><li>求角：线线角取 |cos|，线面角取 |sin|，二面角先看图再定正负。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">a=(1,2,−1)，b=(2,0,3)，求 a·b、|a| 与 cos⟨a,b⟩。</p><details><summary>看解答</summary><div class="note">a·b=1×2+2×0+(−1)×3=2−3=−1。|a|=√(1²+2²+(−1)²)=√6，|b|=√(2²+0²+3²)=√13。cos⟨a,b⟩=a·b/(|a||b|)=−1/(√6×√13)=−1/√78=−√78/78。</div></details></div>
+        <div class="ch-block"><b>综合题（空间向量 + 点面距）</b><p class="lead">正方体 ABCD-A₁B₁C₁D₁ 的棱长为 1，求点 A 到平面 A₁BD 的距离。</p><details><summary>看解答</summary><div class="note">建系：A(0,0,0)，B(1,0,0)，D(0,1,0)，A₁(0,0,1)。A₁B=(1,0,−1)，A₁D=(0,1,−1)。设平面 A₁BD 的法向量 n=(x,y,z)，由 n·A₁B=0 得 x−z=0，由 n·A₁D=0 得 y−z=0，取 z=1，得 n=(1,1,1)。AP=A−A₁=(0,0,−1)，d=|AP·n|/|n|=|−1|/√3=√3/3。所以点 A 到平面 A₁BD 的距离是 √3/3。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">A(1,0,0)，B(0,1,0)，C(0,0,2)，求平面 ABC 的一个法向量。</p><details><summary>看解答</summary><div class="note">AB=(−1,1,0)，AC=(−1,0,2)。设 n=(x,y,z)，由 n·AB=0 得 −x+y=0，由 n·AC=0 得 −x+2z=0。取 x=2，则 y=2，z=1，所以 n=(2,2,1)。检验：AB·n=−2+2+0=0，AC·n=−2+0+2=0。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>法向量要垂直平面内两个不共线向量，只垂直一个不够</li><li>线面角用 sin，不是 cos；二面角还要判断锐钝</li><li>建系时三条轴必须两两垂直，点坐标写错后面全错</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>a=(1,0,1)，b=(0,1,1)，求 a·b。</li><li>线面角 θ 与方向向量 u、法向量 n 的夹角 φ 有什么关系？</li></ol><details><summary>点开看答案</summary><ol><li>a·b=1×0+0×1+1×1=1。</li><li>sinθ=|cosφ|=|u·n|/(|u||n|)。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s2">
+        <h2><span class="num">02</span>直线和圆的方程</h2>
+        <p class="lead">解析几何的起点。</p>
+        <div class="secs">
+            <div class="sec" id="s2-1">
+                <h4><span class="n">2.1</span>直线的倾斜角与斜率</h4>
+                <p>直线向上的方向与 x 轴正方向所成的最小正角叫倾斜角 α，范围是 [0°,180°)。α 不等于 90° 时，斜率 k=tanα；α=90° 时直线垂直于 x 轴，斜率不存在。过两点 P₁(x₁,y₁)、P₂(x₂,y₂) 且 x₁≠x₂ 时，k=(y₂−y₁)/(x₂−x₁)。两条直线斜率都存在时，平行看 k₁=k₂ 且不重合，垂直看 k₁k₂=−1；一条斜率不存在、另一条斜率为 0，也算垂直。</p>
+                <div class="f">k=tanα（α≠90°）；k=(y₂−y₁)/(x₂−x₁)；l₁∥l₂ ⇔ k₁=k₂（不重合）；l₁⊥l₂ ⇔ k₁k₂=−1</div>
+                <p class="use"><b>怎么用：</b>已知两点求斜率，先看横坐标是否相等，相等就写斜率不存在；判断平行垂直先问斜率在不在，再代公式；求倾斜角范围，先求 k 的范围，再用正切图象反推。</p>
+                <p class="warn"><b>易错：</b>倾斜角范围不含 180°；负斜率时 k 越大倾斜角反而越大，不能一根筋；垂直还有「一条竖线加一条横线」的情况，别漏。</p>
+            </div>
+            <div class="sec" id="s2-2">
+                <h4><span class="n">2.2</span>直线的方程</h4>
+                <p>直线方程有几种写法，各有各的条件。点斜式 y−y₀=k(x−x₀)，要求斜率存在；斜截式 y=kx+b，b 是纵截距；两点式 (y−y₁)/(y₂−y₁)=(x−x₁)/(x₂−x₁)，要求 x₁≠x₂ 且 y₁≠y₂；截距式 x/a+y/b=1，要求 a、b 都不为 0；一般式 Ax+By+C=0，A、B 不同时为 0，能表示所有直线。前几种都有死角，一般式没有。</p>
+                <div class="f">y−y₀=k(x−x₀)；y=kx+b；x/a+y/b=1；Ax+By+C=0（A、B 不同时为 0）</div>
+                <p class="use"><b>怎么用：</b>已知一点和斜率用点斜式；已知两点先算斜率再用点斜式；已知两轴截距用截距式；最后化成一般式，方便比较和代距离公式。设直线前先问斜率存不存在，不存在就单独写 x=x₀。</p>
+                <p class="warn"><b>易错：</b>截距不是距离，可以为负，也可以为 0，所以截距式要求 a、b 非零；点斜式容易漏掉竖直线；两点式分母不能为 0，别硬套。</p>
+            </div>
+            <div class="sec" id="s2-3">
+                <h4><span class="n">2.3</span>直线的交点坐标与距离公式</h4>
+                <p>两条直线的交点坐标，就是它们方程联立后的解：有唯一解就相交，无解就平行，有无数解就重合。两点间距离用横纵坐标差的平方和开方。点 P(x₀,y₀) 到直线 Ax+By+C=0 的距离，是拿坐标代进去取绝对值，再除以系数的平方和开方。两条平行线的距离，要求两个方程的 A、B 已经一样，再用常数项差除以同样的分母。</p>
+                <div class="f">|P₁P₂|=√((x₂−x₁)²+(y₂−y₁)²)；d=|Ax₀+By₀+C|/√(A²+B²)；平行线 d=|C₁−C₂|/√(A²+B²)</div>
+                <p class="use"><b>怎么用：</b>求交点就解方程组；求点线距先把直线化成一般式，分子加绝对值；求平行线距离，先确认 x、y 系数一样，不一样先同乘化齐。</p>
+                <p class="warn"><b>易错：</b>点线距公式只认一般式，斜截式要先移项；平行线距离公式里两个方程的 A、B 必须相同；距离是非负数，算出负值说明绝对值漏了。</p>
+            </div>
+            <div class="sec" id="s2-4">
+                <h4><span class="n">2.4</span>圆的方程</h4>
+                <p>圆是平面内到定点距离等于定长的点的集合，定点叫圆心，定长叫半径。标准方程 (x−a)²+(y−b)²=r²，圆心 (a,b)，半径 r，一眼能看出来。把它展开，得到一般方程 x²+y²+Dx+Ey+F=0，配方后圆心是 (−D/2,−E/2)，半径 r=½√(D²+E²−4F)。一般方程表示圆的条件是 D²+E²−4F 大于 0；等于 0 只表示一个点，小于 0 什么也不表示。</p>
+                <div class="f">(x−a)²+(y−b)²=r²；x²+y²+Dx+Ey+F=0；r=½√(D²+E²−4F)；D²+E²−4F 大于 0</div>
+                <p class="use"><b>怎么用：</b>已知圆心和半径直接写标准方程；已知圆上三点，设一般方程，代入三点解 D、E、F；判断一个方程是不是圆，先看 x²、y² 系数是不是 1，再算判别式。</p>
+                <p class="warn"><b>易错：</b>一般方程里 x²、y² 的系数要先化成 1；圆心是 (−D/2,−E/2)，两个负号别抄丢；半径公式里的 4F 不能少，判别式小于 0 根本不是圆。</p>
+            </div>
+            <div class="sec" id="s2-5">
+                <h4><span class="n">2.5</span>直线与圆、圆与圆的位置关系</h4>
+                <p>直线与圆看圆心到直线的距离 d 和半径 r：d 小于 r 相交，有两个公共点；d 等于 r 相切，有一个公共点；d 大于 r 相离，没有公共点。也可以联立方程看判别式。圆与圆看圆心距 d 和两个半径：d 大于 r₁+r₂ 外离，d 等于 r₁+r₂ 外切，|r₁−r₂| 小于 d 小于 r₁+r₂ 相交，d 等于 |r₁−r₂| 内切，d 小于 |r₁−r₂| 内含。两圆相交时，把两个方程相减就得到公共弦所在直线。</p>
+                <div class="f">d=|Ax₀+By₀+C|/√(A²+B²)；弦长=2√(r²−d²)；两圆相交，公共弦由两方程相减得到</div>
+                <p class="use"><b>怎么用：</b>判断直线与圆，先算 d 再比 r，比联立快；求弦长先用 d 算半弦 √(r²−d²)，再乘 2；求公共弦所在直线，把两个圆方程相减，消掉 x²、y²。</p>
+                <p class="warn"><b>易错：</b>弦长是 2√(r²−d²)，不是 r²−d²；圆与圆的分界是 |r₁−r₂|，不是 0；两圆方程相减得到的是一次方程，那是公共弦所在直线，不是弦长。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>倾斜角范围 [0°,180°)，斜率 k=tanα，90° 时斜率不存在</li><li>平行 k₁=k₂ 且不重合，垂直 k₁k₂=−1，都要先看斜率是否存在</li><li>点线距 d=|Ax₀+By₀+C|/√(A²+B²)，直线要化成一般式</li><li>圆的标准方程与一般方程可以互化，半径 r=½√(D²+E²−4F)</li><li>直线与圆用 d 和 r 比较，圆与圆用 d 和 r₁±r₂ 比较</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">k = (y₂−y₁)/(x₂−x₁)；d = |Ax₀+By₀+C|/√(A²+B²)；弦长 = 2√(r²−d²)</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>设直线先问斜率存不存在：存在就设 y−y₀=k(x−x₀)，不存在直接写 x=x₀。</li><li>判断直线与圆：先算圆心到直线的距离 d，再和 r 比，别急着联立。</li><li>求弦长：先算 d，再算半弦 √(r²−d²)，最后乘 2。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">求点 P(1,2) 到直线 3x+4y−5=0 的距离。</p><details><summary>看解答</summary><div class="note">d=|3×1+4×2−5|/√(3²+4²)=|3+8−5|/5=6/5。所以距离是 6/5。</div></details></div>
+        <div class="ch-block"><b>综合题（直线与圆 + 弦长）</b><p class="lead">直线 x−y+1=0 与圆 x²+y²=4 相交于 A、B 两点，求弦长 |AB|。</p><details><summary>看解答</summary><div class="note">圆心 (0,0)，半径 r=2。圆心到直线的距离 d=|0−0+1|/√(1²+(−1)²)=1/√2=√2/2。半弦长=√(r²−d²)=√(4−1/2)=√(7/2)=√14/2。所以 |AB|=2×√14/2=√14。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">求过点 (1,2) 且与直线 2x+y−1=0 平行的直线方程。</p><details><summary>看解答</summary><div class="note">已知直线 2x+y−1=0 的斜率 k=−2。平行则斜率也是 −2。点斜式：y−2=−2(x−1)，整理得 2x+y−4=0。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>斜率不存在的情况要单独讨论，别默认 k 一定存在</li><li>点线距公式只认一般式，分子要加绝对值</li><li>弦长是 2√(r²−d²)，别把 2 丢了</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>过点 (1,1)、(3,5) 的直线斜率是多少？</li><li>直线与圆 d=r 时是什么位置关系？</li></ol><details><summary>点开看答案</summary><ol><li>k=(5−1)/(3−1)=4/2=2。</li><li>相切，只有一个公共点。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s3">
+        <h2><span class="num">03</span>圆锥曲线的方程</h2>
+        <p class="lead">椭圆、双曲线、抛物线。</p>
+        <div class="secs">
+            <div class="sec" id="s3-1">
+                <h4><span class="n">3.1</span>椭圆</h4>
+                <p>平面内到两个定点 F₁、F₂ 的距离之和等于常数 2a，且 2a 大于 |F₁F₂| 的点的轨迹叫椭圆。两个定点叫焦点，|F₁F₂|=2c 叫焦距，a、b、c 满足 c²=a²−b²，a 最大。焦点在 x 轴上时标准方程是 x²/a²+y²/b²=1；焦点在 y 轴上时是 y²/a²+x²/b²=1。看分母大的那一项在哪个字母下面，焦点就在哪条轴上。椭圆关于两条坐标轴和原点都对称；焦点在 x 轴时，顶点是 (±a,0)、(0,±b)，长轴长 2a，短轴长 2b。离心率 e=c/a，范围是 0 到 1，e 越大椭圆越扁。</p>
+                <div class="f">|PF₁|+|PF₂|=2a（2a 大于 2c）；c²=a²−b²；e=c/a，0 小于 e 小于 1；焦点三角形面积 S=b²tan(θ/2)（θ=∠F₁PF₂）</div>
+                <p class="use"><b>怎么用：</b>求标准方程先定位焦点在哪条轴，分母大的就是 a²，再列 a、b、c 的关系解出来；求离心率把条件化成 a、c 的齐次式，两边同除 a² 解 e；焦点三角形用定义加余弦定理。</p>
+                <p class="warn"><b>易错：</b>椭圆是 c²=a²−b²，别和双曲线的加号混；2a 等于 2c 时轨迹是线段，不是椭圆；焦点在 y 轴时 a² 在 y² 下面，别照抄 x 轴的式子。</p>
+            </div>
+            <div class="sec" id="s3-2">
+                <h4><span class="n">3.2</span>双曲线</h4>
+                <p>平面内到两个定点 F₁、F₂ 的距离之差的绝对值等于常数 2a，且 0 小于 2a 小于 |F₁F₂| 的点的轨迹叫双曲线。这里 c²=a²+b²，c 最大，和椭圆正好相反。焦点在 x 轴时方程是 x²/a²−y²/b²=1，渐近线 y=±(b/a)x；焦点在 y 轴时方程是 y²/a²−x²/b²=1，渐近线 y=±(a/b)x。双曲线关于两条坐标轴和原点都对称；焦点在 x 轴时，顶点是 (±a,0)，实轴长 2a，虚轴长 2b。离心率 e=c/a，e 大于 1，e 越大开口越宽。</p>
+                <div class="f">||PF₁|−|PF₂||=2a；c²=a²+b²；e=c/a 大于 1；x²/a²−y²/b²=1 的渐近线为 y=±(b/a)x</div>
+                <p class="use"><b>怎么用：</b>先看方程里哪一项是正的：x² 前为正，焦点在 x 轴；y² 前为正，焦点在 y 轴。求渐近线，把等号右边的 1 换成 0，解出 y。求离心率，用 c²=a²+b² 化成 a、b 的关系。</p>
+                <p class="warn"><b>易错：</b>双曲线是 c²=a²+b²，别套椭圆的减号；定义里是差的绝对值，少写绝对值就只剩一支；焦点在 y 轴时渐近线斜率是 a/b，不是 b/a。</p>
+            </div>
+            <div class="sec" id="s3-3">
+                <h4><span class="n">3.3</span>抛物线</h4>
+                <p>平面内到定点 F 和到定直线 l 距离相等的点的轨迹叫抛物线，F 叫焦点，l 叫准线，F 不在 l 上。四种标准方程：y²=2px 的焦点是 (p/2,0)，准线 x=−p/2；y²=−2px 的焦点是 (−p/2,0)，准线 x=p/2；x²=2py 的焦点是 (0,p/2)，准线 y=−p/2；x²=−2py 的焦点是 (0,−p/2)，准线 y=p/2，其中 p 大于 0。p 是焦点到准线的距离。抛物线关于对称轴对称，顶点在原点；y²=2px 开口向右，x 的范围是 x≥0，y 可以是任意实数。抛物线只有一个焦点、一条准线、一条对称轴，没有中心，离心率恒等于 1。</p>
+                <div class="f">y²=2px ⇒ 焦点 (p/2,0)，准线 x=−p/2；x²=2py ⇒ 焦点 (0,p/2)，准线 y=−p/2；|PF| 等于 P 到准线的距离</div>
+                <p class="use"><b>怎么用：</b>先把方程化成标准形式，看清一次项是 x 还是 y、系数是正还是负，再写焦点和准线；遇到焦半径，直接换成到准线的距离；求最值常把 |PF| 转成横坐标或纵坐标的一次式。</p>
+                <p class="warn"><b>易错：</b>y²=2px 的焦点是 (p/2,0)，不是 (p,0)；准线是 x=−p/2，负号别丢；抛物线离心率是 1，不是 0，也不是小于 1。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>椭圆：到两焦点距离之和为 2a，c²=a²−b²</li><li>双曲线：到两焦点距离之差的绝对值为 2a，c²=a²+b²</li><li>抛物线：到焦点距离等于到准线距离，离心率恒为 1</li><li>离心率：椭圆 0 到 1，双曲线大于 1，抛物线等于 1</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">椭圆 c² = a² − b²，e = c/a；双曲线 c² = a² + b²，e = c/a；抛物线 y² = 2px 的焦点 (p/2, 0)，准线 x = −p/2</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>先定位：椭圆看分母大的项，双曲线看系数为正的项，焦点就在那个字母对应的轴上。</li><li>求 a、b、c：椭圆用 c²=a²−b²，双曲线用 c²=a²+b²，抛物线只看 p。</li><li>焦半径问题：椭圆用和 2a，双曲线用差 2a，抛物线用点到准线的距离。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">椭圆 x²/25+y²/9=1 的焦点坐标与离心率。</p><details><summary>看解答</summary><div class="note">a²=25，b²=9，所以 a=5，b=3。c²=a²−b²=25−9=16，c=4。焦点在 x 轴上，坐标是 (4,0)、(−4,0)。离心率 e=c/a=4/5。</div></details></div>
+        <div class="ch-block"><b>综合题（渐近线 + 离心率）</b><p class="lead">双曲线 x²/a²−y²/b²=1 的一条渐近线是 y=2x，求它的离心率。</p><details><summary>看解答</summary><div class="note">焦点在 x 轴，渐近线为 y=±(b/a)x，所以 b/a=2，即 b=2a。由 c²=a²+b² 得 c²=a²+4a²=5a²，c=√5 a。所以 e=c/a=√5。因为 √5 大于 1，符合双曲线离心率的范围。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">抛物线 y²=8x 的焦点坐标和准线方程。</p><details><summary>看解答</summary><div class="note">标准形式是 y²=2px，所以 2p=8，p=4。焦点是 (p/2,0)=(2,0)，准线是 x=−p/2=−2。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>椭圆用 c²=a²−b²，双曲线用 c²=a²+b²，两个别混</li><li>焦点在 y 轴时，a² 在 y² 下面，标准方程不要照抄</li><li>抛物线焦点是 (p/2,0)，不是 (p,0)，准线负号别丢</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>椭圆 x²/16+y²/9=1 的 c 是多少？</li><li>抛物线 y²=8x 的焦点坐标？</li></ol><details><summary>点开看答案</summary><ol><li>c²=16−9=7，所以 c=√7。</li><li>2p=8，p=4，焦点 (2,0)。</li></ol></details></div>
+    </section>
+
+    <div class="part">选择性必修 第二册</div>
+
+    <section class="card" id="s4">
+        <h2><span class="num">04</span>数列</h2>
+        <p class="lead">找规律、求通项、求和。</p>
+        <div class="secs">
+            <div class="sec" id="s4-1">
+                <h4><span class="n">4.1</span>数列的概念</h4>
+                <p>按一定顺序排成的一列数叫数列，数列里的每一个数叫项，第 n 项记作 aₙ。数列可以看成一个定义在正整数集（或它的有限子集）上的函数，aₙ=f(n)，所以它能画图、能谈单调性。通项公式给出 aₙ 和 n 的关系；递推公式给出相邻项之间的关系。前 n 项和 Sₙ=a₁+a₂+…+aₙ。已知 Sₙ 求 aₙ，用 aₙ=Sₙ−Sₙ₋₁，但这条只对 n 大于等于 2 成立，n=1 时要单独用 a₁=S₁。</p>
+                <div class="f">aₙ=Sₙ−Sₙ₋₁（n≥2）；a₁=S₁；Sₙ−Sₙ₋₁=aₙ</div>
+                <p class="use"><b>怎么用：</b>已知 Sₙ 求通项分两步：先算 a₁=S₁，再对 n≥2 算 Sₙ−Sₙ₋₁；最后把 n=1 代进 n≥2 的式子检验，符合就合并，不符合就写分段。判断单调性，作差 aₙ₊₁−aₙ 看符号。</p>
+                <p class="warn"><b>易错：</b>aₙ=Sₙ−Sₙ₋₁ 必须写 n≥2，n=1 不能代；算完一定要回头验 a₁；数列的项是具体的数，不是函数值，别把 n 的定义域丢掉。</p>
+            </div>
+            <div class="sec" id="s4-2">
+                <h4><span class="n">4.2</span>等差数列</h4>
+                <p>从第 2 项起，每一项与前一项的差都等于同一个常数 d，这样的数列叫等差数列，d 叫公差。通项 aₙ=a₁+(n−1)d，整理成 aₙ=dn+(a₁−d)，当 d 不为 0 时是关于 n 的一次函数。若 a、b、c 成等差，则 2b=a+c，b 叫等差中项。前 n 项和 Sₙ=n(a₁+aₙ)/2=na₁+n(n−1)d/2，当 d 不为 0 时是关于 n 的二次函数，常数项为 0。下标和相等时，对应项的和也相等：m+n=p+q 就有 aₘ+aₙ=aₚ+a_q。</p>
+                <div class="f">aₙ=a₁+(n−1)d；2b=a+c；Sₙ=n(a₁+aₙ)/2=na₁+n(n−1)d/2；m+n=p+q ⇒ aₘ+aₙ=aₚ+a_q</div>
+                <p class="use"><b>怎么用：</b>五个量 a₁、d、n、aₙ、Sₙ 知三求二，先列通项再列求和；看到下标和相等，直接用性质，别硬算；求 Sₙ 最值，看 d 的正负和对称轴，取离对称轴最近的整数 n。</p>
+                <p class="warn"><b>易错：</b>项数容易错：a₁ 到 aₙ 是 n 项，aₘ 到 aₙ 是 n−m+1 项；公差可正可负也可为 0；Sₙ 的最值在对称轴附近，别忘比较相邻两个 n。</p>
+            </div>
+            <div class="sec" id="s4-3">
+                <h4><span class="n">4.3</span>等比数列</h4>
+                <p>从第 2 项起，每一项与前一项的比都等于同一个常数 q，且 q 不为 0，这样的数列叫等比数列，q 叫公比。通项 aₙ=a₁qⁿ⁻¹。若 a、b、c 成等比，则 b²=ac，且 a、c 同号，b 叫等比中项。前 n 项和要分情况：q=1 时 Sₙ=na₁；q 不等于 1 时 Sₙ=a₁(1−qⁿ)/(1−q)=a₁(qⁿ−1)/(q−1)。等比数列的每一项和公比都不能为 0，但公比可以为负，这时项的符号会正负交替。</p>
+                <div class="f">aₙ=a₁qⁿ⁻¹；b²=ac；q=1 时 Sₙ=na₁；q≠1 时 Sₙ=a₁(1−qⁿ)/(1−q)；m+n=p+q ⇒ aₘaₙ=aₚa_q</div>
+                <p class="use"><b>怎么用：</b>求通项先定 a₁ 和 q，用两项相除 aₙ/aₘ=qⁿ⁻ᵐ；求和前先看 q 是不是 1，是 1 就直接 na₁；等比中项开方要带正负，再根据项的符号取舍。</p>
+                <p class="warn"><b>易错：</b>q=1 必须单独讨论，直接代公式分母为 0；等比中项 b=±√(ac)，只写正的是漏解；公比不能为 0，但负公比很常见，别一看负号就说不是等比。</p>
+            </div>
+            <div class="sec" id="s4-4">
+                <h4><span class="n">4.4</span>*数学归纳法</h4>
+                <p>数学归纳法用来证明与正整数 n 有关的命题，分两步。第一步，证明 n=n₀（通常 n₀=1）时命题成立，这叫归纳奠基。第二步，假设 n=k（k≥n₀）时命题成立，证明 n=k+1 时命题也成立，这叫归纳递推。两步都做完，才能说命题对所有 n≥n₀ 的正整数成立。它的依据是正整数集的良序性，不是「试几个数都对」的经验。</p>
+                <div class="f">P(n₀) 真，且 P(k) 真 ⇒ P(k+1) 真（k≥n₀），则 P(n) 对所有 n≥n₀ 真；书写按 ① 验证 ② 假设推下一步 ③ 下结论</div>
+                <p class="use"><b>怎么用：</b>写证明时「假设 n=k 时结论成立」这句话必须写出来，这是归纳假设；从 n=k 推到 n=k+1，要主动凑出假设的形状，多退少补；第二步的 k 要满足 k≥n₀，不能只对某一个具体的 k 成立。</p>
+                <p class="warn"><b>易错：</b>跳过第一步直接推第二步，会证出荒唐结论；第二步没用上归纳假设，等于没归纳；从 k 到 k+1 项数变了多少要数清，尤其是和式新添了哪一项。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>通项 aₙ 与 n 的函数关系，定义域是正整数集</li><li>等差：aₙ=a₁+(n−1)d，Sₙ=n(a₁+aₙ)/2</li><li>等比：aₙ=a₁qⁿ⁻¹，求和要分 q=1 与 q≠1</li><li>aₙ=Sₙ−Sₙ₋₁（n≥2），a₁=S₁</li><li>数学归纳法：奠基加递推，两步缺一不可</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">aₙ = a₁ + (n−1)d；Sₙ = n(a₁+aₙ)/2；aₙ = a₁qⁿ⁻¹；Sₙ = a₁(1−qⁿ)/(1−q)（q≠1）</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>知三求二：a₁、d（或 q）、n、aₙ、Sₙ 五个量，列通项和求和两个方程解。</li><li>已知 Sₙ 求 aₙ：先 a₁=S₁，再 n≥2 用 Sₙ−Sₙ₋₁，最后验 a₁。</li><li>等比求和先看 q 是否为 1：是 1 就 na₁，不是再用公式。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">等差数列 a₁=3，d=2，求 a₁₀ 与 S₁₀。</p><details><summary>看解答</summary><div class="note">a₁₀=a₁+9d=3+9×2=21。S₁₀=10(a₁+a₁₀)/2=10×(3+21)/2=120。</div></details></div>
+        <div class="ch-block"><b>综合题（数列 + 前 n 项和）</b><p class="lead">已知数列 {aₙ} 的前 n 项和 Sₙ=n²+2n，求通项 aₙ。</p><details><summary>看解答</summary><div class="note">n=1 时，a₁=S₁=1+2=3。n≥2 时，aₙ=Sₙ−Sₙ₋₁=(n²+2n)−[(n−1)²+2(n−1)]。先展开：(n−1)²+2(n−1)=n²−2n+1+2n−2=n²−1。所以 aₙ=(n²+2n)−(n²−1)=2n+1。检验 n=1：2×1+1=3=a₁。所以 aₙ=2n+1（n∈N*）。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">等比数列 a₁=1，q=2，求 a₆ 与 S₆。</p><details><summary>看解答</summary><div class="note">a₆=a₁q⁵=1×2⁵=32。因为 q≠1，S₆=a₁(1−q⁶)/(1−q)=(1−64)/(1−2)=63。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>等比 q=1 要单独讨论，直接代公式分母为 0</li><li>aₙ=Sₙ−Sₙ₋₁ 只对 n≥2 成立，n=1 要单独算</li><li>项数不是末项减首项：aₘ 到 aₙ 共 n−m+1 项</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>等差数列 a₁=1，d=2，a₅ 等于多少？</li><li>等比数列 a₁=1，q=2，S₅ 等于多少？</li></ol><details><summary>点开看答案</summary><ol><li>a₅=1+4×2=9。</li><li>S₅=(1−2⁵)/(1−2)=31。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s5">
+        <h2><span class="num">05</span>一元函数的导数及其应用</h2>
+        <p class="lead">瞬时变化率，研究函数最锋利的工具。</p>
+        <div class="secs">
+            <div class="sec" id="s5-1">
+                <h4><span class="n">5.1</span>导数的概念及其意义</h4>
+                <p>函数 y=f(x) 从 x₀ 到 x₀+Δx 的平均变化率是 Δy/Δx=[f(x₀+Δx)−f(x₀)]/Δx。当 Δx 无限趋近于 0 时，如果这个比值趋近于一个确定的常数，就把它叫 f(x) 在 x₀ 处的导数，记 f′(x₀)。导数刻画瞬时变化率，几何意义是曲线在点 (x₀,f(x₀)) 处切线的斜率。切线方程用点斜式：y−f(x₀)=f′(x₀)(x−x₀)。把 x₀ 换成 x，得到导函数 f′(x)。</p>
+                <div class="f">f′(x₀)=lim(Δx→0)[f(x₀+Δx)−f(x₀)]/Δx；k=f′(x₀)；切线 y−f(x₀)=f′(x₀)(x−x₀)</div>
+                <p class="use"><b>怎么用：</b>用定义求导，先算 Δy，再除以 Δx，最后让 Δx 趋近 0；求切线先求导、代 x₀ 得斜率，再写点斜式；看清是「在点 P 处」还是「过点 P」。</p>
+                <p class="warn"><b>易错：</b>导数是极限，不是平均变化率，Δx 不能真的等于 0；切线与曲线可能还有别的交点，「切」是局部性质；「过点 P 的切线」要先设切点，不能把 P 直接当切点。</p>
+            </div>
+            <div class="sec" id="s5-2">
+                <h4><span class="n">5.2</span>导数的运算</h4>
+                <p>基本初等函数的导数要背熟：常数导数为 0，xⁿ 的导数是 nxⁿ⁻¹，sinx 的导数是 cosx，cosx 的导数是 −sinx，eˣ 的导数是 eˣ，aˣ 的导数是 aˣlna，lnx 的导数是 1/x，log_a x 的导数是 1/(x lna)。四则运算：和差分别求导，乘积用前导后不导加前不导后导，商用分母平方分之分子导乘分母减分子乘分母导。复合函数用链式法则，由外向内一层层乘。</p>
+                <div class="f">(xⁿ)′=nxⁿ⁻¹；(eˣ)′=eˣ；(lnx)′=1/x；(sinx)′=cosx；(cosx)′=−sinx；[f(g(x))]′=f′(g(x))·g′(x)</div>
+                <p class="use"><b>怎么用：</b>求导先看结构：和差直接拆，乘积用乘积法则，商用商法则，套娃用链式；链式法则由外向内，每层都乘上内层导数；能先化简的先化简，但别改变定义域。</p>
+                <p class="warn"><b>易错：</b>(fg)′ 不等于 f′g′，(f/g)′ 也不等于 f′/g′；链式法则最容易漏乘内层导数，(sin2x)′=2cos2x；aˣ 的导数有 lna，别漏。</p>
+            </div>
+            <div class="sec" id="s5-3">
+                <h4><span class="n">5.3</span>导数在研究函数中的应用</h4>
+                <p>在某个区间上，f′(x) 大于 0，函数单调递增；f′(x) 小于 0，函数单调递减；f′(x)=0 的点叫驻点。极值的判别：f′(x₀)=0，且 f′(x) 在 x₀ 左右变号，x₀ 才是极值点；左正右负是极大值，左负右正是极小值。求闭区间 [a,b] 上的最值，先求区间内的极值，再和端点值 f(a)、f(b) 一起比较，最大的就是最大值。导数还能处理恒成立、零点个数、不等式证明。</p>
+                <div class="f">f′(x) 大于 0 ⇒ 递增；f′(x) 小于 0 ⇒ 递减；极值点：f′(x₀)=0 且左右变号；闭区间最值=max{极值, f(a), f(b)}</div>
+                <p class="use"><b>怎么用：</b>求单调区间：先写定义域，再解 f′(x) 大于 0 和小于 0，最后写成区间；求极值：令 f′(x)=0 找候选点，列表看左右符号；求最值：极值和端点值一起比，别只看极值。</p>
+                <p class="warn"><b>易错：</b>f′(x₀)=0 只是必要条件，y=x³ 在 x=0 处导数为 0 却不是极值；单调区间之间不能写并集，要用逗号或「和」隔开；闭区间最值必须比较端点，开区间要画图看趋势。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>导数就是瞬时变化率，也是曲线在一点处切线的斜率</li><li>基本初等函数导数公式要背熟，直接套</li><li>四则运算法则与链式法则，复合函数由外向内求</li><li>f′(x) 的符号决定单调性，正增负减</li><li>极值点要导数为 0 且左右变号，最值还要比端点</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">(xⁿ)′ = n xⁿ⁻¹；(ln x)′ = 1/x；(eˣ)′ = eˣ；(sin x)′ = cos x；(cos x)′ = −sin x；[f(g(x))]′ = f′(g(x))·g′(x)</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>求导三步：先看结构，再套公式（乘积、商、链式），最后化简。</li><li>求单调区间：写定义域，解 f′(x) 大于 0 和小于 0，多个区间用逗号隔开。</li><li>求最值：先找极值点，再把极值和两个端点值放一起比较。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">已知 f(x)=x³−3x，求 f′(x) 与 f′(1)。</p><details><summary>看解答</summary><div class="note">f′(x)=3x²−3。f′(1)=3×1²−3=0。</div></details></div>
+        <div class="ch-block"><b>综合题（导数 + 闭区间最值）</b><p class="lead">求 f(x)=x³−3x 在 [−2,2] 上的最大值和最小值。</p><details><summary>看解答</summary><div class="note">f′(x)=3x²−3=3(x−1)(x+1)。令 f′(x)=0，得 x=1 或 x=−1。算四个值：f(−2)=−8+6=−2；f(−1)=−1+3=2；f(1)=1−3=−2；f(2)=8−6=2。比较得最大值是 2，在 x=−1 或 x=2 时取到；最小值是 −2，在 x=−2 或 x=1 时取到。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">求 f(x)=x²eˣ 的导数。</p><details><summary>看解答</summary><div class="note">用乘积法则：f′(x)=(x²)′eˣ+x²(eˣ)′=2xeˣ+x²eˣ=eˣ(x²+2x)=x(x+2)eˣ。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>f′(x₀)=0 不一定有极值，y=x³ 在 x=0 处就不是</li><li>单调区间之间不能写并集，要用逗号或「和」</li><li>闭区间求最值必须比较端点，不能只看极值</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>(x²)′ 等于什么？</li><li>f′(x) 大于 0 说明函数在这个区间上怎样？</li></ol><details><summary>点开看答案</summary><ol><li>2x。</li><li>单调递增。</li></ol></details></div>
+    </section>
+
+
+    <section class="card" id="conclusions">
+        <h2><span class="num">★</span>二级结论 · 考场直接用</h2>
+        <p class="lead">这些不是课本黑体字，但都是从基本公式推出来的「捷径」。先懂怎么来的，再记结论，最后拿题验一遍。</p>
+        <div class="ch-block"><ul style="line-height:2.1"><li><b>弦长 |AB| = √(1+k²)·|x₁−x₂|</b><br><span style="opacity:.85">怎么用：联立后不必求点，用韦达定理算 |x₁−x₂|。</span><br><span style="opacity:.7">例：k=1，|x₁−x₂|=2 ⇒ |AB|=2√2。</span></li><li><b>椭圆中点弦斜率 k = −b²x₀/(a²y₀)</b><br><span style="opacity:.85">怎么用：看到「中点」「斜率」直接用，不用联立。</span><br><span style="opacity:.7">例：x²/4+y²=1 中点 (1, 1/2) ⇒ k = −1/2。</span></li><li><b>椭圆焦点三角形面积 S = b² tan(θ/2)</b><br><span style="opacity:.85">怎么用：θ 是两焦半径夹角，面积只和 b、θ 有关。</span><br><span style="opacity:.7">例：b=3，θ=90° ⇒ S = 9。</span></li><li><b>双曲线渐近线 y = ±(b/a)x；焦点到渐近线距离 = b</b><br><span style="opacity:.85">怎么用：渐近线看 a、b，焦点距离只看 b。</span><br><span style="opacity:.7">例：x²/9−y²/16=1 ⇒ 渐近线 y=±(4/3)x。</span></li><li><b>aₙ = Sₙ − Sₙ₋₁（n≥2）</b><br><span style="opacity:.85">怎么用：已知前 n 项和求通项，先算 n=1 再验。</span><br><span style="opacity:.7">例：Sₙ=n² ⇒ aₙ=2n−1。</span></li><li><b>切线：y − f(x₀) = f′(x₀)(x − x₀)</b><br><span style="opacity:.85">怎么用：点斜式，斜率就是导数。</span><br><span style="opacity:.7">例：y=x² 在 x=1 处切线：y−1=2(x−1)。</span></li></ul></div>
+        <div class="note">记法：不要死背一整串，记「它解决什么问题」——看到题里的关键词，能想起用哪条就够了。</div>
+    </section>
+    <div class="exam">
+        <h3>期末模拟 · 通道侗族自治县高二（上）</h3>
+        <p class="lead">按高二期末题型配 5 题，覆盖空间向量、直线与圆、圆锥曲线、数列、导数。</p>
+        <ol><li>已知 a=(1,0,1)，b=(0,1,1)，求 a·b。</li><li>直线 x + y − 2 = 0 与圆 x² + y² = 2 的位置关系？</li><li>椭圆 x²/9 + y²/4 = 1 的离心率？</li><li>等差数列 a₁=3，d=2，求前 5 项和。</li><li>求 f(x)=x² 的导数。</li></ol>
+        <details><summary>看答案</summary><ol><li>1</li><li>d = 2/√2 = √2 = r，相切</li><li>c=√5，e=√5/3</li><li>S₅=5×3+10×2/2=25</li><li>f′(x)=2x</li></ol></details>
+    </div>
+    
+    <div class="local" style="margin-top:18px;padding:14px 16px;border:1px solid rgba(167,139,250,.3);border-radius:12px;background:rgba(167,139,250,.06);color:var(--muted);font-size:12.8px;line-height:2;"><b style="color:#c4b5fd;font-weight:normal;">通道 · 本地课堂</b><br>高二的题开始「长」了：圆锥曲线可以算侗寨拱桥的轮廓，数列可以算大歌节游客逐年增长。把家乡的数据带进题里，至少算的时候有画面。</div>
+</div>
+<footer><div class="stamp">数学 · 高二 · 2026-10-23</div><div>电子教材笔记本 · 龙潜猫隐</div></footer>
+<script src="../assets/js/update-popup.js?v=20261023"></script>
+<script src="../assets/js/live.js?v=20261025"></script>
+<script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

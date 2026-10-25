@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>二级（编程类）考点讲解 · 语言学习项目</title>
+        <link rel="stylesheet" href="../lesson.css">
+        <style>
+            .breadcrumb { display: inline-block; margin-bottom: 18px; color: var(--muted); font-size: 13px; text-decoration: none; letter-spacing: 1px; }
+            .breadcrumb:hover { color: var(--accent); }
+            .card h3 { margin: 26px 0 12px; font-size: 15px; font-weight: normal; color: var(--accent-2); letter-spacing: 1px; }
+            .card h3:first-of-type { margin-top: 6px; }
+        </style>
+        <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">全国计算机等级考试 · 二级</p>
+            <h1>二级（编程类）考点讲解</h1>
+            <p class="sub">Python 科目 · 考什么、怎么考、怎么复习</p>
+            <div class="meta">
+                <span>科目 <b>1</b></span>
+                <span>考点 <b>10</b></span>
+                <span>更新 <b>2026-10-22</b></span>
+            </div>
+            <p class="series">这一页是地图，不是答案。以当年官方大纲为准。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+            <main>
+                <a class="breadcrumb" href="index.html">← 回到语言目录</a>
+<section class="card" id="s01"><h2><span class="num">01</span>这是什么考试</h2>
+<p><b>全国计算机等级考试（NCRE）</b>，教育部考试中心主办，面向社会，不限学历、不限年龄，谁都能报。</p>
+<p>二级是「程序员预备级」的难度：会写程序、能读懂一段代码、能完成指定功能。它不考算法竞赛，也不考工程能力，<b>考的是「你会不会用这门语言把事做完」</b>。</p>
+<table>
+<tr><th>考试时长</th><td>120 分钟</td></tr>
+<tr><th>满分 / 及格</th><td>100 分 / 60 分及格（上机考，无纸笔）</td></tr>
+<tr><th>一年几次</th><td>一般 3 月和 9 月各一次，具体看各省通知</td></tr>
+<tr><th>报名</th><td>各省教育考试院官网，通常提前 1–2 个月</td></tr>
+<tr><th>证书有用吗</th><td>部分学校能抵学分 / 评优加分；部分岗位（国企、事业单位、教师）会看。<b>它不是万能的，但便宜、门槛低，性价比不错</b></td></tr>
+</table>
+<div class="note"><b>提醒：</b>题型、分值、大纲每年可能有微调，<b>报名前务必去官网看当年的考试大纲</b>。这一页给的是通用结构和常见考法。</div></section>
+<section class="card" id="s02"><h2><span class="num">02</span>考哪些科目，选哪个</h2>
+<table>
+<tr><th>科目</th><th>适合谁</th><th>难度</th></tr>
+<tr><td><b>二级 Python</b></td><td>零基础、想快速拿证、以后想碰数据/AI</td><td>相对低，语法短，上手快</td></tr>
+<tr><td>二级 C</td><td>学过 C、要考研/嵌入式方向</td><td>中，指针和内存容易翻车</td></tr>
+<tr><td>二级 Java</td><td>学过后端、学校开了 Java 课</td><td>中，概念多（类、继承、接口）</td></tr>
+<tr><td>二级 C++</td><td>要走算法/游戏方向</td><td>偏高</td></tr>
+<tr><td>二级 MySQL / Web / Office</td><td>想快速拿证、方向偏应用</td><td>较低</td></tr>
+</table>
+<div class="note"><b>给你的建议：</b>如果你的专业是软件技术、计算机应用这类，<b>报 Python 或 Java 都合理</b>——Java 和你正在学的后端对得上，Python 上手更快。<b>别为了「看起来难」去报 C</b>，除非你真的在用 C。</div></section>
+<section class="card" id="s03"><h2><span class="num">03</span>Python 科目考什么（大纲范围）</h2>
+<p>官方大纲把内容分成七块，你按这个顺序复习就不会漏：</p>
+<table>
+<tr><th>一、基本语法</th><td>缩进、注释、变量、命名规则、保留字、input / print、源程序格式</td></tr>
+<tr><th>二、基本数据类型</th><td>整数、浮点、复数、字符串及常用操作、类型判断与转换</td></tr>
+<tr><th>三、程序控制结构</th><td>if / elif / else、for、while、break / continue、异常处理 try</td></tr>
+<tr><th>四、函数与代码复用</th><td>定义与调用、参数传递、默认参数、变量作用域、递归</td></tr>
+<tr><th>五、组合数据类型</th><td>列表、元组、字典、集合、切片、遍历</td></tr>
+<tr><th>六、文件与数据格式化</th><td>文件打开关闭、读写、逐行处理、CSV / JSON 基本读写</td></tr>
+<tr><th>七、计算生态</th><td>标准库 <code>turtle</code> <code>random</code> <code>time</code> <code>math</code>；第三方库 <code>jieba</code> <code>wordcloud</code> <code>numpy</code> <code>matplotlib</code> 的基本用法</td></tr>
+</table>
+<div class="note"><b>还有 10 分公共基础知识</b>（选择题里）：数据结构与算法、程序设计基础、软件工程基础、数据库设计基础。<b>这块纯背</b>，别花太多时间，但也不能全丢。</div></section>
+<section class="card" id="s04"><h2><span class="num">04</span>题型与分值</h2>
+<table>
+<tr><th>题型</th><th>分值</th><th>说明</th></tr>
+<tr><td>单项选择题</td><td>约 40 分</td><td>40 题，每题 1 分，含 10 分公共基础知识</td></tr>
+<tr><td>基本操作题</td><td>约 15 分</td><td>补全代码、改错，通常 3 小题，<b>最容易拿分</b></td></tr>
+<tr><td>简单应用题</td><td>约 25 分</td><td>按功能要求写一段程序，通常 2 题</td></tr>
+<tr><td>综合应用题</td><td>约 20 分</td><td>1 题，综合读写文件 / 统计 / 输出</td></tr>
+</table>
+<div class="note"><b>策略：</b>先扫一遍，<b>先做基本操作题</b>（送分，五分钟能拿十几分），再做简单应用，最后啃综合。<b>选择题不会就蒙，别超过 15 分钟。</b></div></section>
+<section class="card" id="s05"><h2><span class="num">05</span>高频考点清单（按出现频率排）</h2>
+<table>
+<tr><th>考点</th><th>怎么考</th><th>对应本站课程</th></tr>
+<tr><td>字符串切片与格式化</td><td><code>s[1:5]</code>、<code>f"{x:.2f}"</code>、<code>split/join</code></td><td>第 08 节</td></tr>
+<tr><td>range 与循环边界</td><td><code>range(1,10,2)</code> 输出什么</td><td>第 11 节</td></tr>
+<tr><td>列表操作</td><td><code>append</code> <code>sort</code> <code>len</code> <code>in</code>、切片赋值</td><td>第 12 节</td></tr>
+<tr><td>字典遍历与 get</td><td><code>for k,v in d.items()</code>、<code>d.get(k, 默认)</code></td><td>第 14 节</td></tr>
+<tr><td>函数参数与返回</td><td>默认参数、<code>return</code> 与 <code>None</code>、作用域</td><td>第 15 节</td></tr>
+<tr><td>文件读写</td><td><code>with open(...)</code>、逐行读、写模式</td><td>第 17 节</td></tr>
+<tr><td>异常处理</td><td><code>try/except/else/finally</code> 的执行顺序</td><td>第 18 节</td></tr>
+<tr><td>turtle 绘图</td><td>前进/转向/画笔颜色、循环画图形</td><td>选学</td></tr>
+<tr><td>random</td><td><code>randint</code> <code>random</code> <code>seed</code> 的范围和用法</td><td>第 21 节</td></tr>
+<tr><td>jieba / wordcloud</td><td>分词、词云的基本流程（知道大概即可）</td><td>选学</td></tr>
+</table>
+<div class="note"><b>规律：</b>选择题喜欢考「这段代码输出什么」，操作题喜欢考「补全这一行」。<b>前者靠读代码，后者靠手感</b>——所以一定要自己敲，别只看。</div></section>
+<section class="card" id="s06"><h2><span class="num">06</span>三类操作题怎么答</h2>
+<h3>基本操作题（15 分，必须全拿）</h3>
+<p>给一段不完整的代码，让你填 <code>_____</code>，或指出错误并改正。考的都是最基础的东西：</p>
+<table>
+<tr><th>常见填空</th><td>函数名、参数、循环范围、判断条件、<code>return</code>、文件模式</td></tr>
+<tr><th>常见改错</th><td>缩进错、<code>=</code> 与 <code>==</code> 混用、中文标点、变量名拼错</td></tr>
+<tr><th>技巧</th><td>先看输出结果，反推「中间该发生什么」，再决定填什么</td></tr>
+</table>
+
+<h3>简单应用题（25 分，拉开差距的地方）</h3>
+<p>给一段文字描述（比如「统计一段文本里每个词出现的次数」），让你写完整程序。分两步走：</p>
+<table>
+<tr><th>第 1 步</th><td>把需求翻译成数据流：输入是什么 → 中间怎么处理 → 输出什么格式</td></tr>
+<tr><th>第 2 步</th><td>先写能跑的最笨版本，再优化。<b>能跑比优雅重要</b></td></tr>
+</table>
+
+<h3>综合应用题（20 分，通常是文件 + 统计）</h3>
+<p>一般流程固定：<b>读文件 → 处理数据 → 统计/排序 → 按格式输出</b>。背下这个骨架，题目怎么变都不慌：</p>
+<pre><code>with open("data.txt", "r", encoding="utf-8") as f:
+    lines = f.readlines()
+
+result = {}
+for line in lines:
+    key = line.strip().split(",")[0]
+    result[key] = result.get(key, 0) + 1
+
+for k in sorted(result, key=result.get, reverse=True):
+    print(k, result[k])</code></pre>
+<div class="note"><b>注意分号和小数位数。</b>题目要求「保留两位小数」就用 <code>f"{x:.2f}"</code>，要求「用逗号分隔」就别用空格——<b>输出格式错，整题可能没分。</b></div></section>
+<section class="card" id="s07"><h2><span class="num">07</span>最容易丢分的十个地方</h2>
+<table>
+<tr><th>1</th><td>缩进用了 Tab，和空格混用 → <code>IndentationError</code></td></tr>
+<tr><th>2</th><td>以为 <code>input()</code> 拿到的是数字，直接做加法</td></tr>
+<tr><th>3</th><td><code>range(5)</code> 以为是 1–5，其实是 0–4</td></tr>
+<tr><th>4</th><td>列表切片 <code>[a:b]</code> 不含 b</td></tr>
+<tr><th>5</th><td>字典用 <code>d["不存在的键"]</code> 直接崩，应该用 <code>.get()</code></td></tr>
+<tr><th>6</th><td><code>return</code> 写在循环里以为会继续跑，其实函数结束了</td></tr>
+<tr><th>7</th><td>文件写完没关（或者用 <code>w</code> 模式把原文件清空了）</td></tr>
+<tr><th>8</th><td><code>try/except</code> 把异常吞掉，导致后面逻辑全错</td></tr>
+<tr><th>9</th><td>输出格式不对：多一个空格、少两位小数、该换行没换</td></tr>
+<tr><th>10</th><td>题目要求用函数，你写成一整段平铺代码</td></tr>
+</table>
+<div class="note"><b>这十条，比多刷五十道题有用。</b>考场上的失分，八成不是因为不会，是因为「差一点」。</div></section>
+<section class="card" id="s08"><h2><span class="num">08</span>30 天复习计划</h2>
+<table>
+<tr><th>第 1–7 天</th><td>过一遍本站 Python 课程的 01–15 节，每节代码敲一遍</td></tr>
+<tr><th>第 8–14 天</th><td>16–23 节 + 把「记账本」独立写一遍（不看代码）</td></tr>
+<tr><th>第 15–20 天</th><td>刷真题选择题，错题抄在本子上（只抄错的那一个知识点）</td></tr>
+<tr><th>第 21–26 天</th><td>每天一道操作题，限时 20 分钟，写完对答案</td></tr>
+<tr><th>第 27–30 天</th><td>整套卷子限时模拟两次，熟悉 IDLE 的操作手感</td></tr>
+</table>
+<div class="note"><b>关键：</b>考试是在 <b>IDLE</b> 里写代码，不是 VS Code。提前用 IDLE 写几次，熟悉它的缩进提示和运行方式——<b>考场上换编辑器，手会抖。</b></div></section>
+<section class="card" id="s09"><h2><span class="num">09</span>考场提醒</h2>
+<table>
+<tr><th>提前到</th><td>带身份证 / 准考证，提前 30 分钟到考场</td></tr>
+<tr><th>先看文件</th><td>题目会给素材文件（.txt / .csv），先确认路径和编码，别自己瞎猜</td></tr>
+<tr><th>保存习惯</th><td>写一段按一次 <code>Ctrl + S</code>，机器卡死不会白写</td></tr>
+<tr><th>不会的题</th><td>先跳过，把能拿的分拿满，最后回来蒙</td></tr>
+<tr><th>交卷前</th><td>把每个文件都运行一遍，确认没有红色报错</td></tr>
+</table>
+<div class="note"><b>心态：</b>二级是「合格考」不是「选拔考」，60 分就过。<b>把基本操作题的 15 分拿满，就已经赢了一半人。</b></div></section>
+<section class="card" id="s10"><h2><span class="num">10</span>结语</h2>
+<p>这张证书不会让你变成程序员，但它能证明一件挺重要的事：<b>你能为了一个目标，坐下来把一本厚书啃完。</b></p>
+<p>很多人卡在的不是知识点，是「报名了但没去考」「看了两章就停了」。<b>能坐在考场里把卷子写完，已经比一半人强。</b></p>
+<div class="note"><b>最后提醒三件事：</b><br>① 以<b>当年官方大纲</b>为准，这一页是地图不是答案。<br>② 证书是加分项，<b>项目才是硬通货</b>——一个能被别人打开的完整作品，比一张证书更能说明问题。<br>③ 考完别把 Python 放下，趁热做个小工具，不然三个月就忘光。</div>
+<p style="text-align:right;color:#7dd3fc;">—— 龙潜猫隐</p></section>
+                <p style="margin-top:34px;"><a class="breadcrumb" href="index.html">← 回到语言目录</a></p>
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">二级考点 · 2026-10-22 建</div>
+            <div>目前收录：Python（二级） · 按官方大纲整理</div>
+        </footer>
+
+        <script>
+        (function () {
+            var toc = document.querySelector(".toc");
+            var secs = document.querySelectorAll("main section.card");
+            for (var i = 0; i < secs.length; i++) {
+                if (!secs[i].id) continue;
+                var h2 = secs[i].querySelector("h2");
+                if (!h2) continue;
+                var clone = h2.cloneNode(true);
+                var numEl = clone.querySelector(".num");
+                var num = numEl ? numEl.textContent : "";
+                if (numEl) clone.removeChild(numEl);
+                var label = (num ? num + " " : "") + clone.textContent.trim();
+                var a = document.createElement("a");
+                a.href = "#" + secs[i].id;
+                a.textContent = label;
+                a.title = label;
+                a.style.cssText = "white-space:nowrap;overflow:hidden;text-overflow:ellipsis;";
+                toc.appendChild(a);
+            }
+            var bar = document.createElement("div");
+            bar.className = "progress";
+            document.body.appendChild(bar);
+            window.addEventListener("scroll", function () {
+                var el = document.documentElement;
+                var max = el.scrollHeight - el.clientHeight;
+                bar.style.width = (max > 0 ? (el.scrollTop / max) * 100 : 0) + "%";
+            });
+        })();
+        </script>
+        <script src="../../assets/js/live.js?v=20261025"></script>
+    <script src="../../assets/js/chat.js?v=20261031"></script>
+    <script src="../../assets/js/update-popup.js?v=20261023"></script>
+</body>
+</html>

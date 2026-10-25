@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>我的咖啡 · 龙潜猫隐的咖啡店</title>
-<link rel="stylesheet" href="../assets/owner-badge.css?v=20261028" data-owner-badge="1">
+<link rel="stylesheet" href="../assets/css/owner-badge.css?v=20261028" data-owner-badge="1">
 <style>
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; padding: 38px 18px 80px; background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); color: #f3e7d3; font-family: "Microsoft YaHei", sans-serif; }
@@ -38,7 +38,7 @@
     .note { color: rgba(201,183,156,.38); font-size: 10.5px; line-height: 1.9; margin-top: 12px; }
     @media (max-width: 560px) { .summary { grid-template-columns: repeat(2, 1fr); } .info .status { margin-left: 0; } }
 </style>
-    <script src="/assets/cloud-net.js?v=20261034"></script>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
 </head>
 <body>
 <div class="wrap">
@@ -53,7 +53,7 @@
         <div class="sum"><b id="sumWait">0</b><span>待审核</span></div>
     </div>
 
-    <p class="note" id="earnHint" hidden>收益统计还需要运行 supabase/升级-我的咖啡.sql；跑完后刷新就能看到累计收益。</p>
+    <p class="note" id="earnHint" hidden>收益统计还需要运行 supabase/supabase/migrations/011-my-coffee.sql；跑完后刷新就能看到累计收益。</p>
 
     <section class="section">
         <h2>已上架</h2>
@@ -77,8 +77,8 @@
     <p class="note">收益来自云端订单，按售价全额进入制作者余额；退款 / 取消订单暂未开放。</p>
 </div>
 
-<script src="config.js?v=20261025"></script>
-<script src="member.js?v=20261025"></script>
+<script src="js/config.js?v=20261025"></script>
+<script src="js/member.js?v=20261025"></script>
 <script>
 (function () {
     "use strict";

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>练习任务清单 · 知识库 · 龙潜猫隐</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    .task-note { margin: 0 0 26px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: rgba(56,189,248,.04); color: var(--muted); font-size: 13px; line-height: 2; }
+    .task-block { margin-bottom: 18px; padding: 20px 22px; border: 1px solid var(--line-2); border-radius: 16px; background: linear-gradient(165deg, rgba(14,24,42,.9), rgba(9,16,30,.9)); }
+    .task-block h3 { margin: 0 0 10px; font-size: 16px; font-weight: normal; letter-spacing: 1px; color: #cfeaff; }
+    .task-block ol { margin: 0; padding-left: 22px; color: var(--muted); font-size: 13.5px; line-height: 2.1; }
+    .task-block li { margin-bottom: 4px; }
+    .task-block li::marker { color: var(--accent); }
+</style>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">知识库 · 练习</p>
+    <h1>练习任务清单</h1>
+    <p class="sub">没有答案，也不需要交。做完跑通就算过。</p>
+    <div class="meta">
+        <span>语言 <b>12</b></span>
+        <span>任务 <b>36</b></span>
+        <span>更新 <b>2026-10-23</b></span>
+    </div>
+</header>
+
+<div class="idx-wrap">
+
+    <p class="task-note">
+        这些题是给你在自己电脑上做的：<b>不给答案，也不在课程里挖坑</b>——课程负责讲明白，任务负责让你动手。
+        每门三门，从易到难；做不出来就回课程里找对应那一节，别硬扛。
+    </p>
+
+        <div class="task-block">
+            <h3>Python</h3>
+            <ol><li>读一个 CSV 文件，统计每个城市的订单数，按数量倒序打印前 5 个。</li><li>写一个命令行记账：add 金额 备注 / list / total，数据存 JSON。</li><li>用 requests 抓一个公开网页，把标题和所有链接打印出来。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Java</h3>
+            <ol><li>写一个 Coffee 类（名称、价格），主程序读入数量，算总价并四舍五入到分。</li><li>用 ArrayList 做一个通讯录：增、删、按名字查，控制台菜单操作。</li><li>把订单数据写进文件，程序重启后还能读出来（对象转 JSON 或逐行文本都可以）。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>C 语言</h3>
+            <ol><li>输入 10 个整数，用冒泡排序排好输出，要求用函数拆分。</li><li>写一个结构体数组存 5 本书（书名、价格），按价格排序输出。</li><li>读一个文本文件，统计行数、单词数、字符数（类似 wc 命令）。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>JavaScript</h3>
+            <ol><li>做一个待办清单：添加、勾选完成、删除，刷新后还在（localStorage）。</li><li>写一个倒计时页面：输入分钟数，归零时弹提示。</li><li>用 fetch 拉一个公开 JSON 接口，把结果渲染成卡片列表。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Rust</h3>
+            <ol><li>写一个猜数字游戏：随机 1-100，提示大了小了，统计猜了几次。</li><li>读一个文本文件，统计每个单词出现次数，输出前 10。</li><li>定义一个结构体表示咖啡，写方法计算总价，用 Vec 存多杯。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Go</h3>
+            <ol><li>写一个并发下载器：三个网址同时抓，打印状态码和耗时。</li><li>用 net/http 写一个接口，返回 JSON 格式的咖啡菜单。</li><li>读一个日志文件，统计每种错误出现的次数。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Lua</h3>
+            <ol><li>写一个命令行记账：add / list / total，数据存文本文件。</li><li>用表实现一个简单的栈：push、pop、peek。</li><li>读一个配置文件（key=value 格式），解析成表并打印。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Kotlin</h3>
+            <ol><li>写一个控制台记账：add / list / del，数据存文件。</li><li>用 data class 表示学生，按成绩排序并输出前三名。</li><li>读一个 CSV，过滤出某一列满足条件的行，打印结果。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>MySQL</h3>
+            <ol><li>建 orders 表，插入 10 条测试数据，写出「每人消费总额」查询。</li><li>给某个字段加索引，用 EXPLAIN 对比加索引前后的执行计划。</li><li>用事务模拟转账：扣款、加款、提交；中途手动 ROLLBACK 看数据。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Anaconda</h3>
+            <ol><li>建一个 data 环境，装 numpy、pandas、matplotlib，导出 environment.yml。</li><li>在另一个环境里装不同版本的 pandas，确认两个环境互不影响。</li><li>用 Jupyter 读一个 CSV，画一张折线图并保存成图片。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Node.js</h3>
+            <ol><li>写一个接口：GET /api/list 返回 JSON，POST /api/add 往里加一条。</li><li>用 fs 写一个文件统计脚本：行数、字符数。</li><li>用 Express 写一个静态文件服务器，能打开本地 HTML。</li></ol>
+        </div>
+        <div class="task-block">
+            <h3>Git</h3>
+            <ol><li>给一个项目建仓库，写 .gitignore，提交并推到 GitHub。</li><li>开一个分支改点东西，合并回 main，故意制造一次冲突并解决。</li><li>用 git log / git diff / git show 复述一次提交改了什么。</li></ol>
+        </div>
+
+</div>
+
+<footer>
+    <div class="stamp">练习任务 · 2026-10-23</div>
+    <div>龙潜猫隐 · 2026</div>
+    <div style="margin-top:6px; font-size:12px;">做完跑通就算过，不用交作业</div>
+</footer>
+
+<script src="../assets/js/update-popup.js?v=20261023"></script>
+<script src="../assets/js/live.js?v=20261025"></script>
+<script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

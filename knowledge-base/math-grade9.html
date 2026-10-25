@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>初三数学 · 九上 + 九下（湘教版） · 电子教材 · 龙潜猫隐</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    .lead { color: var(--muted); font-size: 13.5px; line-height: 2; margin: 0 0 10px; }
+    .toc-nav { margin: 0 0 8px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(56,189,248,.05); }
+    .toc-nav p { margin: 0 0 6px; font-size: 12.5px; color: var(--muted); line-height: 2; }
+    .toc-nav b { color: #9fd8ff; font-weight: normal; margin-right: 8px; letter-spacing: 1px; }
+    .toc-nav a { color: #cfeaff; text-decoration: none; margin-right: 12px; border-bottom: 1px dashed rgba(125,211,252,.25); white-space: nowrap; display: inline-block; }
+    .toc-nav a:hover { color: var(--accent); }
+    .sum { margin: 0 0 8px; font-size: 12.5px; line-height: 1.8; }
+    .sum a { color: #cfeaff; text-decoration: none; margin-right: 8px; }
+    .sum a:hover { color: var(--accent); }
+    .sum b { color: var(--accent); font-weight: normal; margin-right: 6px; }
+    .sum span { color: var(--dim); }
+    .part { margin: 34px 0 6px; padding: 10px 16px; border-left: 3px solid var(--accent); background: rgba(56,189,248,.06); border-radius: 0 10px 10px 0; font-size: 14px; letter-spacing: 2px; color: #cfeaff; }
+    .ch-block { margin-top: 12px; }
+    .ch-block > b { display: block; margin-bottom: 5px; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; }
+    .ch-block ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .formula { padding: 9px 13px; border-left: 2px solid rgba(56,189,248,.5); background: rgba(56,189,248,.05); border-radius: 0 8px 8px 0; color: #d9ecff; font-size: 13px; line-height: 1.95; font-family: Consolas, "Microsoft YaHei", monospace; }
+    .quiz { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(80,130,200,.22); }
+    .quiz > b { display: block; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; margin-bottom: 5px; }
+    .quiz ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .quiz details { margin-top: 6px; }
+    .quiz summary { cursor: pointer; color: var(--accent); font-size: 12.5px; }
+    .quiz details ol { margin-top: 5px; color: #9ec9a0; }
+    .exam { margin-top: 18px; border: 1px solid rgba(244,114,182,.35); border-radius: 14px; background: rgba(244,114,182,.05); padding: 18px 20px; }
+    .exam h3 { margin: 0 0 8px; font-size: 15px; font-weight: normal; letter-spacing: 1px; color: #f9c2e0; }
+    .exam ol { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 2; }
+    .exam details summary { color: #f9c2e0; }
+</style>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<header class="top">
+    <p class="kicker">电子教材笔记本 · 数学 · 湘教版（2026 秋 / 旧版九下）</p>
+    <h1>初三数学 · 九上 + 九下（湘教版）</h1>
+    <p class="sub">上册 4 章：相似、锐角三角函数、一元二次方程、二次函数；下册：圆、投影、概率。</p>
+    <div class="meta"><span>教材 <b>湘教版（2026 秋 / 旧版九下）</b></span><span>章节 <b>7</b></span><span>更新 <b>2026-10-23</b></span></div>
+    <p class="series"><a href="math.html" style="color:var(--accent);">← 回到数学教材目录</a></p>
+</header>
+<div class="idx-wrap">
+<div style="display:flex;gap:14px;align-items:center;margin:14px 0;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(10,18,32,.5)"><img src="../assets/textbook/math-x9a.jpg" alt="湘教版九年级数学上册（2026 秋版）" style="width:52px;height:70px;object-fit:cover;border-radius:6px;border:1px solid rgba(125,211,252,.25)"><div style="font-size:12.5px;color:var(--muted);line-height:1.9"><b style="color:#cfeaff;font-weight:normal">湘教版九年级数学上册（2026 秋版）</b><br>图形的相似、锐角的正弦余弦正切、一元二次方程、二次函数</div></div><div style="display:flex;gap:14px;align-items:center;margin:14px 0;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(10,18,32,.5)"><img src="../assets/textbook/math-x9b.jpg" alt="湘教版九年级数学下册" style="width:52px;height:70px;object-fit:cover;border-radius:6px;border:1px solid rgba(125,211,252,.25)"><div style="font-size:12.5px;color:var(--muted);line-height:1.9"><b style="color:#cfeaff;font-weight:normal">湘教版九年级数学下册</b><br>圆、投影与视图、概率（二次函数已并入九上）</div></div>
+    
+    
+    <section class="card" id="formulas">
+        <h2><span class="num">Σ</span>公式总表 · 本册一页查完</h2>
+        <p class="lead">按章节排好，考前扫一遍。每个公式都对应下面某一章，点编号可跳转。</p>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.9">
+            <tr style="color:#9fd8ff"><th style="text-align:left;padding:6px 8px">章</th><th style="text-align:left;padding:6px 8px">内容</th><th style="text-align:left;padding:6px 8px">核心公式</th></tr>
+            <tr><td>1</td><td>第 1 章 图形的相似</td><td>面积比 = (相似比)²</td></tr><tr><td>2</td><td>第 2 章 锐角的正弦、余弦、正切</td><td>sin30° = 1/2；cos30° = √3/2；tan45° = 1</td></tr><tr><td>3</td><td>第 3 章 一元二次方程</td><td>x = [−b ± √(b² − 4ac)] / (2a)</td></tr><tr><td>4</td><td>第 4 章 二次函数</td><td>顶点 (−b/2a, (4ac−b²)/4a)</td></tr><tr><td>1</td><td>第 2 章 圆</td><td>弦长 = 2√(r² − d²)</td></tr><tr><td>2</td><td>第 3 章 投影与视图</td><td>主视图在上，俯视图在下，左视图在右</td></tr><tr><td>3</td><td>第 4 章 概率</td><td>P(A) = m / n</td></tr>
+        </table></div>
+    </section>
+
+    <section class="card" id="chapter-toc">
+        <h2><span class="num">≡</span>章节目录 · 带小结</h2>
+        <p class="sum"><a href="#s1"><b>1</b>第 1 章 图形的相似</a><span>形状相同、大小不同。</span></p><p class="sum"><a href="#s2"><b>2</b>第 2 章 锐角的正弦、余弦、正切</a><span>sin、cos、tan 与解直角三角形。</span></p><p class="sum"><a href="#s3"><b>3</b>第 3 章 一元二次方程</a><span>配方、公式法、判别式、韦达定理。</span></p><p class="sum"><a href="#s4"><b>4</b>第 4 章 二次函数</a><span>抛物线、对称轴、最值。</span></p><p class="sum"><a href="#x1"><b>1</b>第 2 章 圆</a><span>圆的性质、垂径定理、圆周角、弧长扇形。</span></p><p class="sum"><a href="#x2"><b>2</b>第 3 章 投影与视图</a><span>三视图：主、左、俯。</span></p><p class="sum"><a href="#x3"><b>3</b>第 4 章 概率</a><span>列举法、树状图。</span></p>
+    </section>
+<nav class="toc-nav"><p><b>上册（2026 秋）</b><a href="#s1">1 图形的相似</a><a href="#s2">2 锐角的正弦、余弦、正切</a><a href="#s3">3 一元二次方程</a><a href="#s4">4 二次函数</a></p><p><b>下册（湘教版）</b><a href="#x1">1 圆</a><a href="#x2">2 投影与视图</a><a href="#x3">3 概率</a></p></nav>
+
+                <div class="part">上册（2026 秋）</div>
+
+    <section class="card" id="s1">
+        <h2><span class="num">1</span>第 1 章 图形的相似</h2>
+        <p class="lead">形状相同、大小不同。</p>
+        <div class="secs">
+            <div class="sec" id="s1-1">
+                <h4><span class="n">1.1</span>线段的比</h4>
+                <p>两条线段长度的比叫线段的比。量的时候必须用同一长度单位，量得 a、b，比值就是 a/b，它是一个正数，跟选什么单位没有关系。四条线段 a、b、c、d 中，如果 a/b = c/d，就说这四条线段成比例，a、d 叫外项，b、c 叫内项。判断成比例不用真去量，交叉相乘看 ad 和 bc 相不相等就行。</p>
+                <div class="f">a/b = c/d ⇔ ad = bc；若 a/b = b/c，则 b² = ac（b 叫比例中项）；a/b = c/d ⇒ (a ± b)/b = (c ± d)/d；a/b = c/d = … = k ⇒ (a + c + …)/(b + d + …) = k（分母和不为 0）</div>
+                <p class="use"><b>怎么用：</b>① 先统一单位，再把两条线段写成比；② 见到比例式先交叉相乘，化成乘积式；③ 求比例中项就开平方，取正数；④ 连比或等比问题设一个 k，把每条线段都写成 k 的倍数。</p>
+                <p class="warn"><b>易错：</b>3 cm 比 5 mm 直接写成 3:5 就错了，统一单位后是 30:5 = 6:1；比例中项 b² = ac 开方只取正，别写 ±；用等比性质时忘了分母和不能为 0。</p>
+            </div>
+            <div class="sec" id="s1-2">
+                <h4><span class="n">1.2</span>平行线分线段成比例</h4>
+                <p>两条直线被一组平行线所截，截得的对应线段成比例。三条平行线 l₁∥l₂∥l₃ 截两条直线，一条上截出 AB、BC，另一条上截出 DE、EF，就有 AB/BC = DE/EF。由此还能得到：平行于三角形一边的直线截其他两边（或两边的延长线），所得对应线段成比例；被截出的三角形与原三角形相似。</p>
+                <div class="f">l₁∥l₂∥l₃ ⇒ AB/BC = DE/EF；DE∥BC ⇒ AD/DB = AE/EC，AD/AB = AE/AC = DE/BC</div>
+                <p class="use"><b>怎么用：</b>① 先认「对应」：同一条被截直线上相邻的两段，配另一条被截直线上相邻的两段；② 写比例时统一成「上比下」或「上比全」，别一条用上比下、一条用上比全；③ 求长度就设未知数，列比例解方程。</p>
+                <p class="warn"><b>易错：</b>对应关系找错，把 AB/BC 配成了 DE/DF，DF 不是同一条被截直线上的相邻段；同一条直线上的两段必须来自同一个比，跨线乱配就错；忘了「对应线段」是按被截直线分组的。</p>
+            </div>
+            <div class="sec" id="s1-3">
+                <h4><span class="n">1.3</span>相似图形</h4>
+                <p>形状相同的图形叫相似图形。两个多边形相似，要同时满足对应角相等、对应边成比例，缺一不可。对应边的比叫相似比。相似三角形记作 △ABC∽△DEF，字母要按对应顶点顺序写，这样 AB 对 DE、BC 对 EF。全等是相似比为 1 的特殊情况。相似多边形的周长比等于相似比，面积比等于相似比的平方。</p>
+                <div class="f">对应角相等、对应边成比例；周长比 = 相似比 k；面积比 = k²；△ABC∽△DEF ⇒ AB/DE = BC/EF = AC/DF</div>
+                <p class="use"><b>怎么用：</b>① 判断相似先看角、再看边，两个条件都满足才算；② 写相似式一定按对应顶点顺序，写完立刻检查对应边；③ 求面积比先求相似比再平方，反过来已知面积比要先开方。</p>
+                <p class="warn"><b>易错：</b>相似比 2:3 就把面积比写成 2:3，正确是 4:9；相似式字母乱序，导致后面的比例式全错；以为「所有矩形都相似」「所有等腰三角形都相似」，其实角不一定相等。</p>
+            </div>
+            <div class="sec" id="s1-4">
+                <h4><span class="n">1.4</span>相似三角形的判定</h4>
+                <p>判定两个三角形相似有三条常用的路：两角分别相等（AA）；两边成比例且夹角相等（SAS）；三边成比例（SSS）。另外还有一条预备定理：平行于三角形一边的直线和其他两边相交，截出的三角形与原三角形相似。直角三角形里，斜边和一条直角边成比例也能判定相似。做题时优先找角，因为角最好找：公共角、对顶角、平行线带来的同位角内错角。</p>
+                <div class="f">∠A = ∠A′，∠B = ∠B′ ⇒ △ABC∽△A′B′C′；AB/A′B′ = AC/A′C′ 且 ∠A = ∠A′ ⇒ 相似；AB/A′B′ = BC/B′C′ = AC/A′C′ ⇒ 相似；DE∥BC ⇒ △ADE∽△ABC</div>
+                <p class="use"><b>怎么用：</b>① 先扫一遍图里的等角：公共角、对顶角、平行线的同位角或内错角、等腰三角形的两个底角；② 有两角就收工；③ 只有边就排三边比例；④ 两边成比例时必须确认相等的角是这两边的夹角。</p>
+                <p class="warn"><b>易错：</b>用「两边成比例且其中一边的对角相等」判定，这是 SSA，不成立；把夹角写成非夹角，给了 AB、AC 的比却用 ∠B；对应边顺序排错，△ABC∽△DEF 写成了 △ABC∽△EFD。</p>
+            </div>
+            <div class="sec" id="s1-5">
+                <h4><span class="n">1.5</span>相似三角形的性质</h4>
+                <p>相似三角形的对应角相等、对应边成比例。由相似比 k 还能推出一串结论：对应边上的高之比、对应边上的中线之比、对应角平分线之比都等于 k；周长之比等于 k；面积之比等于 k²。相似三角形的外接圆半径之比、内切圆半径之比也等于 k。记住一句话：长度是一次方，面积是二次方。</p>
+                <div class="f">相似比 k ⇒ 对应高比 = 对应中线比 = 对应角平分线比 = 周长比 = k；面积比 = k²；对应线段的比 = k</div>
+                <p class="use"><b>怎么用：</b>① 先定相似比：拿一对对应边相除；② 求面积用 k²，求长度用 k；③ 已知面积比先开方得 k，再去求长度；④ 证明线段成比例，可以找两对相似三角形接力。</p>
+                <p class="warn"><b>易错：</b>把面积比直接写成 k，忘了平方；对应高找错边，高必须是对应边上的高；把周长比也平方，周长比就是 k。</p>
+            </div>
+            <div class="sec" id="s1-6">
+                <h4><span class="n">1.6</span>相似三角形的应用</h4>
+                <p>相似三角形能用来量那些不好直接量的高度和距离。最常见的模型：同一时刻太阳光下，物高与影长成比例；平面镜反射，入射角等于反射角，构出两个相似的直角三角形；还有「A 字型」（平行线截三角形）和「X 字型」（两条直线相交，对应线段成比例）。做法都一样：把实际情境画成图，找出两个相似三角形，写对应边成比例，代数据解方程。</p>
+                <div class="f">同一时刻：h₁/l₁ = h₂/l₂；镜面反射：人高/人到镜的距离 = 物高/物到镜的距离；A 字型：DE∥BC ⇒ DE/BC = AD/AB</div>
+                <p class="use"><b>怎么用：</b>① 画示意图，把已知长度标在图上；② 找平行线、直角、公共角，凑出一对相似三角形；③ 按对应边写比例式；④ 解方程，最后写答句并带单位。</p>
+                <p class="warn"><b>易错：</b>影子一部分落在墙上还按「物高比影长」算，结果偏大；镜面反射里把「人到镜的距离」和「物到镜的距离」配错边；图上单位不统一，米和厘米混着代。</p>
+            </div>
+            <div class="sec" id="s1-7">
+                <h4><span class="n">1.7</span>位似</h4>
+                <p>两个多边形不仅相似，而且对应顶点的连线都经过同一点，对应边互相平行（或在同一条直线上），这样的两个图形叫位似图形，这个点叫位似中心，相似比也叫位似比。位似图形上任意一对对应点到位似中心的距离之比等于位似比。在坐标系里，以原点为位似中心、位似比为 k 时，点 (x, y) 的对应点是 (kx, ky) 或 (−kx, −ky)，对应两个图形分居原点两侧。</p>
+                <div class="f">对应点连线过位似中心；对应边平行；OA′/OA = k；(x, y) → (kx, ky) 或 (−kx, −ky)</div>
+                <p class="use"><b>怎么用：</b>① 连两对对应点，交点就是位似中心；② 位似比用对应点到位似中心的距离之比；③ 坐标系里先乘 k，再看图形在同侧还是异侧决定正负号。</p>
+                <p class="warn"><b>易错：</b>坐标只乘了 x 没乘 y；只写 (kx, ky) 漏掉 (−kx, −ky)，题目问「另一种情况」时就丢分；把位似比当成面积比。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>线段的比与成比例线段：a/b = c/d ⇔ ad = bc</li><li>平行线分线段成比例，平行于三角形一边的直线截出相似三角形</li><li>相似三角形的判定：AA、SAS（夹角）、SSS</li><li>相似三角形的性质：周长比 k、面积比 k²</li><li>位似：对应点连线交于一点，坐标乘 k 有两种位置</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">相似比 k ⇒ 周长比 = k，面积比 = k²；a/b = c/d ⇔ ad = bc</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>判定相似按顺序找：先找两角（公共角、对顶角、平行线角），再试两边夹一角，最后三边排比例。</li><li>求面积比：先定相似比 k 再平方；反过来已知面积比先开方得 k。</li><li>位似作图：连对应点找位似中心，坐标 (x, y) → (kx, ky) 或 (−kx, −ky)，同侧取正、异侧取负。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">已知 △ABC∽△DEF，相似比 AB/DE = 2/3，△ABC 的周长是 12，面积是 18，求 △DEF 的周长和面积。</p><details><summary>看解答</summary><div class="note">相似比 k = 2/3。周长比等于相似比，所以 12/C = 2/3，C = 18。面积比等于相似比的平方，k² = 4/9，所以 18/S = 4/9，S = 18 × 9/4 = 40.5。答：△DEF 的周长是 18，面积是 40.5。</div></details></div>
+        <div class="ch-block"><b>综合题（相似 + 平行线分线段成比例）</b><p class="lead">在 △ABC 中，DE∥BC，D、E 分别在 AB、AC 上，AD:DB = 2:3，DE = 4，求 BC。</p><details><summary>看解答</summary><div class="note">AD:DB = 2:3，所以 AD:AB = 2:(2 + 3) = 2:5。DE∥BC，所以 △ADE∽△ABC，DE/BC = AD/AB = 2/5。代入 DE = 4：4/BC = 2/5，BC = 10。答：BC = 10。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">已知 x/3 = y/5，且 x + y = 16，求 x、y。</p><details><summary>看解答</summary><div class="note">设 x = 3k，y = 5k（k ≠ 0）。代入 x + y = 16：3k + 5k = 16，8k = 16，k = 2。所以 x = 6，y = 10。检验：6/3 = 10/5 = 2，且 6 + 10 = 16，成立。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>面积比写成相似比，相似比 2:3 面积比应是 4:9</li><li>相似式顶点顺序乱写，对应边跟着找错</li><li>SSA（两边成比例、其中一边的对角相等）不能判定相似</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>相似比 1:2，周长比和面积比各是多少？</li><li>△ABC∽△DEF，AB = 4，DE = 6，△ABC 的面积是 8，求 △DEF 的面积。</li></ol><details><summary>点开看答案</summary><ol><li>周长比 1:2；面积比 1:4。</li><li>相似比 4:6 = 2:3，面积比 4:9；8/S = 4/9，S = 18。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s2">
+        <h2><span class="num">2</span>第 2 章 锐角的正弦、余弦、正切</h2>
+        <p class="lead">sin、cos、tan 与解直角三角形。</p>
+        <div class="secs">
+            <div class="sec" id="s2-1">
+                <h4><span class="n">2.1</span>锐角的正弦和余弦</h4>
+                <p>在 Rt△ABC 中，∠C = 90°，∠A 的对边记作 a、邻边记作 b、斜边记作 c。∠A 的对边与斜边的比叫 ∠A 的正弦，记作 sinA = a/c；邻边与斜边的比叫 ∠A 的余弦，记作 cosA = b/c。这两个比值只跟角 A 的大小有关，跟三角形画多大无关。因为直角边总比斜边短，所以锐角的正弦、余弦都在 0 与 1 之间。</p>
+                <div class="f">sinA = 对边/斜边 = a/c；cosA = 邻边/斜边 = b/c；sin²A + cos²A = 1；sinA = cos(90° − A)；sin30° = 1/2，cos30° = √3/2，sin45° = cos45° = √2/2，sin60° = √3/2，cos60° = 1/2</div>
+                <p class="use"><b>怎么用：</b>① 先找直角，斜边一定对着直角；② 再定「对边」：站在 ∠A 的位置看，正对着的那条直角边就是对边；③ 套定义写比值，能约分就约分；④ 用 sin²A + cos²A = 1 验算。</p>
+                <p class="warn"><b>易错：</b>对边、邻边是相对某个锐角说的，换一个角就要换边，很多题错在没换；sinA 是一个比值，不带单位；sin²A 表示 (sinA)²，不是 sin(A²)。</p>
+            </div>
+            <div class="sec" id="s2-2">
+                <h4><span class="n">2.2</span>锐角的正切</h4>
+                <p>∠A 的对边与邻边的比叫 ∠A 的正切，记作 tanA = a/b。正切把两条直角边直接连起来，所以题目里没有斜边时最好用。锐角的正切随角度增大而增大：tan30° = √3/3，tan45° = 1，tan60° = √3。正切值可以大于 1，因为对边可以比邻边长。sinA、cosA、tanA 合称锐角三角函数。</p>
+                <div class="f">tanA = 对边/邻边 = a/b = sinA/cosA；tan30° = √3/3，tan45° = 1，tan60° = √3；坡度 i = 铅直高度/水平宽度 = tanα</div>
+                <p class="use"><b>怎么用：</b>① 有两条直角边就直接写 tan；② 已知 tanA 和一条直角边，用 tanA = 对边/邻边 反求另一条；③ 坡度问题先把坡面、水平宽度、铅直高度画成直角三角形，坡度就是坡角的正切。</p>
+                <p class="warn"><b>易错：</b>tanA 写成邻边/对边，和 sin、cos 记混；tan90° 不存在，因为邻边为 0，别硬算；坡度是 tanα，不是 sinα，也不是坡角的度数。</p>
+            </div>
+            <div class="sec" id="s2-3">
+                <h4><span class="n">2.3</span>解直角三角形</h4>
+                <p>在直角三角形中，除直角外还有五个元素：三条边和两个锐角。由已知元素求出其余未知元素的过程叫解直角三角形。已知条件里至少要有一条边：已知两边，或已知一边一角，都能解；只给两个角解不出来，因为形状定了、大小没定。工具就三样：两锐角互余、勾股定理、锐角三角函数。</p>
+                <div class="f">∠A + ∠B = 90°；a² + b² = c²；sinA = a/c，cosA = b/c，tanA = a/b；已知 c 和 ∠A：a = c·sinA，b = c·cosA；已知 a 和 ∠A：b = a/tanA，c = a/sinA</div>
+                <p class="use"><b>怎么用：</b>① 画图，把已知元素标上；② 看有没有斜边：有斜边用 sin 或 cos，没斜边用 tan；③ 求边用乘法，求角用比值再反查；④ 算完用勾股定理和内角和检验。</p>
+                <p class="warn"><b>易错：</b>只给两个锐角就去解，解不出来；该用 cos 的地方用了 sin，原因是对边邻边没分清；计算器没调到角度制（DEG），sin30° 算出来不是 0.5。</p>
+            </div>
+            <div class="sec" id="s2-4">
+                <h4><span class="n">2.4</span>解直角三角形的应用</h4>
+                <p>测量问题里常出现三个词。仰角：视线在水平线上方时，视线与水平线的夹角；俯角：视线在水平线下方时，视线与水平线的夹角。坡度（坡比）i：坡面的铅直高度 h 与水平宽度 l 的比，i = h/l = tanα，α 叫坡角。方向角：从正北或正南方向转到目标方向所成的角。把这些角放进直角三角形，问题就变成解直角三角形。</p>
+                <div class="f">i = h/l = tanα；h = l·tanα；仰角、俯角都以水平线为基准；两个直角三角形共高时：h/tanα − h/tanβ = 两观测点间的距离</div>
+                <p class="use"><b>怎么用：</b>① 画示意图，把水平线、铅直线画出来；② 作垂线造直角三角形，通常设所求的高为 h；③ 在两个三角形里分别用 tan 表示底边；④ 用底边的和或差列方程；⑤ 解出 h，按题目要求取近似值。</p>
+                <p class="warn"><b>易错：</b>仰角、俯角拿竖直线当基准，画出来就错；把方向角当成与正东的夹角，方向角是从正北或正南量；两个观测点在同一侧时用减法、在两侧时用加法，别套反。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>锐角三角函数：sinA = 对边/斜边，cosA = 邻边/斜边，tanA = 对边/邻边</li><li>特殊角 30°、45°、60° 的三角函数值</li><li>同角关系 sin²A + cos²A = 1，tanA = sinA/cosA，sinA = cos(90° − A)</li><li>解直角三角形：已知一边和一锐角，或已知两边</li><li>仰角、俯角、坡度、方向角</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">sinA = 对边/斜边，cosA = 邻边/斜边，tanA = 对边/邻边 = sinA/cosA；sin²A + cos²A = 1</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>认边：斜边永远对着直角；对边、邻边是相对当前这个锐角说的，换角就换边。</li><li>选函数：题里有斜边用 sin 或 cos，没有斜边用 tan；求边用乘法，求角用比值反查。</li><li>应用题：作垂线造直角三角形，两个三角形共高就设高为 h，用两个 tan 表示底边再列方程。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">在 Rt△ABC 中，∠C = 90°，AB = 10，∠A = 30°，求 BC、AC 和 tanB。</p><details><summary>看解答</summary><div class="note">∠C = 90°，AB 是斜边。BC 是 ∠A 的对边：BC = AB·sinA = 10 × 1/2 = 5。AC 是 ∠A 的邻边：AC = AB·cosA = 10 × √3/2 = 5√3。∠B = 90° − 30° = 60°，tanB = tan60° = √3。检验：5² + (5√3)² = 25 + 75 = 100 = 10²，勾股成立。</div></details></div>
+        <div class="ch-block"><b>综合题（解直角三角形 + 仰角）</b><p class="lead">小明在 A 处测得楼顶 C 的仰角为 30°，朝楼走 20 m 到 B 处，测得楼顶的仰角为 45°，求楼高 CD（结果保留根号）。</p><details><summary>看解答</summary><div class="note">设 CD = h。在 Rt△BCD 中，∠CBD = 45°，所以 BD = CD/tan45° = h。在 Rt△ACD 中，∠CAD = 30°，所以 AD = CD/tan30° = √3h。A、B、D 在同一条水平线上，AD − BD = AB，即 √3h − h = 20，h(√3 − 1) = 20，h = 20/(√3 − 1) = 20(√3 + 1)/2 = 10(√3 + 1)。答：楼高 10(√3 + 1) m，约 27.3 m。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">在 Rt△ABC 中，∠C = 90°，a = 3，b = 4，求 c、sinA、cosA、tanA。</p><details><summary>看解答</summary><div class="note">c = √(a² + b²) = √(9 + 16) = 5。sinA = a/c = 3/5，cosA = b/c = 4/5，tanA = a/b = 3/4。检验：sin²A + cos²A = 9/25 + 16/25 = 1，同角关系成立。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>对边、邻边不跟着角走，换角后还用原来的边</li><li>sin30° 和 cos30° 背反，sin30° = 1/2，cos30° = √3/2</li><li>仰角、俯角以竖直线为基准，或把坡度当成坡角的度数</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>计算 sin30° + cos60° + tan45°。</li><li>Rt△ABC 中 ∠C = 90°，AC = 6，BC = 8，求 sinA 和 tanA。</li></ol><details><summary>点开看答案</summary><ol><li>1/2 + 1/2 + 1 = 2。</li><li>AB = √(6² + 8²) = 10；sinA = BC/AB = 8/10 = 4/5；tanA = BC/AC = 8/6 = 4/3。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s3">
+        <h2><span class="num">3</span>第 3 章 一元二次方程</h2>
+        <p class="lead">配方、公式法、判别式、韦达定理。</p>
+        <div class="secs">
+            <div class="sec" id="s3-1">
+                <h4><span class="n">3.1</span>一元二次方程的概念</h4>
+                <p>只含一个未知数、并且化简后未知数的最高次数是 2 的整式方程，叫一元二次方程。一般形式写成 ax² + bx + c = 0，其中 a、b、c 是常数，a ≠ 0。a 叫二次项系数，b 叫一次项系数，c 叫常数项。判断时要过三关：是整式方程、只有一个未知数、化简后二次项系数不为 0。使方程左右两边相等的未知数的值，叫方程的根。</p>
+                <div class="f">ax² + bx + c = 0（a ≠ 0）；二次项 ax²，一次项 bx，常数项 c</div>
+                <p class="use"><b>怎么用：</b>① 先去分母、去括号、移项、合并，化成一般式；② 按 x²、x、常数三段的系数读 a、b、c，符号一起带上；③ 读 a 之前先确认它不为 0。</p>
+                <p class="warn"><b>易错：</b>不化一般式就读系数，(x − 1)(x + 2) = 0 展开后常数项是 −2，不是 2；a = 0 时方程变成一次方程，不再是一元二次方程；常数项 c 漏掉符号，x² − 4 = 0 里 c = −4。</p>
+            </div>
+            <div class="sec" id="s3-2">
+                <h4><span class="n">3.2</span>一元二次方程的解法</h4>
+                <p>一元二次方程有四种解法。直接开平方法：方程能写成 (x + m)² = n 且 n ≥ 0 时，直接开方。配方法：二次项系数化 1，两边加上一次项系数一半的平方，把左边凑成完全平方。公式法：先算 Δ = b² − 4ac，Δ ≥ 0 时代求根公式。因式分解法：把方程化成两个一次因式的积等于 0，再令每个因式为 0。顺序是能分解先分解，不能分解再配方或套公式。</p>
+                <div class="f">x = [−b ± √(b² − 4ac)]/(2a)（b² − 4ac ≥ 0）；x² + px = (x + p/2)² − p²/4；AB = 0 ⇔ A = 0 或 B = 0</div>
+                <p class="use"><b>怎么用：</b>① 先化一般式；② 看能不能因式分解，能就分解；③ 不能分解就算 Δ，Δ ≥ 0 代公式；④ 两个根都要写出来，别只写一个。</p>
+                <p class="warn"><b>易错：</b>配方时忘了加「一次项系数一半的平方」，或者只在左边加、右边忘了加；求根公式分母写成 2 而不是 2a；因式分解得到 (x − 3)(x − 5) = 0 只写 x = 3，漏掉 x = 5。</p>
+            </div>
+            <div class="sec" id="s3-3">
+                <h4><span class="n">3.3</span>一元二次方程根的判别式</h4>
+                <p>Δ = b² − 4ac 叫一元二次方程根的判别式。它不用解方程，就能判断根的情况：Δ &gt; 0 时有两个不相等的实数根；Δ = 0 时有两个相等的实数根；Δ &lt; 0 时没有实数根。判别式只管「有没有、等不等」，不管根是正还是负。含参数的题里，「有两个实数根」对应 a ≠ 0 且 Δ ≥ 0，两个条件缺一不可。</p>
+                <div class="f">Δ = b² − 4ac；Δ &gt; 0 ⇔ 两个不相等实根；Δ = 0 ⇔ 两个相等实根；Δ &lt; 0 ⇔ 无实根</div>
+                <p class="use"><b>怎么用：</b>① 先化一般式，再算 Δ；② 按题目要求把 Δ 与 0 比较，列不等式或方程；③ 含参数时先写 a ≠ 0，再写 Δ 的条件；④ 最后把参数代回去检验。</p>
+                <p class="warn"><b>易错：</b>忘了 a ≠ 0 这个前提，参数让二次项系数变成 0 还当二次方程解；Δ = 0 说成「只有一个根」，正确是「两个相等的实数根」；Δ &lt; 0 说成「无解」，准确说法是在实数范围内无解。</p>
+            </div>
+            <div class="sec" id="s3-4">
+                <h4><span class="n">3.4</span>一元二次方程根与系数的关系</h4>
+                <p>如果 x₁、x₂ 是方程 ax² + bx + c = 0（a ≠ 0，且 Δ ≥ 0）的两个根，那么 x₁ + x₂ = −b/a，x₁x₂ = c/a，这就是根与系数的关系，也叫韦达定理。它把两根的和、积直接用系数表示出来，不用真的解方程。常见的变形都要会：x₁² + x₂² = (x₁ + x₂)² − 2x₁x₂；1/x₁ + 1/x₂ = (x₁ + x₂)/(x₁x₂)；(x₁ − x₂)² = (x₁ + x₂)² − 4x₁x₂。</p>
+                <div class="f">x₁ + x₂ = −b/a；x₁x₂ = c/a；x₁² + x₂² = (x₁ + x₂)² − 2x₁x₂；|x₁ − x₂| = √Δ/|a|</div>
+                <p class="use"><b>怎么用：</b>① 先确认 Δ ≥ 0，有实根才能用；② 写出 x₁ + x₂ 和 x₁x₂；③ 把要求的式子化成这两个量的组合；④ 代入计算。</p>
+                <p class="warn"><b>易错：</b>不管 Δ 就套韦达定理，方程根本没实根；x₁ + x₂ 的负号丢掉，写成 b/a；求 1/x₁ + 1/x₂ 时不检查 x₁x₂ 是否为 0。</p>
+            </div>
+            <div class="sec" id="s3-5">
+                <h4><span class="n">3.5</span>一元二次方程的应用</h4>
+                <p>列一元二次方程解应用题，套路固定：审题设未知数、找等量关系、列方程、解方程、检验、作答。常见模型有四类：增长率问题 a(1 + x)ⁿ = b；面积问题，把小路、边框平移掉再算；利润问题，利润 =（售价 − 成本）× 销量；握手、比赛问题，n 个人两两握手共 n(n − 1)/2 次。解出来的两个根，要按实际意义取舍。</p>
+                <div class="f">a(1 + x)² = b（连续两次增长）；利润 =（售价 − 成本）× 销量；n(n − 1)/2 次握手</div>
+                <p class="use"><b>怎么用：</b>① 设未知数，写清单位；② 用含 x 的式子表示相关量；③ 找等量关系列方程；④ 解出两根，舍去不合题意的；⑤ 写答句。</p>
+                <p class="warn"><b>易错：</b>增长率问题把 a(1 + x)² 写成 a(1 + 2x)；解出负根不检验，直接写进答案；面积题里米和厘米混用，或者把「小路宽」当成「两边各宽」。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>一元二次方程的一般式 ax² + bx + c = 0（a ≠ 0）</li><li>四种解法：直接开平方、配方、公式法、因式分解</li><li>判别式 Δ = b² − 4ac 决定根的情况</li><li>韦达定理 x₁ + x₂ = −b/a，x₁x₂ = c/a</li><li>应用模型：增长率、面积、利润、握手</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">x = [−b ± √(b² − 4ac)]/(2a)；Δ = b² − 4ac；x₁ + x₂ = −b/a，x₁x₂ = c/a</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>解方程顺序：能因式分解先分解，不能分解算 Δ，Δ ≥ 0 再代求根公式。</li><li>含参数：先写 a ≠ 0，再按 Δ 的符号列条件，最后代回检验。</li><li>应用题五步：设、列、解、验、答，验的是「符不符合实际」。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">用求根公式解方程 2x² − 3x − 2 = 0。</p><details><summary>看解答</summary><div class="note">a = 2，b = −3，c = −2。Δ = b² − 4ac = (−3)² − 4×2×(−2) = 9 + 16 = 25 &gt; 0。x = (3 ± √25)/(2×2) = (3 ± 5)/4。所以 x₁ = 8/4 = 2，x₂ = −2/4 = −1/2。检验：x = 2 时 2×4 − 6 − 2 = 0；x = −1/2 时 2×1/4 + 3/2 − 2 = 0。</div></details></div>
+        <div class="ch-block"><b>综合题（判别式 + 韦达定理）</b><p class="lead">已知关于 x 的方程 x² − (2k + 1)x + k² + 1 = 0 有两个不相等的实数根 x₁、x₂，且 x₁² + x₂² = 15，求 k 的值。</p><details><summary>看解答</summary><div class="note">有两个不相等的实数根，先要 Δ &gt; 0。Δ = (2k + 1)² − 4(k² + 1) = 4k² + 4k + 1 − 4k² − 4 = 4k − 3 &gt; 0，所以 k &gt; 3/4。由韦达定理，x₁ + x₂ = 2k + 1，x₁x₂ = k² + 1。x₁² + x₂² = (x₁ + x₂)² − 2x₁x₂ = (2k + 1)² − 2(k² + 1) = 2k² + 4k − 1。令 2k² + 4k − 1 = 15，得 2k² + 4k − 16 = 0，即 k² + 2k − 8 = 0，(k + 4)(k − 2) = 0，k = −4 或 k = 2。因为 k &gt; 3/4，所以 k = −4 舍去。答：k = 2。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">解方程 (x − 3)² = 2(x − 3)。</p><details><summary>看解答</summary><div class="note">移项：(x − 3)² − 2(x − 3) = 0。提公因式 (x − 3)：(x − 3)(x − 3 − 2) = 0，即 (x − 3)(x − 5) = 0。所以 x − 3 = 0 或 x − 5 = 0，x₁ = 3，x₂ = 5。注意不能两边直接除以 (x − 3)，那样会丢掉 x = 3 这个根。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>方程没化一般式就读 a、b、c，符号和常数项最容易错</li><li>用韦达定理前不检查 Δ ≥ 0</li><li>应用题解出两根不检验，负根、超出范围的根照写</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>解方程 x² − 6x + 8 = 0。</li><li>方程 x² − 2x + m = 0 有两个相等的实数根，求 m。</li></ol><details><summary>点开看答案</summary><ol><li>因式分解 (x − 2)(x − 4) = 0，x₁ = 2，x₂ = 4。</li><li>Δ = (−2)² − 4×1×m = 4 − 4m = 0，m = 1。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s4">
+        <h2><span class="num">4</span>第 4 章 二次函数</h2>
+        <p class="lead">抛物线、对称轴、最值。</p>
+        <div class="secs">
+            <div class="sec" id="s4-1">
+                <h4><span class="n">4.1</span>二次函数</h4>
+                <p>形如 y = ax² + bx + c（a、b、c 是常数，a ≠ 0）的函数叫二次函数，自变量 x 的取值范围是全体实数。a 决定开口方向和开口大小：a &gt; 0 开口向上，a &lt; 0 开口向下，|a| 越大开口越窄。二次函数有三种写法：一般式 y = ax² + bx + c，顶点式 y = a(x − h)² + k，交点式 y = a(x − x₁)(x − x₂)。</p>
+                <div class="f">y = ax² + bx + c（a ≠ 0）；顶点式 y = a(x − h)² + k，顶点 (h, k)；交点式 y = a(x − x₁)(x − x₂)</div>
+                <p class="use"><b>怎么用：</b>① 判断是不是二次函数：化简后看最高次是不是 2、二次项系数是不是不为 0；② 写 a、b、c 时带符号；③ 实际问题要写自变量的取值范围。</p>
+                <p class="warn"><b>易错：</b>a = 0 时不是二次函数，成了一次函数；y = x² + 1/x 不是二次函数，因为它不是整式；实际问题忘了写自变量范围，比如边长必须大于 0。</p>
+            </div>
+            <div class="sec" id="s4-2">
+                <h4><span class="n">4.2</span>二次函数的图象与性质</h4>
+                <p>二次函数的图象是一条抛物线，它是轴对称图形。对称轴是 x = −b/(2a)，顶点坐标是 (−b/(2a), (4ac − b²)/(4a))。a &gt; 0 时开口向上，顶点是最低点，函数在对称轴左边递减、右边递增，最小值是 (4ac − b²)/(4a)；a &lt; 0 时反过来，顶点是最高点。图象与 y 轴的交点固定是 (0, c)。</p>
+                <div class="f">对称轴 x = −b/(2a)；顶点 (−b/(2a), (4ac − b²)/(4a))；最值 y = (4ac − b²)/(4a)；y = a(x − h)² + k 的顶点是 (h, k)</div>
+                <p class="use"><b>怎么用：</b>① 求对称轴和顶点：配方成顶点式，或直接套公式；② 比较函数值大小：a &gt; 0 时离对称轴越远值越大；③ 画图找五个点：顶点、与 x 轴的两个交点、与 y 轴的交点及其对称点。</p>
+                <p class="warn"><b>易错：</b>对称轴写成 x = b/(2a)，负号丢了；最值只看 (4ac − b²)/(4a)，不看 a 的正负，开口向下时那其实是最大值；比较 f(1) 和 f(4) 时直接代进去硬算，忘了用对称性更快。</p>
+            </div>
+            <div class="sec" id="s4-3">
+                <h4><span class="n">4.3</span>二次函数的表达式的求法</h4>
+                <p>求二次函数的表达式用待定系数法，关键是根据已知条件选对形式。已知图象上任意三个点，设一般式 y = ax² + bx + c，列三元一次方程组。已知顶点坐标或对称轴、最值，设顶点式 y = a(x − h)² + k，只要再代一个点求 a。已知图象与 x 轴的两个交点，设交点式 y = a(x − x₁)(x − x₂)，再代一个点求 a。</p>
+                <div class="f">一般式需要三个点；顶点式 y = a(x − h)² + k 需要顶点和一个点；交点式 y = a(x − x₁)(x − x₂) 需要两个交点和另一个点</div>
+                <p class="use"><b>怎么用：</b>① 看条件选形式；② 设出带参数的表达式；③ 把已知点代进去列方程；④ 解出参数；⑤ 写回原式并检验。</p>
+                <p class="warn"><b>易错：</b>顶点是 (h, k) 却设成 y = a(x + h)² + k，符号反了；交点式漏写 a，直接写成 y = (x − x₁)(x − x₂)；只给两个点却设三个参数，方程不够解。</p>
+            </div>
+            <div class="sec" id="s4-4">
+                <h4><span class="n">4.4</span>二次函数与一元二次方程的关系</h4>
+                <p>抛物线 y = ax² + bx + c 与 x 轴交点的横坐标，就是一元二次方程 ax² + bx + c = 0 的根。所以交点个数看 Δ：Δ &gt; 0 有两个交点，Δ = 0 时顶点落在 x 轴上、只有一个交点，Δ &lt; 0 没有交点。反过来，解不等式 ax² + bx + c &gt; 0，就是看图象在 x 轴上方的部分对应哪些 x。</p>
+                <div class="f">交点 (x₁, 0)、(x₂, 0)；Δ &gt; 0 两个交点，Δ = 0 一个交点，Δ &lt; 0 无交点；两交点间距离 |x₁ − x₂| = √Δ/|a|</div>
+                <p class="use"><b>怎么用：</b>① 判断交点个数就算 Δ；② 求交点坐标就解方程；③ 解二次不等式先求根，再对照开口方向看「取两边」还是「取中间」。</p>
+                <p class="warn"><b>易错：</b>把「与 x 轴的交点个数」和「与 y 轴的交点」搞混，与 y 轴永远只有一个交点 (0, c)；Δ = 0 说成没有交点；开口方向不影响方程的根，但决定不等式的解集，别漏看。</p>
+            </div>
+            <div class="sec" id="s4-5">
+                <h4><span class="n">4.5</span>二次函数的应用</h4>
+                <p>二次函数的最值问题在实际里很常见：利润最大、面积最大、抛物线形拱桥、喷泉水柱。做法是设自变量、建立函数关系、写出自变量的取值范围，再配方或套顶点公式求最值。要注意顶点横坐标必须在取值范围内：在范围内，顶点就是最值点；不在范围内，最值在区间的端点上取到。</p>
+                <div class="f">y = a(x − h)² + k；a &lt; 0 且 h 在范围内时，x = h 处取最大值 k；a &gt; 0 时取最小值 k；利润 W =（售价 − 成本）× 销量</div>
+                <p class="use"><b>怎么用：</b>① 设 x 并写清范围；② 列出函数关系式；③ 配方求顶点；④ 判断顶点是否在范围内，不在就比较两个端点；⑤ 作答。</p>
+                <p class="warn"><b>易错：</b>不看自变量范围，直接把顶点当最值；「售价每涨 1 元，销量减少 2 件」这类关系列反，涨价后销量应该减少；单位不统一，件、元、万元混着算。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>二次函数 y = ax² + bx + c（a ≠ 0），a 决定开口方向和大小</li><li>对称轴 x = −b/(2a)，顶点 (−b/(2a), (4ac − b²)/(4a))</li><li>三种表达式：一般式、顶点式、交点式</li><li>抛物线与 x 轴的交点 ⇔ 方程的根，Δ 决定交点个数</li><li>最值：a &gt; 0 取最小值，a &lt; 0 取最大值，要看自变量范围</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">对称轴 x = −b/(2a)；顶点 (−b/(2a), (4ac − b²)/(4a))；y = a(x − h)² + k</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>求顶点：配方成 y = a(x − h)² + k，或直接套 (−b/(2a), (4ac − b²)/(4a))。</li><li>求表达式：三点用一般式，顶点或对称轴用顶点式，两交点用交点式。</li><li>求最值：先看 a 的符号定最大还是最小，再看顶点横坐标在不在取值范围内。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">求 y = 2x² − 4x + 5 的对称轴、顶点坐标和最值。</p><details><summary>看解答</summary><div class="note">a = 2，b = −4，c = 5。对称轴 x = −b/(2a) = 4/4 = 1。代入 x = 1：y = 2 − 4 + 5 = 3，顶点 (1, 3)。因为 a = 2 &gt; 0，开口向上，顶点是最低点，所以当 x = 1 时 y 取最小值 3，没有最大值。</div></details></div>
+        <div class="ch-block"><b>综合题（二次函数 + 一元二次方程）</b><p class="lead">已知抛物线 y = x² − 2x − 3 与 x 轴交于 A、B 两点，与 y 轴交于点 C，求 A、B、C 的坐标和 △ABC 的面积。</p><details><summary>看解答</summary><div class="note">令 y = 0：x² − 2x − 3 = 0，(x − 3)(x + 1) = 0，x = 3 或 x = −1。所以 A(−1, 0)，B(3, 0)，AB = 4。令 x = 0：y = −3，所以 C(0, −3)，点 C 到 x 轴的距离是 3。S△ABC = ½ × AB × 3 = ½ × 4 × 3 = 6。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">已知抛物线的顶点是 (1, −4)，且经过点 (0, −3)，求它的表达式。</p><details><summary>看解答</summary><div class="note">已知顶点，设顶点式 y = a(x − 1)² − 4。把 (0, −3) 代入：−3 = a(0 − 1)² − 4 = a − 4，所以 a = 1。表达式是 y = (x − 1)² − 4，展开得 y = x² − 2x − 3。检验：x = 0 时 y = −3，x = 1 时 y = −4，都对。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>对称轴漏负号，写成 x = b/(2a)</li><li>求最值不看自变量取值范围，顶点不在范围内还算顶点</li><li>顶点式设成 y = a(x + h)² + k，把 (h, k) 的符号弄反</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>y = −2(x + 1)² + 3 的开口方向、顶点和最大值分别是什么？</li><li>抛物线 y = x² − 4x + 3 与 x 轴的交点坐标？</li></ol><details><summary>点开看答案</summary><ol><li>开口向下；顶点 (−1, 3)；最大值 3。</li><li>令 y = 0，(x − 1)(x − 3) = 0，交点是 (1, 0) 和 (3, 0)。</li></ol></details></div>
+    </section>
+
+    <div class="part">下册（湘教版）</div>
+
+    <section class="card" id="x1">
+        <h2><span class="num">1</span>第 2 章 圆</h2>
+        <p class="lead">圆的性质、垂径定理、圆周角、弧长扇形。</p>
+        <div class="secs">
+            <div class="sec" id="x1-1">
+                <h4><span class="n">2.1</span>圆的对称性</h4>
+                <p>平面内到定点 O 的距离等于定长 r 的点的集合叫圆，O 叫圆心，r 叫半径。圆是轴对称图形，任何一条过圆心的直线都是它的对称轴；圆也是中心对称图形，对称中心就是圆心；圆还有旋转不变性，绕圆心转任意角度都和自身重合。同圆或等圆的半径都相等，直径是圆中最长的弦。圆心定位置，半径定大小。</p>
+                <div class="f">点 P 在圆上 ⇔ OP = r；OP &lt; r 在圆内，OP = r 在圆上，OP &gt; r 在圆外；直径 d = 2r</div>
+                <p class="use"><b>怎么用：</b>① 判断点与圆的位置关系，比较 OP 和 r；② 见半径就想到等腰三角形，连半径是常用辅助线；③ 用旋转不变性证弧相等、线段相等。</p>
+                <p class="warn"><b>易错：</b>说「任意一条直线都是圆的对称轴」，只有过圆心的直线才是；弦和弧混着说，弦是线段、弧是曲线；「半径相等」只在同圆或等圆里成立，两个大小不同的圆半径不相等。</p>
+            </div>
+            <div class="sec" id="x1-2">
+                <h4><span class="n">2.2</span>圆心角、圆周角</h4>
+                <p>顶点在圆心的角叫圆心角；顶点在圆上、两边都和圆相交的角叫圆周角。同圆或等圆中，相等的圆心角所对的弧相等、所对的弦相等、弦心距也相等。一条弧所对的圆周角等于它所对的圆心角的一半。同弧或等弧所对的圆周角相等；直径所对的圆周角是直角；90° 的圆周角所对的弦是直径。圆内接四边形的对角互补。</p>
+                <div class="f">∠ACB = ½∠AOB（同一条弧）；直径所对的圆周角 = 90°；圆内接四边形 ∠A + ∠C = 180°</div>
+                <p class="use"><b>怎么用：</b>① 见到圆心角和圆周角，先确认它们对的是不是同一条弧；② 见到直径，立刻想 90°；③ 证两个角相等，找它们所对的弧；④ 圆内接四边形用对角互补。</p>
+                <p class="warn"><b>易错：</b>圆心角和圆周角对的不是同一条弧，就直接套一半的关系；一条弦对着两条弧（优弧和劣弧），两个圆周角互补，只写一个；把「同弦所对的圆周角相等」当永远成立，点在另一侧时是互补。</p>
+            </div>
+            <div class="sec" id="x1-3">
+                <h4><span class="n">2.3</span>垂径定理</h4>
+                <p>垂直于弦的直径平分这条弦，并且平分弦所对的两条弧，这就是垂径定理。推论：平分弦（不是直径）的直径垂直于弦，并且平分弦所对的两条弧；弦的垂直平分线一定经过圆心。计算时把半径、弦心距、半弦放进一个直角三角形：半径是斜边，弦心距和半弦是两条直角边。</p>
+                <div class="f">CD 过圆心且 CD ⊥ AB ⇒ AE = EB，弧 AC = 弧 BC；r² = d² + (a/2)²；弦长 a = 2√(r² − d²)</div>
+                <p class="use"><b>怎么用：</b>① 见弦就作弦心距，连半径；② 用勾股定理列 r² = d² + (a/2)²；③ 已知 r、d、a 中的两个求第三个；④ 两弦平行时，还要分圆心在同侧、异侧两种情况。</p>
+                <p class="warn"><b>易错：</b>把弦心距当斜边，写成 d² = r² + (a/2)²，勾股关系用反；「平分弦的直径垂直于弦」漏掉「弦不是直径」这个条件；题目没画图就不分同侧异侧，少一个答案。</p>
+            </div>
+            <div class="sec" id="x1-4">
+                <h4><span class="n">2.4</span>过不共线三点作圆</h4>
+                <p>不在同一条直线上的三个点确定一个圆。作法：连 AB、BC，分别作它们的垂直平分线，两条垂直平分线的交点就是圆心 O，OA 就是半径。三角形三个顶点确定的圆叫三角形的外接圆，圆心叫外心，它是三条边垂直平分线的交点，到三个顶点的距离相等。锐角三角形的外心在三角形内部，直角三角形的外心在斜边中点，钝角三角形的外心在三角形外部。</p>
+                <div class="f">三点不共线 ⇒ 确定一个圆；外心到三顶点距离相等；直角三角形外接圆半径 R = c/2（c 为斜边）</div>
+                <p class="use"><b>怎么用：</b>① 作外接圆：作两条边的垂直平分线定圆心；② 判断外心位置看三角形形状；③ 直角三角形外接圆半径直接用斜边的一半。</p>
+                <p class="warn"><b>易错：</b>三点共线时作不出圆，两条垂直平分线平行；把外心当成三条角平分线的交点，那是内心；以为外心一定在三角形内部，钝角三角形的外心在外面。</p>
+            </div>
+            <div class="sec" id="x1-5">
+                <h4><span class="n">2.5</span>直线与圆的位置关系</h4>
+                <p>直线与圆的位置关系看圆心到直线的距离 d 和半径 r：d &gt; r 相离，没有公共点；d = r 相切，只有一个公共点；d &lt; r 相交，有两个公共点。切线的判定：经过半径的外端并且垂直于这条半径的直线是圆的切线。切线的性质：圆的切线垂直于过切点的半径。从圆外一点引圆的两条切线，切线长相等，这点和圆心的连线平分两条切线的夹角。</p>
+                <div class="f">d &gt; r 相离，d = r 相切，d &lt; r 相交；切线 ⇒ OT ⊥ l；切线长 PA = PB</div>
+                <p class="use"><b>怎么用：</b>① 判断位置关系，算 d 再和 r 比；② 证切线分两种情况：有切点就连半径证垂直，没切点就作垂线证 d = r；③ 切线长问题连圆心，构造两个全等的直角三角形。</p>
+                <p class="warn"><b>易错：</b>证切线时没说「经过半径外端」，只说了垂直；把「垂直于半径的直线」都当切线，必须过半径的外端；d 是圆心到直线的距离，不是到线段端点的距离。</p>
+            </div>
+            <div class="sec" id="x1-6">
+                <h4><span class="n">2.6</span>弧长与扇形面积</h4>
+                <p>半径为 r 的圆中，n° 的圆心角所对的弧长 l = nπr/180；由这条弧和两条半径围成的扇形面积 S = nπr²/360，也可以写成 S = ½lr。圆锥的侧面展开图是扇形：扇形的弧长等于底面圆的周长 2πr，扇形的半径等于圆锥的母线长 l，所以圆锥侧面积 S侧 = ½ × 2πr × l = πrl。</p>
+                <div class="f">l = nπr/180；S扇形 = nπr²/360 = ½lr；S圆锥侧 = πrl；圆锥底面周长 2πr = 展开扇形的弧长</div>
+                <p class="use"><b>怎么用：</b>① 先确认 n 是角度制；② 求阴影面积用割补：扇形加减小三角形；③ 圆锥问题抓两条对应：底面周长等于扇形弧长，母线等于扇形半径。</p>
+                <p class="warn"><b>易错：</b>弧长公式用成 nπr²/360，那是扇形面积；S = ½lr 里的 l 是弧长，不是半径；圆锥的底面半径和母线混用，侧面积要用母线。</p>
+            </div>
+            <div class="sec" id="x1-7">
+                <h4><span class="n">2.7</span>正多边形与圆</h4>
+                <p>各边相等、各角也相等的多边形叫正多边形。把一个圆 n 等分，依次连接各分点，得到的就是正 n 边形，这个圆叫它的外接圆。正 n 边形的中心角是 360°/n，每个内角是 (n − 2)×180°/n，每个外角是 360°/n。把半径、边心距、半边放进直角三角形，就能互相换算。</p>
+                <div class="f">中心角 = 360°/n；内角 = (n − 2)×180°/n；边长 a = 2R·sin(180°/n)；边心距 r = R·cos(180°/n)；面积 = ½ × 周长 × 边心距</div>
+                <p class="use"><b>怎么用：</b>① 正多边形问题化成「半径、边心距、半边」的直角三角形；② 中心角和边数互相求；③ 面积用 ½ × 周长 × 边心距。</p>
+                <p class="warn"><b>易错：</b>中心角和内角搞混，正六边形中心角 60°、内角 120°；把边心距当半径；以为所有正多边形都是中心对称图形，奇数边的不是。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>圆的对称性：轴对称、中心对称、旋转不变</li><li>圆心角与圆周角：同弧所对圆周角是圆心角的一半</li><li>垂径定理：垂直于弦的直径平分弦，r² = d² + (a/2)²</li><li>直线与圆的位置关系，切线的判定与性质</li><li>弧长 l = nπr/180、扇形面积 S = ½lr、正 n 边形中心角 360°/n</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">弦长 a = 2√(r² − d²)；l = nπr/180；S扇形 = ½lr；正 n 边形中心角 = 360°/n</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>见弦作弦心距、连半径，用勾股：r² = d² + (a/2)²。</li><li>见直径想 90° 圆周角；见同弧想圆周角相等、圆心角是它的 2 倍。</li><li>证切线：有切点连半径证垂直，无切点作垂线证 d = r。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">⊙O 的半径 r = 5，弦心距 d = 3，求弦长。</p><details><summary>看解答</summary><div class="note">设弦为 AB，作 OC ⊥ AB 于 C，则 AC = CB，OC = 3。在 Rt△OAC 中，OA = 5，OC = 3，AC = √(OA² − OC²) = √(25 − 9) = 4。所以 AB = 2AC = 8。</div></details></div>
+        <div class="ch-block"><b>综合题（垂径定理 + 分类讨论）</b><p class="lead">⊙O 的半径是 10，弦 AB = 16，弦 CD = 12，且 AB∥CD，求 AB 与 CD 之间的距离。</p><details><summary>看解答</summary><div class="note">作 OE ⊥ AB 于 E，OF ⊥ CD 于 F。AE = 8，OE = √(10² − 8²) = 6；CF = 6，OF = √(10² − 6²) = 8。两弦平行，要分两种情况：AB 和 CD 在圆心同侧时，距离是 OF − OE = 8 − 6 = 2；在圆心异侧时，距离是 OF + OE = 8 + 6 = 14。答：2 或 14。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">已知扇形的圆心角是 120°，半径是 6，求它的弧长和面积。</p><details><summary>看解答</summary><div class="note">l = nπr/180 = 120×π×6/180 = 4π。S = ½lr = ½×4π×6 = 12π。也可用 S = nπr²/360 = 120×π×36/360 = 12π，两种算法结果一致。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>把弦心距当斜边，勾股定理用错</li><li>圆周角和圆心角不是同一条弧，也套「一半」的关系</li><li>圆锥侧面积用底面半径代替母线</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>半径 5，弦长 8，求弦心距。</li><li>同弧所对的圆心角是圆周角的几倍？</li></ol><details><summary>点开看答案</summary><ol><li>半弦是 4，d = √(5² − 4²) = 3。</li><li>2 倍。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="x2">
+        <h2><span class="num">2</span>第 3 章 投影与视图</h2>
+        <p class="lead">三视图：主、左、俯。</p>
+        <div class="secs">
+            <div class="sec" id="x2-1">
+                <h4><span class="n">3.1</span>投影</h4>
+                <p>用光线照射物体，在某个平面上得到的影子叫投影，光线叫投影线，影子所在的平面叫投影面。由平行光线形成的投影叫平行投影，太阳光下的影子就是；由同一点发出的光线形成的投影叫中心投影，灯光下的影子就是。平行投影中，当物体与投影面平行时，投影和原物体全等；中心投影中，物体离点光源越近，投影越大。</p>
+                <div class="f">平行投影：同一时刻 h₁/l₁ = h₂/l₂（物高比影长）；中心投影：对应点连线都过光源，成位似关系</div>
+                <p class="use"><b>怎么用：</b>① 判断投影类型，看光线平不平行；② 算影长用相似比；③ 画中心投影，先定点光源，再连光线找影子的端点。</p>
+                <p class="warn"><b>易错：</b>把灯光下的影子当平行投影，还用「物高比影长」算；太阳光下不同时刻影子的方向和长度都会变；影子一部分落在墙上时，不能直接用比例。</p>
+            </div>
+            <div class="sec" id="x2-2">
+                <h4><span class="n">3.2</span>直棱柱、圆锥的侧面展开图</h4>
+                <p>直棱柱的侧面展开图是矩形，矩形的长等于底面周长 c，宽等于侧棱长 h，所以侧面积 S侧 = ch，全面积再加上两个底面积。圆锥的侧面展开图是扇形，扇形的半径等于圆锥的母线 l，扇形的弧长等于底面圆的周长 2πr，所以侧面积 S侧 = ½ × 2πr × l = πrl，全面积 S = πrl + πr²。</p>
+                <div class="f">S直棱柱侧 = ch；S圆锥侧 = πrl；S圆锥全 = πrl + πr²；展开扇形圆心角 n = 360°r/l</div>
+                <p class="use"><b>怎么用：</b>① 展开图问题先找对应：哪条边折回去变成哪条边；② 圆锥抓两条：底面周长等于扇形弧长，母线等于扇形半径；③ 求圆心角用 n = 360°r/l。</p>
+                <p class="warn"><b>易错：</b>把圆锥的高当母线，母线是顶点到底面圆周上一点的连线；直棱柱侧面积把底面周长当底面积；求展开图上的最短路径，忘了先展开再连直线。</p>
+            </div>
+            <div class="sec" id="x2-3">
+                <h4><span class="n">3.3</span>三视图</h4>
+                <p>从正面看物体得到的图形叫主视图，从左面看得到的叫左视图，从上面看得到的叫俯视图，三个合起来叫三视图。位置有规定：主视图在左上，左视图在主视图的右边，俯视图在主视图的下边。规律是长对正、高平齐、宽相等：主视图和俯视图长对正，主视图和左视图高平齐，俯视图和左视图宽相等。看得见的轮廓线画实线，看不见的画虚线。</p>
+                <div class="f">长对正、高平齐、宽相等；主视图反映长和高，左视图反映宽和高，俯视图反映长和宽</div>
+                <p class="use"><b>怎么用：</b>① 先定观察方向，再按三条规律摆位置；② 由三视图还原几何体，先看俯视图定底面，再看主视图定高；③ 数小正方体的个数，按层数从上往下数。</p>
+                <p class="warn"><b>易错：</b>三个视图的方向搞混，左视图是从左往右看；看不见的轮廓线忘记画虚线；俯视图和主视图长对正、和左视图宽相等，把宽和高弄反。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>平行投影与中心投影</li><li>直棱柱侧面展开是矩形，圆锥侧面展开是扇形</li><li>三视图：主视图、左视图、俯视图</li><li>长对正、高平齐、宽相等</li><li>看得见的轮廓线画实线，看不见的画虚线</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">S圆锥侧 = πrl；S直棱柱侧 = ch；长对正、高平齐、宽相等</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>圆锥：底面周长 = 展开扇形的弧长，母线 = 扇形半径，圆心角 n = 360°r/l。</li><li>三视图：先定方向，再按长对正、高平齐、宽相等摆放。</li><li>影子：平行投影用相似比，中心投影先找光源再连线。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">圆锥的底面半径是 3，母线长是 5，求它的侧面积和侧面展开图的圆心角。</p><details><summary>看解答</summary><div class="note">S侧 = πrl = π×3×5 = 15π。底面周长 = 2π×3 = 6π，这就是展开扇形的弧长。由 l弧 = nπl/180 得 6π = nπ×5/180，n = 6×180/5 = 216。所以侧面积是 15π，圆心角是 216°。</div></details></div>
+        <div class="ch-block"><b>综合题（三视图 + 体积）</b><p class="lead">一个几何体的主视图和左视图都是长 4、高 3 的矩形，俯视图是直径 4 的圆，求这个几何体的体积。</p><details><summary>看解答</summary><div class="note">俯视图是圆、主视图是矩形，说明这是圆柱。底面直径 4，半径 r = 2；高 h = 3。V = πr²h = π×4×3 = 12π。答：体积是 12π。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">圆柱的主视图、左视图、俯视图分别是什么图形？</p><details><summary>看解答</summary><div class="note">主视图是从正面看，看到的是矩形，宽等于底面直径、高等于圆柱的高；左视图从左面看，也是同样的矩形；俯视图从上面看，看到的是圆，直径等于底面直径。所以是「两个矩形一个圆」。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>三视图方向弄反，把左视图当成从右面看</li><li>圆锥侧面积用底面半径代替母线</li><li>中心投影也用「物高比影长」算</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>圆锥底面半径 2，母线 6，侧面积是多少？</li><li>球的三视图是什么？</li></ol><details><summary>点开看答案</summary><ol><li>S侧 = πrl = π×2×6 = 12π。</li><li>三个大小相同的圆。</li></ol></details></div>
+    </section>
+
+    <section class="card" id="x3">
+        <h2><span class="num">3</span>第 4 章 概率</h2>
+        <p class="lead">列举法、树状图。</p>
+        <div class="secs">
+            <div class="sec" id="x3-1">
+                <h4><span class="n">4.1</span>随机事件与可能性</h4>
+                <p>在一定条件下，一定会发生的事件叫必然事件；一定不会发生的事件叫不可能事件；可能发生也可能不发生的事件叫随机事件。事件发生的可能性大小用概率刻画：必然事件的概率是 1，不可能事件的概率是 0，随机事件的概率在 0 和 1 之间。可能性有大小，但可能性小不等于不可能。</p>
+                <div class="f">P(必然事件) = 1；P(不可能事件) = 0；0 &lt; P(随机事件) &lt; 1</div>
+                <p class="use"><b>怎么用：</b>① 判断事件类型，看条件是否一定成立；② 比较可能性大小，看数量占比；③ 用「一定」「不可能」「可能」三个词描述。</p>
+                <p class="warn"><b>易错：</b>把「可能性很小」当成不可能发生；概率小的事件也可能发生，只是次数少；随机事件的概率写成 0 或 1。</p>
+            </div>
+            <div class="sec" id="x3-2">
+                <h4><span class="n">4.2</span>概率及其计算</h4>
+                <p>一次试验中，如果所有可能的结果只有有限个，而且每个结果出现的可能性相等，这样的试验叫古典概型。事件 A 包含 m 个结果，全部结果有 n 个，那么 P(A) = m/n。求法有三种：一步试验用列举法，两步试验用列表法或树状图法。两步试验的结果总数等于第一步的结果数乘第二步的结果数。</p>
+                <div class="f">P(A) = m/n；P(Ā) = 1 − P(A)；两步试验结果总数 = 第一步数 × 第二步数</div>
+                <p class="use"><b>怎么用：</b>① 先确认「有限、等可能」；② 一步用列举，两步用列表或树状图；③ 数清「放回」还是「不放回」；④ 「至少」问题用对立事件，1 减去一个都没有的概率。</p>
+                <p class="warn"><b>易错：</b>漏情况或重复计数，(a, b) 和 (b, a) 算不算两种要看题目；放回和不放回搞混，不放回时第二次的总数要减 1；概率算完不化简。</p>
+            </div>
+            <div class="sec" id="x3-3">
+                <h4><span class="n">4.3</span>用频率估计概率</h4>
+                <p>大量重复试验中，事件发生的频率会稳定在某个常数附近，这个常数就是这个事件的概率。所以可以用频率估计概率：试验次数越多，估计越可靠。也可以用计算器或计算机产生随机数来模拟试验，模拟前要先规定随机数对应哪种结果。</p>
+                <div class="f">频率 = 频数/试验总次数；试验次数很大时，频率稳定在概率附近</div>
+                <p class="use"><b>怎么用：</b>① 统计频数，算频率；② 多算几组，看频率稳定在哪个数附近；③ 把这个数作为概率的估计值；④ 模拟试验先定随机数范围和对应规则。</p>
+                <p class="warn"><b>易错：</b>把某一次试验的频率直接当概率，次数少时波动很大；频率和概率混为一谈，频率是试验值、概率是客观值；模拟时随机数的范围和事件对不上。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>必然事件、不可能事件、随机事件</li><li>古典概型 P(A) = m/n</li><li>列表法和树状图法数结果</li><li>对立事件 P(Ā) = 1 − P(A)</li><li>用频率估计概率</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">P(A) = m/n；P(Ā) = 1 − P(A)</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>两步试验：先定第一步有几种，再对每种接第二步，列表或画树状图，数总数和有利数。</li><li>「至少」问题：先算一个都没有的概率，再用 1 减。</li><li>放回与不放回：放回时每次总数不变，不放回时第二次总数减 1。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">掷一枚均匀的骰子，求点数是 3 的倍数的概率。</p><details><summary>看解答</summary><div class="note">骰子的点数是 1、2、3、4、5、6，共 6 种等可能结果。3 的倍数有 3 和 6，共 2 种。P = 2/6 = 1/3。</div></details></div>
+        <div class="ch-block"><b>综合题（树状图 + 不放回）</b><p class="lead">袋中有 2 个红球和 1 个白球，不放回地摸两次，求两次都摸到红球的概率。</p><details><summary>看解答</summary><div class="note">把两个红球记作 R₁、R₂，白球记作 W。第一次有 3 种可能，第二次剩 2 种，共 3×2 = 6 种等可能结果：R₁R₂、R₁W、R₂R₁、R₂W、WR₁、WR₂。两次都摸到红球的有 R₁R₂、R₂R₁ 两种。P = 2/6 = 1/3。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">掷两枚硬币，求一正一反的概率。</p><details><summary>看解答</summary><div class="note">两枚硬币的结果有（正，正）、（正，反）、（反，正）、（反，反），共 4 种等可能结果。一正一反有（正，反）、（反，正）两种，所以 P = 2/4 = 1/2。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>两步试验把（正，反）和（反，正）当成一种，漏一半情况</li><li>概率算出大于 1 或小于 0，说明样本点算重了或漏了</li><li>用频率代替概率时试验次数太少，波动大</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>袋中 3 个红球、2 个白球，随机摸一个，摸到红球的概率是多少？</li><li>掷一枚骰子，点数大于 4 的概率是多少？</li></ol><details><summary>点开看答案</summary><ol><li>总共 5 个球，红球 3 个，P = 3/5。</li><li>大于 4 的有 5、6 两种，P = 2/6 = 1/3。</li></ol></details></div>
+    </section>
+
+
+    <section class="card" id="conclusions">
+        <h2><span class="num">★</span>二级结论 · 考场直接用</h2>
+        <p class="lead">这些不是课本黑体字，但都是从基本公式推出来的「捷径」。先懂怎么来的，再记结论，最后拿题验一遍。</p>
+        <div class="ch-block"><ul style="line-height:2.1"><li><b>|x₁ − x₂| = √Δ / |a|</b><br><span style="opacity:.85">怎么用：两根距离不用解方程，判别式和 a 就够。</span><br><span style="opacity:.7">例：x²−5x+6=0，Δ=1，距离 = 1。</span></li><li><b>抛物线与 x 轴两交点距离 = √Δ / |a|</b><br><span style="opacity:.85">怎么用：和上面一条是同一件事：交点就是方程的根。</span><br><span style="opacity:.7">例：y=x²−4x+3，Δ=4，距离 = 2。</span></li><li><b>对称轴 x = (x₁+x₂)/2 = −b/(2a)</b><br><span style="opacity:.85">怎么用：两根平均就是对称轴，已知两根可反求 b。</span><br><span style="opacity:.7">例：交点为 1 和 3 ⇒ 对称轴 x=2。</span></li><li><b>相似：周长比 = k，面积比 = k²</b><br><span style="opacity:.85">怎么用：长度一次方、面积二次方，别把面积比写成 k。</span><br><span style="opacity:.7">例：相似比 2:3 ⇒ 面积比 4:9。</span></li><li><b>圆：弦长 = 2√(r² − d²)</b><br><span style="opacity:.85">怎么用：半径、弦心距、半弦构成直角三角形。</span><br><span style="opacity:.7">例：r=5，d=3 ⇒ 弦长 = 8。</span></li><li><b>sin30°=1/2，sin45°=√2/2，sin60°=√3/2</b><br><span style="opacity:.85">怎么用：按 30→45→60 递增记，cos 反过来。</span><br><span style="opacity:.7">例：tan45°=1，cos60°=1/2。</span></li></ul></div>
+        <div class="note">记法：不要死背一整串，记「它解决什么问题」——看到题里的关键词，能想起用哪条就够了。</div>
+    </section>
+    <div class="exam">
+        <h3>期末模拟 · 通道侗族自治县九年级（湘教版）</h3>
+        <p class="lead">按湘教版期末题型配 5 题，覆盖相似、三角函数、方程、函数、圆。</p>
+        <ol><li>解方程：x² − 5x + 6 = 0。</li><li>二次函数 y = x² − 4x + 3 的顶点坐标？</li><li>半径 5，弦长 6，求弦心距。</li><li>相似比 3:5，面积比是多少？</li><li>计算 sin30° + tan45°。</li></ol>
+        <details><summary>看答案</summary><ol><li>x = 2 或 3</li><li>(2, −1)</li><li>4</li><li>9:25</li><li>3/2</li></ol></details>
+    </div>
+    <div style="margin-top:18px;padding:14px 16px;border:1px solid rgba(167,139,250,.3);border-radius:12px;background:rgba(167,139,250,.06);color:var(--muted);font-size:12.8px;line-height:2;"><b style="color:#c4b5fd;font-weight:normal;">通道 · 本地课堂</b><br>湘教版九上把「相似」和「锐角三角函数」放在最前面，二次函数也在九上；九下才讲圆和概率。你如果拿到的是旧版九下（第一章二次函数），按旧版顺序学也行，内容我已经在九上第 4 章讲全了。</div>
+</div>
+<footer><div class="stamp">数学 · 初三 · 湘教版 · 2026-10-23</div><div>电子教材笔记本 · 龙潜猫隐</div></footer>
+<script src="../assets/js/update-popup.js?v=20261023"></script>
+<script src="../assets/js/live.js?v=20261025"></script>
+<script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

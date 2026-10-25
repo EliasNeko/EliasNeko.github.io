@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>我在用的代码编辑器 · 知识库 · 龙潜猫隐</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    .ed-card { padding: 22px 24px; border: 1px solid var(--line-2); border-radius: 16px; background: linear-gradient(165deg, rgba(14,24,42,.9), rgba(9,16,30,.9)); }
+    .ed-card + .ed-card { margin-top: 18px; }
+    .ed-card h3 { margin: 0 0 10px; font-size: 16px; font-weight: normal; letter-spacing: 1px; color: #cfeaff; }
+    .ed-card p { margin: 0 0 10px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .ed-card ul { margin: 6px 0 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 2; }
+    .ed-card li b { color: var(--text); font-weight: normal; }
+
+    .dl {
+        display: inline-flex; align-items: center; gap: 10px;
+        margin-top: 8px; padding: 11px 20px; border-radius: 999px;
+        border: 1px solid rgba(125, 211, 252, .45);
+        background: rgba(56, 189, 248, .12);
+        color: #bfe9ff; text-decoration: none; font-size: 13.5px; letter-spacing: 1px;
+        transition: .25s;
+    }
+    .dl:hover { background: rgba(56, 189, 248, .22); transform: translateY(-2px); }
+
+    .ed-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    .ed-table th, .ed-table td { padding: 10px 12px; border-bottom: 1px solid rgba(80,130,200,.18); text-align: left; vertical-align: top; }
+    .ed-table th { color: #9fd8ff; font-weight: normal; letter-spacing: 1px; font-size: 12px; }
+    .ed-table td { color: var(--muted); line-height: 1.85; }
+    .ed-table td:first-child { color: var(--text); white-space: nowrap; }
+    .ed-table code { font-size: 11.5px; color: #8fd3ff; background: rgba(56,189,248,.08); padding: 1px 6px; border-radius: 5px; }
+
+    .kbd { display: inline-block; min-width: 22px; padding: 2px 7px; margin: 0 2px; border: 1px solid rgba(125,211,252,.3); border-bottom-width: 2px; border-radius: 6px; font-size: 11.5px; color: #cfeaff; text-align: center; }
+
+    @media (max-width: 640px) {
+        .ed-table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+</style>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+<header class="top">
+    <p class="kicker">知识库 · 工具</p>
+    <h1>龙潜猫隐在用的代码编辑器</h1>
+    <p class="sub">一台电脑，一个编辑器，写 HTML、Java、C、Python —— 顺便说说我为什么没换别的。</p>
+    <div class="meta">
+        <span>编辑器 <b>VS Code</b></span>
+        <span>插件 <b>20+</b></span>
+        <span>更新 <b>2026-10-23</b></span>
+    </div>
+</header>
+
+<div class="idx-wrap">
+
+    <div class="ed-card">
+        <h3>先给结论：VS Code</h3>
+        <p>我现在所有代码都用它写：网页、Java 后端、C 语言作业、Python 脚本。它不是「最好的编辑器」，但它是<b>一个能装下所有语言的地方</b>——换语言不用换软件。</p>
+        <p>免费、Windows / Mac / Linux 都有，装完是英文的，装个中文包就变中文。</p>
+        <a class="dl" href="https://code.visualstudio.com/" target="_blank" rel="noopener">⬇ 去官网下载 VS Code</a>
+    </div>
+
+    <div class="ed-card">
+        <h3>我装了哪些插件（按用途分）</h3>
+        <p>下面这些不是「推荐清单」，是我电脑里真的装着的。每个都写清它管什么，以及你可以拿它练什么。</p>
+
+        <table class="ed-table">
+            <tr><th>插件</th><th>它是干什么的</th><th>你可以拿它做什么</th></tr>
+            <tr><td>Python</td><td>官方 Python 支持：补全、调试、运行</td><td>写课程里的 Python 例子，F5 直接跑</td></tr>
+            <tr><td>Pylance</td><td>Python 的类型检查和智能提示</td><td>提前看到「这个变量可能不是字符串」</td></tr>
+            <tr><td>Debugpy</td><td>Python 调试器</td><td>一行一行走，看每个变量的值</td></tr>
+            <tr><td>Java Extension Pack</td><td>Java 全家桶：语言支持、调试、测试、Maven、Gradle 一起装</td><td>不装 IDEA 也能写 Java 课设</td></tr>
+            <tr><td>C/C++</td><td>补全、跳转、调试 C/C++</td><td>写 C 语言作业，断点看指针</td></tr>
+            <tr><td>CMake Tools</td><td>帮你配 C 项目的构建</td><td>以后写多文件 C 项目用得上</td></tr>
+            <tr><td>JavaScript and TypeScript Nightly</td><td>JS/TS 的新特性预览支持</td><td>写网页脚本时补全更准</td></tr>
+            <tr><td>Live Server</td><td>起一个本地服务器，保存就自动刷新页面</td><td>写 HTML 时不用手动 F5</td></tr>
+            <tr><td>HTML CSS Support</td><td>在 HTML 里补全 CSS 类名</td><td>不会把 <code>class="card"</code> 写成 <code>class="crad"</code></td></tr>
+            <tr><td>Prettier</td><td>保存时自动排版</td><td>缩进、引号、换行统一，交作业好看</td></tr>
+            <tr><td>EditorConfig</td><td>按项目规定缩进和换行</td><td>多人协作时不打架</td></tr>
+            <tr><td>GitLens</td><td>在每一行旁边显示「谁、什么时候、为什么改的」</td><td>看懂自己一个月前的代码</td></tr>
+            <tr><td>Code Runner</td><td>右上角一个三角，点一下就跑当前文件</td><td>临时试一小段代码，不进项目</td></tr>
+            <tr><td>indent-rainbow</td><td>缩进用不同颜色标出来</td><td>一眼看出哪层括号没对齐</td></tr>
+            <tr><td>Code Spell Checker</td><td>拼写检查</td><td>变量名少打错字母</td></tr>
+            <tr><td>Chinese (Simplified)</td><td>中文界面</td><td>菜单看不懂就装它</td></tr>
+            <tr><td>Background</td><td>给编辑器换背景图</td><td>纯好看，学习时心情好一点</td></tr>
+        </table>
+    </div>
+
+    <div class="ed-card">
+        <h3>我的设置（可以照抄）</h3>
+        <ul>
+            <li><b>字号 15</b>：1080P 屏幕下不累眼</li>
+            <li><b>保存时自动格式化</b>：<code>editor.formatOnSave: true</code></li>
+            <li><b>自动保存</b>：<code>files.autoSave: "afterDelay"</code>，写一半切窗口不怕丢</li>
+            <li><b>终端字体</b>：Consolas + 微软雅黑，中文注释不乱码</li>
+            <li><b>删除不二次确认</b>：<code>explorer.confirmDelete: false</code>，手快的时候很爽，手滑的时候很痛</li>
+        </ul>
+    </div>
+
+    <div class="ed-card">
+        <h3>单语言编辑器，我也用过 / 了解过</h3>
+        <table class="ed-table">
+            <tr><th>编辑器</th><th>最适合</th><th>我没长期用的原因</th></tr>
+            <tr><td>HBuilderX</td><td>uni-app、小程序、纯前端快速起步</td><td>写后端和 C 很弱，插件生态偏自家</td></tr>
+            <tr><td>IntelliJ IDEA</td><td>大型 Java 项目、企业开发</td><td>吃内存，社区版功能有限，学生机跑着沉</td></tr>
+            <tr><td>PyCharm</td><td>Python 项目、数据分析</td><td>只为写 Python 装一个几百 MB 的 IDE，不划算</td></tr>
+            <tr><td>Eclipse</td><td>老 Java 课设、学校机房</td><td>界面和提示都偏旧，新手容易被劝退</td></tr>
+            <tr><td>Sublime Text</td><td>打开快、改单文件</td><td>不免费，插件要自己配</td></tr>
+            <tr><td>记事本 / Notepad++</td><td>应急改一行</td><td>没有补全和调试，写项目不现实</td></tr>
+        </table>
+    </div>
+
+    <div class="ed-card">
+        <h3>为什么最后留在 VS Code</h3>
+        <ul>
+            <li><b>一个软件装下所有语言</b>：今天写 HTML、明天写 Java、后天写 C，不用来回换 IDE</li>
+            <li><b>免费且跨平台</b>：宿舍 Windows、机房 Windows、以后 Mac 都能用同一套配置</li>
+            <li><b>插件按需装</b>：不写 Java 就不装 Java 包，编辑器不会一上来就几百 MB</li>
+            <li><b>终端就在下面</b>：<span class="kbd">Ctrl</span> + <span class="kbd">&#96;</span> 打开，编译、跑服务器不用切窗口</li>
+            <li><b>Git 集成</b>：改了哪些文件、要不要提交，左边一眼看到</li>
+            <li><b>远程开发</b>：以后连服务器写代码，也是它</li>
+        </ul>
+        <p style="margin-top:10px;">缺点也说清楚：它<b>不是 IDE</b>。大型 Java 项目的重构、Spring 那一套，IDEA 还是更强；Python 的科学计算，PyCharm 的调试更顺。等你真做到那一步，再换也不迟。</p>
+    </div>
+
+    <div class="ed-card">
+        <h3>几个每天都会用到的快捷键</h3>
+        <ul>
+            <li><span class="kbd">Ctrl</span> + <span class="kbd">P</span>：按文件名跳转，比点目录快</li>
+            <li><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>：命令面板，所有功能都能搜</li>
+            <li><span class="kbd">Ctrl</span> + <span class="kbd">&#96;</span>：打开 / 关闭终端</li>
+            <li><span class="kbd">Ctrl</span> + <span class="kbd">B</span>：收起侧边栏，屏幕小的时候很有用</li>
+            <li><span class="kbd">Alt</span> + <span class="kbd">↑</span> / <span class="kbd">↓</span>：整行上下移动</li>
+            <li><span class="kbd">Shift</span> + <span class="kbd">Alt</span> + <span class="kbd">F</span>：格式化当前文件</li>
+            <li><span class="kbd">F5</span>：启动调试</li>
+        </ul>
+    </div>
+
+    <div class="ed-card">
+        <h3>如果你现在要装</h3>
+        <ul>
+            <li>只写网页：装 <b>Live Server</b> + <b>Prettier</b> + <b>HTML CSS Support</b> 就够了</li>
+            <li>要写 Java：装 <b>Extension Pack for Java</b>，再确认电脑有 JDK 17</li>
+            <li>要写 C：装 <b>C/C++</b>，Windows 上还要有 MinGW 或 MSVC 编译器</li>
+            <li>要写 Python：装 <b>Python</b>，它会自动带 Pylance</li>
+        </ul>
+        <p style="margin-top:10px;">装完别急着装一堆插件。先写一个能跑起来的文件，再按需要加。</p>
+    </div>
+
+</div>
+
+<footer>
+    <div class="stamp">工具 · 2026-10-23</div>
+    <div>龙潜猫隐 · 2026</div>
+    <div style="margin-top:6px; font-size:12px;">一个编辑器，装下所有语言</div>
+</footer>
+
+<script src="../assets/js/update-popup.js?v=20261023"></script>
+<script src="../assets/js/live.js?v=20261025"></script>
+<script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

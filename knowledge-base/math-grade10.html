@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高一数学 · 必修第一册 + 第二册 · 电子教材 · 龙潜猫隐</title>
+<link rel="stylesheet" href="lesson.css">
+<style>
+    .lead { color: var(--muted); font-size: 13.5px; line-height: 2; margin: 0 0 10px; }
+    .ch-block { margin-top: 12px; }
+    .ch-block > b { display: block; margin-bottom: 5px; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; }
+    .ch-block ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .formula { padding: 9px 13px; border-left: 2px solid rgba(56,189,248,.5); background: rgba(56,189,248,.05); border-radius: 0 8px 8px 0; color: #d9ecff; font-size: 13px; line-height: 1.95; font-family: Consolas, "Microsoft YaHei", monospace; }
+    .quiz { margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(80,130,200,.22); }
+    .quiz > b { display: block; color: #9fd8ff; font-weight: normal; font-size: 12.5px; letter-spacing: 1px; margin-bottom: 5px; }
+    .quiz ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .quiz details { margin-top: 6px; }
+    .quiz summary { cursor: pointer; color: var(--accent); font-size: 12.5px; }
+    .quiz details ol { margin-top: 5px; color: #9ec9a0; }
+    .exam { margin-top: 18px; border: 1px solid rgba(244,114,182,.35); border-radius: 14px; background: rgba(244,114,182,.05); padding: 18px 20px; }
+    .exam h3 { margin: 0 0 8px; font-size: 15px; font-weight: normal; letter-spacing: 1px; color: #f9c2e0; }
+    .exam ol { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 13px; line-height: 2; }
+    .exam details summary { color: #f9c2e0; }
+    .bookbar { display: flex; gap: 14px; align-items: center; margin: 18px 0 6px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: rgba(10,18,32,.5); }
+    .bookbar img { width: 52px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid rgba(125,211,252,.25); }
+    .bookbar div { font-size: 12.5px; color: var(--muted); line-height: 1.9; }
+    .bookbar b { color: #cfeaff; font-weight: normal; }
+    @media (max-width: 720px) { .formula { font-size: 12px; } }
+
+    .toc-nav { margin: 0 0 8px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(56,189,248,.05); }
+    .toc-nav p { margin: 0 0 6px; font-size: 12.5px; color: var(--muted); line-height: 2; }
+    .toc-nav b { color: #9fd8ff; font-weight: normal; margin-right: 8px; letter-spacing: 1px; }
+    .toc-nav a { color: #cfeaff; text-decoration: none; margin-right: 12px; border-bottom: 1px dashed rgba(125,211,252,.25); white-space: nowrap; display: inline-block; }
+    .toc-nav a:hover { color: var(--accent); }
+    .sum { margin: 0 0 8px; font-size: 12.5px; line-height: 1.8; }
+    .sum a { color: #cfeaff; text-decoration: none; margin-right: 8px; }
+    .sum a:hover { color: var(--accent); }
+    .sum b { color: var(--accent); font-weight: normal; margin-right: 6px; }
+    .sum span { color: var(--dim); }
+    .part { margin: 34px 0 6px; padding: 10px 16px; border-left: 3px solid var(--accent); background: rgba(56,189,248,.06); border-radius: 0 10px 10px 0; font-size: 14px; letter-spacing: 2px; color: #cfeaff; }
+
+</style>
+    <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+<body>
+<div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+<header class="top">
+    <p class="kicker">电子教材笔记本 · 数学</p>
+    <h1>高一数学 · 必修第一册 + 第二册</h1>
+    <p class="sub">按目录：集合与逻辑、不等式、函数、指数对数、三角函数，再到向量、复数、立体几何、统计、概率。</p>
+    <div class="meta"><span>教材 <b>人教A版（2019）</b></span><span>章节 <b>10</b></span><span>更新 <b>2026-10-23</b></span></div>
+    <p class="series"><a href="math.html" style="color:var(--accent);">← 回到数学教材目录</a></p>
+</header>
+<div class="idx-wrap">
+    
+    
+    <section class="card" id="formulas">
+        <h2><span class="num">Σ</span>公式总表 · 本册一页查完</h2>
+        <p class="lead">按章节排好，考前扫一遍。每个公式都对应下面某一章，点编号可跳转。</p>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12.5px;line-height:1.9">
+            <tr style="color:#9fd8ff"><th style="text-align:left;padding:6px 8px">章</th><th style="text-align:left;padding:6px 8px">内容</th><th style="text-align:left;padding:6px 8px">核心公式</th></tr>
+            <tr><td>01</td><td>集合与常用逻辑用语</td><td>A∩B = {x | x∈A 且 x∈B}；A∪B = {x | x∈A 或 x∈B}</td></tr><tr><td>02</td><td>一元二次函数、方程和不等式</td><td>ax² + bx + c > 0（a>0）看开口与交点</td></tr><tr><td>03</td><td>函数的概念与性质</td><td>f(−x) = −f(x) 奇；f(−x) = f(x) 偶</td></tr><tr><td>04</td><td>指数函数与对数函数</td><td>log_a b = ln b / ln a</td></tr><tr><td>05</td><td>三角函数</td><td>sin²α + cos²α = 1；tanα = sinα/cosα</td></tr><tr><td>06</td><td>平面向量及其应用</td><td>a⊥b ⇔ a·b = 0；a∥b ⇔ x₁y₂ − x₂y₁ = 0</td></tr><tr><td>07</td><td>复数</td><td>|z| = √(a² + b²)；z·z̄ = a² + b²</td></tr><tr><td>08</td><td>立体几何初步</td><td>S球 = 4πR²；V球 = 4πR³/3</td></tr><tr><td>09</td><td>统计</td><td>频率 = 频数 / 样本容量</td></tr><tr><td>10</td><td>概率</td><td>P(A∪B) = P(A) + P(B) − P(A∩B)</td></tr>
+        </table></div>
+    </section>
+
+    <section class="card" id="chapter-toc">
+        <h2><span class="num">≡</span>章节目录 · 带小结</h2>
+        <p class="sum"><a href="#s1"><b>01</b>集合与常用逻辑用语</a><span>数学的语言从这里开始。</span></p><p class="sum"><a href="#s2"><b>02</b>一元二次函数、方程和不等式</a><span>三个二次，一个套路。</span></p><p class="sum"><a href="#s3"><b>03</b>函数的概念与性质</a><span>定义域、值域、单调性、奇偶性。</span></p><p class="sum"><a href="#s4"><b>04</b>指数函数与对数函数</a><span>增长与压缩，互为反函数。</span></p><p class="sum"><a href="#s5"><b>05</b>三角函数</a><span>弧度、诱导公式、图象。</span></p><p class="sum"><a href="#s6"><b>06</b>平面向量及其应用</a><span>有方向的量，几何与代数的桥。</span></p><p class="sum"><a href="#s7"><b>07</b>复数</a><span>i² = −1，数系再一次扩充。</span></p><p class="sum"><a href="#s8"><b>08</b>立体几何初步</a><span>线面关系、表面积与体积。</span></p><p class="sum"><a href="#s9"><b>09</b>统计</a><span>抽样、频率分布、数字特征。</span></p><p class="sum"><a href="#s10"><b>10</b>概率</a><span>古典概型与事件关系。</span></p>
+    </section>
+<nav class="toc-nav"><p><b>必修 第一册</b><a href="#s1">1 集合与常用逻辑用语</a><a href="#s2">2 一元二次函数、方程和不等式</a><a href="#s3">3 函数的概念与性质</a><a href="#s4">4 指数函数与对数函数</a><a href="#s5">5 三角函数</a></p><p><b>必修 第二册</b><a href="#s6">6 平面向量及其应用</a><a href="#s7">7 复数</a><a href="#s8">8 立体几何初步</a><a href="#s9">9 统计</a><a href="#s10">10 概率</a></p></nav>
+<div class="bookbar"><img src="../assets/textbook/math-g1.jpg" alt="必修 第一册（A 版）"><div><b>必修 第一册（A 版）</b><br>集合与常用逻辑用语、一元二次函数方程和不等式、函数的概念与性质、指数函数与对数函数、三角函数</div></div><div class="bookbar"><img src="../assets/textbook/math-g2.jpg" alt="必修 第二册（A 版）"><div><b>必修 第二册（A 版）</b><br>平面向量及其应用、复数、立体几何初步、统计、概率</div></div>
+
+        <div class="part">必修 第一册</div>
+
+    <section class="card" id="s1">
+        <h2><span class="num">01</span>集合与常用逻辑用语</h2>
+        <p class="lead">数学的语言从这里开始：把「对象」装进集合，把「关系」写成推理。</p>
+        <div class="secs">
+            <div class="sec" id="s1-1">
+                <h4><span class="n">1.1</span>集合的概念</h4>
+                <p>把一些确定的、彼此不同的对象整体放在一起，就叫集合，对象叫元素。元素有三个特征：确定性（是不是成员能判断）、互异性（同一元素不重复算）、无序性（顺序无关）。a∈A 读作 a 属于 A。常用数集：N 自然数、N* 正整数、Z 整数、Q 有理数、R 实数。</p>
+                <div class="f">a∈A 或 a∉A；N*⊆N⊆Z⊆Q⊆R；描述法 {x∈A | P(x)}</div>
+                <p class="use"><b>怎么用：</b>判断一组对象能否组成集合，先看「确定性」；用描述法时先写代表元素，再写满足的条件，中间用竖线隔开。</p>
+                <p class="warn"><b>易错：</b>{x | x&gt;1} 没写 x 的范围，默认 x∈R；集合里元素不能重复，{1,1,2} 就是 {1,2}。</p>
+            </div>
+            <div class="sec" id="s1-2">
+                <h4><span class="n">1.2</span>集合间的基本关系</h4>
+                <p>若 A 中每个元素都在 B 中，称 A 是 B 的子集，记 A⊆B；若 A⊆B 且 A≠B，称 A 是 B 的真子集，记 A⊊B。A=B 当且仅当 A⊆B 且 B⊆A。空集 ∅ 不含任何元素，是任何集合的子集。</p>
+                <div class="f">A⊆B ⇔ 任意 x∈A 都有 x∈B；含 n 个元素的集合有 2ⁿ 个子集、2ⁿ−1 个真子集</div>
+                <p class="use"><b>怎么用：</b>判断子集关系用定义逐个检验；已知 A⊆B 求参数，先讨论 A=∅，再让区间端点满足包含关系。</p>
+                <p class="warn"><b>易错：</b>∅ 与 {∅} 不是一回事：前者没有元素，后者有一个元素「∅」；∅⊆A 恒成立，但 ∅∈A 不一定。</p>
+            </div>
+            <div class="sec" id="s1-3">
+                <h4><span class="n">1.3</span>集合的基本运算</h4>
+                <p>交集取公共部分，并集取全部（重复只写一次），补集是在全集 U 中把 A 去掉。德摩根律把「并的补」变成「补的交」。</p>
+                <div class="f">A∩B={x|x∈A 且 x∈B}；A∪B={x|x∈A 或 x∈B}；∁_U A={x|x∈U 且 x∉A}；∁_U(A∪B)=(∁_U A)∩(∁_U B)</div>
+                <p class="use"><b>怎么用：</b>有限集用韦恩图，连续区间用数轴；含参数时按「A 在 B 左边 / 重合 / 右边」分类。</p>
+                <p class="warn"><b>易错：</b>并集里的「或」包含两者都取；求补集前必须先明确全集 U，否则无从补起。</p>
+            </div>
+            <div class="sec" id="s1-4">
+                <h4><span class="n">1.4</span>充分条件与必要条件</h4>
+                <p>若 p 成立一定能推出 q 成立（p⇒q），则 p 是 q 的充分条件，q 是 p 的必要条件；若还能 q⇒p，则 p、q 互为充要条件。判断口诀：小范围推出大范围。</p>
+                <div class="f">p⇒q；p⇔q；p 是 q 的充分不必要条件 ⇔ p⇒q 且 q⇏p</div>
+                <p class="use"><b>怎么用：</b>把 p、q 各自解成集合，比较包含关系：小集合是大集合的充分条件；证明充要条件要正反各证一次。</p>
+                <p class="warn"><b>易错：</b>「p 是 q 的充分条件」与「p 的充分条件是 q」方向相反，读题先定位谁推谁。</p>
+            </div>
+            <div class="sec" id="s1-5">
+                <h4><span class="n">1.5</span>全称量词与存在量词</h4>
+                <p>「所有」「任意」是全称量词，记 ∀；「存在」「至少有一个」是存在量词，记 ∃。全称命题的否定是存在命题，存在命题的否定是全称命题；否定时量词要换、结论要否。</p>
+                <div class="f">¬(∀x∈M, p(x)) ⇔ ∃x∈M, ¬p(x)；¬(∃x∈M, p(x)) ⇔ ∀x∈M, ¬p(x)</div>
+                <p class="use"><b>怎么用：</b>写否定分两步：先换量词，再否定结论；判断全称命题为假，举一个反例就够。</p>
+                <p class="warn"><b>易错：</b>只否定结论、不改条件；「至少有一个」的否定是「一个也没有」，不是「至多有一个」。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>集合元素的确定性、互异性、无序性</li><li>子集、真子集、集合相等</li><li>交集、并集、补集与德摩根律</li><li>充分条件、必要条件、充要条件</li><li>全称量词与存在量词及其否定</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">A∩B = {x | x∈A 且 x∈B}；A∪B = {x | x∈A 或 x∈B}；∁_U A = {x | x∈U 且 x∉A}</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>判断元素是否属于集合：先看集合的代表元素和条件，再把对象代进去检验。</li><li>求子集个数：含 n 个元素 → 2ⁿ 个子集；已知 A⊆B 求参数，先讨论 A=∅。</li><li>判断条件关系：把 p、q 解成集合，小范围 ⇒ 大范围；充要条件要正反各证一次。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">已知 A={1,2,3}，B={2,3,4}，求 A∩B 与 A∪B。</p><details><summary>看解答</summary><div class="note">A∩B={2,3}（公共元素）；A∪B={1,2,3,4}（全部元素，重复只写一次）。</div></details></div>
+        <div class="ch-block"><b>综合题（集合 + 不等式）</b><p class="lead">已知 A={x | −1&lt;x≤3}，B={x | x&gt;a}，若 A⊆B，求 a 的取值范围。</p><details><summary>看解答</summary><div class="note">A 中最小无限接近 −1，要让 A 的每个元素都大于 a，必须 a≤−1。检验：a=−1 时 B={x&gt;−1}，A=(−1,3] 确实全在 B 内。所以 a≤−1。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">用描述法表示「所有大于 1 的实数」。</p><details><summary>看解答</summary><div class="note">{x∈R | x&gt;1}。先写代表元素 x∈R，再写条件 x&gt;1。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>空集是任何集合的子集，也是任何非空集合的真子集</li><li>「或」与「且」弄反；并集用「或」，交集用「且」</li><li>集合元素互异，写答案时别重复</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>A={x|x&gt;1}，B={x|x&lt;3}，求 A∩B</li><li>x&gt;1 是 x&gt;2 的什么条件？</li></ol><details><summary>点开看答案</summary><ol><li>{x | 1&lt;x&lt;3}</li><li>必要不充分（x&gt;2 ⇒ x&gt;1，反之不成立）</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s2">
+        <h2><span class="num">02</span>一元二次函数、方程和不等式</h2>
+        <p class="lead">三个二次，一个套路：图象、根、解集是同一件事的三种说法。</p>
+        <div class="secs">
+            <div class="sec" id="s2-1">
+                <h4><span class="n">2.1</span>等式性质与不等式性质</h4>
+                <p>等式两边同加同乘（乘数非零）仍相等；不等式两边同加一个数方向不变，同乘正数方向不变，同乘负数方向翻转。比较两个代数式大小最常用作差法：看 a−b 的符号。</p>
+                <div class="f">a&gt;b ⇔ a−b&gt;0；a&gt;b, c&gt;0 ⇒ ac&gt;bc；a&gt;b, c&lt;0 ⇒ ac&lt;bc</div>
+                <p class="use"><b>怎么用：</b>比较大小：作差 → 因式分解或配方 → 判断符号；证明不等式常从已知同向不等式相加、同向正数相乘出发。</p>
+                <p class="warn"><b>易错：</b>同向不等式能相加，但不能直接相减、相除；乘负数一定要记得变号。</p>
+            </div>
+            <div class="sec" id="s2-2">
+                <h4><span class="n">2.2</span>基本不等式</h4>
+                <p>两个正数的算术平均数不小于几何平均数；等号只在两数相等时成立。它把「和」与「积」联系起来，是求最值的常用工具。</p>
+                <div class="f">a,b&gt;0 ⇒ (a+b)/2 ≥ √(ab)，即 a+b ≥ 2√(ab)；ab ≤ ((a+b)/2)²；a²+b² ≥ 2ab</div>
+                <p class="use"><b>怎么用：</b>用前默念「一正、二定、三相等」：先确认都是正数，再凑出定值（和定求积最大、积定求和最小），最后检验等号能否取到。</p>
+                <p class="warn"><b>易错：</b>等号取不到时不能用它下结论；写最值必须写清「当且仅当 a=b 时取等」。</p>
+            </div>
+            <div class="sec" id="s2-3">
+                <h4><span class="n">2.3</span>二次函数与一元二次方程、不等式</h4>
+                <p>二次函数图象、一元二次方程的根、一元二次不等式的解集，是同一件事的三种说法：抛物线与 x 轴交点的横坐标就是方程的根，也是解集的分界点。</p>
+                <div class="f">Δ=b²−4ac；x₁+x₂=−b/a，x₁x₂=c/a；a&gt;0 且 Δ&lt;0 ⇒ ax²+bx+c&gt;0 恒成立</div>
+                <p class="use"><b>怎么用：</b>解不等式：先化二次项系数为正 → 求根（能因式分解先分解）→ 画开口向上的抛物线 →「大于取两边，小于取中间」。</p>
+                <p class="warn"><b>易错：</b>二次项系数为负要先乘 −1 并变号；含参数时讨论 a=0 与 Δ 的正负，别漏情况。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>作差法比较大小</li><li>不等式的基本性质（同加、同乘）</li><li>基本不等式与「一正二定三相等」</li><li>二次函数、二次方程、二次不等式的对应关系</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">a+b ≥ 2√(ab)（a,b&gt;0）；Δ=b²−4ac；x₁+x₂=−b/a，x₁x₂=c/a</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>比较大小：作差 → 因式分解或配方 → 判断符号。</li><li>基本不等式：先验正数，再凑定值，最后检查等号能否取到。</li><li>解二次不等式：化 a&gt;0 → 求根 → 画抛物线 → 大于取两边、小于取中间。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">a,b&gt;0，a+b=4，求 ab 的最大值。</p><details><summary>看解答</summary><div class="note">ab ≤ ((a+b)/2)² = 4，当且仅当 a=b=2 时取等，所以最大值是 4。</div></details></div>
+        <div class="ch-block"><b>综合题（二次不等式 + 分类讨论）</b><p class="lead">解关于 x 的不等式 x²−(a+1)x+a&lt;0。</p><details><summary>看解答</summary><div class="note">因式分解：(x−1)(x−a)&lt;0。比较 1 与 a：a&gt;1 时解集为 1&lt;x&lt;a；a=1 时原式为 (x−1)²&lt;0，无解；a&lt;1 时解集为 a&lt;x&lt;1。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">解 x²−x−6&lt;0。</p><details><summary>看解答</summary><div class="note">(x−3)(x+2)&lt;0，开口向上，两根 −2、3，小于取中间：−2&lt;x&lt;3。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>二次项系数为负，先乘 −1 并改变不等号方向</li><li>基本不等式取等条件不成立时不能直接用</li><li>同向不等式不能直接相减、相除</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>解 x²−4&gt;0</li><li>a,b&gt;0，a+b=4，ab 最大值？</li></ol><details><summary>点开看答案</summary><ol><li>x&lt;−2 或 x&gt;2</li><li>4（a=b=2 时）</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s3">
+        <h2><span class="num">03</span>函数的概念与性质</h2>
+        <p class="lead">先有定义域，再谈一切；单调与对称是函数的两副骨架。</p>
+        <div class="secs">
+            <div class="sec" id="s3-1">
+                <h4><span class="n">3.1</span>函数的概念及其表示</h4>
+                <p>设 A、B 是非空实数集，按某种对应关系 f，对 A 中任意一个 x，B 中都有唯一确定的 y 与它对应，就称 f 为从 A 到 B 的函数，记 y=f(x)。定义域、对应关系、值域合称函数三要素。分段函数是一个函数，不是几个函数。</p>
+                <div class="f">y=f(x)，x∈A；定义域优先</div>
+                <p class="use"><b>怎么用：</b>求定义域盯四件事：分母不为 0、偶次根号下非负、对数真数为正、零次幂底数不为 0；判断两个函数是否相同，看定义域和对应关系是否都相同。</p>
+                <p class="warn"><b>易错：</b>f(x) 表示函数，f(a) 表示函数在 x=a 处的值；先化简再求定义域容易漏掉原式的限制。</p>
+            </div>
+            <div class="sec" id="s3-2">
+                <h4><span class="n">3.2</span>函数的基本性质</h4>
+                <p>单调性描述函数在区间上的增减：区间内任取 x₁&lt;x₂，若 f(x₁)&lt;f(x₂) 则递增。奇偶性描述对称：定义域关于原点对称时，f(−x)=−f(x) 为奇函数（图象关于原点对称），f(−x)=f(x) 为偶函数（图象关于 y 轴对称）。</p>
+                <div class="f">增函数：x₁&lt;x₂ ⇒ f(x₁)&lt;f(x₂)；奇：f(−x)=−f(x)；偶：f(−x)=f(x)</div>
+                <p class="use"><b>怎么用：</b>证明单调性用定义五步：取值、作差、变形（因式分解/通分/配方）、定号、下结论；判断奇偶先看定义域是否对称。</p>
+                <p class="warn"><b>易错：</b>单调区间之间不能用「∪」连接；奇函数若在 x=0 处有定义，则 f(0)=0。</p>
+            </div>
+            <div class="sec" id="s3-3">
+                <h4><span class="n">3.3</span>幂函数</h4>
+                <p>形如 y=x^α（α 为常数）的函数叫幂函数，系数必须是 1、底数是自变量。α&gt;0 时在 (0,+∞) 上递增，α&lt;0 时递减；图象都过点 (1,1)。</p>
+                <div class="f">y=x^α；x^α·x^β=x^(α+β)；(x^α)^β=x^(αβ)</div>
+                <p class="use"><b>怎么用：</b>比较幂值大小：同底看指数（用单调性），同指数看底数，底和指数都不同就插入中间量 1 或 0。</p>
+                <p class="warn"><b>易错：</b>y=x⁰ 的定义域是 x≠0；y=2x²、y=x²+1 都不是幂函数。</p>
+            </div>
+            <div class="sec" id="s3-4">
+                <h4><span class="n">3.4</span>函数的应用（一）</h4>
+                <p>用函数解决实际问题：先弄清变量各代表什么，再根据等量关系写出解析式，标出实际意义的定义域，最后求最值并回答。</p>
+                <div class="f">常见模型：一次函数 y=kx+b；二次函数 y=ax²+bx+c；分段函数；反比例 y=k/x</div>
+                <p class="use"><b>怎么用：</b>审题时先写「设……为 x，……为 y」，再找等量关系；求最值别忘比较定义域端点。</p>
+                <p class="warn"><b>易错：</b>实际问题不写定义域是常见丢分点；单位不统一（米/千米、元/万元）会算错。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>函数三要素：定义域、对应关系、值域</li><li>单调性的定义与证明</li><li>奇偶性与图象对称</li><li>幂函数的图象与性质</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">f(−x)=−f(x) 为奇函数；f(−x)=f(x) 为偶函数；y=x^α</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>求定义域：分母≠0、偶次根号下≥0、对数真数&gt;0、零次幂底≠0。</li><li>证单调性：取值—作差—变形—定号—结论。</li><li>判奇偶：先看定义域是否关于原点对称，再算 f(−x) 与 f(x) 的关系。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">求 f(x)=√(x−1)+1/(x−3) 的定义域。</p><details><summary>看解答</summary><div class="note">根号要求 x−1≥0，分母要求 x−3≠0，所以 x≥1 且 x≠3，定义域 [1,3)∪(3,+∞)。</div></details></div>
+        <div class="ch-block"><b>综合题（奇函数 + 分段求解析式）</b><p class="lead">f(x) 是定义在 R 上的奇函数，当 x&gt;0 时 f(x)=x²−2x，求 f(x) 的解析式。</p><details><summary>看解答</summary><div class="note">x&lt;0 时 −x&gt;0，f(−x)=x²+2x；由奇函数 f(x)=−f(−x)=−x²−2x。x=0 时 f(0)=0。所以 x&gt;0 时 f(x)=x²−2x；x=0 时 0；x&lt;0 时 −x²−2x。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">求 f(x)=√(x−1) 的定义域。</p><details><summary>看解答</summary><div class="note">x−1≥0 ⇒ x≥1，定义域 [1,+∞)。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>先化简再求定义域会漏掉原式的限制</li><li>奇偶性要求定义域关于原点对称</li><li>单调区间之间不能用「∪」连接</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>f(x)=1/(x−2) 的定义域？</li><li>f(x)=x³ 的奇偶性？</li></ol><details><summary>点开看答案</summary><ol><li>x≠2</li><li>奇函数</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s4">
+        <h2><span class="num">04</span>指数函数与对数函数</h2>
+        <p class="lead">增长与压缩互为反函数：一个把加法变乘法，一个把乘法变加法。</p>
+        <div class="secs">
+            <div class="sec" id="s4-1">
+                <h4><span class="n">4.1</span>指数</h4>
+                <p>n 次方根与分数指数幂互化：ⁿ√(aᵐ)=a^(m/n)（a&gt;0）。规定 a⁰=1（a≠0）、a⁻ⁿ=1/aⁿ；指数运算的三条性质是化简的基础。</p>
+                <div class="f">a^(m/n)=ⁿ√(aᵐ)；a⁻ⁿ=1/aⁿ；aᵐ·aⁿ=aᵐ⁺ⁿ；(aᵐ)ⁿ=aᵐⁿ；(ab)ⁿ=aⁿbⁿ</div>
+                <p class="use"><b>怎么用：</b>根式先化成分数指数，同底数再合并；化简顺序：先乘方、再乘除、最后加减。</p>
+                <p class="warn"><b>易错：</b>负数指数不是负数，a⁻ⁿ 是倒数；n 为偶数时 ⁿ√(aⁿ)=|a|。</p>
+            </div>
+            <div class="sec" id="s4-2">
+                <h4><span class="n">4.2</span>指数函数</h4>
+                <p>y=aˣ（a&gt;0 且 a≠1）叫指数函数：定义域 R，值域 (0,+∞)，图象恒过 (0,1)；a&gt;1 时递增，0&lt;a&lt;1 时递减；y=aˣ 与 y=(1/a)ˣ 的图象关于 y 轴对称。</p>
+                <div class="f">a&gt;1 增，0&lt;a&lt;1 减；值域 (0,+∞)；过定点 (0,1)</div>
+                <p class="use"><b>怎么用：</b>比较大小先化同底，不能同底就找中间量 1；解指数不等式化同底后，按底数大于 1 或小于 1 决定不等号方向。</p>
+                <p class="warn"><b>易错：</b>底数含参数要分 0&lt;a&lt;1 与 a&gt;1 讨论；指数函数值域取不到 0。</p>
+            </div>
+            <div class="sec" id="s4-3">
+                <h4><span class="n">4.3</span>对数</h4>
+                <p>若 aˣ=N（a&gt;0,a≠1,N&gt;0），则 x=log_a N，指数与对数互为逆运算。真数必须为正；log_a 1=0，log_a a=1；积的对数等于对数的和。</p>
+                <div class="f">a^(log_a N)=N；log_a(MN)=log_aM+log_aN；log_a(M/N)=log_aM−log_aN；log_a Mⁿ=n log_a M</div>
+                <p class="use"><b>怎么用：</b>化简对数先指对互化或统一底数；真数是积、商、幂时拆开算。</p>
+                <p class="warn"><b>易错：</b>log_a(M+N) ≠ log_aM+log_aN；真数 ≤0 时对数无意义。</p>
+            </div>
+            <div class="sec" id="s4-4">
+                <h4><span class="n">4.4</span>对数函数</h4>
+                <p>y=log_a x（a&gt;0,a≠1,x&gt;0）叫对数函数：定义域 (0,+∞)，值域 R，图象恒过 (1,0)；a&gt;1 递增，0&lt;a&lt;1 递减；它与 y=aˣ 互为反函数，图象关于直线 y=x 对称。</p>
+                <div class="f">y=log_a x ⇔ x=aʸ；换底公式 log_a b=ln b/ln a</div>
+                <p class="use"><b>怎么用：</b>比较对数大小：同底看单调性，同真数看底数（底大图靠右），都不同就找 0 或 1 作中间量。</p>
+                <p class="warn"><b>易错：</b>定义域是 (0,+∞) 不是 R；底数与真数的位置不要写反。</p>
+            </div>
+            <div class="sec" id="s4-5">
+                <h4><span class="n">4.5</span>函数的应用（二）</h4>
+                <p>使 f(x)=0 的实数 x 叫函数的零点，零点是一个数，不是点。零点存在定理：f(x) 在 [a,b] 上连续，且 f(a)f(b)&lt;0，则 (a,b) 内至少有一个零点；二分法不断取中点把区间缩小。</p>
+                <div class="f">f(a)f(b)&lt;0 ⇒ (a,b) 内存在零点；二分法每步区间长度减半</div>
+                <p class="use"><b>怎么用：</b>判断零点所在区间，代端点算符号；用二分法求近似解，直到区间长度小于精度要求。</p>
+                <p class="warn"><b>易错：</b>f(a)f(b)&lt;0 只保证「存在」，不保证唯一；零点不是坐标点。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>根式与分数指数幂互化</li><li>指数函数的图象与性质</li><li>对数定义与运算性质</li><li>对数函数与指数函数互为反函数</li><li>函数零点与二分法</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">log_a b = ln b/ln a；a^(log_a N)=N；aᵐ·aⁿ=aᵐ⁺ⁿ</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>指对互化：aˣ=N ⇔ x=log_a N，这是解指对数题的第一步。</li><li>比较大小：同底看单调性，异底找 0、1 作中间量。</li><li>判断零点区间：算区间端点函数值的符号，异号则有零点。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">计算 log₂8 + 2^(log₂5)。</p><details><summary>看解答</summary><div class="note">log₂8=3；2^(log₂5)=5；和为 8。</div></details></div>
+        <div class="ch-block"><b>综合题（对数不等式 + 定义域）</b><p class="lead">解不等式 log₂(x−1)&lt;2。</p><details><summary>看解答</summary><div class="note">先保真数：x−1&gt;0；再化 log₂(x−1)&lt;log₂4，底数 2&gt;1，不等号不变：x−1&lt;4。合起来 1&lt;x&lt;5。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">化简 8^(2/3)。</p><details><summary>看解答</summary><div class="note">8^(2/3)=(2³)^(2/3)=2²=4。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>对数真数必须大于 0，解对数不等式先写定义域</li><li>log_a(M+N) ≠ log_aM+log_aN</li><li>指数函数值域是 (0,+∞)，取不到 0</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>计算 log₃9</li><li>化简 2^(log₂7)</li></ol><details><summary>点开看答案</summary><ol><li>2</li><li>7</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s5">
+        <h2><span class="num">05</span>三角函数</h2>
+        <p class="lead">圆上的匀速运动写了两次：一次用角，一次用正弦余弦。</p>
+        <div class="secs">
+            <div class="sec" id="s5-1">
+                <h4><span class="n">5.1</span>任意角和弧度制</h4>
+                <p>角可以按旋转方向分成正角、负角、零角；与 α 终边相同的角组成集合 {β | β=α+k·360°, k∈Z}。弧度制用弧长与半径的比度量角：α=l/r，π 弧度=180°。</p>
+                <div class="f">180°=π rad；1 rad=(180/π)°；l=|α|r；S扇形=½lr=½|α|r²</div>
+                <p class="use"><b>怎么用：</b>角度化弧度乘 π/180，弧度化角度乘 180/π；扇形问题先统一用弧度，再套 l、S 公式。</p>
+                <p class="warn"><b>易错：</b>弧度制下角是实数，可以不带单位；扇形面积别和三角形面积公式混。</p>
+            </div>
+            <div class="sec" id="s5-2">
+                <h4><span class="n">5.2</span>三角函数的概念</h4>
+                <p>角 α 终边上任取一点 P(x,y)（不与原点重合），r=√(x²+y²)，定义 sinα=y/r，cosα=x/r，tanα=y/x。三角函数值的符号由终边所在象限决定：一全正、二正弦、三正切、四余弦。</p>
+                <div class="f">sin²α+cos²α=1；tanα=sinα/cosα；r=√(x²+y²)</div>
+                <p class="use"><b>怎么用：</b>已知一个三角函数值求另外两个，用平方关系和商数关系，先根据象限定符号。</p>
+                <p class="warn"><b>易错：</b>由 sin²α+cos²α=1 开方时要带 ±，符号看象限；tanα 在 x=0 时无意义。</p>
+            </div>
+            <div class="sec" id="s5-3">
+                <h4><span class="n">5.3</span>诱导公式</h4>
+                <p>诱导公式把任意角的三角函数化到锐角：口诀「奇变偶不变，符号看象限」。「奇偶」指 π/2 的奇数倍还是偶数倍，「符号」把 α 当锐角，看原函数在对应象限的正负。</p>
+                <div class="f">sin(π+α)=−sinα；cos(π+α)=−cosα；sin(−α)=−sinα；cos(−α)=cosα；sin(π/2−α)=cosα</div>
+                <p class="use"><b>怎么用：</b>化角三步：先去掉 k·360°，再用 π±α 化到 [0,π]，最后用 π/2±α 化到锐角。</p>
+                <p class="warn"><b>易错：</b>判断符号时把 α 看成锐角，不要用题中 α 的真实象限；函数名变不变只看 π/2 的倍数。</p>
+            </div>
+            <div class="sec" id="s5-4">
+                <h4><span class="n">5.4</span>三角函数的图象与性质</h4>
+                <p>y=sinx、y=cosx 的周期是 2π，y=tanx 的周期是 π；sinx 是奇函数，cosx 是偶函数，tanx 是奇函数。用「五点法」可以快速画出一个周期的图象。</p>
+                <div class="f">sin(x+2kπ)=sinx；cos(x+2kπ)=cosx；tan(x+π)=tanx；tanx 定义域 x≠π/2+kπ</div>
+                <p class="use"><b>怎么用：</b>求 y=Asin(ωx+φ) 的单调区间、对称轴，把 ωx+φ 整体代入 sinx 的相应区间或方程。</p>
+                <p class="warn"><b>易错：</b>写单调区间要注明 k∈Z；正切函数图象在 x=π/2+kπ 处断开。</p>
+            </div>
+            <div class="sec" id="s5-5">
+                <h4><span class="n">5.5</span>三角恒等变换</h4>
+                <p>两角和差公式是全部恒等变换的源头；由它令 β=α 得二倍角公式。cos2α 有三种等价写法，按题目需要选。辅助角公式把 a sinx+b cosx 合成一个正弦。</p>
+                <div class="f">sin(α±β)=sinαcosβ±cosαsinβ；cos(α±β)=cosαcosβ∓sinαsinβ；sin2α=2sinαcosα；cos2α=cos²α−sin²α=2cos²α−1=1−2sin²α；a sinx+b cosx=√(a²+b²)sin(x+φ)</div>
+                <p class="use"><b>怎么用：</b>化简先看「角」的关系（和差、倍角、互补），再看「函数名」，目标是化成同一个角、同一个函数、一次式。</p>
+                <p class="warn"><b>易错：</b>cos2α 的三个形式按需选用，别死记一个；正切公式要求分母不为 0。</p>
+            </div>
+            <div class="sec" id="s5-6">
+                <h4><span class="n">5.6</span>函数 y=Asin(ωx+φ)</h4>
+                <p>A 叫振幅（|A|），ω 决定周期 T=2π/|ω|，φ 叫初相。图象变换有两种顺序：先平移后伸缩，或先伸缩后平移，平移量不同。</p>
+                <div class="f">T=2π/|ω|；f=1/T；五点法取 ωx+φ=0, π/2, π, 3π/2, 2π</div>
+                <p class="use"><b>怎么用：</b>求解析式：先由最值定 A，再由周期定 ω，最后代入一个特殊点求 φ。</p>
+                <p class="warn"><b>易错：</b>先伸缩后平移时，平移量是 φ/ω 而不是 φ；φ 不唯一，通常取 |φ|&lt;π/2。</p>
+            </div>
+            <div class="sec" id="s5-7">
+                <h4><span class="n">5.7</span>三角函数的应用</h4>
+                <p>简谐运动、潮汐、气温等周期现象常用 y=Asin(ωx+φ)+b 建模：A 由振幅定，b 由平衡位置定，ω 由周期定，φ 由初始状态定。</p>
+                <div class="f">A=(最大值−最小值)/2；b=(最大值+最小值)/2；T=2π/ω</div>
+                <p class="use"><b>怎么用：</b>先读图找最高点、最低点、周期，再代特殊点求 φ；最后回答实际问题时注意定义域。</p>
+                <p class="warn"><b>易错：</b>实际问题中 x 有范围，别把整个实数轴当答案；相位 φ 的取值不唯一，要按题目要求取。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>任意角与弧度制</li><li>三角函数定义与符号规律</li><li>诱导公式「奇变偶不变，符号看象限」</li><li>正弦、余弦、正切函数的图象与性质</li><li>两角和差、二倍角与辅助角公式</li><li>y=Asin(ωx+φ) 的图象变换</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">sin²α+cos²α=1；tanα=sinα/cosα；T=2π/|ω|；sin2α=2sinαcosα</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>诱导公式化角：负化正、大化小、小化锐，最后查表或特殊角。</li><li>求周期与振幅：T=2π/|ω|，振幅 |A|；求单调区间把 ωx+φ 整体代入。</li><li>化简三角式：看角的关系、看函数名、看次数，目标是「一角一函数一次」。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">求 y=2sin(2x+π/3) 的周期与振幅。</p><details><summary>看解答</summary><div class="note">T=2π/2=π；振幅为 2。</div></details></div>
+        <div class="ch-block"><b>综合题（同角关系 + 二倍角）</b><p class="lead">已知 sinα=3/5，α∈(π/2,π)，求 cosα、tanα、sin2α。</p><details><summary>看解答</summary><div class="note">α 在第二象限，cosα&lt;0：cosα=−√(1−9/25)=−4/5；tanα=sinα/cosα=−3/4；sin2α=2sinαcosα=2×(3/5)×(−4/5)=−24/25。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">求 sin(π/6) 与 y=sinx 的周期。</p><details><summary>看解答</summary><div class="note">sin(π/6)=1/2；周期 2π。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>角度制与弧度制混用</li><li>诱导公式符号判断错：要把 α 当锐角看</li><li>写单调区间要注明 k∈Z</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>sin(π/6)=?</li><li>y=sinx 的周期？</li></ol><details><summary>点开看答案</summary><ol><li>1/2</li><li>2π</li></ol></details></div>
+    </section>
+
+    <div class="part">必修 第二册</div>
+
+    <section class="card" id="s6">
+        <h2><span class="num">06</span>平面向量及其应用</h2>
+        <p class="lead">有方向的量：几何的箭头，代数的坐标，物理的力。</p>
+        <div class="secs">
+            <div class="sec" id="s6-1">
+                <h4><span class="n">6.1</span>平面向量的概念</h4>
+                <p>既有大小又有方向的量叫向量，用有向线段表示；向量的大小叫模，记 |a|。长度为 1 的叫单位向量，长度为 0 的叫零向量（方向任意）。方向相同或相反的非零向量叫平行（共线）向量。</p>
+                <div class="f">|a|；a∥b ⇔ 存在实数 λ 使 a=λb（b≠0）</div>
+                <p class="use"><b>怎么用：</b>判断两个向量是否相等，要同时看方向和模；用有向线段表示时，起点可以任意平移。</p>
+                <p class="warn"><b>易错：</b>向量不能比较大小，只能说模相等；零向量与任何向量平行，但方向不确定。</p>
+            </div>
+            <div class="sec" id="s6-2">
+                <h4><span class="n">6.2</span>平面向量的运算</h4>
+                <p>加法用三角形法则或平行四边形法则，减法「共起点、指向被减向量」；数乘 λa 只改变长度和方向。数量积 a·b=|a||b|cosθ 的结果是一个实数，不是向量。</p>
+                <div class="f">a·b=|a||b|cosθ；|a|²=a·a；cosθ=a·b/(|a||b|)；a·b=0 ⇔ a⊥b（非零向量）</div>
+                <p class="use"><b>怎么用：</b>求模先平方：|a±b|²=|a|²±2a·b+|b|²；求夹角先算数量积和两个模。</p>
+                <p class="warn"><b>易错：</b>数量积不满足结合律，(a·b)c ≠ a(b·c)；a·b=0 也可能是其中一个为零向量。</p>
+            </div>
+            <div class="sec" id="s6-3">
+                <h4><span class="n">6.3</span>平面向量基本定理及坐标表示</h4>
+                <p>若 e₁、e₂ 是同一平面内两个不共线向量，则对该平面内任一向量 a，存在唯一一对实数 λ₁、λ₂，使 a=λ₁e₁+λ₂e₂。取正交单位基底后，向量可以用坐标表示，几何问题变成代数运算。</p>
+                <div class="f">a±b=(x₁±x₂, y₁±y₂)；λa=(λx₁, λy₁)；a·b=x₁x₂+y₁y₂；a∥b ⇔ x₁y₂−x₂y₁=0；a⊥b ⇔ x₁x₂+y₁y₂=0</div>
+                <p class="use"><b>怎么用：</b>建系后先写各点坐标，再算向量坐标；判断平行、垂直直接套坐标判别式。</p>
+                <p class="warn"><b>易错：</b>平行与垂直的坐标公式不要记反；共线定理中基底必须不共线。</p>
+            </div>
+            <div class="sec" id="s6-4">
+                <h4><span class="n">6.4</span>平面向量的应用</h4>
+                <p>向量可以证明平行、垂直、求长度和夹角；解三角形时，余弦定理处理「两边夹一角」或「三边求角」，正弦定理处理「两角一边」或「两边及一边对角」。</p>
+                <div class="f">c²=a²+b²−2ab cosC；a/sinA=b/sinB=c/sinC=2R；S=½ab sinC</div>
+                <p class="use"><b>怎么用：</b>解三角形先画图、标已知，再选定理；已知两边及夹角求第三边用余弦定理，已知两角一边用正弦定理。</p>
+                <p class="warn"><b>易错：</b>用正弦定理求角可能出现两解，要结合「大边对大角」取舍；余弦定理中边与角的对应别错位。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>向量的模、方向与共线</li><li>加法、减法、数乘与数量积</li><li>平面向量基本定理与坐标运算</li><li>余弦定理、正弦定理与三角形面积</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">a·b=|a||b|cosθ=x₁x₂+y₁y₂；a∥b ⇔ x₁y₂−x₂y₁=0；a⊥b ⇔ x₁x₂+y₁y₂=0</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>坐标运算：先写点坐标，再算向量坐标，最后套公式。</li><li>求夹角：cosθ=a·b/(|a||b|)，先算数量积和模。</li><li>解三角形：画图标已知，两边夹一角用余弦定理，两角一边用正弦定理。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">a=(1,2)，b=(3,−1)，求 a·b 与夹角余弦。</p><details><summary>看解答</summary><div class="note">a·b=1×3+2×(−1)=1；|a|=√5，|b|=√10，cosθ=1/√50=√2/10。</div></details></div>
+        <div class="ch-block"><b>综合题（余弦定理 + 面积）</b><p class="lead">在 △ABC 中，a=3，b=4，C=60°，求 c 与面积 S。</p><details><summary>看解答</summary><div class="note">c²=a²+b²−2ab cosC=9+16−12=13，c=√13；S=½ab sinC=½×3×4×(√3/2)=3√3。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">a=(2,1)，b=(−1,3)，求 a·b。</p><details><summary>看解答</summary><div class="note">2×(−1)+1×3=1。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>数量积的结果是数，不是向量</li><li>平行与垂直的坐标条件记反</li><li>正弦定理求角可能有两解，要结合大边对大角取舍</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>a=(2,1)，b=(−1,3)，a·b=?</li><li>a⊥b 的坐标条件？</li></ol><details><summary>点开看答案</summary><ol><li>1</li><li>x₁x₂+y₁y₂=0</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s7">
+        <h2><span class="num">07</span>复数</h2>
+        <p class="lead">i²=−1：数系再一次扩充，平面上的点从此能相乘。</p>
+        <div class="secs">
+            <div class="sec" id="s7-1">
+                <h4><span class="n">7.1</span>复数的概念</h4>
+                <p>形如 z=a+bi（a,b∈R）的数叫复数，a 是实部，b 是虚部，i 是虚数单位且 i²=−1。两个复数相等当且仅当实部、虚部分别相等。复数 z=a+bi 对应复平面内的点 (a,b)，模 |z|=√(a²+b²)。</p>
+                <div class="f">i²=−1；z=a+bi；z̄=a−bi；|z|=√(a²+b²)；z·z̄=a²+b²</div>
+                <p class="use"><b>怎么用：</b>复数相等列两个方程解参数；判断实数、虚数、纯虚数分别看虚部是否为 0、是否非 0、实部是否为 0。</p>
+                <p class="warn"><b>易错：</b>虚部是 b 不是 bi；两个虚数不能比较大小。</p>
+            </div>
+            <div class="sec" id="s7-2">
+                <h4><span class="n">7.2</span>复数的四则运算</h4>
+                <p>加减法实部、虚部分别相加减；乘法按多项式展开，遇到 i² 换成 −1；除法分子分母同乘分母的共轭复数，把分母变成实数。</p>
+                <div class="f">(a+bi)(c+di)=(ac−bd)+(ad+bc)i；(a+bi)/(c+di)=((a+bi)(c−di))/(c²+d²)</div>
+                <p class="use"><b>怎么用：</b>除法先写成分式，再「分母实数化」；记住 (1+i)²=2i、(1−i)²=−2i 可以提速。</p>
+                <p class="warn"><b>易错：</b>除法别漏乘分子的共轭；i³=−i，i⁴=1，按周期 4 计算。</p>
+            </div>
+            <div class="sec" id="s7-3">
+                <h4><span class="n">7.3</span>复数的三角表示</h4>
+                <p>复数 z=a+bi 可以写成 z=r(cosθ+isinθ)，其中 r=|z| 是模，θ 是辐角。三角形式下，乘法是「模相乘、辐角相加」，除法是「模相除、辐角相减」，几何上就是旋转与伸缩。</p>
+                <div class="f">z₁z₂=r₁r₂[cos(θ₁+θ₂)+isin(θ₁+θ₂)]；z₁/z₂=(r₁/r₂)[cos(θ₁−θ₂)+isin(θ₁−θ₂)]</div>
+                <p class="use"><b>怎么用：</b>求复数的高次幂用三角形式加棣莫弗定理；把代数形式化三角形式，先算 r，再定象限求 θ。</p>
+                <p class="warn"><b>易错：</b>辐角不唯一，通常取主值；化三角形式时先看点在哪个象限。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>复数的实部、虚部与相等条件</li><li>共轭复数与模</li><li>复数的四则运算</li><li>复数的几何意义与三角表示</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">|z|=√(a²+b²)；z·z̄=a²+b²；i²=−1</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>除法：分子分母同乘分母的共轭，把分母变成实数。</li><li>求模：先化成 a+bi，再开方。</li><li>高次幂：利用 i 的周期 4，或化成三角形式用棣莫弗定理。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">计算 (1+i)²。</p><details><summary>看解答</summary><div class="note">(1+i)²=1+2i+i²=1+2i−1=2i。</div></details></div>
+        <div class="ch-block"><b>综合题（除法 + 模）</b><p class="lead">已知 z=(1+i)/(1−i)，求 z 的实部、虚部与 |z|。</p><details><summary>看解答</summary><div class="note">分子分母同乘 1+i：z=(1+i)²/((1−i)(1+i))=2i/2=i。实部 0，虚部 1，|z|=1。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">计算 i³ 与 (2+i)(2−i)。</p><details><summary>看解答</summary><div class="note">i³=−i；(2+i)(2−i)=4−i²=5。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>i²=−1 别写成 1</li><li>虚部是 b 不是 bi</li><li>两个虚数不能比较大小</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>i³=?</li><li>(2+i)(2−i)=?</li></ol><details><summary>点开看答案</summary><ol><li>−i</li><li>5</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s8">
+        <h2><span class="num">08</span>立体几何初步</h2>
+        <p class="lead">从纸面站起来：先认图形，再算面积体积，最后证平行垂直。</p>
+        <div class="secs">
+            <div class="sec" id="s8-1">
+                <h4><span class="n">8.1</span>基本立体图形</h4>
+                <p>多面体包括棱柱、棱锥、棱台；旋转体包括圆柱、圆锥、圆台、球。棱柱的侧棱互相平行，棱锥的侧棱交于一点，棱台是用平行于底面的平面截棱锥得到的。</p>
+                <div class="f">球：S=4πR²，V=4πR³/3；圆柱侧面积 2πrh</div>
+                <p class="use"><b>怎么用：</b>认组合体先拆成基本几何体，再分别算；画图时先画底面，再画侧棱或母线。</p>
+                <p class="warn"><b>易错：</b>球不是多面体；棱台上下底面相似，侧棱延长后交于一点。</p>
+            </div>
+            <div class="sec" id="s8-2">
+                <h4><span class="n">8.2</span>立体图形的直观图</h4>
+                <p>斜二测画法画直观图：x 轴方向长度不变，y 轴方向长度减半，z 轴方向长度不变；平行关系保持不变，但角度会变。</p>
+                <div class="f">y 方向线段长度 × ½；S直观/S原 = √2/4（水平放置的平面图形）</div>
+                <p class="use"><b>怎么用：</b>画直观图先建三条轴，再按「横不变、纵减半、竖不变」定点，最后连线。</p>
+                <p class="warn"><b>易错：</b>斜二测画出的图不是真实投影，不能直接从图上量角度；长度只有 x、z 方向保持原长。</p>
+            </div>
+            <div class="sec" id="s8-3">
+                <h4><span class="n">8.3</span>简单几何体的表面积与体积</h4>
+                <p>柱体体积等于底面积乘高；锥体是等底等高柱体体积的三分之一；台体用上下底面积和中间项；球的表面积、体积公式要背熟。</p>
+                <div class="f">V柱=Sh；V锥=⅓Sh；V台=⅓h(S₁+√(S₁S₂)+S₂)；S球=4πR²；V球=4πR³/3</div>
+                <p class="use"><b>怎么用：</b>求体积先找底面积和高（高是两底面间的距离）；组合体用割补法拆开或补形。</p>
+                <p class="warn"><b>易错：</b>锥体别忘 ⅓；圆锥侧面积用母线 l，不是高 h。</p>
+            </div>
+            <div class="sec" id="s8-4">
+                <h4><span class="n">8.4</span>空间点、直线、平面之间的位置关系</h4>
+                <p>基本事实：两点确定一条直线；不共线的三点确定一个平面；两个不重合的平面若有公共点，则交于一条过该点的直线。空间中两条直线的位置关系有相交、平行、异面三种。</p>
+                <div class="f">异面直线所成角的范围 (0°,90°]；公理 1、2、3</div>
+                <p class="use"><b>怎么用：</b>判断位置关系时用正方体模型比划；证明点共线、线共点，用基本事实找公共点。</p>
+                <p class="warn"><b>易错：</b>异面直线是「不同在任何一个平面内」，不是「不相交」那么简单；空间中垂直于同一直线的两直线不一定平行。</p>
+            </div>
+            <div class="sec" id="s8-5">
+                <h4><span class="n">8.5</span>空间直线、平面的平行</h4>
+                <p>线面平行判定：平面外一条直线与平面内一条直线平行，则该直线与平面平行。线面平行性质：一条直线与一个平面平行，过这条直线的平面与已知平面的交线与它平行。面面平行由两组相交直线分别平行来判定。</p>
+                <div class="f">a⊄α，b⊂α，a∥b ⇒ a∥α；a∥α，a⊂β，α∩β=b ⇒ a∥b</div>
+                <p class="use"><b>怎么用：</b>证线面平行，先在平面内找（或作）一条平行线；证面面平行，找一个平面内两条相交直线都平行于另一个平面。</p>
+                <p class="warn"><b>易错：</b>判定定理必须强调直线在平面外；性质定理必须出现「过该直线的平面与原平面的交线」。</p>
+            </div>
+            <div class="sec" id="s8-6">
+                <h4><span class="n">8.6</span>空间直线、平面的垂直</h4>
+                <p>线面垂直判定：一条直线与平面内两条相交直线都垂直，则它垂直于这个平面。线面垂直性质：垂直于同一个平面的两条直线平行。面面垂直判定：一个平面经过另一个平面的一条垂线，则两平面垂直。</p>
+                <div class="f">l⊥m，l⊥n，m∩n=P，m,n⊂α ⇒ l⊥α；l⊥α，l⊂β ⇒ α⊥β</div>
+                <p class="use"><b>怎么用：</b>证线面垂直，在平面内找两条相交直线；证面面垂直，先证线面垂直，再看这条线是否在另一个平面内。</p>
+                <p class="warn"><b>易错：</b>两条直线必须相交，平行不够；异面直线也可以垂直，垂直不一定相交。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>棱柱、棱锥、棱台与旋转体</li><li>斜二测画法</li><li>表面积与体积公式</li><li>空间点线面位置关系</li><li>线面、面面平行与垂直的判定和性质</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">S球=4πR²；V球=4πR³/3；V柱=Sh；V锥=⅓Sh</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>求体积：先找底面积和高，锥体乘 ⅓；组合体用割补。</li><li>证平行：线线平行 ⇒ 线面平行 ⇒ 面面平行。</li><li>证垂直：线线垂直 ⇒ 线面垂直 ⇒ 面面垂直。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">正方体棱长 2，求体积与表面积。</p><details><summary>看解答</summary><div class="note">V=2³=8；S=6×2²=24。</div></details></div>
+        <div class="ch-block"><b>综合题（圆锥的侧面积、表面积与体积）</b><p class="lead">圆锥底面半径 3，母线 5，求侧面积、表面积与体积。</p><details><summary>看解答</summary><div class="note">高 h=√(5²−3²)=4；S侧=πrl=15π；S表=15π+9π=24π；V=⅓πr²h=⅓×9π×4=12π。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">圆柱底面积 4、高 5，求体积。</p><details><summary>看解答</summary><div class="note">V=Sh=4×5=20。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>线面平行判定要强调直线在平面外</li><li>锥体体积别忘 ⅓</li><li>圆锥侧面积用母线不是高</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>棱长 3 的正方体体积？</li><li>圆柱底面积 4、高 5，体积？</li></ol><details><summary>点开看答案</summary><ol><li>27</li><li>20</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s9">
+        <h2><span class="num">09</span>统计</h2>
+        <p class="lead">用一小撮数据，谨慎地推断一大群人的样子。</p>
+        <div class="secs">
+            <div class="sec" id="s9-1">
+                <h4><span class="n">9.1</span>随机抽样</h4>
+                <p>简单随机抽样（抽签法、随机数法）要求每个个体被抽到的机会相等；分层随机抽样按各层个体数比例抽取，适合总体差异明显的情况。</p>
+                <div class="f">分层抽样中某层抽取数 = 该层个体数 × 样本容量/总体个数</div>
+                <p class="use"><b>怎么用：</b>总体由差异明显的几部分组成时用分层抽样；抽样前先编号，保证不重不漏。</p>
+                <p class="warn"><b>易错：</b>抽样必须保证每个个体等可能入样；样本容量是抽出的个体数，不是样本个数。</p>
+            </div>
+            <div class="sec" id="s9-2">
+                <h4><span class="n">9.2</span>用样本估计总体</h4>
+                <p>频率分布直方图用面积表示频率，纵轴是「频率/组距」；平均数、中位数、众数刻画集中趋势，方差、标准差刻画离散程度。</p>
+                <div class="f">频率=频数/样本容量；s²=[(x₁−x̄)²+…+(xₙ−x̄)²]/n；s=√(s²)</div>
+                <p class="use"><b>怎么用：</b>直方图求平均数用各组的组中值加权平均；比较两组数据稳定性看方差，方差越小越稳定。</p>
+                <p class="warn"><b>易错：</b>直方图纵轴不是频率，面积才是频率；中位数是使左右面积各为 0.5 的值，不是最高矩形的中点。</p>
+            </div>
+            <div class="sec" id="s9-3">
+                <h4><span class="n">9.3</span>统计案例</h4>
+                <p>用样本估计总体时，先明确总体、样本、样本容量，再选择合适的图表和数字特征；结论必须由数据支撑。</p>
+                <div class="f">样本平均数 x̄ 估计总体平均数 μ；样本方差 s² 估计总体方差 σ²</div>
+                <p class="use"><b>怎么用：</b>先看数据想回答什么问题：分布用直方图，趋势用折线图，比较用平均数加方差。</p>
+                <p class="warn"><b>易错：</b>样本不能代表总体时，结论无效；相关不等于因果。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>简单随机抽样与分层抽样</li><li>频率分布直方图</li><li>平均数、中位数、众数</li><li>方差与标准差</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">频率=频数/样本容量；s²=[(x₁−x̄)²+…+(xₙ−x̄)²]/n</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>直方图：面积=频率，纵轴是频率/组距，求平均数用组中值加权。</li><li>中位数：把数据排序后取中间位置，偶数个取中间两数的平均。</li><li>方差：先求平均数，再求偏差平方的平均。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">数据 2,3,3,5,7 的平均数、中位数、众数。</p><details><summary>看解答</summary><div class="note">平均数 (2+3+3+5+7)/5=4；中位数 3；众数 3。</div></details></div>
+        <div class="ch-block"><b>综合题（分层抽样 + 方差比较）</b><p class="lead">某校高一男 30 人、女 20 人，用分层抽样抽 10 人，男女各几人？若两组方差分别为 1.2 和 3.5，哪组更稳定？</p><details><summary>看解答</summary><div class="note">按 30:20=3:2 分配，男 6 人、女 4 人；方差小的更稳定，所以第一组更稳定。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">求 3,5,7,9 的中位数。</p><details><summary>看解答</summary><div class="note">排序后中间两数 5、7，中位数 (5+7)/2=6。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>直方图纵轴是频率/组距，不是频率</li><li>偶数个数据的中位数要取中间两数的平均</li><li>众数可能不唯一</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>直方图小矩形面积表示？</li><li>方差越大数据越？</li></ol><details><summary>点开看答案</summary><ol><li>该组频率</li><li>分散</li></ol></details></div>
+    </section>
+
+    <section class="card" id="s10">
+        <h2><span class="num">10</span>概率</h2>
+        <p class="lead">把「可能」变成可以计算的数，再用它做决定。</p>
+        <div class="secs">
+            <div class="sec" id="s10-1">
+                <h4><span class="n">10.1</span>随机事件与概率</h4>
+                <p>随机试验所有可能结果组成的集合叫样本空间 Ω，随机事件是 Ω 的子集。古典概型要求样本点有限且等可能，此时 P(A)=A 包含的样本点数/样本点总数。</p>
+                <div class="f">P(A)=m/n；P(Ω)=1，P(∅)=0，0≤P(A)≤1；P(A∪B)=P(A)+P(B)−P(A∩B)</div>
+                <p class="use"><b>怎么用：</b>古典概型先列（或算）样本点总数，再数有利事件数；复杂事件用对立事件 1−P(Ā) 更快。</p>
+                <p class="warn"><b>易错：</b>每个样本点必须等可能，否则不能用 m/n；互斥事件概率相加，对立事件概率之和为 1。</p>
+            </div>
+            <div class="sec" id="s10-2">
+                <h4><span class="n">10.2</span>事件的相互独立性</h4>
+                <p>若 P(AB)=P(A)P(B)，则事件 A、B 相互独立；直观上是一个事件发生与否不影响另一个事件的概率。n 次独立重复试验中事件恰发生 k 次的概率用二项式公式。</p>
+                <div class="f">P(AB)=P(A)P(B)；P(X=k)=C(n,k)pᵏ(1−p)ⁿ⁻ᵏ</div>
+                <p class="use"><b>怎么用：</b>判断独立看定义或实际意义；求「至少一次」用 1−P(一次都不发生)。</p>
+                <p class="warn"><b>易错：</b>互斥与独立是两回事，两个概率非零的事件不可能既互斥又独立；独立不是「没有关系」。</p>
+            </div>
+            <div class="sec" id="s10-3">
+                <h4><span class="n">10.3</span>频率与概率</h4>
+                <p>大量重复试验中，事件发生的频率会稳定在某个常数附近，这个常数就是概率；可以用频率估计概率，也可以用随机数模拟试验。</p>
+                <div class="f">f_n(A)=n_A/n；n 越大，f_n(A) 越接近 P(A)</div>
+                <p class="use"><b>怎么用：</b>试验次数足够多时用频率估计概率；模拟试验要先规定随机数的对应规则。</p>
+                <p class="warn"><b>易错：</b>频率是试验值，概率是客观值，二者不能画等号；试验次数少时频率波动很大。</p>
+            </div>
+        </div>
+        <div class="ch-block"><b>本章核心概念</b><ul><li>样本空间与随机事件</li><li>古典概型 P(A)=m/n</li><li>互斥事件与对立事件</li><li>事件的相互独立性</li><li>频率估计概率</li></ul></div>
+        <div class="ch-block"><b>关键公式 / 结论</b><div class="formula">P(A)=m/n；P(A∪B)=P(A)+P(B)−P(A∩B)；P(AB)=P(A)P(B)（独立）</div></div>
+        <div class="ch-block"><b>怎么记 / 怎么用</b><ul><li>古典概型：先数列样本空间，再数有利事件，最后化简。</li><li>「至少」问题：用对立事件 1−P(全不发生)。</li><li>独立重复试验：P(X=k)=C(n,k)pᵏ(1−p)ⁿ⁻ᵏ。</li></ul></div>
+        <div class="ch-block"><b>公式小题</b><p class="lead">掷一枚骰子，求点数为偶数的概率。</p><details><summary>看解答</summary><div class="note">偶数有 2、4、6 共 3 个，P=3/6=1/2。</div></details></div>
+        <div class="ch-block"><b>综合题（独立性 + 对立事件）</b><p class="lead">甲、乙独立射击，命中率分别为 0.8、0.7，求至少一人命中的概率。</p><details><summary>看解答</summary><div class="note">两人都没命中概率 0.2×0.3=0.06；至少一人命中 1−0.06=0.94。</div></details></div>
+        <div class="ch-block"><b>例题</b><p class="lead">掷骰子，求点数大于 4 的概率。</p><details><summary>看解答</summary><div class="note">5、6 两种，P=2/6=1/3。</div></details></div>
+        <div class="ch-block"><b>易错点</b><ul><li>概率不能大于 1，算出大于 1 说明样本点算重了</li><li>互斥与对立混淆：对立一定互斥，互斥不一定对立</li><li>独立与互斥不是一回事</li></ul></div>
+        <div class="quiz"><b>小测（2 题）</b><ol><li>掷骰子点数大于 4 的概率？</li><li>对立事件概率之和？</li></ol><details><summary>点开看答案</summary><ol><li>1/3</li><li>1</li></ol></details></div>
+    </section>
+
+
+    <section class="card" id="conclusions">
+        <h2><span class="num">★</span>二级结论 · 考场直接用</h2>
+        <p class="lead">这些不是课本黑体字，但都是从基本公式推出来的「捷径」。先懂怎么来的，再记结论，最后拿题验一遍。</p>
+        <div class="ch-block"><ul style="line-height:2.1"><li><b>f(x+a) = −f(x) ⇒ 周期 T = 2a；f(x+a) = 1/f(x) ⇒ T = 2a</b><br><span style="opacity:.85">怎么用：抽象函数求周期：迭代两次回到原式。</span><br><span style="opacity:.7">例：f(x+2)=−f(x) ⇒ f(x+4)=f(x)。</span></li><li><b>奇函数在对称区间单调性相同，偶函数相反</b><br><span style="opacity:.85">怎么用：画图记：奇函数像「斜线」，偶函数像「U」。</span><br><span style="opacity:.7">例：f 奇且在 (0,+∞) 增 ⇒ 在 (−∞,0) 也增。</span></li><li><b>a sinx + b cosx = √(a²+b²) sin(x+φ)</b><br><span style="opacity:.85">怎么用：辅助角公式：先提模长，再找 tanφ = b/a。</span><br><span style="opacity:.7">例：sinx+cosx = √2 sin(x+π/4)。</span></li><li><b>a²+b² ≥ 2ab；a+b ≥ 2√(ab)（a,b>0）</b><br><span style="opacity:.85">怎么用：两个正数，和定积最大、积定和最小。</span><br><span style="opacity:.7">例：a+b=4 ⇒ ab ≤ 4。</span></li><li><b>log_a b = ln b / ln a；log_a b · log_b c = log_a c</b><br><span style="opacity:.85">怎么用：换底把不同底统一，链条相乘会「约掉」。</span><br><span style="opacity:.7">例：log₂3 · log₃4 = log₂4 = 2。</span></li><li><b>|a+b|² = |a|² + 2a·b + |b|²</b><br><span style="opacity:.85">怎么用：向量模长先平方，数量积就出来了。</span><br><span style="opacity:.7">例：|a|=2，|b|=1，夹角 60° ⇒ |a+b|²=4+2+1=7。</span></li></ul></div>
+        <div class="note">记法：不要死背一整串，记「它解决什么问题」——看到题里的关键词，能想起用哪条就够了。</div>
+    </section>
+    <div class="exam">
+        <h3>期末模拟 · 通道侗族自治县高一（上）</h3>
+        <p class="lead">按高一期末题型配 5 题，覆盖集合、不等式、函数、三角、向量。</p>
+        <ol><li>已知 A={1,2,3}，B={2,3,4}，求 A∩B。</li><li>解不等式 x² − x − 6 < 0。</li><li>求 f(x) = 1/(x−1) 的定义域。</li><li>计算 log₂8 + 2^(log₂3)。</li><li>a=(1,2)，b=(2,−1)，求 a·b。</li></ol>
+        <details><summary>看答案</summary><ol><li>{2,3}</li><li>−2 < x < 3</li><li>x ≠ 1</li><li>3 + 3 = 6</li><li>0</li></ol></details>
+    </div>
+    <div class="local" style="margin-top:18px;padding:14px 16px;border:1px solid rgba(167,139,250,.3);border-radius:12px;background:rgba(167,139,250,.06);color:var(--muted);font-size:12.8px;line-height:2;"><b style="color:#c4b5fd;font-weight:normal;">通道 · 本地课堂</b><br>通道一中的课堂也在用情境题：游客量、茶油产量、侗锦销量写进函数题。新高考更强调建模，把家乡数据带进题里，比纯符号好理解。</div>
+</div>
+<footer><div class="stamp">数学 · 高一 · 2026-10-23</div><div>电子教材笔记本 · 龙潜猫隐</div></footer>
+<script src="../assets/js/update-popup.js?v=20261023"></script>
+<script src="../assets/js/live.js?v=20261025"></script>
+<script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>基础篇 · HTML5 + CSS + JavaScript</title>
+        <link rel="stylesheet" href="lesson.css">
+        <style>:root{--lesson-date:"基础篇 · 代码示例"}</style>
+        <script src="/assets/js/cloud-net.js?v=20261034"></script>
+</head>
+    <body>
+        <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
+
+        <header class="top">
+            <p class="kicker">基础篇 · 长期置顶</p>
+            <h1>三个语言，一栋房子</h1>
+            <p class="sub">HTML5 搭骨架 · CSS 做装修 · JavaScript 通水电</p>
+            <div class="meta">
+                <span>基础点 <b>50</b></span>
+                <span>语言 <b>3</b></span>
+                <span>更新 <b>2026-10-21</b></span>
+            </div>
+            <p class="series">这份不用背，卡住的时候回来查。每一条都配了能直接跑的小例子。</p>
+        </header>
+
+        <div class="layout">
+            <aside class="toc" data-auto="true"><h2>目录</h2></aside>
+
+            <main>
+
+                <section class="card" id="s01">
+                    <h2><span class="num">01</span>三种语言怎么分工</h2>
+                    <p>同一张网页，三种语言各管一段：HTML 说「有什么」，CSS 说「长什么样」，JS 说「能干什么」。</p>
+                    <pre><code>&lt;button id="buy" class="btn"&gt;加入购物车&lt;/button&gt;
+
+.btn { padding: 10px 20px; background: #38bdf8; }
+
+document.getElementById("buy").onclick = function () {
+  alert("已加入！");
+};</code></pre>
+                    <div class="note"><b>备注：</b>三段代码放在同一个页面里，就是一个能看、能点、还不难看的按钮。三层各干各的，互不打架。</div>
+                </section>
+
+                <section class="card" id="s02">
+                    <h2><span class="num">02</span>一个页面是怎么被拼出来的</h2>
+                    <p>浏览器先把 HTML 读成一棵「树」（DOM），CSS 给树上的节点化妆，JS 在树上增删改。三个文件，靠两行标签连起来：</p>
+                    <pre><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;script src="main.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+                    <div class="note"><b>备注：</b>CSS 放 <code>&lt;head&gt;</code>，页面一出来就是化好妆的；JS 放 <code>&lt;/body&gt;</code> 前，保证它运行时元素已经存在。</div>
+                </section>
+
+                <section class="card" id="s03">
+                    <h2><span class="num">03</span>标签、元素、属性、值</h2>
+                    <p>这四个词会一直出现，先分清：</p>
+                    <pre><code>&lt;a href="https://example.com" target="_blank"&gt;点我&lt;/a&gt;
+ ↑        ↑属性名              ↑值              ↑内容
+ 标签名                    （自闭合标签：&lt;img src="a.png" alt=""&gt;）</code></pre>
+                    <table>
+                        <tr><th>叫法</th><th>意思</th><th>例子</th></tr>
+                        <tr><td>标签</td><td>尖括号里的名字</td><td><code>a</code>、<code>p</code>、<code>div</code></td></tr>
+                        <tr><td>元素</td><td>从开标签到闭标签的整块</td><td><code>&lt;p&gt;你好&lt;/p&gt;</code></td></tr>
+                        <tr><td>属性</td><td>给标签加的设置项</td><td><code>href</code>、<code>class</code>、<code>id</code></td></tr>
+                        <tr><td>值</td><td>属性的具体内容，通常加引号</td><td><code>href="index.html"</code></td></tr>
+                    </table>
+                </section>
+
+                <section class="card" id="s04">
+                    <h2><span class="num">04</span>文档骨架</h2>
+                    <p>每张网页都是同一个开头，背下来不亏：</p>
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;页面标题&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    这里放看得见的东西
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <div class="note"><b>备注：</b>中文乱码先查 <code>charset</code>；手机上排版错乱先查 <code>viewport</code>——这两行没写，后面写再多都白搭。</div>
+                </section>
+
+                <section class="card" id="s05">
+                    <h2><span class="num">05</span>文本：标题、段落、强调</h2>
+                    <pre><code>&lt;h1&gt;页面主标题&lt;/h1&gt;
+&lt;h2&gt;章节标题&lt;/h2&gt;
+&lt;p&gt;一个段落，段落之间会自动留空。&lt;/p&gt;
+&lt;p&gt;这里有&lt;strong&gt;重要的话&lt;/strong&gt;和&lt;em&gt;语气加重&lt;/em&gt;。&lt;/p&gt;
+&lt;br&gt;   换行（不产生新段落）
+&lt;hr&gt;   一条分隔线</code></pre>
+                    <div class="note"><b>备注：</b><code>h1</code> 一页只写一个，它是这张页面的“门牌”；别用 <code>br</code> 去凑段距，那是 CSS 的活。</div>
+                </section>
+
+                <section class="card" id="s06">
+                    <h2><span class="num">06</span>列表：ul / ol / dl</h2>
+                    <pre><code>&lt;ul&gt;
+  &lt;li&gt;无序项一&lt;/li&gt;
+  &lt;li&gt;无序项二&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;第一步&lt;/li&gt;
+  &lt;li&gt;第二步&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                    <div class="note"><b>备注：</b>导航栏看着是一排文字，本质是个 <code>ul</code>——因为「一组链接」就是列表。把 <code>list-style: none</code> 一加，小圆点就没了。</div>
+                </section>
+
+                <section class="card" id="s07">
+                    <h2><span class="num">07</span>链接 &lt;a&gt;</h2>
+                    <pre><code>&lt;a href="https://example.com"&gt;普通链接&lt;/a&gt;
+&lt;a href="https://example.com" target="_blank"&gt;新标签页打开&lt;/a&gt;
+&lt;a href="#menu"&gt;跳到本页 id=menu 的位置&lt;/a&gt;
+&lt;a href="mailto:hi@example.com"&gt;发邮件&lt;/a&gt;
+&lt;a href="file.pdf" download&gt;下载文件&lt;/a&gt;</code></pre>
+                    <div class="note"><b>备注：</b><code>href</code> 里的 <code>#</code> 决定「打开新页面」还是「本页跳转」。少了它，浏览器会去找一个同名文件，然后报错。</div>
+                </section>
+
+                <section class="card" id="s08">
+                    <h2><span class="num">08</span>图片 &lt;img&gt;</h2>
+                    <pre><code>&lt;img src="coffee.jpg" alt="一杯拿铁" width="320" loading="lazy"&gt;
+
+&lt;figure&gt;
+  &lt;img src="shop.jpg" alt="门店"&gt;
+  &lt;figcaption&gt;田心南校区的午后&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+                    <div class="note"><b>备注：</b><code>alt</code> 不是可选项：图片挂了、网差了、读屏软件读的时候，全靠它。<code>loading="lazy"</code> 让图片滚到眼前才加载，省流量。</div>
+                </section>
+
+                <section class="card" id="s09">
+                    <h2><span class="num">09</span>语义化布局</h2>
+                    <p>用「意思对」的标签搭页面，而不是一屏的 <code>div</code>：</p>
+                    <pre><code>&lt;header&gt;  页头（logo、导航）&lt;/header&gt;
+&lt;nav&gt;     导航&lt;/nav&gt;
+&lt;main&gt;
+  &lt;section&gt;  一个独立区块&lt;/section&gt;
+  &lt;article&gt;  一篇能独立存在的内容&lt;/article&gt;
+  &lt;aside&gt;    侧边栏&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;  页脚&lt;/footer&gt;</code></pre>
+                    <div class="note"><b>备注：</b>语义标签不改变外观，改变的是「可读性和可维护性」。半年后回来，<code>header</code> 和 <code>div</code> 哪个更好找？</div>
+                </section>
+
+                <section class="card" id="s10">
+                    <h2><span class="num">10</span>表格 &lt;table&gt;</h2>
+                    <pre><code>&lt;table&gt;
+  &lt;caption&gt;本月销量&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;产品&lt;/th&gt;&lt;th&gt;数量&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;拿铁&lt;/td&gt;&lt;td&gt;120&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;美式&lt;/td&gt;&lt;td colspan="2"&gt;95&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                    <div class="note"><b>备注：</b>表格只用来放「数据」，不要拿它排版页面。手机上看表格会挤，记得配 <code>overflow-x: auto</code> 让它自己横向滚。</div>
+                </section>
+
+                <section class="card" id="s11">
+                    <h2><span class="num">11</span>表单（上）：输入框</h2>
+                    <pre><code>&lt;form action="/submit" method="post"&gt;
+  &lt;label for="name"&gt;昵称&lt;/label&gt;
+  &lt;input id="name" name="name" type="text" placeholder="请输入昵称" required&gt;
+
+  &lt;input type="email" name="email" placeholder="邮箱"&gt;
+  &lt;input type="password" name="pwd" placeholder="密码"&gt;
+  &lt;button type="submit"&gt;提交&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    <table>
+                        <tr><th>type</th><th>用途</th></tr>
+                        <tr><td><code>text</code> / <code>email</code> / <code>password</code></td><td>单行文本 / 邮箱 / 密码</td></tr>
+                        <tr><td><code>number</code> / <code>range</code></td><td>数字 / 滑块</td></tr>
+                        <tr><td><code>date</code> / <code>time</code></td><td>日期 / 时间选择</td></tr>
+                        <tr><td><code>checkbox</code> / <code>radio</code></td><td>多选 / 单选</td></tr>
+                        <tr><td><code>file</code> / <code>color</code></td><td>文件 / 取色器</td></tr>
+                    </table>
+                </section>
+
+                <section class="card" id="s12">
+                    <h2><span class="num">12</span>表单（下）：选择与多行</h2>
+                    <pre><code>&lt;select name="size"&gt;
+  &lt;option value="m"&gt;中杯&lt;/option&gt;
+  &lt;option value="l" selected&gt;大杯&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;textarea name="note" rows="4" placeholder="备注…"&gt;&lt;/textarea&gt;
+
+&lt;fieldset&gt;
+  &lt;legend&gt;口味&lt;/legend&gt;
+  &lt;label&gt;&lt;input type="radio" name="taste" checked&gt; 原味&lt;/label&gt;
+  &lt;label&gt;&lt;input type="radio" name="taste"&gt; 香草&lt;/label&gt;
+&lt;/fieldset&gt;</code></pre>
+                    <div class="note"><b>备注：</b><code>label</code> 是隐形的贴心：点文字也能选中输入框。<code>name</code> 才是提交到后端时用的键名，<code>id</code> 只是页面内的名字。</div>
+                </section>
+
+                <section class="card" id="s13">
+                    <h2><span class="num">13</span>全局属性</h2>
+                    <p>几乎所有标签都能用的属性：</p>
+                    <pre><code>&lt;div id="app" class="box big" style="color:red" title="提示文字"
+     data-id="42" hidden lang="zh"&gt;内容&lt;/div&gt;</code></pre>
+                    <table>
+                        <tr><th>属性</th><th>作用</th></tr>
+                        <tr><td><code>id</code></td><td>全页唯一，JS 找它、锚点跳它</td></tr>
+                        <tr><td><code>class</code></td><td>可重复，给 CSS 和 JS 分组</td></tr>
+                        <tr><td><code>style</code></td><td>内联样式，优先级很高，能少用就少用</td></tr>
+                        <tr><td><code>data-*</code></td><td>存自定义数据，JS 用 <code>dataset</code> 读</td></tr>
+                        <tr><td><code>hidden</code></td><td>直接藏起来，等价于 <code>display:none</code></td></tr>
+                    </table>
+                </section>
+
+                <section class="card" id="s14">
+                    <h2><span class="num">14</span>特殊字符与注释</h2>
+                    <pre><code>&amp;lt;   显示 &lt;
+&amp;gt;   显示 &gt;
+&amp;amp;  显示 &amp;
+&amp;nbsp; 不换行的空格
+
+&lt;!-- 这是 HTML 注释，页面上看不见 --&gt;</code></pre>
+                    <div class="note"><b>备注：</b>想在网页上「演示一段 HTML 代码」，就得把这些符号转义，否则浏览器真的会把它当标签执行。</div>
+                </section>
+
+                <section class="card" id="s15">
+                    <h2><span class="num">15</span>HTML5 新特性</h2>
+                    <pre><code>&lt;video src="a.mp4" controls poster="cover.jpg"&gt;&lt;/video&gt;
+&lt;audio src="b.mp3" controls&gt;&lt;/audio&gt;
+
+&lt;progress value="70" max="100"&gt;&lt;/progress&gt;
+
+&lt;details&gt;
+  &lt;summary&gt;点开看更多&lt;/summary&gt;
+  &lt;p&gt;折叠起来的内容&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;canvas id="c" width="400" height="200"&gt;&lt;/canvas&gt;
+&lt;svg width="100" height="100"&gt;&lt;circle cx="50" cy="50" r="40" /&gt;&lt;/svg&gt;</code></pre>
+                    <div class="note"><b>备注：</b><code>canvas</code> 用 JS 画像素图，<code>svg</code> 用标签画矢量图。图标、logo 优先 SVG——放大不糊。</div>
+                </section>
+
+                <section class="card" id="s16">
+                    <h2><span class="num">16</span>块级与行内</h2>
+                    <table>
+                        <tr><th>类型</th><th>代表</th><th>特点</th></tr>
+                        <tr><td>块级 block</td><td><code>div</code> <code>p</code> <code>section</code> <code>h1</code></td><td>独占一行，能设宽高</td></tr>
+                        <tr><td>行内 inline</td><td><code>span</code> <code>a</code> <code>strong</code></td><td>跟文字排一行，宽高不生效</td></tr>
+                        <tr><td>行内块 inline-block</td><td><code>img</code> <code>button</code> <code>input</code></td><td>排一行，但能设宽高</td></tr>
+                    </table>
+                    <pre><code>&lt;p&gt;文字里插一个&lt;span style="color:#38bdf8"&gt;彩色片段&lt;/span&gt;，它不会换行。&lt;/p&gt;</code></pre>
+                    <div class="note"><b>备注：</b>搞不清「为什么设了宽度没反应」，八成是给行内元素设了 <code>width</code>。加一句 <code>display: inline-block</code> 就好了。</div>
+                </section>
+
+                <section class="card" id="s17">
+                    <h2><span class="num">17</span>CSS 语法与三种写法</h2>
+                    <pre><code>.card {
+  color: #e8f0fd;        /* 属性: 值; */
+  padding: 24px;
+}
+
+/* 三种引入方式 */
+&lt;link rel="stylesheet" href="style.css"&gt;     外部（推荐）
+&lt;style&gt; .card { … } &lt;/style&gt;                内部
+&lt;div style="color:red"&gt;…&lt;/div&gt;              内联（优先级高，少用）</code></pre>
+                    <div class="note"><b>备注：</b>外部样式表能被所有页面共用，改一处全站变。这正是它比行内样式更值得用的原因。</div>
+                </section>
+
+                <section class="card" id="s18">
+                    <h2><span class="num">18</span>选择器：选中谁</h2>
+                    <pre><code>p { }                标签
+.card { }            类
+#app { }             id
+.card p { }          后代：card 里面所有 p
+.card &gt; p { }        子代：只要直接儿子
+h2 + p { }           相邻：h2 后面紧挨着的 p
+input[type="text"] { }  属性选择器
+* { }                所有元素</code></pre>
+                    <table>
+                        <tr><th>伪类</th><th>意思</th></tr>
+                        <tr><td><code>:hover</code> / <code>:active</code> / <code>:focus</code></td><td>悬停 / 按下 / 聚焦</td></tr>
+                        <tr><td><code>:first-child</code> / <code>:nth-child(2n)</code></td><td>第一个 / 偶数位</td></tr>
+                        <tr><td><code>:not(.x)</code></td><td>除了 .x 以外的</td></tr>
+                    </table>
+                </section>
+
+                <section class="card" id="s19">
+                    <h2><span class="num">19</span>优先级：谁说了算</h2>
+                    <pre><code>行内 style          1000
+#id                 100
+.class / :hover      10
+标签 / 伪元素          1
+
+/* 同分时：写在后面的赢 */
+p { color: red; }
+p { color: blue; }   /* 生效 */
+
+/* 最后的手段，别滥用 */
+p { color: green !important; }</code></pre>
+                    <div class="note"><b>备注：</b>样式没生效，先看「这条规则有没有被划掉」——被划掉是优先级问题，压根没出现是选择器没匹配上。两种情况解法完全不同。</div>
+                </section>
+
+                <section class="card" id="s20">
+                    <h2><span class="num">20</span>盒模型</h2>
+                    <pre><code>div {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #38bdf8;
+  margin: 16px;
+  box-sizing: border-box;   /* 宽度包含 padding 和 border */
+}
+
+/* 几乎所有项目的起手式 */
+* { margin: 0; padding: 0; box-sizing: border-box; }</code></pre>
+                    <div class="note"><b>备注：</b>不加 <code>border-box</code>，<code>width:300 + padding:20×2 + border:1×2</code> 实际占 342px——「为什么布局总是差几个像素」多半是这儿。</div>
+                </section>
+
+                <section class="card" id="s21">
+                    <h2><span class="num">21</span>单位</h2>
+                    <table>
+                        <tr><th>单位</th><th>含义</th><th>场景</th></tr>
+                        <tr><td><code>px</code></td><td>像素，绝对</td><td>边框、间距</td></tr>
+                        <tr><td><code>%</code></td><td>相对父元素</td><td>宽度</td></tr>
+                        <tr><td><code>rem</code></td><td>相对根字号（默认 16px）</td><td>字号、整体缩放</td></tr>
+                        <tr><td><code>vw / vh</code></td><td>视口宽/高的 1%</td><td><code>100vh</code> 满屏</td></tr>
+                        <tr><td><code>fr</code></td><td>Grid 的「份」</td><td>平分空间</td></tr>
+                        <tr><td><code>deg / s / ms</code></td><td>角度 / 秒 / 毫秒</td><td>旋转 / 动画</td></tr>
+                    </table>
+                    <pre><code>font-size: clamp(18px, 2.4vw, 28px);   /* 随屏幕伸缩，有上下限 */</code></pre>
+                </section>
+
+                <section class="card" id="s22">
+                    <h2><span class="num">22</span>颜色、渐变、透明</h2>
+                    <pre><code>color: #38bdf8;                         十六进制：红38 绿bd 蓝f8
+color: rgb(56, 189, 248);               十进制写法
+background: rgba(7, 12, 23, 0.72);      多一个透明度（0~1）
+color: hsl(199 89% 59%);                色相 饱和度 亮度
+
+background: linear-gradient(120deg, #0ea5e9, #38bdf8);
+background: radial-gradient(circle at 50% 0%, #1e3a5f, #070c17 70%);</code></pre>
+                    <div class="note"><b>备注：</b>深色页面里，纯黑 <code>#000</code> 会显得“脏”。用带一点蓝的黑（如 <code>#070c17</code>），画面立刻有空气感。</div>
+                </section>
+
+                <section class="card" id="s23">
+                    <h2><span class="num">23</span>字体与文字排版</h2>
+                    <pre><code>body {
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;          /* 无单位 = 字号的倍数 */
+  letter-spacing: 0.5px;
+  color: #e8f0fd;
+}
+
+h1 { font-weight: 400; }     /* 400 正常，700 粗 */
+p  { text-align: justify; text-indent: 2em; }
+a  { text-decoration: none; }</code></pre>
+                    <div class="note"><b>备注：</b>中文正文行距 <b>1.8–2.0</b> 比默认舒服得多；<code>letter-spacing</code> 用在标题上像“留白”，用多了会散。</div>
+                </section>
+
+                <section class="card" id="s24">
+                    <h2><span class="num">24</span>背景</h2>
+                    <pre><code>div {
+  background-color: #0d1524;
+  background-image: url("texture.png");
+  background-size: cover;        /* 铺满，可能裁掉一点 */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  /* 滚动时背景不动 */
+}
+
+/* 简写 */
+background: #0d1524 url("a.jpg") center / cover no-repeat;</code></pre>
+                </section>
+
+                <section class="card" id="s25">
+                    <h2><span class="num">25</span>边框、圆角、阴影</h2>
+                    <pre><code>.card {
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(2, 6, 15, 0.55);
+}
+
+.btn { border-radius: 999px; }   /* 胶囊按钮 */
+
+.circle {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+}</code></pre>
+                    <div class="note"><b>备注：</b>阴影的四个值是 <code>水平偏移 垂直偏移 模糊 颜色</code>。写成 <code>0.20px</code> 会整条失效——小数点位置错了，浏览器一声不吭。</div>
+                </section>
+
+                <section class="card" id="s26">
+                    <h2><span class="num">26</span>display：元素的性格</h2>
+                    <pre><code>.a { display: block; }         独占一行
+.b { display: inline; }        跟着文字走
+.c { display: inline-block; }  排一行，但能设宽高
+.d { display: flex; }          弹性布局
+.e { display: grid; }          网格布局
+.f { display: none; }          从页面上彻底消失</code></pre>
+                    <div class="note"><b>备注：</b><code>display:none</code> 是“不存在”，<code>visibility:hidden</code> 是“隐身但占位”。做动画时这个区别很重要。</div>
+                </section>
+
+                <section class="card" id="s27">
+                    <h2><span class="num">27</span>定位与层级</h2>
+                    <pre><code>.parent { position: relative; }    /* 给子元素当参照 */
+.badge {
+  position: absolute;             /* 相对最近的定位祖先 */
+  top: 8px; right: 8px;
+  z-index: 2;                     /* 数字大的在上面 */
+}
+.nav  { position: fixed; top: 0; }  /* 钉在窗口上 */
+.title{ position: sticky; top: 0; } /* 滚到顶部时粘住 */</code></pre>
+                    <div class="note"><b>备注：</b><code>absolute</code> 会到处乱跑，是因为它的父元素没写 <code>position: relative</code>——找不到参照物，就相对整个页面定位了。</div>
+                </section>
+
+                <section class="card" id="s28">
+                    <h2><span class="num">28</span>Flex 弹性布局</h2>
+                    <pre><code>.box {
+  display: flex;
+  flex-direction: row;      /* row 横 / column 竖 */
+  justify-content: space-between;  /* 主轴 */
+  align-items: center;             /* 交叉轴 */
+  flex-wrap: wrap;                 /* 放不下就换行 */
+  gap: 16px;                       /* 子元素之间的缝 */
+}
+
+.item { flex: 1; }   /* 平分剩余空间 */
+.item { flex: none; width: 200px; }</code></pre>
+                    <div class="note"><b>备注：</b>口诀：<b>justify 管主轴，align 管交叉轴</b>。中间一根隐形轴，方向由 <code>flex-direction</code> 决定——别死记“水平垂直”。</div>
+                </section>
+
+                <section class="card" id="s29">
+                    <h2><span class="num">29</span>Grid 网格布局</h2>
+                    <pre><code>.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);     /* 三列等宽 */
+  gap: 24px;
+}
+
+/* 自适应：能放几列放几列，每列最小 260px */
+.cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+/* 指定位置 */
+.wide { grid-column: 1 / 3; }   /* 从第 1 条线跨到第 3 条线 */</code></pre>
+                    <div class="note"><b>备注：</b>Grid 是「二维」的，同时管行和列；Flex 是「一维」的，只管一条线。卡片墙用 Grid，导航条用 Flex。</div>
+                </section>
+
+                <section class="card" id="s30">
+                    <h2><span class="num">30</span>响应式：一套代码，两种设备</h2>
+                    <pre><code>/* 手机优先：先写窄屏，再用 min-width 加宽 */
+.box { padding: 16px; }
+
+@media (min-width: 768px) {
+  .box { padding: 40px; }
+}
+
+@media (max-width: 860px) {
+  .toc { display: none; }        /* 手机上收起侧栏 */
+  .grid { grid-template-columns: 1fr; }
+}</code></pre>
+                    <div class="note"><b>备注：</b>再加一层保险：<code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>。没有它，手机上一切都按 980px 缩着排。</div>
+                </section>
+
+                <section class="card" id="s31">
+                    <h2><span class="num">31</span>过渡与变换</h2>
+                    <pre><code>.btn {
+  transition: transform 0.3s, background 0.3s;
+}
+.btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  background: #0ea5e9;
+}
+
+.rotate { transform: rotate(45deg); }
+.grow   { transform: scale(1.2); }</code></pre>
+                    <div class="note"><b>备注：</b><code>transition</code> 写「要变什么、变多久」；<code>transform</code> 写「变成什么样」。这两个组合起来，就是网页里 80% 的“高级感”。</div>
+                </section>
+
+                <section class="card" id="s32">
+                    <h2><span class="num">32</span>关键帧动画</h2>
+                    <pre><code>@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+.dot {
+  animation: float 3s ease-in-out infinite;
+}</code></pre>
+                    <div class="note"><b>备注：</b><code>animation</code> 后面依次是：名字、时长、缓动、循环次数。<code>infinite</code> 是无限循环——别给所有东西都加，会晕。</div>
+                </section>
+
+                <section class="card" id="s33">
+                    <h2><span class="num">33</span>伪类与伪元素</h2>
+                    <pre><code>a:hover { color: #38bdf8; }
+input:focus { outline: 2px solid #38bdf8; }
+li:first-child { margin-top: 0; }
+li:nth-child(2n) { background: rgba(56,189,248,.05); }
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(56,189,248,.08));
+}</code></pre>
+                    <div class="note"><b>备注：</b>伪类用「一个冒号」，伪元素用「两个冒号」。伪元素能凭空画出线条、色块、图标——不用加一个真实标签。</div>
+                </section>
+
+                <section class="card" id="s34">
+                    <h2><span class="num">34</span>CSS 变量</h2>
+                    <pre><code>:root {
+  --bg: #070c17;
+  --accent: #38bdf8;
+  --radius: 18px;
+}
+
+.card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  color: var(--accent);
+}
+
+/* 换个主题：只改变量 */
+body.light {
+  --bg: #f7fbff;
+  --accent: #0284c7;
+}</code></pre>
+                    <div class="note"><b>备注：</b>变量让「主题切换」变成两行代码。你现在看的这份清单，颜色全在 <code>:root</code> 里——改一次，全站变。</div>
+                </section>
+
+                <section class="card" id="s35">
+                    <h2><span class="num">35</span>滤镜与毛玻璃</h2>
+                    <pre><code>.blur    { filter: blur(6px); }
+.gray    { filter: grayscale(1); }
+.bright  { filter: brightness(1.2); }
+
+.glass {
+  background: rgba(13, 21, 36, 0.6);
+  backdrop-filter: blur(12px);   /* 身后的内容被虚化 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}</code></pre>
+                    <div class="note"><b>备注：</b><code>backdrop-filter</code> 是「毛玻璃」的关键，它虚化的是元素背后的东西，不是元素自己。iOS 和安卓新版都支持。</div>
+                </section>
+
+                <section class="card" id="s36">
+                    <h2><span class="num">36</span>五个常用特效配方</h2>
+                    <pre><code>/* 渐变文字 */
+.grad { background: linear-gradient(90deg, #fff, #38bdf8);
+        -webkit-background-clip: text; color: transparent; }
+
+/* 悬浮卡片 */
+.card { transition: .3s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(0,0,0,.5); }
+
+/* 骨架屏 */
+@keyframes shimmer { to { background-position: 200% 0; } }
+.skeleton { background: linear-gradient(90deg,#111a2b,#1b2942,#111a2b);
+            background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+
+/* 打字机 */
+.typing { overflow: hidden; white-space: nowrap; border-right: 2px solid #38bdf8;
+          animation: type 3s steps(20) forwards; }
+@keyframes type { to { width: 100%; } }</code></pre>
+                    <div class="note"><b>备注：</b>特效不是越多越好。一个页面里有一两个“会呼吸”的细节就够了，剩下的交给留白。</div>
+                </section>
+
+                <section class="card" id="s37">
+                    <h2><span class="num">37</span>JavaScript：让页面动起来</h2>
+                    <pre><code>&lt;script src="main.js"&gt;&lt;/script&gt;
+
+console.log("你好，控制台");   /* F12 → Console 里能看到 */
+// 单行注释
+/* 多行注释 */</code></pre>
+                    <div class="note"><b>备注：</b>JS 出错不会让页面白屏（除非写在 head 里阻塞），但功能会静默失灵。<b>第一件事永远是打开 F12 的 Console 看红字。</b></div>
+                </section>
+
+                <section class="card" id="s38">
+                    <h2><span class="num">38</span>变量与类型</h2>
+                    <pre><code>const name = "阿猫";        /* 常量，不能重新赋值 */
+let count = 0;              /* 变量，可以改 */
+count = count + 1;
+
+let price = 32;             /* number */
+let open = true;            /* boolean */
+let tags = ["HTML", "CSS"]; /* 数组 */
+let user = { name: "阿猫" }; /* 对象 */
+let nothing = null;         /* 空 */
+let unknown;                /* undefined */
+
+console.log(`一杯${name}的咖啡，${price} 元`);   /* 模板字符串 */</code></pre>
+                    <div class="note"><b>备注：</b>默认用 <code>const</code>，确实要改再用 <code>let</code>。<code>var</code> 是旧写法，新代码里别用了。</div>
+                </section>
+
+                <section class="card" id="s39">
+                    <h2><span class="num">39</span>条件与循环</h2>
+                    <pre><code>if (count &gt; 10) {
+  console.log("满十了");
+} else if (count &gt; 0) {
+  console.log("还没满");
+} else {
+  console.log("空的");
+}
+
+for (let i = 0; i &lt; 3; i++) {
+  console.log(i);            /* 0 1 2 */
+}
+
+const list = ["拿铁", "美式"];
+list.forEach(function (item) {
+  console.log(item);
+});</code></pre>
+                </section>
+
+                <section class="card" id="s40">
+                    <h2><span class="num">40</span>函数</h2>
+                    <pre><code>/* 普通函数 */
+function add(a, b) {
+  return a + b;
+}
+
+/* 箭头函数（更短，事件里常用） */
+const add2 = (a, b) =&gt; a + b;
+
+/* 默认参数 */
+function greet(name = "朋友") {
+  return `你好，${name}`;
+}
+
+console.log(add(1, 2), greet());</code></pre>
+                    <div class="note"><b>备注：</b>函数是「把一段逻辑装进盒子，起个名字，随时喊它」。写多了你会发现，好代码就是一堆名字起得好的小盒子。</div>
+                </section>
+
+                <section class="card" id="s41">
+                    <h2><span class="num">41</span>数组与常用方法</h2>
+                    <pre><code>const prices = [32, 28, 30];
+
+prices.push(26);                    /* 末尾加一个 */
+prices.length;                      /* 4 */
+prices.map(p =&gt; p * 2);             /* [64,56,60,52] 逐个变换 */
+prices.filter(p =&gt; p &lt; 30);         /* [28,26] 筛选 */
+prices.find(p =&gt; p === 30);         /* 30 找第一个 */
+prices.reduce((a, b) =&gt; a + b, 0);  /* 116 累加 */
+prices.join(" / ");                 /* "32 / 28 / 30 / 26" */</code></pre>
+                    <div class="note"><b>备注：</b>渲染列表、算总价、做筛选——购物车基本就靠这几个方法。先把 <code>map</code> 和 <code>filter</code> 用熟。</div>
+                </section>
+
+                <section class="card" id="s42">
+                    <h2><span class="num">42</span>对象与解构</h2>
+                    <pre><code>const coffee = {
+  name: "拿铁",
+  price: 28,
+  size: "大杯"
+};
+
+coffee.price;            /* 28 */
+coffee["name"];          /* "拿铁" */
+
+const { name, price } = coffee;   /* 解构：直接取出 */
+const { size: cup } = coffee;     /* 改名 */
+
+const all = { ...coffee, ice: true };  /* 展开合并 */</code></pre>
+                </section>
+
+                <section class="card" id="s43">
+                    <h2><span class="num">43</span>DOM：找到元素，改它</h2>
+                    <pre><code>const title = document.querySelector("h1");        /* 第一个 */
+const cards = document.querySelectorAll(".card");  /* 全部 */
+
+title.textContent = "新标题";        /* 改文字，安全 */
+title.innerHTML = "&lt;b&gt;粗体&lt;/b&gt;";   /* 改 HTML，慎用 */
+
+title.style.color = "#38bdf8";       /* 改样式 */
+title.classList.add("active");       /* 加类 */
+title.classList.toggle("dark");      /* 有就删，没有就加 */</code></pre>
+                    <div class="note"><b>备注：</b>能用 <code>classList</code> 就别写 <code>style</code>——样式该住在 CSS 里，JS 只负责“换开关”。</div>
+                </section>
+
+                <section class="card" id="s44">
+                    <h2><span class="num">44</span>DOM：创建元素与事件</h2>
+                    <pre><code>const box = document.querySelector(".cards");
+const card = document.createElement("div");
+card.className = "card";
+card.textContent = "新卡片";
+box.appendChild(card);
+
+document.querySelector(".buy").addEventListener("click", function (e) {
+  e.preventDefault();               /* 阻止默认行为 */
+  console.log("点了", e.target);
+});</code></pre>
+                    <div class="note"><b>备注：</b><code>addEventListener</code> 比 <code>onclick =</code> 好：同一个按钮可以绑多个监听，互不覆盖。</div>
+                </section>
+
+                <section class="card" id="s45">
+                    <h2><span class="num">45</span>事件委托：给一百个按钮只绑一次</h2>
+                    <pre><code>document.querySelector(".list").addEventListener("click", function (e) {
+  const btn = e.target.closest(".buy");
+  if (!btn) return;
+  console.log("买了：", btn.dataset.name);
+});</code></pre>
+                    <div class="note"><b>备注：</b>原理是「事件冒泡」：点按钮，事件会往上冒到父元素。所以只监听父元素，就能接住所有子元素的点击——列表再长也不怕。</div>
+                </section>
+
+                <section class="card" id="s46">
+                    <h2><span class="num">46</span>表单取值与定时器</h2>
+                    <pre><code>const input = document.querySelector("#name");
+console.log(input.value);        /* 取输入框里的字 */
+
+setTimeout(function () {
+  console.log("3 秒后执行一次");
+}, 3000);
+
+const timer = setInterval(function () {
+  console.log("每秒一次");
+}, 1000);
+
+clearInterval(timer);            /* 停掉 */</code></pre>
+                </section>
+
+                <section class="card" id="s47">
+                    <h2><span class="num">47</span>本地存储与 JSON</h2>
+                    <pre><code>localStorage.setItem("theme", "dark");
+localStorage.getItem("theme");     /* "dark" */
+localStorage.removeItem("theme");
+
+/* 存对象必须先转成字符串 */
+const cart = [{ name: "拿铁", price: 28 }];
+localStorage.setItem("cart", JSON.stringify(cart));
+
+const saved = JSON.parse(localStorage.getItem("cart") || "[]");</code></pre>
+                    <div class="note"><b>备注：</b><code>localStorage</code> 存在浏览器里，关掉再开还在，但只在这台设备上。容量约 5MB，别拿它存图片。</div>
+                </section>
+
+                <section class="card" id="s48">
+                    <h2><span class="num">48</span>fetch：和后端说话</h2>
+                    <pre><code>fetch("/api/orders", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ item: "拿铁", qty: 2 })
+})
+  .then(res =&gt; res.json())
+  .then(data =&gt; console.log("服务器说：", data))
+  .catch(err =&gt; console.error("出错了", err));</code></pre>
+                    <div class="note"><b>备注：</b>前端把数据交给后端，后端存进数据库。比如前端去请求 <code>/api/orders</code>，把订单真的存下来。</div>
+                </section>
+
+                <section class="card" id="s49">
+                    <h2><span class="num">49</span>把三个语言合起来：一个小功能</h2>
+                    <p>「点击加一杯，数字变大，刷新页面还在」——HTML、CSS、JS 各出一份力：</p>
+                    <pre><code>&lt;button id="add"&gt;加一杯&lt;/button&gt;
+&lt;p&gt;今天喝了 &lt;span id="num"&gt;0&lt;/span&gt; 杯&lt;/p&gt;
+
+#add { padding: 10px 22px; border-radius: 999px; cursor: pointer; }
+#num { color: #38bdf8; font-size: 22px; }
+
+let n = Number(localStorage.getItem("cups") || 0);
+const num = document.getElementById("num");
+num.textContent = n;
+
+document.getElementById("add").addEventListener("click", function () {
+  n = n + 1;
+  num.textContent = n;
+  localStorage.setItem("cups", n);
+});</code></pre>
+                    <div class="note"><b>备注：</b>把这段存成 <code>demo.html</code> 双击打开，就是一个真能用的功能。<b>你现在掌握的，已经够做很多小工具了。</b></div>
+                </section>
+
+                <section class="card" id="s50">
+                    <h2><span class="num">50</span>学习路线与五个忠告</h2>
+                    <table>
+                        <tr><th>阶段</th><th>做什么</th><th>标准</th></tr>
+                        <tr><td>1 结构</td><td>用语义标签手写三张页面</td><td>不看教程能默写骨架</td></tr>
+                        <tr><td>2 样式</td><td>用 Flex/Grid 复刻喜欢的网站首屏</td><td>能解释每一行为什么写</td></tr>
+                        <tr><td>3 交互</td><td>购物车、筛选、主题切换</td><td>能自己查 MDN 解决</td></tr>
+                        <tr><td>4 后端</td><td>Java 写接口，前后端联调</td><td>数据能存下来</td></tr>
+                        <tr><td>5 上线</td><td>部署、域名、HTTPS</td><td>朋友能打开你的网址</td></tr>
+                    </table>
+                    <pre><code>1. 报错是朋友，F12 是听诊器。
+2. 先让它跑起来，再让它好看，最后让它优雅。
+3. 抄结构和思路，别抄整页代码——抄来的代码你改不动。
+4. 每学一个点，立刻做一个小东西，哪怕只有 20 行。
+5. 卡住超过 40 分钟，就去问、去搜、去睡一觉。</code></pre>
+                    <div class="note"><b>备注：</b>这份文档不是拿来背的，是拿来“查”的。真正记住的，都是你自己写错又改对的那几次。</div>
+                </section>
+
+            </main>
+        </div>
+
+        <footer>
+            <div class="stamp">基础篇 · 2026-10-21 建</div>
+            <div>HTML5 + CSS + JavaScript · 五十个基础点</div>
+            <div style="margin-top:6px; font-size:12px; color:#5d6f8c;">常读常新 · 需要的时候回来查</div>
+        </footer>
+
+        <script src="lessons.js"></script>
+        <script>renderLessonNav("basics.html");</script>
+
+            <script src="../assets/js/update-popup.js?v=20261022"></script>
+    <script src="../assets/js/live.js?v=20261025"></script>
+    <script src="../assets/js/chat.js?v=20261031"></script>
+</body>
+</html>
