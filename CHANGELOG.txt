@@ -113,3 +113,4 @@
 全站：更新日志.txt → CHANGELOG.txt，启动网站.bat → start-site.bat，更新网站.bat → update-site.bat
 全站：重排 JS / CSS 缩进，修复静态资源、聊天室 CSS、更新弹窗和咖啡脚本路径；本地预览与线上均无 404
 全站：新增 README.md 与 WEB_PROJECT_MEMORY.md（后者只留本地），旧知识库 URL 改为 knowledge-base/
+全站：迁移时云端账号已到 10 位（期间新增 4 位、注销 test号2），本地注册记录同步 10 位
