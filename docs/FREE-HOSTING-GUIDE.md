@@ -76,7 +76,7 @@ Render 免费 Web Service 能跑 Java（用 Dockerfile），地址固定、不�
 
 1. 今天想给同学看：走**方案 A**，双击 `start-site.bat` 就行
 2. 想要 24 小时在线：等周末，走**方案 B**
-3. 想先上线看看效果：把 `coffee-site/config.js` 里的地址改成你的 ngrok 域名，推上去，GitHub Pages 也会调后端
+3. 想先上线看看效果：把 `coffee-site/js/config.js` 里的地址改成你的 ngrok 域名，推上去，GitHub Pages 也会调后端
 
 ---
 

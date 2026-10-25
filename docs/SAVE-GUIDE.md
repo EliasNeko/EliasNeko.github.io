@@ -20,7 +20,7 @@
 
 ## 改了公共脚本之后
 
-`assets/js/chat.js`、`assets/js/live.js`、`coffee-site/member.js` 这些被很多页面共用。
+`assets/js/chat.js`、`assets/js/live.js`、`coffee-site/js/member.js` 这些被很多页面共用。
 改完必须把所有页面里的 `?v=20261023` 改成新版本号，否则**浏览器会一直用缓存里的旧文件**，表现为「明明改了却没生效」。
 
 ## 出问题时

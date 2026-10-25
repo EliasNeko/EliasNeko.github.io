@@ -23,7 +23,7 @@
    - **Project URL**（形如 `https://xxxx.supabase.co`）
    - **Publishable key**（`sb_publishable_` 开头，可以公开）
 
-把这两个值填进 `coffee-site/config.js`：
+把这两个值填进 `coffee-site/js/config.js`：
 
 ```js
 window.SUPABASE_URL = "https://xxxx.supabase.co";

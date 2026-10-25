@@ -8,7 +8,7 @@
 2. 左侧 **Workers & Pages** → **Create** → **Pages** → **Upload assets**。
 3. 新建文件夹，把本目录的 `_worker.js` 和 `index.html` 放进去，拖进去上传。
 4. 部署完会得到一个网址，例如 `https://coffee-proxy.pages.dev`。
-5. 把网址填到 `coffee-site/config.js`：
+5. 把网址填到 `coffee-site/js/config.js`：
 
    ```js
    window.SUPABASE_PROXY = "https://coffee-proxy.pages.dev";
