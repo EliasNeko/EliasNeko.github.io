@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>龙潜猫隐 · 个人主页</title>
+<meta name="description" content="龙潜猫隐（阿猫）的个人主页：咖啡店、书房知识库，还有 2026 version 的形象设定。">
+<meta name="theme-color" content="#05070f">
+<meta property="og:title" content="龙潜猫隐 · 个人主页">
+<meta property="og:description" content="一杯咖啡，一屋子书，一个慢慢做出来的个人网站。">
+<meta property="og:image" content="https://eliasneko.github.io/assets/images/oc/lqmy-2026.jpg">
+<meta property="og:type" content="website">
+<style>html,body{margin:0;background:#05070f}</style>
+<link rel="icon" href="assets/images/oc/favicon.png">
+<link rel="apple-touch-icon" href="assets/images/oc/favicon.png">
+<link rel="preload" as="image" href="assets/images/oc/avatar.jpg">
+<link rel="stylesheet" href="assets/css/home.css?v=20261027">
+<script src="assets/js/site-shell.js?v=20261026"></script>
+</head>
+<body class="booting">
+
+<!-- 背景：极光 / 网格 / 浮尘 -->
+<div class="bg" aria-hidden="true">
+    <div class="aurora a"></div>
+    <div class="aurora b"></div>
+    <div class="aurora c"></div>
+    <div class="bg-grid"></div>
+    <div id="dust"></div>
+</div>
+
+<!-- 开场：三行字 + 进入按钮 -->
+<div class="boot" id="boot">
+    <div class="boot-frame" aria-hidden="true"></div>
+    <div class="boot-inner">
+        <p class="boot-mark">龍潛貓隱</p>
+        <!-- 这三行以 assets/data/profile.js 的 boot.lines 为准，这里只是没开 JS 时的兜底 -->
+        <p class="boot-line" data-boot-line><b>[ 01 ]</b><span class="boot-text">欢迎进入 · 龙潜猫隐的个人网页</span></p>
+        <p class="boot-line" data-boot-line><b>[ 02 ]</b><span class="boot-text">次元端口已连接 · 2026 version</span></p>
+        <p class="boot-line caret" data-boot-line><b>[ 03 ]</b><span class="boot-text">档案载入完成，请进入</span></p>
+        <div class="boot-progress" id="bootBar"><i></i></div>
+        <button class="enter" id="enter" type="button" aria-label="进入个人主页">
+            <span class="enter-core">进入</span>
+            <span class="enter-en">ENTER</span>
+        </button>
+    </div>
+    <button class="skip" id="skip" type="button">跳过开场 →</button>
+</div>
+
+<!-- 转场幕布 -->
+<div class="wipe" id="wipe" aria-hidden="true"><span>龍潛貓隱</span></div>
+
+<!-- 顶栏 -->
+<header class="topbar" id="topbar">
+    <a class="brand" href="#top" data-nav-dom><span class="brand-dot"></span>龙潜猫隐</a>
+    <nav class="topnav" aria-label="页面导航">
+        <a href="#profile" data-spy>个人档案</a>
+        <a href="#projects" data-spy>在写的项目</a>
+        <a href="#character" data-spy>我的虚拟形象</a>
+    </nav>
+    <a class="topbar-cta" href="coffee-site/index.html?stay=1" data-nav>咖啡店 ↗</a>
+</header>
+
+<main>
+    <!-- 首屏：头像先铺满，再缩到中间 -->
+    <section class="hero" id="top">
+        <div class="hero-inner">
+            <div class="avatar-wrap">
+                <span class="ring dash"></span>
+                <span class="ring arc"></span>
+                <span class="ring burst"></span>
+                <img class="avatar" src="assets/images/oc/avatar.jpg" alt="龙潜猫隐 2026 version 头像" width="720" height="720">
+            </div>
+            <p class="hero-kicker" data-p="kicker">PERSONAL PAGE</p>
+            <h1 class="hero-name" data-p="name">龙潜猫隐</h1>
+            <p class="hero-en" data-p="en">ELIAS NEKO</p>
+            <span class="hero-glow" aria-hidden="true"></span>
+            <p class="hero-tag" data-p="tagline">把热爱，一点一点做成能看到的现实。</p>
+            <div class="hero-chips" id="chips"></div>
+        </div>
+        <a class="cue" href="#profile"><span>向下</span><i></i></a>
+        <div class="side-note">2026 · PERSONAL ARCHIVE</div>
+    </section>
+
+    <!-- 档案 -->
+    <section class="section" id="profile">
+        <div class="sec-head reveal">
+            <div>
+                <p class="sec-kicker">01 / About Me</p>
+                <h2>关于我</h2>
+            </div>
+            <p class="sec-desc">龙潜猫隐</p>
+        </div>
+
+        <div class="profile-grid reveal" id="info"></div>
+
+        <div class="more reveal">
+            <button class="more-btn" id="moreBtn" type="button" aria-expanded="false" aria-controls="morePanel">
+                <span class="more-btn-main">
+                    <span class="more-btn-label" id="moreLabel">更多</span>
+                    <span class="more-btn-sub">MORE ABOUT ME</span>
+                </span>
+                <span class="more-chev" aria-hidden="true"></span>
+            </button>
+            <div class="more-panel" id="morePanel">
+                <div class="more-inner">
+                    <div class="more-grid" id="moreList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote reveal">
+            <div>
+                <p data-p="quote">「能上线的东西，才算做完。」</p>
+                <small data-p="quoteBy">2026 · 龙潜猫隐</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目 -->
+    <section class="section" id="projects">
+        <div class="sec-head reveal">
+            <div>
+                <p class="sec-kicker">02 / 项目</p>
+                <h2>正在写的项目</h2>
+            </div>
+            <p class="sec-desc">咖啡店和书房是链接在一起的，可以自由跳转，且每个项目都写入了一个公用云端账号注册表，游客可以登录注册实现最佳体验。</p>
+        </div>
+
+        <div class="duo reveal">
+            <a class="duo-half coffee" href="coffee-site/index.html?stay=1" data-nav>
+                <span class="duo-num">01 / COFFEE</span>
+                <h3 data-p="proj.coffee.title">咖啡店</h3>
+                <p class="duo-desc" data-p="proj.coffee.desc">咖啡厅：进来听每一杯咖啡的故事。</p>
+                <div class="duo-foot">
+                    <span class="duo-tag" data-p="proj.coffee.tag">已上线</span>
+                    <span class="duo-go">进店看看 <i></i></span>
+                </div>
+                <span class="duo-ghost" aria-hidden="true">01</span>
+            </a>
+
+            <a class="duo-half study" href="knowledge-base/index.html?stay=1" data-nav>
+                <span class="duo-num">02 / STUDY</span>
+                <h3 data-p="proj.study.title">书房</h3>
+                <p class="duo-desc" data-p="proj.study.desc">图书馆：我把学过的教材、计算机语言、知识点...都整理成了可以直接搜索收藏知识的图书馆。</p>
+                <div class="duo-foot">
+                    <span class="duo-tag" data-p="proj.study.tag">已上线</span>
+                    <span class="duo-go">去翻书 <i></i></span>
+                </div>
+                <span class="duo-ghost" aria-hidden="true">02</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 形象 -->
+    <section class="section" id="character">
+        <div class="sec-head reveal">
+            <div>
+                <p class="sec-kicker">03 / 虚拟形象</p>
+            </div>
+            <p class="sec-desc">个人oc迭代更新中...</p>
+        </div>
+
+        <div class="char">
+            <div class="art reveal">
+                <span class="art-tag">OC</span>
+                <img src="assets/images/oc/lqmy-2026.jpg" width="900" height="1317" alt="龙潜猫隐 2026 version 全身立绘" loading="lazy">
+            </div>
+            <div class="char-body reveal">
+                <p class="char-kicker">CHARACTERS</p>
+                <h3 data-p="char.title">姓名：龍音 汐（Ryuon Shio）</h3>
+                <p data-p="char.text">数据 ---- 年龄：17岁 / 身高：163cm / 体重：45kg</p>
+                <span class="char-note">正在征集二创 · 之后会有 Q 版和更多版本的立绘，欢迎投稿至本人邮箱：hyyzcn0115@163.com</span>
+            </div>
+        </div>
+
+        <!-- 以后约到的新稿子会出现在这里（现在没有内容，不显示） -->
+        <div class="art-more" id="artMore" hidden></div>
+    </section>
+</main>
+
+<footer class="foot">
+    <div class="foot-inner">
+        <div class="foot-brand">龙潜猫隐<span>ELIAS NEKO · 2026</span></div>
+        <nav class="foot-nav" aria-label="页脚导航">
+            <a href="#top" data-nav-dom>回到顶部</a>
+            <a href="coffee-site/index.html?stay=1" data-nav>咖啡店</a>
+            <a href="knowledge-base/index.html?stay=1" data-nav>书房</a>
+            <a href="CHANGELOG.txt">更新日志</a>
+        </nav>
+        <div class="foot-copy">
+            <span>© 2026 龙潜猫隐 · 用 HTML / CSS / JS 手写</span>
+            <span>站内形象为个人设定，请勿转载、盗用、商用或二改...</span>
+        </div>
+    </div>
+</footer>
+
+<noscript>
+    <style>
+        body { overflow: auto !important; }
+        .boot { display: none !important; }
+        .topbar, .cue, .side-note, .reveal,
+        .hero-kicker, .hero-name, .hero-en, .hero-tag, .hero-chips {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+        .avatar-wrap { opacity: 1 !important; transform: none !important; filter: none !important; }
+        .hero-glow { opacity: .85 !important; }
+    </style>
+</noscript>
+
+<script src="assets/data/profile.js?v=20261027"></script>
+<script src="assets/js/home.js?v=20261027"></script>
+</body>
+</html>

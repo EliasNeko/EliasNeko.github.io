@@ -5,7 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>知识库 · 龙潜猫隐的个人学习网页</title>
 <link rel="stylesheet" href="lesson.css">
+<link rel="stylesheet" href="../assets/css/site-notice.css?v=20261026">
+<script src="../assets/js/site-shell.js?v=20261026"></script>
+<script src="../assets/js/site-notice.js?v=20261026" data-home="../index.html"></script>
 <style>
+    /* 回个人主页的小徽章 */
+    .k-home {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        padding: 6px 15px;
+        border: 1px solid rgba(125, 211, 252, .28);
+        border-radius: 999px;
+        color: #bcd7f5;
+        font-size: 12px;
+        letter-spacing: .16em;
+        text-decoration: none;
+        transition: .3s;
+    }
+
+    .k-home:hover {
+        border-color: rgba(125, 211, 252, .7);
+        color: #fff;
+        background: rgba(125, 211, 252, .08);
+    }
+
     :root {
         --anime-pink: #f472b6;
         --anime-violet: #a78bfa;
@@ -682,15 +707,15 @@
 <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
 
 <header class="top">
+    <a class="k-home" href="../index.html" data-lqmy-nav>← 个人主页</a>
     <p class="kicker">龙潜猫隐的个人学习网页 · 知识库</p>
     <h1>把学过的东西，都收在这里</h1>
-    <p class="hero-sub">教材、语言、知识点、练习、还有正在做的项目 —— 一个入口，全都能找到。</p>
+    <p class="hero-sub">教材、语言、知识点、练习 —— 一个入口，全都能找到。</p>
 
     <div class="meta">
         <span>内容 <b id="stat-tutorials">0</b></span>
         <span>语言 <b id="stat-langs">0</b></span>
         <span>词条 <b id="stat-words">0</b></span>
-        <span>项目 <b id="stat-projects">0</b></span>
     </div>
 
     <div class="mega-search">
@@ -705,8 +730,6 @@
         <span>·</span>
         <a href="#sec-lang">单语言教程</a>
         <span>·</span>
-        <a href="../coffee-site/index.html">咖啡店</a>
-        <span>·</span>
         <span>搜课本内容去</span>
         <a href="textbook-shelf.html#shelfSearch">书架搜索</a>
     </div>
@@ -716,7 +739,6 @@
         <a class="hero-link" href="#sec-lang">⌨ 单语言教程</a>
         <a class="hero-link" href="#sec-know">🧩 该懂的知识</a>
         <a class="hero-link" href="#sec-practice">🛠 实践应用</a>
-        <a class="hero-link" href="#sec-project">🚧 项目进行中</a>
     </p>
 </header>
 
@@ -993,30 +1015,6 @@
         </div>
     </section>
 
-    <!-- ============ 5. 项目进行中 ============ -->
-    <section class="sec" id="sec-project">
-        <div class="sec-head">
-            <div>
-                <div class="sec-title"><span class="sec-num">05</span><h2>龙潜猫隐的项目进行中…</h2></div>
-                <p class="sec-sub">自己的项目，边做边学，做完了也放这</p>
-            </div>
-        </div>
-
-        <div class="cards">
-            <a class="kcard" href="../coffee-site/index.html" data-search="咖啡店 项目 html5 会员 聊天室">
-                <div class="kt"><h3>龙潜猫隐的咖啡店</h3><span class="tag gold">已上线</span></div>
-                <div class="kd">六屏齐全的单页站：菜单、故事、门店、会员、购物车、咖啡故事；后来加了云端会员和聊天室。</div>
-                <div class="km"><span>HTML5 · CSS · JS · Supabase</span><span class="go">进去看看 →</span></div>
-            </a>
-
-            <div class="kcard soon" data-search="项目 筹备 下一个">
-                <div class="kt"><h3>第二个项目</h3><span class="tag">筹备中</span></div>
-                <div class="kd">想做一个能记学习进度的工具站。等主线（Java 后端）接上订单，就开工。</div>
-                <div class="km"><span>计划中</span><span class="go">还没开始</span></div>
-            </div>
-        </div>
-    </section>
-
     <div class="idx-empty" id="idx-empty" style="display:none;">
         没有找到匹配的内容。换个说法，或者去 <a href="keywords.html" style="color:var(--accent);">词典</a> 查一个词。
     </div>
@@ -1051,7 +1049,7 @@
 <footer>
     <div class="stamp">知识库 · 2026-10-23 重构</div>
     <div>龙潜猫隐 · 2026</div>
-    <div style="margin-top:6px; font-size:12px;">教材、语言、知识点、练习、项目 —— 一个入口全找到</div>
+    <div style="margin-top:6px; font-size:12px;">教材、语言、知识点、练习 —— 一个入口全找到</div>
 </footer>
 
 <script src="lessons.js"></script>
@@ -1225,12 +1223,10 @@
     var words = (window.KEYWORDS && KEYWORDS.length) || 0;
     var langs = document.querySelectorAll('[data-panel="lang"] .kcard').length;
     var tutorials = document.querySelectorAll('#sec-book .kcard:not(.soon), #sec-lang .kcard:not(.soon), #sec-know .kcard:not(.soon), #sec-practice .kcard').length;
-    var projects = document.querySelectorAll('#sec-project .kcard:not(.soon)').length;
 
     document.getElementById("stat-tutorials").textContent = tutorials;
     document.getElementById("stat-langs").textContent = langs;
     document.getElementById("stat-words").textContent = words || "—";
-    document.getElementById("stat-projects").textContent = projects;
 })();
 </script>
 

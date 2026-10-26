@@ -1,0 +1,230 @@
+/* ============================================================
+   旧入口提示
+   ------------------------------------------------------------
+   咖啡店和书房换了入口，老地址照样能打开，但会先弹这一条，
+   六秒后自动带去个人主页。点「先留在这里」就不再打扰。
+   ============================================================ */
+
+.sn {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 2147482000;
+    width: min(520px, calc(100vw - 30px));
+    transform: translate(-50%, 26px);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    text-align: left;
+    pointer-events: none;
+}
+
+.sn.on {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sn-card {
+    position: relative;
+    overflow: hidden;
+    padding: 18px 20px 16px;
+    border: 1px solid rgba(232, 201, 138, 0.38);
+    border-radius: 18px;
+    background: rgba(8, 11, 20, 0.94);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(232, 201, 138, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #e9eef8;
+}
+
+.sn-badge {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e8c98a, #f3dfb4);
+    color: #191410;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+.sn-title {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+}
+
+.sn-desc {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #9aa8c0;
+    letter-spacing: 0.02em;
+}
+
+.sn-desc b {
+    color: #e8c98a;
+    font-weight: 500;
+}
+
+.sn-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.sn-go,
+.sn-stay {
+    font-family: inherit;
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    border-radius: 999px;
+    padding: 8px 18px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.sn-go {
+    border: 0;
+    background: linear-gradient(90deg, #e8c98a, #f0d9a6);
+    color: #191410;
+    font-weight: 600;
+}
+
+.sn-go:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(232, 201, 138, 0.35);
+}
+
+.sn-stay {
+    border: 1px solid rgba(150, 175, 210, 0.32);
+    background: transparent;
+    color: #9aa8c0;
+}
+
+.sn-stay:hover {
+    border-color: rgba(180, 205, 240, 0.6);
+    color: #e9eef8;
+}
+
+.sn-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: none;
+    color: rgba(160, 180, 210, 0.5);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: color 0.25s, background 0.25s;
+}
+
+.sn-close:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.sn-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sn-bar i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #e8c98a, #5fc6ff);
+    transform-origin: left center;
+}
+
+.sn.on .sn-bar i {
+    animation: snCountdown 6s linear forwards;
+}
+
+@keyframes snCountdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+}
+
+/* 咖啡店是暖色调，提示条跟着暖一点，别太割裂 */
+.sn-warm .sn-card {
+    background: rgba(21, 16, 13, 0.96);
+    border-color: rgba(201, 168, 106, 0.42);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.62), 0 0 40px rgba(201, 168, 106, 0.1);
+}
+
+.sn-warm .sn-title {
+    color: #f3e7d3;
+}
+
+.sn-warm .sn-desc {
+    color: #b6a48b;
+}
+
+.sn-warm .sn-desc b {
+    color: #e8c98a;
+}
+
+.sn-warm .sn-badge {
+    background: linear-gradient(90deg, #c9a86a, #e9d5a8);
+    color: #14100e;
+}
+
+.sn-warm .sn-go {
+    background: linear-gradient(90deg, #c9a86a, #e6d1a2);
+    color: #14100e;
+}
+
+.sn-warm .sn-stay {
+    border-color: rgba(201, 168, 106, 0.3);
+    color: #b6a48b;
+}
+
+.sn-warm .sn-stay:hover {
+    border-color: rgba(232, 201, 138, 0.65);
+    color: #f3e7d3;
+}
+
+@media (max-width: 520px) {
+    .sn {
+        bottom: 14px;
+    }
+
+    .sn-card {
+        padding: 16px 16px 14px;
+    }
+
+    .sn-actions {
+        gap: 8px;
+    }
+
+    .sn-go,
+    .sn-stay {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sn {
+        transition: opacity 0.3s ease;
+        transform: translate(-50%, 0);
+    }
+
+    .sn.on .sn-bar i {
+        animation: none;
+    }
+}

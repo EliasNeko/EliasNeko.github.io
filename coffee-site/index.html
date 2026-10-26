@@ -5,6 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>龙潜猫隐的咖啡店</title>
+        <link rel="stylesheet" href="../assets/css/site-notice.css?v=20261026">
+        <script src="../assets/js/site-shell.js?v=20261026"></script>
+        <script src="../assets/js/site-notice.js?v=20261026" data-home="../index.html"></script>
         <link rel="stylesheet" href="../assets/css/owner-badge.css?v=20261028" data-owner-badge="1">
         <link rel="stylesheet" href="../assets/css/titles.css?v=20261035" data-titles-badge="1">
         <style>
@@ -97,6 +100,19 @@
                 color: #c9a86a;
                 font-size: 22px;
                 letter-spacing: 6px;
+                text-decoration: none;
+            }
+
+            /* 手机上导航链接会收起来，单独留一个回个人主页的小徽章 */
+            .nav-home {
+                display: none;
+                align-items: center;
+                padding: 3px 9px;
+                border: 1px solid rgba(201, 168, 106, 0.35);
+                border-radius: 999px;
+                color: #c9a86a;
+                font-size: 11px;
+                letter-spacing: 1px;
                 text-decoration: none;
             }
 
@@ -888,6 +904,7 @@
 
             @media (max-width: 560px) {
                 .nav-links { display: none; }
+                .nav-home { display: inline-flex; }
                 .nav {
                     height: auto;
                     min-height: 58px;
@@ -931,6 +948,7 @@
             <nav class="nav">
                 <div class="nav-left">
                     <a class="logo" href="#">龙潜猫隐</a>
+                    <a class="nav-home" href="../index.html" data-lqmy-nav>主页</a>
                     <div class="nav-user" id="navUser">
                         <a class="nav-account" id="accountEntry" href="account.html">登录</a>
                         <img class="nav-avatar" id="navAvatar" alt="头像">
@@ -945,6 +963,7 @@
                 </div>
                 <div class="nav-right">
                     <ul class="nav-links">
+                        <li><a href="../index.html" data-lqmy-nav>个人主页</a></li>
                         <li><a href="#menu">菜单</a></li>
                         <li><a href="#story">故事</a></li>
                         <li><a href="#store">门店</a></li>
@@ -1417,9 +1436,9 @@
                 for (var i = 0; i < favs.length; i++) {
                     var left = Math.max(1, Math.ceil((favs[i].t + FAV_TTL - Date.now()) / 60000));
                     html += '<div class="fav-item">'
-                          + '<a href="story.html?id=' + encodeURIComponent(favs[i].id) + '">' + esc(favs[i].name) + ' · 读故事</a>'
-                          + '<span class="fav-left">还剩 ' + left + ' 分钟</span>'
-                          + '</div>';
+                        + '<a href="story.html?id=' + encodeURIComponent(favs[i].id) + '">' + esc(favs[i].name) + ' · 读故事</a>'
+                        + '<span class="fav-left">还剩 ' + left + ' 分钟</span>'
+                        + '</div>';
                 }
                 box.innerHTML = html;
             }
