@@ -36,21 +36,30 @@
                 color: #eef4fb;
             }
 
-            /* 壁纸背景：滚到下面的内容时只留一层很淡的纹理 */
+            /* 壁纸：固定在整个视口后面，内容在上面滚，所以不会有一条接缝 */
             .bg-photo {
                 position: fixed;
                 inset: 0;
-                z-index: -1;
+                z-index: -2;
                 background: url("../assets/images/oc/coffee-wallpaper.jpg") center 30% / cover no-repeat;
-                opacity: 0.24;
+                animation: bgDrift 46s ease-in-out infinite alternate;
                 pointer-events: none;
             }
 
-            .bg-photo::after {
-                content: "";
-                position: absolute;
+            @keyframes bgDrift {
+                from { transform: scale(1.02); }
+                to   { transform: scale(1.09); }
+            }
+
+            /* 一层跟着滚动加深的夜色：头图浅一点，越往下越暗 */
+            .bg-veil {
+                position: fixed;
                 inset: 0;
-                background: linear-gradient(180deg, rgba(11, 15, 21, 0.42), rgba(11, 15, 21, 0.86));
+                z-index: -1;
+                background: #0b0f15;
+                opacity: var(--veil, 0.42);
+                pointer-events: none;
+                transition: opacity 0.25s linear;
             }
 
             /*头图区：壁纸铺满一屏，文字沉在底部*/
@@ -65,32 +74,6 @@
                 text-align: center;
                 padding: 0 24px 12vh;
                 overflow: hidden;
-                background: #0b0f15;
-            }
-
-            .hero::before {
-                content: "";
-                position: absolute;
-                inset: -2%;
-                z-index: 0;
-                background: url("../assets/images/oc/coffee-wallpaper.jpg") center 32% / cover no-repeat;
-                animation: heroDrift 44s ease-in-out infinite alternate;
-            }
-
-            @keyframes heroDrift {
-                from { transform: scale(1.02) translate3d(0, 0, 0); }
-                to   { transform: scale(1.08) translate3d(0, -1.4%, 0); }
-            }
-
-            /* 压暗 + 底部融进页面底色 */
-            .hero::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                z-index: 1;
-                background:
-                    radial-gradient(80% 60% at 50% 38%, rgba(6, 9, 14, 0.05), rgba(6, 9, 14, 0.5) 78%),
-                    linear-gradient(180deg, rgba(6, 9, 14, 0.62) 0%, rgba(6, 9, 14, 0.12) 34%, rgba(11, 15, 21, 0.62) 74%, #0b0f15 100%);
             }
 
             .hero .rain {
@@ -101,11 +84,38 @@
                 opacity: 0.8;
             }
 
-            .hero h1,
-            .hero p,
-            .hero .btn {
-                position: relative;
+            /* 标题这一块单独包一层：滚动时整体淡出，下面的内容浮上来 */
+            .hero-copy {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 9vh;
                 z-index: 3;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 20px 26px;
+                pointer-events: none;
+                transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .hero-copy .btn {
+                pointer-events: auto;
+            }
+
+            .hero-copy::before {
+                content: "";
+                position: absolute;
+                inset: -70px -30px -40px;
+                z-index: -1;
+                background: radial-gradient(closest-side, rgba(6, 9, 14, 0.74), rgba(6, 9, 14, 0.34) 60%, transparent 100%);
+                pointer-events: none;
+            }
+
+            .hero.scrolled .hero-copy {
+                opacity: 0;
+                transform: translateY(-28px);
+                pointer-events: none;
             }
 
             /*店名*/
@@ -397,7 +407,9 @@
             margin: 0 auto;
             padding: 150px 40px 140px;
             text-align: center;
-            background: radial-gradient(ellipse at 50% 8%, rgba(201, 168, 106, 0.07), transparent 58%);
+            background:
+            radial-gradient(58% 62% at 50% 52%, rgba(8, 11, 16, 0.5), rgba(8, 11, 16, 0.16) 62%, transparent 78%),
+            radial-gradient(ellipse at 50% 8%, rgba(201, 168, 106, 0.07), transparent 58%);
             }
 
             /* 背后那个巨大的幽灵数字 */
@@ -474,7 +486,32 @@
             color: #5f6c7e;
             }
 
-                /* 页脚 */
+                /* 壁纸透出来以后，压在照片上的字要有点阴影才稳 */
+            .menu h2,
+            .store h2 {
+                text-shadow: 0 4px 26px rgba(4, 8, 14, 0.85);
+            }
+
+            .menu .sub,
+            .store .sub,
+            .menu-tools span {
+                color: #a9b7ca;
+                text-shadow: 0 2px 14px rgba(4, 8, 14, 0.9);
+            }
+
+            .group-head h3,
+            .group-head span {
+                text-shadow: 0 2px 14px rgba(4, 8, 14, 0.85);
+            }
+
+            .story .kicker,
+            .story h2,
+            .story-body p,
+            .story-sign {
+                text-shadow: 0 2px 18px rgba(4, 8, 14, 0.7);
+            }
+
+            /* 页脚 */
             .footer {
             border-top: 1px solid rgba(201, 168, 106, 0.15);
             padding: 70px 48px 30px;
@@ -986,7 +1023,6 @@
                 .wallet-label { display: none; }
                 .wallet strong { font-size: 13px; }
 
-                .bg-photo { opacity: 0.18; }
                 .hero { padding-bottom: 11vh; }
                 .hero h1 { font-size: clamp(26px, 7vw, 40px); letter-spacing: 2px; line-height: 1.35; padding: 0 18px; }
                 .hero p { font-size: 13px; letter-spacing: 1px; padding: 0 22px; line-height: 1.9; }
@@ -1038,6 +1074,7 @@
 </head>
         <body>
             <div class="bg-photo" aria-hidden="true"></div>
+            <div class="bg-veil" aria-hidden="true"></div>
             <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
             <nav class="nav">
                 <div class="nav-left">
@@ -1073,9 +1110,11 @@
             </nav>
             <section class="hero">
                 <canvas class="rain" id="rain" aria-hidden="true"></canvas>
-                <h1>龙潜猫隐的咖啡店</h1>
-                <p>一杯咖啡的时间，和你一起走过3年的大学时光</p>
-                <a class="btn" href="#">进入店铺</a>
+                <div class="hero-copy">
+                    <h1>龙潜猫隐的咖啡店</h1>
+                    <p>一杯咖啡的时间，和你一起走过3年的大学时光</p>
+                    <a class="btn" href="#menu">进入店铺</a>
+                </div>
             </section>
             <section class="menu" id="menu">
                 <h2>招牌咖啡</h2>
@@ -2070,6 +2109,37 @@
                     <script src="../assets/js/update-popup.js?v=20261022"></script>
     <script src="../assets/js/live.js?v=20261025"></script>
     <script src="../assets/js/chat.js?v=20261031"></script>
+    <script>
+        /* 背景那层夜色跟着滚动加深：头图浅、下面深，中间不会有一条明显的边 */
+        (function () {
+            "use strict";
+
+            var root = document.documentElement;
+            var hero = document.querySelector(".hero");
+            var ticking = false;
+
+            function update() {
+                ticking = false;
+                var vh = window.innerHeight || 800;
+                var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+                var t = Math.min(1, y / (vh * 0.85));
+                root.style.setProperty("--veil", (0.42 + t * 0.26).toFixed(3));
+                if (hero) hero.classList.toggle("scrolled", y > 24);
+            }
+
+            window.addEventListener(
+                "scroll",
+                function () {
+                    if (ticking) return;
+                    ticking = true;
+                    requestAnimationFrame(update);
+                },
+                { passive: true }
+            );
+
+            update();
+        })();
+    </script>
     <script src="js/rain.js?v=20261027"></script>
 </body>
         </html>
