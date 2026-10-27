@@ -157,8 +157,27 @@
     if (sbMode) {
         var tip = document.createElement("p");
         tip.className = "note";
-        tip.innerHTML = "当前使用 <b>Supabase</b>：注册名单请在 Supabase 后台查看 —— Table Editor → <b>users</b>（账号）与 <b>profiles</b>（QQ / 邮箱）。手机也能看。";
+        tip.innerHTML = "当前使用 <b>Supabase</b>：下面是云端实时名单（只读，含最后上线时间）。";
         document.querySelector(".wrap").insertBefore(tip, document.querySelector(".card"));
+
+        /* 直接读云端名单：users 表 + last_seen，时间是浏览器本地时区 */
+        (function () {
+            var base = (window.SUPABASE_PROXY || "https://coffee-cloud.pages.dev").replace(/\/$/, "");
+            var key = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
+            fetch(base + "/rest/v1/users?select=name,created,last_seen&order=last_seen.desc.nullslast", {
+                headers: { apikey: key, Authorization: "Bearer " + key },
+                cache: "no-store"
+            })
+                .then(function (r) { return r.ok ? r.json() : []; })
+                .then(function (rows) {
+                    var box = document.getElementById("serverBox");
+                    if (!box) return;
+                    box.innerHTML = table(rows.map(function (u) {
+                        return { name: u.name, time: u.created, last_seen: u.last_seen };
+                    }));
+                })
+                .catch(function () {});
+        })();
     }
 
     function esc(s) {
