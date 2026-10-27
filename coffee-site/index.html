@@ -483,7 +483,7 @@
             text-align: right;
             font-size: 12px;
             letter-spacing: 3px;
-            color: #5f6c7e;
+            color: #93a1b3;
             }
 
                 /* 壁纸透出来以后，压在照片上的字要有点阴影才稳 */
@@ -509,6 +509,58 @@
             .story-body p,
             .story-sign {
                 text-shadow: 0 2px 18px rgba(4, 8, 14, 0.7);
+            }
+
+            /* 入店须知：一条一条写清楚这里能干嘛 */
+            .notice-steps {
+                display: grid;
+                gap: 14px;
+                margin: 42px 0 6px;
+                text-align: left;
+            }
+
+            .step {
+                display: flex;
+                gap: 18px;
+                padding: 18px 22px;
+                border: 1px solid rgba(201, 168, 106, 0.16);
+                border-radius: 14px;
+                background: rgba(9, 13, 19, 0.55);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+            }
+
+            .step-no {
+                flex: 0 0 auto;
+                padding-top: 2px;
+                font-family: Georgia, serif;
+                font-size: 14px;
+                letter-spacing: 1px;
+                color: #c9a86a;
+            }
+
+            .step b {
+                display: block;
+                margin-bottom: 6px;
+                font-size: 15px;
+                font-weight: 500;
+                letter-spacing: 1px;
+                color: #e3ebf5;
+            }
+
+            .step p {
+                margin: 0;
+                font-size: 13.5px;
+                line-height: 1.95;
+                color: #a9b7ca;
+            }
+
+            .notice-outro {
+                margin-top: 30px;
+                text-align: center;
+                font-size: 14px;
+                letter-spacing: 1px;
+                color: #b9c6d6;
             }
 
             /* 页脚 */
@@ -1025,6 +1077,9 @@
 
                 .hero { padding-bottom: 11vh; }
                 .hero h1 { font-size: clamp(26px, 7vw, 40px); letter-spacing: 2px; line-height: 1.35; padding: 0 18px; }
+                .story h2 { font-size: 26px; letter-spacing: 2px; line-height: 1.7; }
+                .notice-steps { margin-top: 32px; }
+                .step { padding: 16px 18px; gap: 14px; }
                 .hero p { font-size: 13px; letter-spacing: 1px; padding: 0 22px; line-height: 1.9; }
                 .secret { left: 12px; bottom: 14px; padding: 10px 14px; font-size: 11.5px; letter-spacing: 1px; }
                 .cart-btn { right: 12px; bottom: 14px; padding: 10px 14px; font-size: 14px; }
@@ -1096,7 +1151,7 @@
                     <ul class="nav-links">
                         <li><a href="../index.html" data-lqmy-nav>个人主页</a></li>
                         <li><a href="#menu">菜单</a></li>
-                        <li><a href="#story">故事</a></li>
+                        <li><a href="#notice">须知</a></li>
                         <li><a href="#store">门店</a></li>
                         <li><a href="#contact">联系</a></li>
                     </ul>
@@ -1168,15 +1223,47 @@
                 </div>
             </section>
 
-            <section class="story" id="story">
-                <p class="kicker">关于我们</p>
-                <h2>一个人和一条鱼<br>把学习日子熬成了美好回忆的味道</h2>
+            <section class="story" id="notice">
+                <p class="kicker">入店须知</p>
+                <h2>欢迎光临，随便坐<br>不煮咖啡，只存故事</h2>
 
                 <div class="story-body">
-                    <p>2026 年秋天，一个学 HTML5 的男孩做了一个决定：开一家不存在的咖啡店。</p>
-                    <p>它没有门面，没有营业执照，也还不会煮咖啡。但它有名字，有菜单，有一张写着「回忆的地图总有一天会被添加在这里」的虚拟地图。</p>
-                    <p>后来他想，也许三年以后翻回来，这家店就是他走过的证据，也将是他憧憬的程序温柔乡。</p>
+                    <p>谢谢你推门进来。这里没有吧台，也没有真的咖啡豆，但每一杯都配着一段我写下来的故事——点单之前，先听我说几句。</p>
+                    <p>它本来是 2026 年秋天一个 HTML5 课的作业：一个男孩想试试，能不能用代码开一家店。后来它长成了我的第一个作品，也成了我练习布局、动画、会员系统和云端数据库的地方。咖啡是假的，写下来的东西是真的。</p>
                 </div>
+
+                <div class="notice-steps">
+                    <div class="step">
+                        <span class="step-no">01</span>
+                        <div>
+                            <b>先登录，再点单</b>
+                            <p>右上角登录之后，余额会存在云端，换设备也还在；每天签到还能领 ¥50。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-no">02</span>
+                        <div>
+                            <b>挑一杯，读一段</b>
+                            <p>「官方咖啡」是我上架的，「个人咖啡」是客人投稿的。买完以后，可以在「我的咖啡」里把那段故事重新读一遍。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-no">03</span>
+                        <div>
+                            <b>也可以自己上架一杯</b>
+                            <p>点「我也想制作咖啡」，传图、取名、写故事、定价；我审核通过后就会出现在菜单里，卖出的钱进你的余额。</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <span class="step-no">04</span>
+                        <div>
+                            <b>坐下歇会儿再走</b>
+                            <p>右下角的聊天球能进公共聊天室，也能和好友单聊；余额可以转给好友，隔壁「书房」还有一屋子教材和语言课。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="notice-outro">慢慢逛，喝完再走。有找不到的东西，去下面「联系」里发邮件给我。</p>
 
                 <p class="story-sign">—— 龙潜猫隐</p>
             </section>
