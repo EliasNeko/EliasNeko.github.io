@@ -201,7 +201,7 @@ var Member = (function () {
   /* 记一次「最后上线」：走云端代理的 rpc，失败就算了，不影响登录 */
   function touchSeen(name) {
     try {
-      var base = window.SUPABASE_PROXY || "https://wjvwupcquwjoajdvinkx.supabase.co";
+      var base = window.SUPABASE_PROXY || "https://coffee-cloud.pages.dev";
       var key = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
       if (!base || !name) return;
       fetch(String(base).replace(/\/$/, "") + "/rest/v1/rpc/touch_last_seen", {
@@ -307,8 +307,15 @@ var Member = (function () {
     publicEntries: publicEntries,
     session: session,
     saveSession: saveSession,
+    touchSeen: touchSeen,
     logout: logout,
     toPublic: toPublic,
     download: download,
   };
+
+  /* 已经登录的人，每次进站都记一次最后上线（不只在输入密码那一刻） */
+  try {
+    var s0 = session();
+    if (s0 && s0.name) touchSeen(s0.name);
+  } catch (e) {}
 })();
