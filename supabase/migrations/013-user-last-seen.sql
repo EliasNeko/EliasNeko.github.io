@@ -1,9 +1,9 @@
--- 013 · 每个用户最后上线时间
--- 在 Supabase → SQL Editor 里整段跑一次即可（可重复跑，不会报错）
+-- 013 · 每个用户最后上线时间（修正版：users 的注册时间列叫 created，不是 created_at）
+-- Supabase → SQL Editor 整段跑一次，可以重复跑
 
 alter table public.users add column if not exists last_seen timestamptz;
 
--- 登录 / 进站时打一次点
+-- 进站 / 登录时打一次点
 create or replace function public.touch_last_seen(p_name text)
 returns void
 language plpgsql
@@ -15,9 +15,7 @@ begin
 end;
 $$;
 
-grant execute on function public.touch_last_seen(text) to anon, authenticated;
-
--- 站长工具用：一份带最后上线时间的名单
+-- 只给已登录（站长在 SQL Editor / 后台）用，不给匿名导出名单
 create or replace function public.admin_user_list()
 returns table (
   name text,
@@ -30,10 +28,14 @@ language sql
 security definer
 set search_path = public
 as $$
-  select u.name, u.created_at, u.last_seen, p.contact, p.email
+  select u.name, u.created as created_at, u.last_seen, p.contact, p.email
   from public.users u
   left join public.profiles p on p.name = u.name
-  order by coalesce(u.last_seen, u.created_at) desc nulls last;
+  order by coalesce(u.last_seen, u.created) desc nulls last;
 $$;
 
-grant execute on function public.admin_user_list() to anon, authenticated;
+revoke all on function public.admin_user_list() from anon, authenticated;
+grant execute on function public.touch_last_seen(text) to anon, authenticated;
+
+-- 跑完之后在 SQL Editor 里查名单：
+--   select * from public.admin_user_list();
