@@ -198,7 +198,25 @@ var Member = (function () {
     return read(SESSION_KEY, null);
   }
 
+  /* 记一次「最后上线」：走云端代理的 rpc，失败就算了，不影响登录 */
+  function touchSeen(name) {
+    try {
+      var base = window.SUPABASE_PROXY || window.SUPABASE_URL || "https://coffee-cloud.pages.dev";
+      if (!base || !name) return;
+      var key = window.SUPABASE_KEY || "";
+      var headers = { "Content-Type": "application/json" };
+      if (key) { headers["apikey"] = key; headers["Authorization"] = "Bearer " + key; }
+      fetch(String(base).replace(/\/$/, "") + "/rest/v1/rpc/touch_last_seen", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({ p_name: name }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   function saveSession(name, hash) {
+    touchSeen(name);
     return write(SESSION_KEY, { name: name, time: nowStr(), hash: hash || "" });
   }
 
