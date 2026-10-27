@@ -166,15 +166,23 @@
             .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    function fmtLast(v) {
+        if (!v) return "—";
+        var d = new Date(v);
+        if (isNaN(d.getTime())) return String(v);
+        function p(n) { return String(n).padStart(2, "0"); }
+        return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + " " + p(d.getHours()) + ":" + p(d.getMinutes());
+    }
+
     function table(rows) {
         if (!rows || !rows.length) {
             return '<table><tr><td class="empty">还没有记录</td></tr></table>';
         }
-        var html = "<table><tr><th>用户名</th><th>密码 / 哈希</th><th>QQ / 微信</th><th>邮箱</th><th>时间</th></tr>";
+        var html = "<table><tr><th>用户名</th><th>密码 / 哈希</th><th>QQ / 微信</th><th>邮箱</th><th>注册</th><th>最后上线</th></tr>";
         rows.forEach(function (u) {
             var secret = u.pass ? esc(u.pass) : (u.hash ? esc(u.hash.slice(0, 12)) + "…" : "—");
             html += "<tr><td>" + esc(u.name) + "</td><td>" + secret + "</td><td>" +
-                    esc(u.contact) + "</td><td>" + esc(u.email || "—") + "</td><td>" + esc(u.time) + "</td></tr>";
+                    esc(u.contact) + "</td><td>" + esc(u.email || "—") + "</td><td>" + esc(u.time) + "</td><td>" + esc(fmtLast(u.last_seen || u.last)) + "</td></tr>";
         });
         return html + "</table>";
     }
