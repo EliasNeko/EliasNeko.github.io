@@ -4,19 +4,20 @@
     ========================================================== */
 
 :root {
-  --bg:        #070c17;
-  --bg-2:      #0a1020;
-  --panel:     #0d1524;
-  --panel-2:   #0b1220;
-  --line:      rgba(96, 165, 250, 0.14);
-  --line-2:    rgba(96, 165, 250, 0.28);
-  --text:      #e8f0fd;
-  --muted:     #93a9c9;
-  --dim:       #5d6f8c;
-  --accent:    #38bdf8;
-  --accent-2:  #7dd3fc;
-  --accent-3:  #60a5fa;
-  --glow:      rgba(56, 189, 248, 0.12);
+  --bg:        #0a0c11;
+  --bg-2:      #0e1118;
+  --panel:     #141821;
+  --panel-2:   #10141b;
+  --line:      rgba(226, 199, 156, 0.14);
+  --line-2:    rgba(226, 199, 156, 0.28);
+  --text:      #eef1f6;
+  --muted:     #a9b2c0;
+  --dim:       #6d7684;
+  --accent:    #7dd3fc;
+  --accent-2:  #a5e4ff;
+  --accent-3:  #e2c08d;
+  --glow:      rgba(125, 211, 252, 0.12);
+  --paper:     #e8dcc4;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,15 +26,32 @@ html { scroll-behavior: smooth; }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(1200px 620px at 50% -12%, rgba(56, 189, 248, 0.11), transparent 62%),
-    radial-gradient(900px 520px at 92% 2%, rgba(96, 165, 250, 0.09), transparent 58%),
-    radial-gradient(800px 500px at 4% 30%, rgba(59, 130, 246, 0.06), transparent 60%),
-    var(--bg);
+  background: var(--bg);
   color: var(--text);
   font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
+}
+
+/* 书房背景：整站共用一张图书馆的照片，压暗之后当底（玻璃层叠在照片上） */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(76% 62% at 50% 32%, rgba(8, 10, 15, 0.18), rgba(8, 10, 15, 0.62) 78%),
+    linear-gradient(180deg, rgba(8, 10, 15, 0.58) 0%, rgba(8, 10, 15, 0.70) 42%, rgba(8, 10, 15, 0.86) 100%),
+    url("../assets/images/kb-library.jpg") center 32% / cover no-repeat;
+  pointer-events: none;
+}
+
+/* 落书特效画布（只有首页挂） */
+.kb-books {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* 顶部 */
@@ -129,7 +147,7 @@ body {
   padding: 22px 18px;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(13, 21, 36, 0.75), rgba(9, 14, 25, 0.55));
+  background: linear-gradient(180deg, rgba(20, 20, 24, 0.75), rgba(12, 12, 15, 0.55));
   backdrop-filter: blur(8px);
 }
 
@@ -167,7 +185,7 @@ body {
 /* 卡片 */
 .card {
   position: relative;
-  background: linear-gradient(180deg, rgba(14, 22, 38, 0.92), rgba(9, 15, 26, 0.92));
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.92), rgba(12, 13, 16, 0.92));
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 30px 32px;
@@ -245,7 +263,7 @@ pre::before {
   font-size: 11px;
   letter-spacing: 1px;
   color: var(--muted);
-  background: rgba(13, 21, 36, 0.9);
+  background: rgba(20, 20, 24, 0.9);
   border: 1px solid var(--line);
   border-radius: 6px;
   cursor: pointer;
@@ -360,7 +378,7 @@ footer .stamp {
   padding: 7px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
-  background: rgba(9, 14, 25, 0.82);
+  background: rgba(12, 12, 15, 0.82);
   backdrop-filter: blur(14px);
   box-shadow: 0 16px 40px rgba(2, 6, 15, 0.6);
   z-index: 90;
@@ -435,7 +453,7 @@ footer .stamp {
   padding: 0 16px 0 42px;
   border-radius: 12px;
   border: 1px solid var(--line);
-  background: rgba(13, 21, 36, 0.75);
+  background: rgba(20, 20, 24, 0.75);
   color: var(--text);
   font-size: 14px;
   font-family: inherit;
@@ -480,7 +498,7 @@ footer .stamp {
   border: 1px solid var(--line);
   border-radius: 18px;
   text-decoration: none;
-  background: linear-gradient(160deg, rgba(14, 22, 38, 0.95), rgba(8, 13, 23, 0.95));
+  background: linear-gradient(160deg, rgba(22, 22, 26, 0.95), rgba(11, 11, 14, 0.95));
   transition: 0.3s;
   overflow: hidden;
 }
@@ -610,7 +628,7 @@ footer .stamp {
   border-color: rgba(125, 211, 252, 0.3);
   background:
     radial-gradient(600px 220px at 8% 0%, rgba(56, 189, 248, 0.14), transparent 70%),
-    linear-gradient(120deg, rgba(15, 26, 45, 0.96), rgba(8, 13, 23, 0.96));
+    linear-gradient(120deg, rgba(15, 26, 45, 0.96), rgba(11, 11, 14, 0.96));
 }
 
 .lesson-card.pinned .lesson-no {
@@ -769,7 +787,7 @@ footer .stamp {
   border-color: rgba(56, 189, 248, 0.22);
   background:
     radial-gradient(520px 200px at 0% 0%, rgba(14, 165, 233, 0.16), transparent 70%),
-    linear-gradient(120deg, rgba(14, 24, 42, 0.96), rgba(8, 13, 23, 0.96));
+    linear-gradient(120deg, rgba(14, 24, 42, 0.96), rgba(11, 11, 14, 0.96));
 }
 
 .badge-proj {
@@ -916,7 +934,7 @@ footer .stamp {
 .kw-card {
   border-radius: 18px;
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, rgba(14, 22, 38, 0.92), rgba(9, 15, 26, 0.92));
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.92), rgba(12, 13, 16, 0.92));
   padding: 26px 28px;
   margin-bottom: 18px;
   scroll-margin-top: 24px;
