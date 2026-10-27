@@ -160,6 +160,15 @@
         tip.innerHTML = "当前使用 <b>Supabase</b>：下面是云端实时名单（只读，含最后上线时间）。";
         document.querySelector(".wrap").insertBefore(tip, document.querySelector(".card"));
 
+        /* 云端模式下，本地那几块（本机记录 / 公开名单 / 加密导出）没用了，收起来 */
+        try {
+            var cards = document.querySelectorAll(".wrap > .card");
+            for (var ci = 1; ci < cards.length; ci++) {
+                cards[ci].setAttribute("data-sbMode-hide", "1");
+                cards[ci].style.display = "none";
+            }
+        } catch (e) {}
+
         /* 直接读云端名单：users 表 + last_seen，时间是浏览器本地时区 */
         (function () {
             var base = (window.SUPABASE_PROXY || "https://coffee-cloud.pages.dev").replace(/\/$/, "");
