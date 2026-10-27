@@ -46,6 +46,15 @@ body::before {
   pointer-events: none;
 }
 
+@media (max-aspect-ratio: 1/1) {
+  body::before {
+    background:
+      radial-gradient(72% 46% at 50% 26%, rgba(8, 10, 15, 0.24), rgba(8, 10, 15, 0.66) 78%),
+      linear-gradient(180deg, rgba(8, 10, 15, 0.52) 0%, rgba(8, 10, 15, 0.66) 40%, rgba(8, 10, 15, 0.88) 100%),
+      url("../assets/images/kb-library-mobile.jpg") center 8% / cover no-repeat;
+  }
+}
+
 /* 落书特效画布（只有首页挂） */
 .kb-books {
   position: fixed;
