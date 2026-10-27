@@ -201,14 +201,16 @@ var Member = (function () {
   /* 记一次「最后上线」：走云端代理的 rpc，失败就算了，不影响登录 */
   function touchSeen(name) {
     try {
-      var base = window.SUPABASE_PROXY || window.SUPABASE_URL || "https://coffee-cloud.pages.dev";
+      var base = window.SUPABASE_PROXY || "https://wjvwupcquwjoajdvinkx.supabase.co";
+      var key = "sb_publishable_Wy3IyDHb-0yFAuRHbxuLFw_obIXU3OI";
       if (!base || !name) return;
-      var key = window.SUPABASE_KEY || "";
-      var headers = { "Content-Type": "application/json" };
-      if (key) { headers["apikey"] = key; headers["Authorization"] = "Bearer " + key; }
       fetch(String(base).replace(/\/$/, "") + "/rest/v1/rpc/touch_last_seen", {
         method: "POST",
-        headers: headers,
+        headers: {
+          "apikey": key,
+          "Authorization": "Bearer " + key,
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({ p_name: name }),
         keepalive: true
       }).catch(function () {});
