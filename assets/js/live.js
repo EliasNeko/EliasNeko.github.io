@@ -67,7 +67,12 @@
         Authorization: "Bearer " + SB_KEY,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ p_device: deviceId() }),
+      body: JSON.stringify({ p_device: deviceId(), p_name: (function () {
+        try {
+          var s = JSON.parse(localStorage.getItem("coffee-session") || "null");
+          return s && s.name ? s.name : null;
+        } catch (e) { return null; }
+      })() }),
     })
       .then(function (r) {
         return r.ok ? r.json() : null;

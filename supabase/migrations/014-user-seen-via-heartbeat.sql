@@ -24,8 +24,9 @@ begin
     delete from public.online where last_seen < now() - interval '1 day';
 
     return json_build_object(
-        'online', (select count(*) from public.online where last_seen > now() - interval '90 seconds'),
-        'users',  (select count(*) from public.users)
+        'online',  (select count(*) from public.online where last_seen > now() - interval '90 seconds'),
+        'members', (select count(*) from public.chat_presence where last_seen > now() - interval '90 seconds'),
+        'users',   (select count(*) from public.users)
     );
 end; $$;
 
