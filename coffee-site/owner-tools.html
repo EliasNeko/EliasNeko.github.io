@@ -420,5 +420,31 @@
 </script>
 <script src="../assets/js/chat.js?v=20261031"></script>
 <script src="../assets/js/update-popup.js?v=20261023"></script>
+
+<section id="users" style="margin-top:34px">
+  <h2 style="font-size:15px;letter-spacing:3px;color:#c9a86a;margin:0 0 12px">四、注册名单 · 最后上线</h2>
+  <div id="adminMount" style="opacity:.6">正在加载名单…</div>
+</section>
+<script>
+(function () {
+  var host = document.getElementById("adminMount");
+  if (!host) return;
+  fetch("_admin-partial.html", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .then(function (html) {
+      if (!html) { host.textContent = "名单模块没加载出来。"; return; }
+      host.innerHTML = html;
+      host.style.opacity = 1;
+      /* 把里面内联脚本重新执行一遍 */
+      var scripts = host.querySelectorAll("script");
+      for (var i = 0; i < scripts.length; i++) {
+        var s = document.createElement("script");
+        s.textContent = scripts[i].textContent;
+        scripts[i].parentNode.replaceChild(s, scripts[i]);
+      }
+    })
+    .catch(function () { host.textContent = "名单模块没加载出来。"; });
+})();
+</script>
 </body>
 </html>
