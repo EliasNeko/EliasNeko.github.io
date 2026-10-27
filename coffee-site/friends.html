@@ -8,14 +8,14 @@
 <link rel="stylesheet" href="../assets/css/titles.css?v=20261035" data-titles-badge="1">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { min-height: 100vh; padding: 40px 20px 90px; font-family: "Microsoft YaHei", sans-serif; color: #f3e7d3;
-        background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); }
+    body { min-height: 100vh; padding: 40px 20px 90px; font-family: "Microsoft YaHei", sans-serif; color: #eef4fb;
+        background: radial-gradient(circle at 50% 0%, #1b2431 0%, #0b0f15 62%); }
     .wrap { width: min(560px, 100%); margin: 0 auto; }
-    .back { display: inline-block; margin-bottom: 22px; color: rgba(201,183,156,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back { display: inline-block; margin-bottom: 22px; color: rgba(185, 198, 214,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
     .back:hover { color: #c9a86a; }
     h1 { font-size: 26px; font-weight: normal; letter-spacing: 4px; margin-bottom: 8px; }
-    .sub { color: #c9b79c; font-size: 13px; margin-bottom: 24px; line-height: 1.9; }
-    .card { padding: 18px 20px; background: #1a1512; border: 1px solid rgba(201,168,106,.22); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+    .sub { color: #b9c6d6; font-size: 13px; margin-bottom: 24px; line-height: 1.9; }
+    .card { padding: 18px 20px; background: #1a2030; border: 1px solid rgba(201,168,106,.22); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
     .row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(201,168,106,.15); }
     .row:last-child { border-bottom: 0; }
     .av { width: 36px; height: 36px; border-radius: 50%; overflow: hidden; background: #2a2119; color: #e0c48c; display: flex; align-items: center; justify-content: center; font-size: 14px; flex: 0 0 auto; }
@@ -25,7 +25,7 @@
     .ops button { padding: 6px 12px; border: 1px solid rgba(201,168,106,.4); border-radius: 999px; background: none; color: #c9a86a; font: inherit; font-size: 12px; cursor: pointer; }
     .ops button:hover { background: rgba(201,168,106,.12); }
     .ops button.danger { border-color: rgba(226,154,142,.4); color: #e29a8e; }
-    .empty { color: rgba(201,183,156,.5); text-align: center; padding: 30px 0; font-size: 13px; line-height: 2; }
+    .empty { color: rgba(185, 198, 214,.5); text-align: center; padding: 30px 0; font-size: 13px; line-height: 2; }
     .msg { min-height: 20px; margin-top: 12px; font-size: 13px; }
     .msg.ok { color: #9ec9a0; }
     .msg.err { color: #e29a8e; }
@@ -58,7 +58,7 @@
     var s = (function () { try { return JSON.parse(localStorage.getItem("coffee-session") || "null"); } catch (e) { return null; } })();
 
     if (!s || !s.name || !s.hash) {
-        document.body.innerHTML = '<p style="padding:60px;text-align:center;color:#c9b79c;">先登录才能看好友。<br><br><a style="color:#c9a86a" href="account.html">去登录</a></p>';
+        document.body.innerHTML = '<p style="padding:60px;text-align:center;color:#b9c6d6;">先登录才能看好友。<br><br><a style="color:#c9a86a" href="account.html">去登录</a></p>';
         return;
     }
 

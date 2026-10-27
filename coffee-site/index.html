@@ -17,6 +17,11 @@
             .hero h1 的意思是“hero 里面的 h1”。
             */
 
+            /* 点导航的时候滑过去，不要一下跳 */
+            @media (prefers-reduced-motion: no-preference) {
+                html { scroll-behavior: smooth; }
+            }
+
             /*清零浏览器默认的间距*/
             * {
                 margin: 0;
@@ -27,19 +32,80 @@
             /*整页的底色和字体*/
             body {
                 font-family: "Microsoft YaHei", sans-serif;
-                background: #14100e;
-                color: #f3e7d3;
+                background: #0b0f15;
+                color: #eef4fb;
             }
 
-            /*头图区：铺满一屏 + 内容居中*/
+            /* 壁纸背景：滚到下面的内容时只留一层很淡的纹理 */
+            .bg-photo {
+                position: fixed;
+                inset: 0;
+                z-index: -1;
+                background: url("../assets/images/oc/coffee-wallpaper.jpg") center 30% / cover no-repeat;
+                opacity: 0.24;
+                pointer-events: none;
+            }
+
+            .bg-photo::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(180deg, rgba(11, 15, 21, 0.42), rgba(11, 15, 21, 0.86));
+            }
+
+            /*头图区：壁纸铺满一屏，文字沉在底部*/
             .hero {
-                height: 100vh;
+                position: relative;
+                min-height: 100vh;
+                min-height: 100svh;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-end;
                 align-items: center;
                 text-align: center;
-                background: radial-gradient(circle at 50% 30%, #3a2a1e 0%, #14100e 70%);
+                padding: 0 24px 12vh;
+                overflow: hidden;
+                background: #0b0f15;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: -2%;
+                z-index: 0;
+                background: url("../assets/images/oc/coffee-wallpaper.jpg") center 32% / cover no-repeat;
+                animation: heroDrift 44s ease-in-out infinite alternate;
+            }
+
+            @keyframes heroDrift {
+                from { transform: scale(1.02) translate3d(0, 0, 0); }
+                to   { transform: scale(1.08) translate3d(0, -1.4%, 0); }
+            }
+
+            /* 压暗 + 底部融进页面底色 */
+            .hero::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: 1;
+                background:
+                    radial-gradient(80% 60% at 50% 38%, rgba(6, 9, 14, 0.05), rgba(6, 9, 14, 0.5) 78%),
+                    linear-gradient(180deg, rgba(6, 9, 14, 0.62) 0%, rgba(6, 9, 14, 0.12) 34%, rgba(11, 15, 21, 0.62) 74%, #0b0f15 100%);
+            }
+
+            .hero .rain {
+                position: absolute;
+                inset: 0;
+                z-index: 2;
+                pointer-events: none;
+                opacity: 0.8;
+            }
+
+            .hero h1,
+            .hero p,
+            .hero .btn {
+                position: relative;
+                z-index: 3;
             }
 
             /*店名*/
@@ -52,7 +118,7 @@
 
             /*副标语*/
             .hero p {
-                color: #c9b79c;
+                color: #b9c6d6;
                 letter-spacing: 2px;
                 margin-bottom: 44px;
             }
@@ -68,10 +134,25 @@
                 transition: all 0.3s;
             }
 
+            /* 头图上的按钮：加一层很薄的深色底，压在壁纸上不飘 */
+            .hero .btn {
+                background: rgba(11, 15, 21, 0.35);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+            }
+
+            .hero h1 {
+                text-shadow: 0 6px 34px rgba(0, 0, 0, 0.6);
+            }
+
+            .hero p {
+                text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+            }
+
             /* 7. 鼠标悬停时 */
             .btn:hover {
                 background: #c9a86a;
-                color: #14100e;
+                color: #0b0f15;
             }
             .nav {
                 position: fixed;/*把元素从文档流里“揪出来”，钉在窗口上，滚动时不动*/
@@ -83,7 +164,7 @@
                 align-items: center;
                 justify-content: space-between;/*flex 里让子元素两端贴边，中间自动撑开。左边 logo*/
                 padding: 0 48px;
-                background: rgba(20, 16, 14, 0.65);/*比十六进制多一个透明度，0 全透明、1 不透明；配上 backdrop-filter: blur() 就是毛玻璃。*/
+                background: rgba(9, 13, 19, 0.5);/*比十六进制多一个透明度，0 全透明、1 不透明；配上 backdrop-filter: blur() 就是毛玻璃。*/
                 backdrop-filter: blur(10px);
                 border-bottom: 1px solid rgba(201,168,106,0.18);
                 z-index: 10;/*让导航栏在最上层显示*/
@@ -123,7 +204,7 @@
             }
 
             .nav-links a {
-                color: #c9b79c;
+                color: #b9c6d6;
                 font-size: 14px;
                 text-decoration: none;
                 transition: color 0.3s;
@@ -149,7 +230,7 @@
 
             .menu .sub{
                 text-align: center;
-                color: #8d7f6d;
+                color: #8593a6;
                 font-size: 14px;
                 margin-bottom: 56px;
             }
@@ -165,12 +246,12 @@
             .menu-group:last-child { margin-bottom: 0; }
             .group-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 0 0 16px; padding-bottom: 9px; border-bottom: 1px solid rgba(201,168,106,.16); }
             .group-head h3 { margin: 0; color: #e8d4a8; font-size: 16px; font-weight: normal; letter-spacing: 3px; }
-            .group-head span { color: rgba(201,183,156,.4); font-size: 10.5px; letter-spacing: 1px; }
-            .group-empty { margin: 0; padding: 20px 16px; border: 1px dashed rgba(201,168,106,.18); border-radius: 12px; color: rgba(201,183,156,.38); font-size: 12px; text-align: center; }
+            .group-head span { color: rgba(185, 198, 214,.4); font-size: 10.5px; letter-spacing: 1px; }
+            .group-empty { margin: 0; padding: 20px 16px; border: 1px dashed rgba(201,168,106,.18); border-radius: 12px; color: rgba(185, 198, 214,.38); font-size: 12px; text-align: center; }
             .menu-group .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 28px; }
 
             .card {
-                background: #1e1815;
+                background: #141a22;
                 border: 1px solid rgba(201, 168, 106, 0.12);
                 border-radius: 16px;
                 overflow: hidden;
@@ -179,7 +260,17 @@
 
             .card:hover {
                 transform: translateY(-8px);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.45), 0 0 0 1px rgba(201, 168, 106, 0.28);
+            }
+
+            .card-img { overflow: hidden; }
+
+            .card-img img {
+                transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .card:hover .card-img img {
+                transform: scale(1.06);
             }
 
             .card-img {
@@ -188,7 +279,7 @@
                 align-items: center;
                 justify-content: center;
                 font-size: 64px;
-                background: linear-gradient(135deg, #3a2a1e, #241a14);
+                background: linear-gradient(135deg, #1c2733, #101822);
             }
 
             .card h3 {
@@ -197,7 +288,7 @@
             }
 
             .card .desc {
-                color: #8d7f6d;
+                color: #8593a6;
                 font-size: 14px;
                 margin: 0 20px 20px;
             }
@@ -227,7 +318,7 @@
 
             .buy:hover {
                 background: #c9a86a;
-                color: #14100e;
+                color: #0b0f15;
             }
 
             /* 门店区 */
@@ -246,7 +337,7 @@
 
             .store .sub {
             text-align: center;
-            color: #8d7f6d;
+            color: #8593a6;
             font-size: 14px;
             margin-bottom: 56px;
             }
@@ -271,7 +362,7 @@
             }
 
             .store-info p {
-            color: #c9b79c;
+            color: #b9c6d6;
             font-size: 15px;
             }
 
@@ -284,18 +375,18 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            color: #8d7f6d;
+            color: #8593a6;
             background: rgba(201, 168, 106, 0.03);
             }
 
             .store-map small {
             font-size: 12px;
-            color: #6f6357;
+            color: #5f6c7e;
             }
 
             .store-info .small {
             font-size: 13px;
-            color: #8d7f6d;
+            color: #8593a6;
             margin-top: 4px;
             }
 
@@ -362,7 +453,7 @@
             }
 
             .story-body p {
-            color: #b6a68f;
+            color: #b6c2d2;
             font-size: 16px;
             line-height: 2.05;
             letter-spacing: 0.5px;
@@ -371,7 +462,7 @@
             }
 
             .story-body p:first-child {
-            color: #d3c3a8;
+            color: #d3dde9;
             }
 
             /* 落款 */
@@ -380,14 +471,14 @@
             text-align: right;
             font-size: 12px;
             letter-spacing: 3px;
-            color: #6f6357;
+            color: #5f6c7e;
             }
 
                 /* 页脚 */
             .footer {
             border-top: 1px solid rgba(201, 168, 106, 0.15);
             padding: 70px 48px 30px;
-            background: #100d0b;
+            background: #080b10;
             }
 
             .footer-inner {
@@ -409,7 +500,7 @@
             }
 
             .footer-desc {
-            color: #8d7f6d;
+            color: #8593a6;
             font-size: 14px;
             line-height: 1.9;
             max-width: 320px;
@@ -423,7 +514,7 @@
             }
 
             .footer-col p:not(.footer-title) {
-            color: #8d7f6d;
+            color: #8593a6;
             font-size: 14px;
             line-height: 2;
             }
@@ -435,7 +526,7 @@
             border-top: 1px solid rgba(201, 168, 106, 0.1);
             display: flex;
             justify-content: space-between;
-            color: #5f554a;
+            color: #4f5c6d;
             font-size: 12px;
             letter-spacing: 1px;
             padding-left: 48px;
@@ -470,7 +561,7 @@
                 font-family: inherit;
                 font-size: 12.5px;
                 letter-spacing: 2px;
-                color: #1a130d;
+                color: #0f1620;
                 background: linear-gradient(135deg, #e0c48c, #c9a86a);
                 border: 1px solid rgba(255, 232, 190, 0.6);
                 border-radius: 999px;
@@ -495,7 +586,7 @@
                 padding: 6px 14px;
                 border: 1px solid rgba(201, 168, 106, 0.35);
                 border-radius: 999px;
-                color: #c9b79c;
+                color: #b9c6d6;
                 font-size: 12px;
                 letter-spacing: 1px;
                 text-decoration: none;
@@ -504,7 +595,7 @@
             }
 
             .nav-account:hover {
-                color: #14100e;
+                color: #0b0f15;
                 background: #c9a86a;
                 border-color: #c9a86a;
             }
@@ -528,7 +619,7 @@
                 left: 0;
                 min-width: 148px;
                 padding: 8px;
-                background: #1a1512;
+                background: #1a2030;
                 border: 1px solid rgba(201,168,106,.35);
                 border-radius: 12px;
                 box-shadow: 0 16px 40px rgba(0,0,0,.6);
@@ -554,7 +645,7 @@
                 border: 0;
                 border-radius: 8px;
                 background: none;
-                color: #e8dcc8;
+                color: #e3ebf5;
                 font-family: inherit;
                 font-size: 13px;
                 text-align: left;
@@ -569,7 +660,7 @@
                 margin-top: 16px;
                 font-size: 12px;
                 letter-spacing: 1px;
-                color: rgba(201, 183, 156, 0.45);
+                color: rgba(185, 198, 214, 0.45);
             }
 
             .gate-note a {
@@ -586,7 +677,7 @@
                 align-items: center;
                 justify-content: center;
                 padding: 20px;
-                background: rgba(8, 6, 5, 0.78);
+                background: rgba(8, 11, 16, 0.78);
                 backdrop-filter: blur(10px);
             }
 
@@ -595,7 +686,7 @@
             .gate-panel {
                 width: min(380px, 100%);
                 padding: 34px 30px 28px;
-                background: #1a1512;
+                background: #1a2030;
                 border: 1px solid rgba(201, 168, 106, 0.28);
                 border-radius: 18px;
                 box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
@@ -611,14 +702,14 @@
             .gate-panel h3 {
                 font-size: 18px;
                 letter-spacing: 6px;
-                color: #e8d9bf;
+                color: #dde6f2;
                 font-weight: normal;
                 margin-bottom: 10px;
             }
 
             .gate-panel > p {
                 font-size: 13px;
-                color: #8d7f6d;
+                color: #8593a6;
                 letter-spacing: 1px;
                 margin-bottom: 22px;
             }
@@ -627,10 +718,10 @@
                 width: 100%;
                 height: 44px;
                 padding: 0 14px;
-                background: #120f0d;
+                background: #0d1118;
                 border: 1px solid rgba(201, 168, 106, 0.22);
                 border-radius: 10px;
-                color: #f3e7d3;
+                color: #eef4fb;
                 font-size: 14px;
                 font-family: inherit;
                 letter-spacing: 3px;
@@ -673,7 +764,7 @@
             .gate-ok {
                 background: #c9a86a;
                 border: 1px solid #c9a86a;
-                color: #14100e;
+                color: #0b0f15;
             }
 
             .gate-ok:hover { background: #dcc08a; }
@@ -681,7 +772,7 @@
             .gate-back {
                 background: transparent;
                 border: 1px solid rgba(201, 168, 106, 0.3);
-                color: #c9b79c;
+                color: #b9c6d6;
             }
 
             .gate-back:hover {
@@ -697,7 +788,7 @@
                 75% { transform: translateX(8px); }
             }
             /* 校徽 */
-            .school-badge { position: fixed; top: 84px; right: 24px; width: 46px; height: 46px; z-index: 95; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(20,16,14,.55); border: 1px solid rgba(201,168,106,.25); backdrop-filter: blur(8px); opacity: .62; transition: .3s; }
+            .school-badge { position: fixed; top: 84px; right: 24px; width: 46px; height: 46px; z-index: 95; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(11, 15, 21,.55); border: 1px solid rgba(201,168,106,.25); backdrop-filter: blur(8px); opacity: .62; transition: .3s; }
             .school-badge img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.2); transition: filter .3s; }
             .school-badge:hover { opacity: 1; border-color: #c9a86a; transform: translateY(-1px) scale(1.04); box-shadow: 0 0 0 3px rgba(201,168,106,.12), 0 10px 24px rgba(0,0,0,.5); }
             .school-badge:hover img { filter: none; }
@@ -712,13 +803,13 @@
                 padding: 12px 18px;
                 border: 1px solid #c9a86a;
                 border-radius: 999px;
-                background: #14100e;
+                background: #0b0f15;
                 color: #c9a86a;
                 font-size: 15px;
                 cursor: pointer;
             }
 
-            .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; max-width: 86vw; display: flex; flex-direction: column; background: #14100e; border-left: 1px solid rgba(201,168,106,.25); z-index: 160; transform: translateX(100%); transition: transform .3s; }
+            .cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; max-width: 86vw; display: flex; flex-direction: column; background: #0b0f15; border-left: 1px solid rgba(201,168,106,.25); z-index: 160; transform: translateX(100%); transition: transform .3s; }
             .cart-drawer.show { transform: translateX(0); }
             .cart-mask { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 150; opacity: 0; pointer-events: none; transition: opacity .3s; }
             .cart-mask.show { opacity: 1; pointer-events: auto; }
@@ -728,22 +819,22 @@
             .fav { padding: 14px 20px 10px; border-bottom: 1px dashed rgba(201,168,106,.18); }
             .fav-title { margin: 0 0 8px; font-size: 11.5px; letter-spacing: 2px; color: #c9a86a; }
             .fav-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 5px 0; font-size: 13px; }
-            .fav-item a { color: #e8dcc8; text-decoration: none; border-bottom: 1px solid rgba(201,168,106,.35); }
+            .fav-item a { color: #e3ebf5; text-decoration: none; border-bottom: 1px solid rgba(201,168,106,.35); }
             .fav-item a:hover { color: #c9a86a; }
-            .fav-left { color: rgba(232,220,200,.4); font-size: 11px; white-space: nowrap; }
-            .fav-tip { margin: 0; font-size: 11.5px; line-height: 1.85; color: rgba(232,220,200,.45); }
+            .fav-left { color: rgba(227, 235, 245,.4); font-size: 11px; white-space: nowrap; }
+            .fav-tip { margin: 0; font-size: 11.5px; line-height: 1.85; color: rgba(227, 235, 245,.45); }
             .cart-list { flex: 1; overflow-y: auto; padding: 10px 20px; }
-            .cart-item { display: flex; gap: 8px; align-items: center; padding: 12px 0; border-bottom: 1px dashed rgba(201,168,106,.15); color: #e8dcc8; font-size: 14px; }
+            .cart-item { display: flex; gap: 8px; align-items: center; padding: 12px 0; border-bottom: 1px dashed rgba(201,168,106,.15); color: #e3ebf5; font-size: 14px; }
             .cart-item .n { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            .cart-empty { color: rgba(232,220,200,.45); text-align: center; margin-top: 40px; font-size: 14px; }
-            .cart-foot { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-top: 1px solid rgba(201,168,106,.2); color: #e8dcc8; }
+            .cart-empty { color: rgba(227, 235, 245,.45); text-align: center; margin-top: 40px; font-size: 14px; }
+            .cart-foot { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-top: 1px solid rgba(201,168,106,.2); color: #e3ebf5; }
             .cart-foot strong { color: #c9a86a; font-size: 20px; }
 
             .qty-btn { width: 24px; height: 24px; border: 1px solid rgba(201,168,106,.45); border-radius: 50%; background: none; color: #c9a86a; font-size: 15px; line-height: 1; cursor: pointer; }
             .qty-btn:hover { background: rgba(201,168,106,.15); }
             .cart-item .qty { min-width: 24px; text-align: center; }
             .cart-item .sum { min-width: 52px; text-align: right; }
-            .cart-del { border: 0; background: none; padding: 0 2px; color: rgba(232,220,200,.35); font-size: 16px; line-height: 1; cursor: pointer; }
+            .cart-del { border: 0; background: none; padding: 0 2px; color: rgba(227, 235, 245,.35); font-size: 16px; line-height: 1; cursor: pointer; }
             .cart-del:hover { color: #e08a7a; }
             .cart-clear { margin: 0 20px 20px; padding: 10px; border: 1px solid rgba(201,168,106,.35); border-radius: 8px; background: none; color: rgba(201,168,106,.85); font-size: 13px; letter-spacing: 1px; cursor: pointer; }
             .cart-clear:hover { background: rgba(201,168,106,.12); }
@@ -751,7 +842,7 @@
             .store-info a:hover { border-bottom-color: #c9a86a; }
             /* ---------- 余额 / 购买 ---------- */
             .nav-right { display: flex; align-items: center; gap: 28px; }
-            .wallet { display: flex; align-items: baseline; gap: 7px; padding: 6px 14px; border: 1px solid rgba(201,168,106,.35); border-radius: 999px; white-space: nowrap; color: #c9b79c; font-size: 12px; letter-spacing: 1px; transition: border-color .3s; }
+            .wallet { display: flex; align-items: baseline; gap: 7px; padding: 6px 14px; border: 1px solid rgba(201,168,106,.35); border-radius: 999px; white-space: nowrap; color: #b9c6d6; font-size: 12px; letter-spacing: 1px; transition: border-color .3s; }
             .wallet strong { color: #c9a86a; font-size: 15px; letter-spacing: .5px; }
 
             .checkin-btn {
@@ -794,7 +885,7 @@
                 transition: .2s;
             }
             .brew-btn:hover { background: rgba(201,168,106,.1); border-style: solid; }
-            .menu-tools span { color: rgba(201,183,156,.38); font-size: 10.5px; letter-spacing: 1px; }
+            .menu-tools span { color: rgba(185, 198, 214,.38); font-size: 10.5px; letter-spacing: 1px; }
             .maker { margin: 7px 0 0; color: #c9a86a; font-size: 10.5px; letter-spacing: 1px; }
             .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -812,7 +903,7 @@
                 transition: .22s;
                 white-space: nowrap;
             }
-            .nav-transfer:hover { background: #c9a86a; color: #14100e; border-color: #c9a86a; }
+            .nav-transfer:hover { background: #c9a86a; color: #0b0f15; border-color: #c9a86a; }
 
             .transfer-mask {
                 position: fixed; inset: 0; z-index: 160;
@@ -827,7 +918,7 @@
                 padding: 22px 22px 18px;
                 border: 1px solid rgba(201,168,106,.35);
                 border-radius: 18px;
-                background: linear-gradient(165deg, #1d1712, #14100e);
+                background: linear-gradient(165deg, #121a24, #0b0f15);
                 box-shadow: 0 30px 80px rgba(0,0,0,.68), 0 0 0 1px rgba(201,168,106,.06);
                 opacity: 0; pointer-events: none;
                 transform: translate(-50%, -48%);
@@ -837,14 +928,14 @@
             .transfer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
             .transfer-head h3 { margin: 0; color: #c9a86a; font-size: 17px; font-weight: normal; letter-spacing: 2px; }
             .transfer-close { border: 0; background: none; color: #c9a86a; font-size: 22px; line-height: 1; cursor: pointer; }
-            .transfer-balance { margin: 0 0 14px; padding: 9px 12px; border-radius: 10px; background: rgba(201,168,106,.08); color: #c9b79c; font-size: 12px; }
+            .transfer-balance { margin: 0 0 14px; padding: 9px 12px; border-radius: 10px; background: rgba(201,168,106,.08); color: #b9c6d6; font-size: 12px; }
             .transfer-balance strong { color: #e8d4a8; font-size: 15px; margin-left: 4px; }
             .transfer-field { margin-bottom: 12px; }
-            .transfer-field label { display: block; margin-bottom: 6px; color: #c9b79c; font-size: 11.5px; letter-spacing: 1.5px; }
+            .transfer-field label { display: block; margin-bottom: 6px; color: #b9c6d6; font-size: 11.5px; letter-spacing: 1.5px; }
             .transfer-field select, .transfer-field input {
                 width: 100%; padding: 11px 12px;
                 border: 1px solid rgba(201,168,106,.25); border-radius: 10px;
-                background: #14100e; color: #f3e7d3;
+                background: #0b0f15; color: #eef4fb;
                 font-family: inherit; font-size: 14px; outline: none;
             }
             .transfer-field select:focus, .transfer-field input:focus { border-color: rgba(201,168,106,.6); }
@@ -854,23 +945,23 @@
             .transfer-msg { min-height: 20px; margin: 0 0 6px; font-size: 12px; color: #e29a8e; }
             .transfer-actions { display: flex; gap: 10px; }
             .transfer-actions button { flex: 1; padding: 11px; border-radius: 10px; font-family: inherit; font-size: 13px; letter-spacing: 1px; cursor: pointer; }
-            .transfer-cancel { border: 1px solid rgba(201,168,106,.3); background: none; color: #c9b79c; }
-            .transfer-go { border: 1px solid #c9a86a; background: #c9a86a; color: #14100e; }
+            .transfer-cancel { border: 1px solid rgba(201,168,106,.3); background: none; color: #b9c6d6; }
+            .transfer-go { border: 1px solid #c9a86a; background: #c9a86a; color: #0b0f15; }
             .transfer-go:disabled { opacity: .4; cursor: not-allowed; }
-            .transfer-note { margin: 12px 0 0; color: rgba(201,183,156,.42); font-size: 10.5px; line-height: 1.8; }
+            .transfer-note { margin: 12px 0 0; color: rgba(185, 198, 214,.42); font-size: 10.5px; line-height: 1.8; }
             @media (max-width: 760px) { .nav-transfer { display: none; } }
 
-            .cart-buy { margin: 0 20px 10px; padding: 13px; border: 0; border-radius: 10px; background: #c9a86a; color: #14100e; font-size: 15px; letter-spacing: 4px; font-family: inherit; cursor: pointer; transition: background .25s, opacity .25s; }
+            .cart-buy { margin: 0 20px 10px; padding: 13px; border: 0; border-radius: 10px; background: #c9a86a; color: #0b0f15; font-size: 15px; letter-spacing: 4px; font-family: inherit; cursor: pointer; transition: background .25s, opacity .25s; }
             .cart-buy:hover { background: #dcc08a; }
             .cart-buy:disabled { opacity: .3; cursor: not-allowed; }
             .cart-done { display: none; flex: 1; overflow-y: auto; padding: 30px 20px; text-align: center; }
             .cart-drawer.done .cart-done { display: block; }
             .cart-drawer.done .cart-list, .cart-drawer.done .cart-foot, .cart-drawer.done .cart-clear, .cart-drawer.done .cart-buy { display: none; }
             .done-kicker { margin: 0 0 12px; font-size: 12px; letter-spacing: 5px; color: #c9a86a; }
-            .done-text { margin: 0 0 22px; font-size: 13px; line-height: 2; color: rgba(232,220,200,.7); }
-            .done-link { display: block; margin-bottom: 10px; padding: 13px 14px; border: 1px solid rgba(201,168,106,.3); border-radius: 10px; color: #e8dcc8; font-size: 13px; text-decoration: none; transition: .25s; }
+            .done-text { margin: 0 0 22px; font-size: 13px; line-height: 2; color: rgba(227, 235, 245,.7); }
+            .done-link { display: block; margin-bottom: 10px; padding: 13px 14px; border: 1px solid rgba(201,168,106,.3); border-radius: 10px; color: #e3ebf5; font-size: 13px; text-decoration: none; transition: .25s; }
             .done-link:hover { border-color: #c9a86a; background: rgba(201,168,106,.08); color: #c9a86a; }
-            .done-back { width: 100%; margin-top: 14px; padding: 11px; border: 1px solid rgba(201,168,106,.3); border-radius: 8px; background: none; color: #c9b79c; font-size: 13px; letter-spacing: 2px; font-family: inherit; cursor: pointer; }
+            .done-back { width: 100%; margin-top: 14px; padding: 11px; border: 1px solid rgba(201,168,106,.3); border-radius: 8px; background: none; color: #b9c6d6; font-size: 13px; letter-spacing: 2px; font-family: inherit; cursor: pointer; }
             .done-back:hover { border-color: #c9a86a; color: #c9a86a; }
             @media (max-width: 820px) {
                 .secret {
@@ -895,6 +986,8 @@
                 .wallet-label { display: none; }
                 .wallet strong { font-size: 13px; }
 
+                .bg-photo { opacity: 0.18; }
+                .hero { padding-bottom: 11vh; }
                 .hero h1 { font-size: clamp(26px, 7vw, 40px); letter-spacing: 2px; line-height: 1.35; padding: 0 18px; }
                 .hero p { font-size: 13px; letter-spacing: 1px; padding: 0 22px; line-height: 1.9; }
                 .secret { left: 12px; bottom: 14px; padding: 10px 14px; font-size: 11.5px; letter-spacing: 1px; }
@@ -944,6 +1037,7 @@
             <script src="/assets/js/cloud-net.js?v=20261034"></script>
 </head>
         <body>
+            <div class="bg-photo" aria-hidden="true"></div>
             <div class="school-badge" title="湖南铁道职业技术学院"><img src="../assets/images/school-logo.png" alt="湖南铁道职业技术学院校徽"></div>
             <nav class="nav">
                 <div class="nav-left">
@@ -978,6 +1072,7 @@
                 </div>
             </nav>
             <section class="hero">
+                <canvas class="rain" id="rain" aria-hidden="true"></canvas>
                 <h1>龙潜猫隐的咖啡店</h1>
                 <p>一杯咖啡的时间，和你一起走过3年的大学时光</p>
                 <a class="btn" href="#">进入店铺</a>
@@ -1975,5 +2070,6 @@
                     <script src="../assets/js/update-popup.js?v=20261022"></script>
     <script src="../assets/js/live.js?v=20261025"></script>
     <script src="../assets/js/chat.js?v=20261031"></script>
+    <script src="js/rain.js?v=20261027"></script>
 </body>
         </html>

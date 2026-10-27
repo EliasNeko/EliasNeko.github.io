@@ -8,21 +8,21 @@
 <link rel="stylesheet" href="../assets/css/titles.css?v=20261035" data-titles-badge="1">
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { min-height: 100vh; padding: 36px 20px 80px; background: radial-gradient(circle at 50% 0%, #33251a 0%, #14100e 62%); color: #f3e7d3; font-family: "Microsoft YaHei", sans-serif; }
+    body { min-height: 100vh; padding: 36px 20px 80px; background: radial-gradient(circle at 50% 0%, #1b2431 0%, #0b0f15 62%); color: #eef4fb; font-family: "Microsoft YaHei", sans-serif; }
     .wrap { width: min(780px, 100%); margin: 0 auto; }
-    .back { display: inline-block; margin-bottom: 18px; color: rgba(201,183,156,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
+    .back { display: inline-block; margin-bottom: 18px; color: rgba(185, 198, 214,.7); font-size: 13px; letter-spacing: 2px; text-decoration: none; }
     .back:hover { color: #c9a86a; }
     h1 { font-size: 28px; font-weight: normal; letter-spacing: 6px; margin-bottom: 6px; }
-    .sub { color: #c9b79c; font-size: 12.5px; line-height: 1.9; margin-bottom: 22px; }
-    .card { margin-bottom: 16px; padding: 18px 20px; border: 1px solid rgba(201,168,106,.22); border-radius: 16px; background: #1a1512; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
+    .sub { color: #b9c6d6; font-size: 12.5px; line-height: 1.9; margin-bottom: 22px; }
+    .card { margin-bottom: 16px; padding: 18px 20px; border: 1px solid rgba(201,168,106,.22); border-radius: 16px; background: #1a2030; box-shadow: 0 18px 50px rgba(0,0,0,.35); }
     .cardhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
     h2 { font-size: 16px; font-weight: normal; letter-spacing: 3px; color: #e8d4a8; }
-    .search { margin-left: auto; width: min(220px, 50vw); padding: 8px 11px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #14100e; color: #f3e7d3; font-family: inherit; font-size: 12px; outline: none; }
-    .note { margin-top: 12px; color: rgba(201,183,156,.5); font-size: 11px; line-height: 1.9; }
+    .search { margin-left: auto; width: min(220px, 50vw); padding: 8px 11px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #0b0f15; color: #eef4fb; font-family: inherit; font-size: 12px; outline: none; }
+    .note { margin-top: 12px; color: rgba(185, 198, 214,.5); font-size: 11px; line-height: 1.9; }
     .account { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed rgba(201,168,106,.14); flex-wrap: wrap; }
     .account:last-child { border-bottom: 0; }
     .account .nm { min-width: 120px; font-size: 14px; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
-    .account .meta { color: rgba(201,183,156,.45); font-size: 10.5px; min-width: 92px; }
+    .account .meta { color: rgba(185, 198, 214,.45); font-size: 10.5px; min-width: 92px; }
     .account .tag { font-size: 9.5px; padding: 1px 6px; border-radius: 999px; border: 1px solid rgba(201,168,106,.25); color: #c9a86a; }
     .account .tag.online { color: #86efac; border-color: rgba(134,239,172,.35); }
     .account .tag.friend { color: #7dd3fc; border-color: rgba(125,211,252,.35); }
@@ -31,21 +31,21 @@
     button { padding: 6px 10px; border: 1px solid rgba(201,168,106,.35); border-radius: 8px; background: none; color: #e0c48c; font-family: inherit; font-size: 11px; cursor: pointer; }
     button:hover { background: rgba(201,168,106,.12); }
     button.danger { border-color: rgba(226,154,142,.4); color: #e29a8e; }
-    button.primary { background: #c9a86a; border-color: #c9a86a; color: #14100e; }
+    button.primary { background: #c9a86a; border-color: #c9a86a; color: #0b0f15; }
     .form { display: grid; grid-template-columns: 1fr 1fr 110px 96px 78px; gap: 8px; }
-    .form select, .form input { min-width: 0; padding: 9px 10px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #14100e; color: #f3e7d3; font-family: inherit; font-size: 12px; outline: none; }
+    .form select, .form input { min-width: 0; padding: 9px 10px; border: 1px solid rgba(201,168,106,.25); border-radius: 8px; background: #0b0f15; color: #eef4fb; font-family: inherit; font-size: 12px; outline: none; }
     .grant { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px dashed rgba(201,168,106,.12); flex-wrap: wrap; font-size: 12px; }
-    .grant .who { color: #c9b79c; }
+    .grant .who { color: #b9c6d6; }
     .coffee { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px dashed rgba(201,168,106,.14); flex-wrap: wrap; }
     .coffee:last-child { border-bottom: 0; }
     .coffee .pic { width: 64px; height: 64px; border-radius: 10px; overflow: hidden; background: #2a2119; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #c9a86a; }
     .coffee .pic img { width: 100%; height: 100%; object-fit: cover; }
     .coffee .info { flex: 1; min-width: 200px; }
     .coffee .info b { color: #e8d4a8; font-weight: normal; font-size: 13px; }
-    .coffee .info p { color: rgba(201,183,156,.65); font-size: 11px; line-height: 1.8; margin-top: 3px; }
+    .coffee .info p { color: rgba(185, 198, 214,.65); font-size: 11px; line-height: 1.8; margin-top: 3px; }
     .coffee .ops { display: flex; gap: 6px; align-items: flex-start; }
-    .deny { padding: 40px 20px; text-align: center; color: #c9b79c; line-height: 2; }
-    .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 200; padding: 10px 18px; border: 1px solid rgba(201,168,106,.4); border-radius: 999px; background: rgba(20,16,14,.94); color: #f3e7d3; font-size: 12px; opacity: 0; pointer-events: none; transition: .2s; }
+    .deny { padding: 40px 20px; text-align: center; color: #b9c6d6; line-height: 2; }
+    .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 200; padding: 10px 18px; border: 1px solid rgba(201,168,106,.4); border-radius: 999px; background: rgba(11, 15, 21,.94); color: #eef4fb; font-size: 12px; opacity: 0; pointer-events: none; transition: .2s; }
     .toast.show { opacity: 1; }
     @media (max-width: 640px) { .form { grid-template-columns: 1fr 1fr; } .account .meta { display: none; } }
 </style>

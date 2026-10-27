@@ -80,8 +80,8 @@
 
     var gold = location.pathname.indexOf("coffee-site") >= 0;
     var accent = gold ? "#c9a86a" : "#38bdf8";
-    var panel = gold ? "#14100e" : "#0a1120";
-    var text = gold ? "#e8dcc8" : "#d7e5f5";
+    var panel = gold ? "#0b0f15" : "#0a1120";
+    var text = gold ? "#e3ebf5" : "#d7e5f5";
 
     /* 分类 */
     var coffee = [];
@@ -96,7 +96,7 @@
 
     var css = document.createElement("style");
     css.textContent =
-      ".up-mask{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.62);opacity:0;transition:opacity .25s}" +
+      ".up-mask{position:fixed;inset:0;z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.5);opacity:0;transition:opacity .25s}" +
       ".up-mask.show{opacity:1}" +
       ".up-card{width:100%;max-width:420px;max-height:86vh;display:flex;flex-direction:column;background:" +
       panel +
